@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RLeroux - About Me</title>
+  <link rel="stylesheet" href="stylesheet.css">
+  <script src="js\jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+  <header> HEADER HEADER HEADER HEADER HEADER HEADER HEADER</header>
+  <main>
+    <div class="multi-column">
+      
+      <div class="image-left">
+          <img src="images/armor-full.jpg" id="about-image" alt="Person wearing armor">
+        </div>
+      <div class="text-right">
+
+      
+    
+    <h2>About Me</h2>
+    
+
+    <h2>Contact</h2>
+    Got a question or something to say? Enter it here or send an email to <a href="mailto:lerouxr@wwu.edu">lerouxr@wwu.edu</a>
+    <form onsubmit="return validateForm()" novalidate method="post" action="https://webdevbasics.net/scripts/demo.php" target="_blank"> <!-- message,  -->
+
+      <label for="name" class="prompt"><span class="prompt">Name: </span></label>      
+      <input type="text" id="name" name="name" autocomplete="name">
+      <span class="name error"></span>
+
+
+      <label for="contact" class="prompt"><span class="prompt">Contact info: </span></label>
+      <input type="text" id="contact" name="contact" placeholder="phone or email" autocomplete="email">
+      <span class="contact error"></span>
+
+
+
+      <label for="message" class="prompt"><span class="prompt">Message: </span></label>
+      <textarea id="message" name="message" rows="2" cols="20" placeholder="What's on your mind?"></textarea>
+      <span class="message error"></span>
+
+
+      <button type="submit" id="mySubmit">Send!</button>
+      <span id="success">Message Sent!</span>
+    </form>
+    </div>
+    </div>
+  </main>
+  <footer>FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER</footer>
+</body>
+
+</html>
+<!-- <script src="js/script.js"></script> -->
+<script src="js/contactScript.js"></script>
