@@ -153,6 +153,7 @@ nav ul li ul {
   padding-top: 10px;
   text-align: center;
   width: 100%;
+  /* color: red; */
 
   background-color: var(--secondary);
 }
@@ -243,6 +244,8 @@ nav ul li ul li a:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+
+    /* color: green; */
   }
   nav ul li {
     padding: 0.4em;
