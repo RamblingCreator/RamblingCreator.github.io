@@ -9,203 +9,187 @@
   <script src="js\jquery-3.7.1.min.js"></script>
 </head>
 
-<body>
-  <header> HEADER HEADER HEADER HEADER HEADER HEADER HEADER</header>
-  <main>
+<body id="page-container">
+  <div id="content-wrap">
+    <header>
+      <h1 class="logo">R Leroux</h1>
+      <label for="hamburger" tabindex="0">&#9776;</label>
+      <input id='hamburger' type='checkbox'/>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a> </li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="leatherwork.html">Leatherwork</a>
+            <ul>
+              <li><a href="armor.html">Armor</a> </li>
+              <li><a href="bookcover.html">Book Cover</a> </li>
+              <li><a href="birdarmor.html">Bird Armor</a> </li>
+            </ul>
+          </li>
+          <li><a href="3dmodels.html">3d Modeling</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
 
-    <div class="text-card"><!-- 
-      <h1>Bird Armor</h1>
-      <p>
-        i made this for a costume design class
-      </p> -->
+      <div class="text-card">
 
-      <div class="multi-column">
-        <div class="caption">
-          <h3>Bird Armor</h3>
-          <p>
-            I made this for a costume design class that I took during my senior year of high school. The assignment was to design and create a costume for a stuffed animal.
-          </p>
-        </div>
-        <div class="slide-box" id="final" slide="0">
-          <div class="slide-content">
-            <div class="slide-image"><img src="images/bird/finalbird1.jpg" alt="Stuffed animal bird wearing armor"></div>
+        <div class="multi-column">
+          <div class="caption">
+            <h3>Bird Armor</h3>
+            <p> I made this for a costume design class that I took during my senior year of high school. The assignment was to design and create a costume for a stuffed animal. </p>
           </div>
 
-          <div class="slide-content">
-            <div class="slide-image"><img src="images/bird/finalbird2.jpg" alt="Stuffed animal bird wearing armor"></div>
+          <div class="slide-box" id="final">
+            <div class="slide-content">
+              <div class="slide-image"><img src="images/bird/finalbird1.jpg" alt="Stuffed animal bird wearing armor"></div>
+            </div>
+
+            <div class="slide-content">
+              <div class="slide-image"><img src="images/bird/finalbird2.jpg" alt="Stuffed animal bird wearing armor"></div>
+            </div>
+
+            <div class="slide-content">
+              <div class="slide-image"><img src="images/bird/finaltop.jpg" alt="Stuffed animal bird wearing armor"></div>
+            </div>
+
+            <div class="slide-content">
+              <div class="slide-image"><img src="images/bird/finalcoat.jpg" alt="A green coat for a stuffed animal"></div>
+            </div>
+
+            <div class="slide-content">
+              <div class="slide-image"><img src="images/bird/finalpants.jpg" alt="small black pants for a stuffed animal"></div>
+            </div>
+
+            <div class="slide-content">
+              <div class="slide-image"><img src="images/bird/finalhelmet.jpg" alt="A leather helmet"></div>
+            </div>
+
+            <a class="prev">&#10094;</a>
+            <a class="next">&#10095;</a>
           </div>
+        </div>
+      </div>
 
-          <div class="slide-content">
-            <div class="slide-image"><img src="images/bird/finaltop.jpg" alt="Stuffed animal bird wearing armor"></div>
+
+      <h3 class="titlecard">Process</h3>
+
+      <div class="slide-box" id="plan">
+        <h2>Planning</h2>
+
+        <div class="slide-content">
+          <div class="slide-image"><img src="images/bird/inspiration.png" alt="ideas"></div>
+          <div class="slide-text">
+            <h3>Ideas</h3>
+            <p>My plan was to make armor for a stuffed kiwi, and I decided that I wanted to make a leather helmet, gambeson-like jacket, and pants.
+              These are the images that i used as inspiration for the design.
+              I knew that I wanted the pants to be black, and that the helmet would be brown, but I didn’t decide the color of the jacket until I was looking at the fabric options.</p>
           </div>
+        </div>
 
-          <div class="slide-content">
-            <div class="slide-image"><img src="images/bird/finalcoat.jpg" alt="A green coat for a stuffed animal"></div>
+        <div class="slide-content">
+          <div class="slide-image"><img src="images\bird\plans.png" alt="plans"></div>
+          <div class="slide-text">
+            <h3>Planning</h3>
+            <p> It was difficult to create the pattern. I had to create a pair of pants for something that was always sitting down, with strange proportions. I also had to figure out how to make a jacket for something without arms, but that wasn't quite as difficult. </p>
           </div>
+        </div>
 
-          <div class="slide-content">
-            <div class="slide-image"><img src="images/bird/finalpants.jpg" alt="small black pants for a stuffed animal"></div>
+        <a class="prev">&#10094;</a>
+        <a class="next">&#10095;</a>
+      </div>
+
+      <div class="slide-box" id="jacket">
+        <h2>Jacket</h2>
+        <div class="slide-content">
+          <div class="slide-image">
+            <img src="images/bird/coatpattern.jpg" alt="pattern">
           </div>
-
-          <div class="slide-content">
-            <div class="slide-image"><img src="images/bird/finalhelmet.jpg" alt="A leather helmet"></div>
+          <div class="slide-text">
+            <h3>Patterning</h3>
+            <p>This is the pattern for the jacket. I used it to draft the lines for the quilting on the final piece. <br>
+              I cut out 2 of this piece from green fabric, and 1 from a thicker fabric</p>
           </div>
-
-          <a class="prev">&#10094;</a>
-          <a class="next">&#10095;</a>
         </div>
-      </div>
-    </div>
 
-
-    <h3 class="titlecard">Process</h3>
-
-    <div class="slide-box" id="plan" slide="0">
-      <h2>Planning</h2>
-
-      <div class="slide-content">
-        <div class="slide-image"><img src="images/bird/inspiration.png" alt="ideas"></div>
-        <div class="slide-text">
-          <h3>Ideas</h3>
-          <p>
-            My plan was to make armor for a stuffed kiwi, and I decided that I wanted to make a leather helmet, gambeson-like jacket, and pants.
-            These are the images that i used as inspiration for the design.
-            I knew that I wanted the pants to be black, and that the helmet would be brown, but I didn’t decide the color of the jacket until I was looking at the fabric options.
-          </p>
+        <div class="slide-content">
+          <div class="slide-image"><img src="images\bird\jacketsewing.jpg" alt="sewing"></div>
+          <div class="slide-text">
+            <h3>Sewing</h3>
+            <p>First, I sewed the pieces into a pocket, so that the thicker piece would be on the inside when it was turned inside out
+              Next, I closed the final seam of the pocket so that I had 1 piece of material with the thicker part sandwiched between the green pieces.</p>
+          </div>
         </div>
+
+        <div class="slide-content">
+          <div class="slide-image"><img src="images\bird\coatfinal.jpg" alt="sewing"></div>
+          <div class="slide-text">
+            <h3>Finishing</h3>
+            <p> I drew evenly spaced diagonal lines to guide where I was going to sew to quilt it. Then, I sewed along all these lines to create the quilted effect, then trimmed the loose threads from the ends. Last, I attached a hook and eye closure to the jacket so that it would be wearable.</p>
+          </div>
+        </div>
+        <a class="prev">&#10094;</a>
+        <a class="next">&#10095;</a>
       </div>
 
-      <div class="slide-content">
-        <div class="slide-image"><img src="images\bird\plans.png" alt="plans"></div>
-        <div class="slide-text">
-          <h3>Planning</h3>
-          <p>
-
-            It was difficult to create the pattern. I had to create a pair of pants for something that was always sitting down, with strange proportions. I also had to figure out how to make a jacket for something without arms, but that wasn't quite as difficult.
-
-          </p>
+      <div class="slide-box" id="pants">
+        <h2>Pants</h2>
+        <div class="slide-content">
+          <div class="slide-image"><img src="images/bird/pantspattern.jpg" alt="pattern"></div>
+          <div class="slide-text">
+            <h3>Patterning</h3>
+            <p> This is the pattern for the pants. The crumpled versions are the ones that I pinned to the stuffed animal so that I could test it. I cut 2 of each piece out. </p>
+          </div>
         </div>
+
+        <div class="slide-content">
+          <div class="slide-image"><img src="images\bird\pantslayout.jpg" alt="sewing"></div>
+          <div class="slide-text">
+            <h3>Sewing</h3>
+            <p>This picture is from when I was partway through sewing the pants pieces together. I had hemmed some of the edges and sewn together the outside seam on one half of the pants.</p>
+          </div>
+        </div>
+
+        <div class="slide-content">
+          <div class="slide-image"><img src="images\bird\pantsfinal.jpg" alt="sewing"></div>
+          <div class="slide-text">
+            <h3>Finishing</h3>
+            <p> After finishing the outside seams, I sewed the 2 halves to each other and hemmed the final edge. Next, I sewed the top leg seams.
+              This picture was taken at this point. I noticed that the waistband stuck really far out to the back, so I also folded and sewed the back seam in so it would fit better. </p>
+          </div>
+        </div>
+
+        <a class="prev">&#10094;</a>
+        <a class="next">&#10095;</a>
       </div>
 
-      <a class="prev">&#10094;</a>
-      <a class="next">&#10095;</a>
-    </div>
+      <div class="slide-box" id="helmet">
+        <h2>Helmet</h2>
 
-    <div class="slide-box" id="jacket" slide="0">
-      <h2>Jacket</h2>
+        <div class="slide-content">
+          <div class="slide-image"><img src="images/bird/helmetpattern.jpg" alt="pattern"></div>
+          <div class="slide-text">
+            <h3>Patterning</h3>
+            <p>The first step was drafting the pattern. I made 5 total pieces: the beak, main head section, and 3 back segments. I cut these pieces out of leather, then punched the holes for riveting and sewing.</p>
+          </div>
+        </div>
 
-      <div class="slide-content">
-        <div class="slide-image">
-          <img src="images/bird/coatpattern.jpg" alt="pattern">
+        <div class="slide-content">
+          <div class="slide-image"><img src="images\bird\finalhelmet.jpg" alt="Finished helmet"></div>
+          <div class="slide-text">
+            <h3>Finishing</h3>
+            <p> I used a piece of cardboard to form the beak into a curved shape.
+              Finally, I dyed the pieces using brown dye, then sewed & riveted them together.
+              I needed to sew the beak to the main section and rivet the back pieces to the main section. </p>
+          </div>
         </div>
-        <div class="slide-text">
-          <h3>Patterning</h3>
-          <p>
-            This is the pattern for the jacket. I used it to draft the lines for the quilting on the final piece. <br>
-            I cut out 2 of this piece from green fabric, and 1 from a thicker fabric
-          </p>
-        </div>
+
+        <a class="prev">&#10094;</a>
+        <a class="next">&#10095;</a>
       </div>
-
-      <div class="slide-content">
-        <div class="slide-image"><img src="images\bird\jacketsewing.jpg" alt="sewing"></div>
-        <div class="slide-text">
-          <h3>Sewing</h3>
-          <p>
-            First, I sewed the pieces into a pocket, so that the thicker piece would be on the inside when it was turned inside out
-            Next, I closed the final seam of the pocket so that I had 1 piece of material with the thicker part sandwiched between the green pieces.
-          </p>
-        </div>
-      </div>
-
-      <div class="slide-content">
-        <div class="slide-image"><img src="images\bird\coatfinal.jpg" alt="sewing"></div>
-        <div class="slide-text">
-          <h3>Finishing</h3>
-          <p>
-            I drew evenly spaced diagonal lines to guide where I was going to sew to quilt it. Then, I sewed along all these lines to create the quilted effect, then trimmed the loose threads from the ends.
-            Last, I attached a hook and eye closure to the jacket so that it would be wearable.
-          </p>
-        </div>
-      </div>
-
-      <a class="prev">&#10094;</a>
-      <a class="next">&#10095;</a>
-    </div>
-
-    <div class="slide-box" id="pants" slide="0">
-      <h2>Pants</h2>
-
-      <div class="slide-content">
-        <div class="slide-image"><img src="images/bird/pantspattern.jpg" alt="pattern"></div>
-        <div class="slide-text">
-          <h3>Patterning</h3>
-          <p>
-            This is the pattern for the pants. The crumpled versions are the ones that I pinned to the stuffed animal so that I could test it. I cut 2 of each piece out.
-          </p>
-        </div>
-      </div>
-
-      <div class="slide-content">
-        <div class="slide-image"><img src="images\bird\pantslayout.jpg" alt="sewing"></div>
-        <div class="slide-text">
-          <h3>Sewing</h3>
-          <p>
-            This picture is from when I was partway through sewing the pants pieces together. I had hemmed some of the edges and sewn together the outside seam on one half of the pants.
-
-          </p>
-        </div>
-      </div>
-
-      <div class="slide-content">
-        <div class="slide-image"><img src="images\bird\pantsfinal.jpg" alt="sewing"></div>
-        <div class="slide-text">
-          <h3>Finishing</h3>
-          <p>
-            After finishing the outside seams, I sewed the 2 halves to each other and hemmed the final edge. Next, I sewed the top leg seams.
-            This picture was taken at this point. I noticed that the waistband stuck really far out to the back, so I also folded and sewed the back seam in so it would fit better.
-          </p>
-        </div>
-      </div>
-
-      <a class="prev">&#10094;</a>
-      <a class="next">&#10095;</a>
-    </div>
-
-    <div class="slide-box" id="helmet" slide="0">
-      <h2>Helmet</h2>
-
-      <div class="slide-content">
-        <div class="slide-image"><img src="images/bird/helmetpattern.jpg" alt="pattern"></div>
-        <div class="slide-text">
-          <h3>Patterning</h3>
-          <p>
-            The first step was drafting the pattern. I made 5 total pieces: the beak, main head section, and 3 back segments. I cut these pieces out of leather, then punched the holes for riveting and sewing.
-          </p>
-        </div>
-      </div>
-
-      <div class="slide-content">
-        <div class="slide-image"><img src="images\bird\finalhelmet.jpg" alt="Finished helmet"></div>
-        <div class="slide-text">
-          <h3>Finishing</h3>
-          <p>
-
-            I used a piece of cardboard to form the beak into a curved shape.
-            Finally, I dyed the pieces using brown dye, then sewed & riveted them together.
-            I needed to sew the beak to the main section and rivet the back pieces to the main section.
-          </p>
-        </div>
-      </div>
-
-      <a class="prev">&#10094;</a>
-      <a class="next">&#10095;</a>
-    </div>
-
-
-
-  </main>
-  <footer>FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER</footer>
+    </main>
+  </div>
+  <footer> Ruby Leroux, 2025 <a href="mailto:lerouxr@wwu.edu">lerouxr@wwu.edu</a> </footer>
 </body>
 
 </html>

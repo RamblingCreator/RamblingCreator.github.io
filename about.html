@@ -9,50 +9,71 @@
   <script src="js\jquery-3.7.1.min.js"></script>
 </head>
 
-<body>
-  <header> HEADER HEADER HEADER HEADER HEADER HEADER HEADER</header>
-  <main>
-    <div class="multi-column">
-      
-      <div class="image-left">
-          <img src="images/armor-full.jpg" id="about-image" alt="Person wearing armor">
+<body id="page-container">
+  <div id="content-wrap">
+    <header>
+      <h1 class="logo">R Leroux</h1>
+      <label for="hamburger" tabindex="0">&#9776;</label>
+      <input id='hamburger' type='checkbox' />
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a> </li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="leatherwork.html">Leatherwork</a>
+            <ul>
+              <li><a href="armor.html">Armor</a> </li>
+              <li><a href="bookcover.html">Book Cover</a> </li>
+              <li><a href="birdarmor.html">Bird Armor</a> </li>
+            </ul>
+          </li>
+          <li><a href="3dmodels.html">3d Modeling</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main> <!--  id="content-wrap" -->
+
+      <div class="multi-column">
+
+        <div id="about-image">
+          <img src="images/me2.jpg" class="desktop" alt="Person wearing armor">
+          <img src="images/me2-mobile.jpg" class="mobile" alt="Person wearing armor">
         </div>
-      <div class="text-right">
-
-      
-    
-    <h2>About Me</h2>
-    
-
-    <h2>Contact</h2>
-    Got a question or something to say? Enter it here or send an email to <a href="mailto:lerouxr@wwu.edu">lerouxr@wwu.edu</a>
-    <form onsubmit="return validateForm()" novalidate method="post" action="https://webdevbasics.net/scripts/demo.php" target="_blank"> <!-- message,  -->
-
-      <label for="name" class="prompt"><span class="prompt">Name: </span></label>      
-      <input type="text" id="name" name="name" autocomplete="name">
-      <span class="name error"></span>
-
-
-      <label for="contact" class="prompt"><span class="prompt">Contact info: </span></label>
-      <input type="text" id="contact" name="contact" placeholder="phone or email" autocomplete="email">
-      <span class="contact error"></span>
+        <div id="about-text" class="text-right">
 
 
 
-      <label for="message" class="prompt"><span class="prompt">Message: </span></label>
-      <textarea id="message" name="message" rows="2" cols="20" placeholder="What's on your mind?"></textarea>
-      <span class="message error"></span>
+          <h2>About Me</h2>
+          <p> I've done a variety of art forms over my life. The biggest ones are leatherworking and 3d modeling, but I've also explored papercraft, embroidery, and digital art. I'm from Seattle, Washington, and I'm currently studying computer science at WWU. In my free time, I also like to play video games and do bouldering.</p>
+
+          <h2>Contact</h2>
+          <p>Got a question or something to say? Enter it here or send an email to <a href="mailto:lerouxr@wwu.edu">lerouxr@wwu.edu</a></p>
+          <form onsubmit="return validateForm()" novalidate method="post" action="https://webdevbasics.net/scripts/demo.php" target="_blank"> <!-- message,  -->
+
+            <label for="name" class="prompt"><span class="prompt">Name: </span></label>
+            <input type="text" id="name" name="name" autocomplete="name">
+            <span class="name popup"></span>
 
 
-      <button type="submit" id="mySubmit">Send!</button>
-      <span id="success">Message Sent!</span>
-    </form>
-    </div>
-    </div>
-  </main>
-  <footer>FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER</footer>
+            <label for="contact" class="prompt"><span class="prompt">Contact info: </span></label>
+            <input type="text" id="contact" name="contact" placeholder="phone or email" autocomplete="email">
+            <span class="contact popup"></span>
+
+
+
+            <label for="message" class="prompt"><span class="prompt">Message: </span></label>
+            <textarea id="message" name="message" rows="2" cols="20" placeholder="What's on your mind?"></textarea>
+            <span class="message popup"></span>
+
+
+            <button type="submit" class="button" id="mySubmit">Send!</button>
+            <span id="success" class="popup">Message Sent!</span>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer> Ruby Leroux, 2025 <a href="mailto:lerouxr@wwu.edu">lerouxr@wwu.edu</a></footer>
 </body>
 
 </html>
-<!-- <script src="js/script.js"></script> -->
 <script src="js/contactScript.js"></script>

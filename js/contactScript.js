@@ -31,7 +31,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
   if (!validateForm()) {
     event.preventDefault();
   } else {
-    $("#success").css('display', 'block');
+    $("#success").css('display', 'inline-block');
   }
   event.preventDefault();
 });
@@ -70,11 +70,11 @@ function showError(selector, message) {
   /* let errorSpan = document.querySelector("." + selector + ".error")
   errorSpan.textContent = message; */
 
-  $("." + selector + ".error").text(message);
+  $("." + selector + ".popup").text(message);
 
   if (message == "") {
     $("." + selector).css('display', 'none');
   } else {
-    $("." + selector).css('display', 'block');
+    $("." + selector).css('display', 'inline');
   }
 }

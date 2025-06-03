@@ -8,99 +8,123 @@
   <link rel="stylesheet" href="stylesheet.css">
 </head>
 
-<body>
+<body id="page-container">
+  <div id="content-wrap">
 
-  <header> HEADER HEADER HEADER HEADER HEADER HEADER HEADER</header>
-  <div id="wrapper">
-    <main>
-      <div class="text-card">
-        <h1>My Projects</h1>
-        <p>
-
-        </p>
-      </div>
-      <table>
-        <caption></caption>
-        <thead>
-          <tr>
-            <!-- <th class="col-title">Name</th> -->
-            <th class="col-img">Image</th>
-            <th class="col-description">Description</th>
-            <th class="col-date">Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <!-- <td>Book Cover</td> -->
-            <td><img src="images/book-icon.jpg" alt="Book Cover"></td>
-            <td class="col-description">
-              <h1>Book Cover</h1>
-              <p>I made this for a friend</p>
-            </td>
-            <td class="date">
-              <p>Aug 2022 - Dec 2023</p>
-            </td>
-          </tr>
-          <tr>
-            <!-- <td>Keyring Floats</td> -->
-            <td><img src="images/key-floats.jpg" alt="Keyring Floats"></td>
-            <td class="description">
-              <h1>Keyring Floats</h1>
-              <p></p>
-            </td>
-            <td>Sept 2022</td>
-          </tr>
-          <tr>
-            <!-- <td>Knife Sheath</td> -->
-            <td><img src="images/knife-sheath.jpg" alt="Knife Sheath"></td>
-            <td class="description">
-              <h1>Knife Sheath</h1>
-              <p></p>
-            </td>
-            <td>April 2023</td>
-          </tr>
-          <tr>
-            <!-- <td>Bracelet</td> -->
-            <td><img src="images/bracelet.png" alt="Bracelet"></td>
-            <td class="description">
-              <h1>Bracelet</h1>
-              <p></p>
-            </td>
-            <td>April 2023</td>
-          </tr>
-          <tr>
-            <!-- <td>Bag</td> -->
-            <td><img src="images/bag-icon.jpg" alt="Bag"></td>
-            <td class="description">
-              <h1>Bag</h1>
-              <p></p>
-            </td>
-            <td>Feb - July 2023</td>
-          </tr>
-          <tr>
-            <!-- <td>Bird Armor</td> -->
-            <td><img src="images/bird-armor.jpg" alt="Bird Armor"></td>
-            <td class="description">
-              <h1>Bird Armor</h1>
-              <p></p>
-              <a class="button" href="birdarmor.html">Read More!</a>
-            </td>
-            <td>February - April 2024</td>
-          </tr>
-          <tr>
-            <!-- <td>Mushroom Knife Sheath</td> -->
-            <td><img src="images/mushroom-sheath.jpg" alt="Mushroom Knife Sheath"></td>
-            <td class="description">
-              <h1>Mushroom Knife Sheath</h1>
-              <p></p>
-            </td>
-            <td>December 2024</td>
-          </tr>
-        </tbody>
-      </table>
-    </main>
+    <header>
+      <h1 class="logo">R Leroux</h1>
+      <label for="hamburger" tabindex="0">&#9776;</label>
+      <input id='hamburger' type='checkbox' />
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a> </li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="leatherwork.html">Leatherwork</a>
+            <ul>
+              <li><a href="armor.html">Armor</a> </li>
+              <li><a href="bookcover.html">Book Cover</a> </li>
+              <li><a href="birdarmor.html">Bird Armor</a> </li>
+            </ul>
+          </li>
+          <li><a href="3dmodels.html">3d Modeling</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div id="wrapper">
+      <main>
+        <div class="text-card">
+          <h1>My Projects</h1>
+          <p>
+            I've been doing leatherworking since about 2019. The first big project I made was the armor, but I've also made many other projects.
+          </p>
+        </div>
+        <table>
+          <caption></caption>
+          <thead>
+            <tr>
+              <th class="col-img">Image</th>
+              <th class="col-description">Description</th>
+              <th class="col-date">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><img src="images/armor-icon.jpg" alt="Armor"></td>
+              <td class="description">
+                <h1>Armor</h1>
+                <p>One of my first projects, and the one I've been working on for the longest. It's still not done!</p>
+                <a class="button" href="armor.html">Read More!</a>
+              </td>
+              <td class="date">
+                <p>Summer 2020-now</p>
+              </td>
+            </tr>
+            <tr>
+              <td><img src="images/book-icon.jpg" alt="Book Cover"></td>
+              <td class="description">
+                <h1>Book Cover</h1>
+                <p>I made this for a friend, based on the cover of a book that he wrote.</p>
+                <a class="button" href="bookcover.html">Read More!</a>
+              </td>
+              <td class="date">
+                <p>Aug 2022 - Dec 2023</p>
+              </td>
+            </tr>
+            <tr>
+              <td><img src="images/leatherwork/key-floats.jpg" alt="Keyring Floats"></td>
+              <td class="description">
+                <h1>Keyring Floats</h1>
+                <p>I made these to attach to keys for my parent's boat. They have foam pieces inside them so that they float if dropped into water.</p>
+              </td>
+              <td>Sept 2022</td>
+            </tr>
+            <tr>
+              <td><img src="images/leatherwork/knife-sheath.jpg" alt="Knife Sheath"></td>
+              <td class="description">
+                <h1>Knife Sheath</h1>
+                <p>This was for some of my parent's friends, who had a knife that they wanted to display in a nice sheath.</p>
+              </td>
+              <td>April 2023</td>
+            </tr>
+            <tr>
+              <td><img src="images/leatherwork/bracelet.png" alt="Bracelet"></td>
+              <td class="description">
+                <h1>Bracelet</h1>
+                <p>This was a short test project, and I'm really happy with how it turned out.</p>
+              </td>
+              <td>April 2023</td>
+            </tr>
+            <tr>
+              <td><img src="images/leatherwork/bag-icon.jpg" alt="Bag"></td>
+              <td class="description">
+                <h1>Bag</h1>
+                <p>I made this for one of my grandparents. She wanted to replace a bag that she was using to store scrabble tiles, and I decided to take it as an oppportunity to make something nice for her.</p>
+              </td>
+              <td>Feb - July 2023</td>
+            </tr>
+            <tr>
+              <td><img src="images/bird-armor.jpg" alt="Bird Armor"></td>
+              <td class="description">
+                <h1>Bird Armor</h1>
+                <p>This was a project for a costume design class I took in high school.</p>
+                <a class="button" href="birdarmor.html">Read More!</a>
+              </td>
+              <td>February - April 2024</td>
+            </tr>
+            <tr>
+              <td><img src="images/leatherwork/mushroom-sheath.jpg" alt="Mushroom Knife Sheath"></td>
+              <td class="description">
+                <h1>Mushroom Knife Sheath</h1>
+                <p>This was part of a Christmas present for my dad. I got him a knife designed for gathering mushrooms, and made a custom sheath/holster to go with it.</p>
+              </td>
+              <td>December 2024</td>
+            </tr>
+          </tbody>
+        </table>
+      </main>
+    </div>
   </div>
-  <footer>FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER</footer>
+  <footer> Ruby Leroux, 2025 <a href="mailto:lerouxr@wwu.edu">lerouxr@wwu.edu</a> </footer>
 </body>
 
 </html>
