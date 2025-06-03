@@ -329,7 +329,7 @@ main {
 }
 
 .image-left img, .image-right img {
-  /* padding: 10%; */
+  padding: 10%;
   width: 100%;
 }
 
