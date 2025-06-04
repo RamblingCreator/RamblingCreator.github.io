@@ -616,6 +616,7 @@ table .date {
   padding: 2em;
   padding-left: 1.5em;
   padding-right: 0;
+  /* font-size: 1.1em; */
 }
 
 .slide-box h2 {
@@ -649,12 +650,17 @@ table .date {
   /* width: auto; */
 }
 
+#final-bird .multi-column {
+  gap: 0;
+}
+
 .slide-text {
   flex: 40%;
   margin: auto;
-  padding: 0 1em;
+  padding: 0 0.75em;
   /* padding-bottom: 0.5em; */
   min-width: 20vw;
+  font-size: 1.1em;
 }
 
 .slide-text * {
