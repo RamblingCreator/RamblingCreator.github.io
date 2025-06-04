@@ -41,6 +41,12 @@ body {
 
 }
 
+@media(min-width:1800px) {
+  body {
+    font-size: 25px;
+  }
+}
+
 #page-container {
   position: relative;
   /* min-height: calc(100vh - 3.5em - 2.5em); */
@@ -81,6 +87,7 @@ header {
 
   height: 3.5em;
   background-color: var(--primary);
+  /*   background-color: antiquewhite; */
 }
 
 .logo {
@@ -181,7 +188,6 @@ nav ul li:hover ul {
   display: block;
   /* max-height: 200px;
   transition: max-height 0.05s; */
-
 }
 
 nav ul li ul li {
@@ -247,6 +253,12 @@ nav ul li ul li a:hover {
 
     /* color: green; */
   }
+
+  nav ul li:hover ul {
+    display: flex;
+    /* max-height: 200px;
+  transition: max-height 0.05s; */
+  }
   nav ul li {
     padding: 0.4em;
   }
@@ -280,6 +292,8 @@ nav ul li ul li a:hover {
   font-weight: 500;
   text-decoration: none;
   transition: background-color 0.3s;
+
+  display: inline-block;
 
 }
 
@@ -319,12 +333,17 @@ main {
 
 .text-left p, .text-right p {
   margin-top: 0;
-  margin-bottom: 1.3em;
+  /* margin-bottom: 1.3em; */
 }
 
 .text-left h3, .text-right h3 {
   margin-top: 0.5em;
   margin-bottom: 1.3em;
+}
+
+.text-left h2, .text-right h2 {
+  /* margin-top: 0.5em; */
+  margin-bottom: 0.75em;
 }
 
 .image-left, .image-right {
@@ -362,7 +381,7 @@ main {
   text-decoration: none;
 }
 
-.titlecard h3 {
+.titlecard h3, h2 {
   margin: 0;
 }
 
@@ -406,6 +425,10 @@ main {
 
 .box h3 {
   margin: 0.5em auto;
+}
+
+.box h2 {
+  margin: 0.05em auto;
 }
 
 .box img {
@@ -926,6 +949,13 @@ textarea {
 
 /* Armor */
 
+.text-left h1 {
+  margin: 0;
+  margin-bottom: 0.4em;
+}
+
+.text-left p {}
+
 .scroll-box {
   margin: auto;
   overflow-y: scroll;
@@ -944,4 +974,10 @@ textarea {
   display: block;
   width: 100%;
   padding: .5em 1em;
+}
+
+@media(max-width:800px) {
+  .scroll-box {
+    order: 2;
+  }
 }

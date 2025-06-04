@@ -1,11 +1,11 @@
-
+/* 
 let name = document.getElementById("name")
 let contact = document.getElementById("contact")
 let message = document.getElementById("message")
 
 let nameError = document.querySelector(".name.error")
 let contactError = document.querySelector(".contact.error")
-let messageError = document.querySelector(".message.error")
+let messageError = document.querySelector(".message.error") */
 const isEmail = /^\S+@\S+\.\S+$/
 const isPhone = /^(?:\d{3}|\(\d{3}\))([-/.])\d{3}\1\d{4}$/
 
