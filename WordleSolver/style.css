@@ -1,0 +1,37 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+
+}
+input, textarea {
+    font-size: 18vw;
+    width: 20%;
+    margin: 1vw;
+    text-align: center;
+}
+
+#search {
+    font-size: 2em;
+    margin: auto;
+    display: block;
+}
+
+#letter_input {
+
+    display: flex;
+    flex-direction: row;
+}
+
+.wordList ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    list-style-type: none;
+}
+
+.wordList ul li {
+    padding: auto;
+    font-size: 2em;
+}
