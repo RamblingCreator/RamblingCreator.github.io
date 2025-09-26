@@ -12,59 +12,25 @@ $(".search").on("click", function () {
 });
 
 
-/* document.querySelector("form").addEventListener("button", (event) => {
-    var inputWord = new Array()
-    var constructedExpression = "/^"
-    inputs.forEach(element => {
-        inputWord.add(element.value);
-        if (element.value == "") {
-            constructedExpression += "."
-        } else {
-            constructedExpression += "[" + element.value + "]";
-        }
-    });
-    constructedExpression += "$/";
-    var isMatch = new RegExp(constructedExpression);
-
-
-
-    var validWords = new Array();
-    for (let i = 0; i < allWords.length; i++) { */
-/* for (let j = 0; j < wordLength; j++) {
-    if (inputWord[j] == "") {
-        continue;
-    } else if (inputWord[j] !=) {
-
-    }
-} *//* 
-if (isMatch.test(allWords[i])) {
-    validWords.Add(allWords[i]);
-}
-}
-console.log("valid words: " + validWords.length);
-//output.value = allWords.toString();
-event.preventDefault();
-}); */
-
 function filterWords() {
     var inputWord = new Array()
     var constructedExpression = "";//"/^"
     //inputs.forEach(element => {
     for (let i = 0; i < inputs.length; i++) {
-        const element = inputs[i];
-
+        const thisLetter = inputs[i].value.toLowerCase();
+        console.log(thisLetter);
         //inputWord.Add(element.value);
-        if (element.value == "") {
+        if (thisLetter == "" || thisLetter == " ") {
             constructedExpression += "."
         } else {
-            constructedExpression += "[" + element.value + "]";
+            constructedExpression += "[" + thisLetter + "]";
         }
         //});
     }
     //constructedExpression += "$/";
-    var isMatch = new RegExp(constructedExpression);
+    var isMatch = new RegExp(constructedExpression, "i");
 
-    console.log("regex: "+isMatch);
+    console.log("regex: " + isMatch);
 
     var validWords = new Array();
 
@@ -79,10 +45,59 @@ function filterWords() {
     //output.validWords = allWords.toString();
 
     document.getElementById('outputList').innerHTML = validWords.map((word) => {
-    return `<li>${word}</li>`;
-  }).join('');
+        return `<li>${word}</li>`;
+    }).join('');
 }
 
 function setAllWords() {
-    allWords = new Array()
+    allWords = new Array();
+}
+
+/* inputs.forEach(input => {
+    input.addEventListener("keyup", () => {
+        if (input.value.length === input.maxLength && parseInt(input.id) < inputLists.length) {
+
+            document.getElementById(parseInt(input.id) + 1).focus();
+            console.log("Advancing cursor");
+        }
+    })
+}) */
+
+for (let i = 0; i < inputs.length; i++) {
+    const input = inputs[i];
+
+    input.addEventListener("keyup", handleInput);
+    /* input.addEventListener("keyup", (event) => {
+        //console.log("letter entered");
+        console.log("key: "+KeyboardEvent.key);
+        //console.log(input.value.length+" =? "+input.maxLength);
+       // console.log("id int: "+parseInt(input.id));
+        if (input.value.length === input.maxLength && parseInt(input.id) < inputs.length) {
+
+            document.getElementById(parseInt(input.id) + 1).focus();
+            console.log("Advancing cursor");
+        }
+    }) */
+
+}
+
+function handleInput(e) {
+    console.log("key: " + e.code);
+    console.log("this: " + this);
+    const input = this;
+    //console.log(input.value.length+" =? "+input.maxLength);
+    // console.log("id int: "+parseInt(input.id));
+
+
+    if (e.code == "Backspace"&& parseInt(input.id) > 0 && input.value.length ===0) {
+        document.getElementById(parseInt(input.id) - 1).focus();
+    } else if (e.code == "ArrowLeft"&& parseInt(input.id) > 0) {
+        document.getElementById(parseInt(input.id) - 1).focus();
+    } else if (e.code == "ArrowRight"&& parseInt(input.id) < inputs.length) {
+        document.getElementById(parseInt(input.id) + 1).focus();
+    } else if (input.value.length === input.maxLength && parseInt(input.id) < inputs.length) {
+
+        document.getElementById(parseInt(input.id) + 1).focus();
+        console.log("Advancing cursor");
+    }
 }
