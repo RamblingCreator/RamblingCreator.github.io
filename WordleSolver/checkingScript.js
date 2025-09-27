@@ -84,6 +84,7 @@ for (let i = 0; i < inputs.length; i++) {
 function handleInput(e) {
     console.log("key: " + e.code);
     console.log("this: " + this);
+    document.getElementById("debug").innerHTML +="<li>key: " + e.code+"</li>";
     const input = this;
     //console.log(input.value.length+" =? "+input.maxLength);
     // console.log("id int: "+parseInt(input.id));
