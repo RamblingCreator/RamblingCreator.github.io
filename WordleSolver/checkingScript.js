@@ -31,9 +31,12 @@ debug("on mobile: " + deviceIsMobile);
     console.log(rules[i]);
 } */
 
-$(".search").on("click", function () {
-    filterWords();
+$(document).ready(function () {
+    $("input:text").focus(function () { $(this).select(); });
+    $(".search").on("click", filterWords());
+
 });
+
 
 $(".clear").on("click", function () {
     for (let i = 0; i < wordLength; i++) {
@@ -124,14 +127,14 @@ for (let i = 0; i < inputs.length; i++) {
 
 function handleInput(e) {
     // /console.log("key: " + e.key+", code: " + e.code);
-    console.log(e.code + " is letter: "+isLetterKey.test(e.code));
-    
+    console.log(e.code + " is letter: " + isLetterKey.test(e.code));
+
     // console.log("this: " + this);
     //document.getElementById("debug").innerHTML += "<li>key: " + e.code + "</li>";
     const input = this;
 
     if (deviceIsMobile) {
-        debug(e);
+        debug("key: " + e.key+", code: " + e.code);
         if (parseInt(input.id) > 0 && input.value.length === 0) {
             //document.getElementById(parseInt(input.id) - 1).focus();
             newFocus = document.getElementById(parseInt(input.id) - 1);

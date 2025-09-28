@@ -16,15 +16,50 @@ h1 {
     margin: 10px;
     text-align: center;
 }
+
+.lengthSelection {
+    /* display:flex;
+    flex-direction: row; */
+    font-size: 2em;
+    margin: auto;
+    display: block;
+    width: fit-content;
+}
+.lengthSelection p {
+    display: inline-block;
+    margin: 0;
+    margin-bottom: 10px;
+}
+.lengthSelection input {
+    width: 2em;
+    height: 2em;
+    margin-right: 0px;
+    margin-left: 8px;
+}
+
+
 /* input, textarea { */
-#letter_input input {
+
+
+input[type=text] {
+    text-transform: lowercase;
+}
+
+
+#letter_input {
+
+    display: flex;
+    flex-direction: row;
+}
+
+/* #letter_input input {
     font-size: 18vw;
-    /* font-size: 100%; */
+    font-size: 100%;
     width: 20%;
     margin: 0.5vw;
     text-align: center;
 }
-
+ */
 @media(min-width:1200px) {
     #letter_input input {
         font-size: 216px;
@@ -32,6 +67,10 @@ h1 {
 }
 
 .letter {
+    font-size: 18vw;
+    width: 20%;
+    margin: 0.5vw;
+    text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
@@ -64,11 +103,17 @@ button {
 
 #search {
     padding: 0px 20px;
+    grid-area: search;
 
 }
 #clear {
     font-size: 2.5em;
+    grid-area: clear;
 }
+
+
+
+
 
 #ignoreLabel {
     font-size: 2.5em;
@@ -78,51 +123,38 @@ button {
 }
 
 #no-list {
-
-    /* display: none; */
     width: 100%;
     text-align: center;
-    font-kerning: none;
     letter-spacing: 0.1em;
-
-
     font-size: 3em;
     margin: auto;
     display: block;
-    text-align: center;
-    flex: 50%;
 }
 
-input[type=text] {
-    text-transform: lowercase;
-}
-
-
-#letter_input {
-
+#ignore {
+    grid-area: ignore;
     display: flex;
-    flex-direction: row;
+    gap: 5px;
 }
 
-.lengthSelection {
-    /* display:flex;
-    flex-direction: row; */
-    font-size: 2em;
-    margin: auto;
-    display: block;
-    width: fit-content;
+
+@media(max-width:1000px) {
+
+    .buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas:
+            "ignore ignore" 
+            "clear search";
+        width: fit-content;
+        width: 90%;
+        margin: auto;
+        gap: 10px;
+
+    }
 }
-.lengthSelection p {
-    display: inline-block;
-    margin: 0;
-    margin-bottom: 10px;
-}
-.lengthSelection input {
-    width: 2em;
-    height: 2em;
-    margin-right: 0px;
-    margin-left: 8px;
-}
+
+
 
 #output_list {
     display: grid;
@@ -138,11 +170,15 @@ input[type=text] {
     width: 5em; */
     font-size: 2em;
     border: 1px solid black;
+
+    border-radius:8px;
+    text-align: center;
+    margin: 2px auto;
 }
 
 li.output.highlight {
     color: gray;
-    border: darkgray;
+    border: 1px solid darkgray;
 }
 
 #output_list li :hover {
