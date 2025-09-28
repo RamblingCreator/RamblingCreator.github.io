@@ -16,21 +16,48 @@
   <main>
 
     <form>
-      
-      <div id="letter_input">
-        <input type="text" class="letter" name="letter0" maxlength = 1 id="1">
-        <input type="text" class="letter" name="letter1" maxlength = 1 id="2">
-        <input type="text" class="letter" name="letter2" maxlength = 1 id="3">
-        <input type="text" class="letter" name="letter3" maxlength = 1 id="4">
-        <input type="text" class="letter" name="letter4" maxlength = 1 id="5">
-      </div>
 
-      <button type="button" class="search" id="search">Go</button>
+      <div class="lengthSelection">
+        <p>Length: </p>
+        <input type="radio" id="five" name="length" value="5" checked="true">
+        <label for="five">5</label>
+
+        <input type="radio" id="seven" name="length" value="7">
+        <label for="seven">7</label>
+      </div>
+      <div id="letter_input">
+
+        <input type="text" class="letter" name="letter0" maxlength=1 id="0" autocomplete="off">
+        <input type="text" class="letter" name="letter1" maxlength=1 id="1" autocomplete="off">
+        <input type="text" class="letter" name="letter2" maxlength=1 id="2" autocomplete="off">
+        <input type="text" class="letter" name="letter3" maxlength=1 id="3" autocomplete="off">
+        <input type="text" class="letter" name="letter4" maxlength=1 id="4" autocomplete="off">
+        <input type="text" class="letter" name="letter5" maxlength=1 id="5" autocomplete="off">
+        <input type="text" class="letter" name="letter6" maxlength=1 id="6" autocomplete="off">
+        <input type="text" class="letter" name="letter7" maxlength=1 id="7" autocomplete="off">
+      </div>
+      <input type="text" class="no-list" name="no-list" id="no-list">
+      <div class="buttons">
+        <button type="button" class="search" id="search">Go</button>
+        <button type="button" class="clear" id="clear">Clear</button>
+        <button type="button" class="show-nolist" id="show-nolist">>no-list</button>
+      </div>
     </form>
-    <ul id = debug></ul>
-    <div class="wordList">
-      <ul id="outputList"></ul>
-    </div>
+    <ul id=debug>
+      <!-- <li id="debug1">test1</li>
+      <li>test2</li>
+      <li>test3</li>
+      <li>test4</li> -->
+    </ul>
+    <!-- <div class="wordList"> -->
+    <ul id="output_list">
+      <!-- <li class="output">W</li>
+      <li class="output">M</li>
+      <li class="output">M</li>
+      <li class="output">W</li> -->
+
+    </ul>
+    <!-- </div> -->
   </main>
 </body>
 
