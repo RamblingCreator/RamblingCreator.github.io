@@ -33,9 +33,8 @@ debug("on mobile: " + deviceIsMobile);
 
 $(document).ready(function () {
     $("input:text").focus(function () { $(this).select(); });
-    $(".search").on("click", filterWords());
-
 });
+$(".search").on("click", function () {filterWords();});
 
 
 $(".clear").on("click", function () {
@@ -52,6 +51,15 @@ $(".show-nolist").on("click", function () {
         $('#no-list').css('display', 'none');
     }
 });
+
+$("#head").on("click", function () {
+    if ($('#debug').css('display') == "none") {
+        $('#debug').css('display', 'block');
+    } else {
+        $('#debug').css('display', 'none');
+    }
+});
+
 
 
 
@@ -134,8 +142,11 @@ function handleInput(e) {
     const input = this;
 
     if (deviceIsMobile) {
-        debug("key: " + e.key+", code: " + e.code);
-        if (parseInt(input.id) > 0 && input.value.length === 0) {
+        debug("key: " + e.key + ", code: " + e.code);
+        /* if (parseInt(input.id) > 0 && input.value.length === 0) {
+            //document.getElementById(parseInt(input.id) - 1).focus();
+            newFocus = document.getElementById(parseInt(input.id) - 1);
+        } else */ if (e.code == "Backspace" && parseInt(input.id) > 0 && input.value.length === 0) {
             //document.getElementById(parseInt(input.id) - 1).focus();
             newFocus = document.getElementById(parseInt(input.id) - 1);
         } else if (input.value.length === input.maxLength && parseInt(input.id) < inputs.length) {
