@@ -1,5 +1,5 @@
-function getAllWords() {
-    var wordsArray = new Array(
+function get5LetterWords() {
+    var fiveLetterWords = new Array(
         "under",
         "candy",
         "apple",
@@ -12973,5 +12973,12 @@ function getAllWords() {
         "samfu",
         "seity",
     );
-    return wordsArray;
+    return fiveLetterWords;
+}
+
+function get7LetterWords() {
+    var sevenLetterWords = new Array(
+        ""
+    );
+    return sevenLetterWords;
 }

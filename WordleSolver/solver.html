@@ -42,8 +42,12 @@
         <!-- <button type="button" class="show-nolist" id="show-nolist">>Ignore</button> -->
 
         <div id="ignore">
-          <label for="no-list" id="ignoreLabel">Ignore:</label>
-          <input type="text" class="no-list" name="no-list" id="no-list" maxlength=10>
+          <label for="no-list" id="ignoreLabel" class="listLabel">Ignore:</label>
+          <input type="text" class="listInput" name="no-list" id="no-list" maxlength=10 autocomplete="off">
+        </div>
+        <div id="include">
+          <label for="yes-list" id="includeLabel" class="listLabel">Include:</label>
+          <input type="text" class="listInput" name="yes-list" id="yes-list" maxlength=10 autocomplete="off">
         </div>
         <button type="button" class="search" id="search">Go</button>
 

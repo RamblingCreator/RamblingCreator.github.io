@@ -1,12 +1,13 @@
 var inputs = document.getElementsByClassName("letter");
 var ignored = document.getElementById("no-list");
+var included = document.getElementById("yes-list");
 /* var output = document.getElementsByClassName("wordList"); */
-var allWords = new Array();
+var fiveLetterWords = new Array();
 
 var isLetterKey = new RegExp("Key[A-Z]");
 
 var wordLength = 8;
-allWords = getAllWords();
+fiveLetterWords = get5LetterWords();
 const rules = document.styleSheets[0].cssRules;
 
 updateLetterCount(5);
@@ -34,7 +35,7 @@ debug("on mobile: " + deviceIsMobile);
 $(document).ready(function () {
     $("input:text").focus(function () { $(this).select(); });
 });
-$(".search").on("click", function () {filterWords();});
+$(".search").on("click", function () { filterWords(); });
 
 
 $(".clear").on("click", function () {
@@ -75,27 +76,28 @@ function filterWords() {
         }
     }
     var ignoredLetters = ignored.value;
-    /* var isMatch = new RegExp(constructedExpression, "i"); */
+    var includedLetters = included.value;
 
 
-    /* 
-        var ignoredRegex = "^[^" + ignoredLetters + "]+$";
-        ignoredRegex = "^(?!.*[" + ignoredLetters + "])";
-        var isIgnored = new RegExp(ignoredRegex, "i"); */
+    // var combined = "(?=^[^" + ignoredLetters + "]+$)(?=" + constructedExpression + ")";
+
     var combined = "(?=^[^" + ignoredLetters + "]+$)(?=" + constructedExpression + ")";
 
+    for (let i=0; i<includedLetters.length; i++) {
+        combined += "(?=.*"+includedLetters[i]+")";
+    }
     var combinedRegex = new RegExp(combined);
     /* console.log("isMatch regex: " + isMatch);
-    console.log("isIgnored regex: " + isIgnored);
-    console.log("combined regex: " + isBoth); */
+    console.log("isIgnored regex: " + isIgnored); */
+    console.log("combined regex: " + combinedRegex);
 
 
     var validWords = new Array();
 
-    for (let i = 0; i < allWords.length; i++) {
-        if (combinedRegex.test(allWords[i])) {
+    for (let i = 0; i < fiveLetterWords.length; i++) {
+        if (combinedRegex.test(fiveLetterWords[i])) {
             //validWords.Add(allWords[i]);
-            validWords.push(allWords[i]);
+            validWords.push(fiveLetterWords[i]);
             /* if (isIgnored.test(allWords[i])) {
                 console.log(allWords[i] + " is not ignored");
             }
@@ -125,7 +127,7 @@ function filterWords() {
 }
 
 function setAllWords() {
-    allWords = new Array();
+    fiveLetterWords = new Array();
 }
 
 for (let i = 0; i < inputs.length; i++) {
@@ -142,6 +144,8 @@ function handleInput(e) {
     const input = this;
 
     if (deviceIsMobile) {
+
+        var newFocus = input;
         debug("key: " + e.key + ", code: " + e.code);
         /* if (parseInt(input.id) > 0 && input.value.length === 0) {
             //document.getElementById(parseInt(input.id) - 1).focus();
@@ -194,6 +198,7 @@ function updateLetterCount(newCount) {
 
 
     rules[0].style.width = newCount + "em";
+    rules[1].style.fontSize = 100/newCount + "vw";
 
 
     wordLength = newCount;
