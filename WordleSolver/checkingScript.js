@@ -83,9 +83,10 @@ function filterWords() {
 
     var combined = "(?=^[^" + ignoredLetters + "]+$)(?=" + constructedExpression + ")";
 
-    for (let i=0; i<includedLetters.length; i++) {
-        combined += "(?=.*"+includedLetters[i]+")";
+    for (let i = 0; i < includedLetters.length; i++) {
+        combined += "(?=.*" + includedLetters[i] + ")";
     }
+    debug(combined);
     var combinedRegex = new RegExp(combined);
     /* console.log("isMatch regex: " + isMatch);
     console.log("isIgnored regex: " + isIgnored); */
@@ -198,7 +199,7 @@ function updateLetterCount(newCount) {
 
 
     rules[0].style.width = newCount + "em";
-    rules[1].style.fontSize = 100/newCount + "vw";
+    rules[1].style.fontSize = 100 / newCount + "vw";
 
 
     wordLength = newCount;
