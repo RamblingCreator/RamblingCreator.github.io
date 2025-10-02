@@ -3,12 +3,15 @@ var ignored = document.getElementById("no-list");
 var included = document.getElementById("yes-list");
 /* var output = document.getElementsByClassName("wordList"); */
 var fiveLetterWords = new Array();
+var sevenLetterWords = new Array();
 
 var isLetterKey = new RegExp("Key[A-Z]");
 
 var wordLength = 8;
 fiveLetterWords = get5LetterWords();
+sevenLetterWords = get7LetterWords();
 const rules = document.styleSheets[0].cssRules;
+
 
 updateLetterCount(5);
 
@@ -86,26 +89,41 @@ function filterWords() {
     for (let i = 0; i < includedLetters.length; i++) {
         combined += "(?=.*" + includedLetters[i] + ")";
     }
-    debug(combined);
+    /* debug(combined); */
     var combinedRegex = new RegExp(combined);
     /* console.log("isMatch regex: " + isMatch);
     console.log("isIgnored regex: " + isIgnored); */
     console.log("combined regex: " + combinedRegex);
 
+    /* var allWords = new Array(); */
 
     var validWords = new Array();
+    if (wordLength == 5) {
+        for (let i = 0; i < fiveLetterWords.length; i++) {
+            if (combinedRegex.test(fiveLetterWords[i])) {
+                //validWords.Add(allWords[i]);
+                validWords.push(fiveLetterWords[i]);
+                /* if (isIgnored.test(allWords[i])) {
+                    console.log(allWords[i] + " is not ignored");
+                }
+     */
 
-    for (let i = 0; i < fiveLetterWords.length; i++) {
-        if (combinedRegex.test(fiveLetterWords[i])) {
-            //validWords.Add(allWords[i]);
-            validWords.push(fiveLetterWords[i]);
-            /* if (isIgnored.test(allWords[i])) {
-                console.log(allWords[i] + " is not ignored");
             }
- */
+        }
+    } else if (wordLength == 7) {
+        for (let i = 0; i < sevenLetterWords.length; i++) {
+            if (combinedRegex.test(sevenLetterWords[i])) {
+                //validWords.Add(allWords[i]);
+                validWords.push(sevenLetterWords[i]);
+                /* if (isIgnored.test(allWords[i])) {
+                    console.log(allWords[i] + " is not ignored");
+                }
+     */
 
+            }
         }
     }
+
     //console.log("valid words: " + validWords.length);
     document.getElementById('output_list').innerHTML = validWords.map((word) => {
         return `<li class="output">${word}</li>`;
