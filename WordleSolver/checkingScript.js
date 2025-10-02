@@ -75,8 +75,8 @@ function filterWords() {
             constructedExpression += "[" + thisLetter + "]";
         }
     }
-    var ignoredLetters = ignored.value;
-    var includedLetters = included.value;
+    var ignoredLetters = ignored.value.toLowerCase();
+    var includedLetters = included.value.toLowerCase();
 
 
     // var combined = "(?=^[^" + ignoredLetters + "]+$)(?=" + constructedExpression + ")";
