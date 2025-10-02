@@ -159,6 +159,13 @@ button {
 
 }
 
+#test {
+    display: block;
+    margin: auto;
+    width: 0.85em;
+    background-color: aqua;
+}
+
 
 /* mobile layout */
 @media(max-width:1000px) {
