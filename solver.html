@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wordle Solver</title>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="css/stylesheet.css">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/header.js"></script>
+</head>
+
+<body>
+  <!-- <header>
+    <h1 id="head">Wordle solver</h1>
+  </header> -->
+  <header>
+    <h1 class="logo">R Leroux</h1>
+    <label for="hamburger" tabindex="0">&#9776;</label>
+    <input id='hamburger' type='checkbox' />
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a> </li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="leatherwork.html">Leatherwork</a>
+          <ul>
+            <li><a href="armor.html">Armor</a> </li>
+            <li><a href="bookcover.html">Book Cover</a> </li>
+            <li><a href="birdarmor.html">Bird Armor</a> </li>
+          </ul>
+        </li>
+        <li><a href="3dmodels.html">3d Modeling</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="solver">
+    <div class="text-card">
+      <h1>Wordle Solver</h1>
+      <div class="lengthSelection">
+        <p>Length: </p>
+        <input type="radio" id="five" name="length" class="length" value="5" checked="true">
+        <label for="five">5</label>
+        <input type="radio" id="seven" name="length" class="length" value="7">
+        <label for="seven">7</label>
+      </div>
+    </div>
+    <!-- <div id = "test">m</div> -->
+    <form class="solver">
+
+
+      <div id="letter_input">
+
+        <input type="text" class="letter" name="letter0" maxlength=1 id="0" autocomplete="off">
+        <input type="text" class="letter" name="letter1" maxlength=1 id="1" autocomplete="off">
+        <input type="text" class="letter" name="letter2" maxlength=1 id="2" autocomplete="off">
+        <input type="text" class="letter" name="letter3" maxlength=1 id="3" autocomplete="off">
+        <input type="text" class="letter" name="letter4" maxlength=1 id="4" autocomplete="off">
+        <input type="text" class="letter" name="letter5" maxlength=1 id="5" autocomplete="off">
+        <input type="text" class="letter" name="letter6" maxlength=1 id="6" autocomplete="off">
+        <input type="text" class="letter" name="letter7" maxlength=1 id="7" autocomplete="off">
+      </div>
+      <!-- <input type="text" class="no-list" name="no-list" id="no-list"> -->
+      <div class="buttons">
+        <button type="button" class="clear button" id="clear">Clear</button>
+        <!-- <button type="button" class="show-nolist" id="show-nolist">>Ignore</button> -->
+
+        <div id="ignore">
+          <label for="no-list" id="ignoreLabel" class="listLabel">Ignore:</label>
+          <input type="text" class="listInput" name="no-list" id="no-list" maxlength=10 autocomplete="off">
+        </div>
+        <div id="include">
+          <label for="yes-list" id="includeLabel" class="listLabel">Include:</label>
+          <input type="text" class="listInput" name="yes-list" id="yes-list" maxlength=10 autocomplete="off">
+        </div>
+        <button type="button" class="search" id="search">Go</button>
+
+      </div>
+    </form>
+    <ul id=debug></ul>
+    <ul id="output_list">
+      <!-- <li class="output">mmmmmmm</li>
+      <li class="output">mmmmmmm</li> -->
+    </ul>
+  </main>
+</body>
+
+</html>
+<!-- <script src="js/header.js"></script> -->
+<script src="js/getWordsArray.js"></script>
+<script src="js/checkingScript.js"></script>
+<script src="js/header.js"></script>
+
+
+<!-- TODO:
+  fix input width
+  style output
+  mobile layout??
+  upload
+-->
