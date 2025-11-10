@@ -1045,9 +1045,13 @@ h1 {
     flex-direction: row; */
     font-size: 1.5em;
     margin: auto;
-    display: block;
+    display: inline-block;
     width: fit-content;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: 0;
+    /* float: right; */
 }
 .lengthSelection p {
     display: inline-block;
@@ -1058,15 +1062,19 @@ h1 {
     width: 2em;
     height: 2em;
     margin-right: 0px;
-    margin-left: 8px;
-    margin: 0;
+    margin-left: 12px;
+    /* margin: 0; */
     vertical-align: middle;
 }
 .lengthSelection label {
     margin: 0;
-    vertical-align: middle;
 }
 
+.lengthSelection input, .lengthSelection label {
+    /* margin-left: 12px; */
+    vertical-align: middle;
+
+}
 
 /* input, textarea { */
 
@@ -1079,6 +1087,9 @@ h1 {
     /* background-color: antiquewhite; */
     /* border: none; */
 }
+
+
+
 
 
 #letter_input {
@@ -1094,11 +1105,7 @@ h1 {
     text-align: center;
 }
  */
-@media(min-width:1200px) {
-    #letter_input input {
-        font-size: 216px;
-    }
-}
+
 
 .letter {
     /* font-size: 18vw; */
@@ -1142,9 +1149,13 @@ button {
 
 }
 #clear {
-    font-size: 2.5em;
     grid-area: clear;
     padding: 0.1em 0.3em;
+}
+
+.solver .button {
+    font-size: 2.5em;
+    color: white;
 }
 
 form.solver {
@@ -1197,7 +1208,21 @@ form.solver {
 }
 
 .solver .text-card {
-    padding: 0.5em;
+    padding: 0.5em 2em;
+    display: flex;
+    justify-content: space-around;
+}
+
+.solver h1 {
+    display: inline-block;
+    vertical-align: middle;
+    margin: auto 0;
+}
+
+@media(min-width:1200px) {
+    #letter_input input {
+        font-size: 216px;
+    }
 }
 
 /* mobile layout */
@@ -1205,9 +1230,15 @@ form.solver {
     #debug {
         display: none;
     }
+
+    main.solver {
+        margin: 10px auto;
+    }
+
     .solver h1 {
         /* margin: 0; */
-        font-size: 1.6em;
+        font-size: 1.25em;
+        display: inline-block;
     }
     .buttons {
         display: grid;
@@ -1222,11 +1253,22 @@ form.solver {
         gap: 2px 20px;
     }
 
-    button {
+    .solver .button {
+        font-size: 1.5em;
+        color: white;
         margin: 0 10px;
         margin: 0;
         line-height: 1em;
     }
+    form.solver {
+        padding: 0.2em;
+    }
+
+    .solver .text-card {
+        margin: 0.2em auto;
+        padding: 0.5em 0.5em;
+    }
+
     #ignore, #include {
         margin: 3px 0;
     }
@@ -1244,10 +1286,11 @@ form.solver {
         line-height: 1em;
     }
     #output_list {
-        margin-block-start: 0.2em;
+        /* margin-block-start: 0.4em; */
+        margin-top: 1em;
     }
     .lengthSelection {
-        margin-bottom: 4px;
+        font-size: 1.2em;
     }
 }
 
@@ -1265,6 +1308,8 @@ form.solver {
     padding: 0 12px;
     font-size: 2em;
     border: 1px solid black;
+
+    background-color: antiquewhite;
 
     border-radius: 8px;
     text-align: center;
