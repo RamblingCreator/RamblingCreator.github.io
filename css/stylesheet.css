@@ -595,6 +595,85 @@ table .date {
     padding: .5em;
 }
 
+/* leatherworking version without table */
+
+.project {
+    display: flex;
+    flex-direction: row;
+    background-color: antiquewhite;
+    /* width: 95%; */
+    margin: auto;
+
+}
+.project .img {
+    padding: 1em;
+}
+.project img {
+    /* padding: 1em;
+    height: 95%;
+    width: 95%; */
+    width: 35em;
+}
+
+.project .details {
+    font-size: 1.25em;
+    padding: 2em;
+    margin: auto;
+    height: fit-content;
+}
+
+.project h1 {
+    margin: 0;
+}
+.project .date {
+    margin-top: 0.4em;
+    font-style: italic;
+}
+
+@media(max-width:1000px) {
+    .project {
+        display: flex;
+        flex-direction: column;
+        background-color: antiquewhite;
+        /* width: 95%; */
+        margin: 1em auto;
+    }
+    .project .img {
+        padding: 0.5em;
+    }
+    .project img {
+        /* padding: 1em;
+    height: 95%;
+    width: 95%; */
+        width: 100%;
+    }
+
+    .project .details {
+        font-size: 1em;
+        /* padding: 0 0.5em; */
+        padding: 1em;
+        padding-top: 0em;
+        margin: auto;
+        height: fit-content;
+    }
+
+    .project p {
+        margin-top: 0.5em;
+        margin-bottom: 0;
+        margin: 0.5em 0;
+    }
+
+    .project h1 {
+        margin: 0;
+    }
+    .project .date {
+        margin-top: 0.3em;
+        margin-bottom: 0.6em;
+        font-style: italic;
+    }
+}
+
+
 /* Bird Armor */
 
 .slide-box {
@@ -721,6 +800,7 @@ table .date {
     .slide-image {
         width: 100%;
         height: auto;
+        padding: 0;
     }
 
     .slide-image img {
@@ -730,6 +810,21 @@ table .date {
     .slide-text {
         padding: 0;
     }
+
+    .text-card #final.slide-box {
+        padding: 0;
+    }
+
+    .text-card .next {
+        right: -0.5em;
+        border-radius: 3px 0 0 3px;
+    }
+
+    .text-card  .prev {
+        left: -0.5em;
+        border-radius: 0 3px 3px 0;
+    }
+
 }
 /* Book cover */
 

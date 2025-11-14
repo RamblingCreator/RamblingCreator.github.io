@@ -1,0 +1,1070 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+    box-sizing: border-box;
+    color: black;
+
+}
+
+:root {
+    /* defining colors */
+    /* --background: rgb(97, 97, 97); */
+    --background: #97928e;
+    /* --background-darker: darkgrey; */
+    --background-darker: #595855;
+    /* --card: white; */
+    --card: #cdcac3;
+    --field: beige;
+    --field: #bab5aa;
+
+
+    --accent: #65C854;
+    --accent-darker: #65A954;
+
+
+    /* media query values */
+    --mobile-size: 800px;
+}
+
+h1, h2, h3, h4 {
+
+    font-family: 'Special Elite', serif;
+    margin: 0;
+}
+
+
+body {
+    font-family: 'Alegreya', serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+
+    margin: 0;
+    min-height: 100%;
+    height: 100%;
+}
+
+textarea, input, select {
+    font-family: 'Alegreya', serif;
+    font-weight: 500;
+}
+
+
+button {
+    background-color: var(--accent);
+    border-radius: 1em;
+    border: none;
+    margin: 0.2em;
+    height: min-content;
+
+
+    font-family: 'Alegreya', serif;
+    font-size: 1em;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s;
+
+    display: inline-block;
+
+}
+
+button:hover {
+    background-color: var(--accent-darker);
+}
+
+
+
+form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: 25% 50% 25% */
+    /* grid-template-columns: 25% 48% 25%; */
+    /* grid-template-columns: 33% 40% 25%; */
+    grid-template-columns: 30% 45% 25%;
+    /*  25% */
+    ;
+    /* grid-template-rows: 1fr; */
+    /* grid-template-areas:
+        "title      abilities        cyphers"
+        "stats      abilities        skills"; */
+    background-color: var(--background);
+    /* gap: 10px; */
+    /* gap: 1%; */
+}
+#title {
+    /* grid-area: title; */
+    /* grid-column: 1; */
+    width: fit-content;
+    /* width: 100%; */
+    align-items: center;
+    font-size: 20px;
+
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+#name, #focus, #descriptor, #type {
+    flex: 1;
+    width: min-content;
+    text-align: center;
+}
+
+#title * {
+    font-size: 20px;
+}
+/*
+#name {
+    width: 100%;
+    flex: 1;
+    width: min-content;
+    text-align: center;
+}
+
+#focus {
+    width: 100%;
+    flex: 1;
+    width: min-content;
+    text-align: center;
+}
+
+#descriptor, #type {
+    width: 100%;
+    flex: 1;
+    text-align: center;
+} */
+
+#details {
+    /* padding: 1em; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#status {
+    padding: 1em 0;
+    padding-right: 1em;
+    /* display: flex;
+    flex-direction: row; */
+
+    display: grid;
+    /* grid-template-columns: 25% 45% 30%; */
+    grid-template-columns: 25% 40% 35%;
+    height: min-content;
+    gap: 10px;
+    width: 100%;
+}
+
+#recoverySection {
+    padding: 0.5em;
+    text-align: center;
+    flex: 2;
+}
+
+#recovery {
+    accent-color: rgb(0, 115, 255);
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.75em;
+    text-align: left;
+}
+
+#recoveryAmount {
+    font-size: 1.75em;
+    text-align: center;
+    margin-bottom: 0.2em;
+}
+
+
+#damageSection {
+    display: flex;
+    flex-direction: column;
+    /* margin-top: 1em; */
+    height: 100%;
+    padding: 0.5em;
+    width: 100%;
+
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+#damage {
+    accent-color: red;
+}
+
+label.damage {
+    text-align: center;
+    /* height: 100%; */
+    display: flex;
+    flex-direction: column;
+}
+#damageText {
+    text-align: left;
+    padding: 0 0.5em;
+    height: 8em;
+}
+
+.stress {
+    width: 100%;
+}
+
+
+.stressAmount input, .stressLevel input {
+    /* width: 100%; */
+    width: 2em;
+    font-size: 1em;
+    text-align: center;
+    height: 1.35em;
+    background-color: var(--field);
+    border: none;
+    margin: auto;
+
+}
+
+.stressLevel, .stressAmount {
+    display: flex;
+    gap: 5px;
+}
+
+#stressSection {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+label.stress {
+    font-size: 0.75em;
+    /* font-size: 1em; */
+    font-family: 'Courier New', 'Courier', serif;
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+    background-color: var(--card);
+    padding: 0.5em;
+}
+
+#recoverySection, #damageSection {
+    background-color: var(--card);
+}
+
+#stressNumbers {
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 1.6em;
+    width: 100%;
+}
+
+#supernaturalStress {
+    display: grid;
+    grid-template-columns: repeat(5, 2em);
+    margin: auto;
+    width: min-content;
+}
+
+@media(max-width:700px) {
+    #status {
+
+        grid-template-columns: 25% 75%;
+        grid-template-areas:
+            "recovery damage"
+            "stress stress";
+        row-gap: 0.5em;
+    }
+    #recoverySection {
+        grid-area: recovery;
+    }
+    #damageSection {
+        grid-area: damage;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: end; */
+    }
+    #stressSection {
+        grid-area: stress;
+        width: 100%;
+        /* display: grid;
+        grid-template-areas:
+            "amount level"
+            "super super"; */
+    }
+
+    #stressNumbers {
+        flex-direction: row;
+    }
+
+    .stressAmount {
+        grid-area: amount;
+    }
+    .stressLevel {
+        grid-area: level
+    }
+    .supernaturalStress {
+        grid-area: super;
+    }
+
+
+    label.stress {
+        font-size: 1em;
+        padding: 0.5em 0;
+        padding: 0.5em 1em;
+        /* display: flex;
+        flex-direction: row; */
+    }
+
+    label.stressAmount, label.stressLevel {
+        width: max-content;
+    }
+
+}
+
+
+.right-side {
+    padding: 0.5em;
+}
+
+.left-side {
+    padding: 1em;
+}
+
+#advancement {
+    display: flex;
+    flex-direction: row;
+}
+.advancement {
+    padding: 0.6em;
+    background-color: var(--card);
+    /* flex: 0.5; */
+}
+.advancement input {
+    width: 100%;
+    font-size: 2em;
+    transform: scale(1.5);
+    text-align: left;
+    width: min-content;
+    display: block;
+}
+
+#attackNameLabel {
+    width: min-content;
+    /* width: 80%; */
+    font-size: 1.2em;
+    /* padding-right: 0.5em; */
+    flex: 1;
+    margin-top: auto;
+    padding-left: 0.6em;
+
+}
+
+
+#attackDiffcultyLabel, #attackDamageLabel {
+    font-size: 0.85em;
+    width: 5em;
+    text-align: center;
+    margin-top: auto;
+
+}
+#attacksHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    width: 100%;
+}
+
+
+
+
+.attack {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.attackName {
+    width: 80%;
+}
+
+.attackDifficulty {
+    width: 5em;
+    text-align: center;
+
+}
+
+.attackDamage {
+    width: 5em;
+    text-align: center;
+
+}
+/* datalist {
+  display: flex;
+  justify-content: space-between;
+  color: red;
+  width: 50%;
+} */
+
+
+#levels {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2em;
+    justify-content: space-between;
+    font-size: 2.4vw;
+}
+
+
+.level {
+    font-size: 2.4vw;
+    width: 3em;
+}
+
+.level input {
+    font-family: 'Special Elite', serif;
+    font-family: 'Courier Prime', serif;
+    font-family: 'Courier New', 'Courier', serif;
+
+    letter-spacing: -0.05em;
+    width: 100%;
+    width: 2em;
+    font-size: 2em;
+    margin: auto;
+
+    vertical-align: middle;
+
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    resize: vertical;
+
+    border: none;
+    border-radius: 0;
+    background-color: var(--field);
+}
+
+#levels label {
+    font-size: 0.75em;
+    /* font-size: 1em; */
+    font-family: 'Courier New', 'Courier', serif;
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+
+label.level {
+    background-color: var(--card);
+}
+
+#stats {
+    /* grid-area: stats;
+    grid-column: 1;
+    grid-row: 0; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+    font-size: 1.9vw;
+
+
+    gap: 5px;
+}
+
+.stat input {
+    font-family: 'Special Elite', serif;
+    font-family: 'Courier Prime', serif;
+    font-family: 'Courier New', 'Courier', serif;
+
+    letter-spacing: -0.05em;
+
+    vertical-align: middle;
+    /* line-height: 1px;
+        padding-top: 0.1em; */
+}
+
+label.stat {
+    font-size: 0.75em;
+    /* font-size: 1em; */
+    font-family: 'Courier New', 'Courier', serif;
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+    width: fit-content;
+    background-color: var(--card);
+    padding: 0 0.5em;
+}
+
+.stat label {
+    font-size: 0.4em;
+    font-family: 'Alegreya', serif;
+    text-align: center;
+    /* font-family: 'Courier New', 'Courier', serif;
+    text-align: center;
+    width: 100%; */
+    grid-row: 3;
+    margin: auto;
+    line-height: 0.8em;
+}
+
+
+label .stat {
+    /* font-size: 30px; */
+    font-size: 25px;
+    font-size: 30px;
+    font-size: 2.4vw;
+    font-size: 3.2vw;
+    font-size: 2.8vw;
+    /*  
+    30/1250 = s/100
+    s = w */
+
+    /* font-size: 40%; */
+
+    display: grid;
+    /* grid-template-columns: repeat(2, 2em); */
+    grid-template-columns: repeat(2, 50%);
+    /* grid-template-columns: repeat(2, 1.5em); */
+    grid-template-rows: 1.75em 1em 0.4em;
+    /* row-gap: 0.25em; */
+
+    grid-template-areas:
+        "curP curP"
+        "edge maxP";
+    /* padding: 5px; */
+    /* width: fit-content; */
+    width: 3em;
+    width: 2.8em;
+    /* width: 50%; */
+}
+
+@media(max-width:700px) {
+    label .stat {
+        font-size: 9vw;
+    }
+    #levels {
+        font-size: 7vw;
+    }
+    #stats {
+        font-size: 6vw;
+    }
+}
+
+
+
+.statField {
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    resize: vertical;
+
+    border: none;
+    border-radius: 0;
+
+    background-color: var(--field);
+}
+
+.edge, .maxPool {
+    font-size: 1.25em;
+    font-size: 1em;
+    padding-top: 0.25em;
+}
+.edge {
+    grid-area: edge;
+    border-right: solid 0.75px black;
+
+}
+.maxPool {
+    grid-area: maxP;
+    border-left: solid 0.75px black;
+
+}
+.currentPool {
+    grid-area: curP;
+    font-size: 2.5em;
+    font-size: 2em;
+    border-bottom: solid 1px black;
+}
+
+#abilities {
+    /* grid-area: abilities; */
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-darker);
+    padding: 0.5em;
+}
+
+
+#abilitiesList {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+    padding: 1em;
+}
+
+.ability, .cypher, .newAbility, .newCypher {
+    width: 100%;
+    border: 0;
+    /* border-bottom: 1px solid black; */
+    margin: 0;
+    /* margin: 0 1em; */
+    padding: 0.25em 1em;
+    padding: 0.5em;
+
+    background-color: var(--card);
+
+}
+
+.ability h1 {
+    font-size: 1.25em;
+    margin: 0;
+}
+
+.ability p {
+    margin: 0;
+}
+
+/* .ability {
+    width: 100%;
+    border: 0;
+    margin: 0;
+    padding: 5px;
+}
+ */
+
+.abilityDescription, .cypherDescription {
+    width: 100%;
+    border: 0;
+    font-size: 18px;
+    background-color: var(--field);
+    resize: vertical;
+    /* border: none; */
+    /* border-bottom: 1px solid black; */
+}
+
+.newAbility .abilityDescription {
+    margin: 0;
+}
+
+textarea {
+    /* resize: vertical; */
+    resize: none;
+    height: fit-content;
+    width: 100%;
+}
+
+.abilityHeader, .cypherHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    row-gap: 8px
+        /* 
+    align-items: center
+    align-items: flex-start; */
+}
+
+.abilityDetails, .cypherDetails {
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.cypherDetails {
+    gap: 15px;
+}
+
+.ability input, .cypher input {
+    display: inline;
+    border: none;
+    border-radius: 0;
+    /* margin: 0 auto; */
+    background-color: var(--field);
+}
+
+.newAbility div {
+    white-space: nowrap;
+}
+
+/* .newAbility input {
+    display: inline;
+    border: none;
+    border-radius: 0;
+    margin: 0 auto;
+    background-color: beige;
+} */
+
+
+
+.abilityName, .cypherName {
+    font-size: 1.4em;
+    /* width: 12em; */
+    border: 1px solid black;
+}
+
+.abilityContext, .abilityCost, .abilityTier {
+    text-align: center;
+    font-size: 18px;
+    display: inline;
+}
+
+
+.abilityField, .cypherField {
+    display: flex;
+    flex-direction: row;
+    margin: auto 0;
+    width: min-content;
+}
+
+.ability input[type='checkbox'] {
+    display: none;
+}
+input:checked+.supernaturalIcon {
+    /* display: block; */
+    color: purple;
+    opacity: 100%;
+
+}
+
+.ability, .newAbility {
+    background-color: var(--card);
+    color: black;
+}
+
+.newAbility {
+    margin: 0 1em;
+    padding: 1em;
+}
+
+.toggle input {
+    display: none;
+}
+
+.supernaturalIcon {
+    user-select: none;
+    font-size: 40px;
+    line-height: 30px;
+    text-align: center;
+    /* display: none; */
+    color: grey;
+    opacity: 50%;
+    margin: 0 auto;
+}
+
+
+.right-side {
+    width: 100%;
+}
+
+#cyphers {
+    background-color: var(--background-darker);
+    padding: 0.5em;
+}
+
+.cypherLevel, .cypherRange, .cypherUse {
+    /* .cypherDetails{ */
+    white-space: nowrap;
+    text-align: center;
+    font-size: 18px;
+    display: inline;
+    width: 3em;
+}
+
+.cypherUse {
+    width: 4em;
+}
+
+
+
+
+
+
+.cypher {
+    width: 100%;
+}
+
+
+/* skills */
+
+
+#skillsHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    width: 100%;
+}
+
+#skillKey {
+    font-size: 0.8em;
+    flex: 1;
+    width: 100%;
+    margin: auto;
+    font-size: 0.7vw;
+}
+
+#skillNameLabel {
+    width: min-content;
+    /* width: 80%; */
+    font-size: 1.2em;
+    padding-right: 0.5em;
+}
+
+#skillPoolLabel {
+    width: 2.25em;
+    text-align: center;
+    font-size: 0.9em;
+}
+#trainedLabel, #specializedLabel, #inabilityLabel {
+    font-size: 0.9em;
+    width: 1.2em;
+    text-align: center;
+}
+
+.skill {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    /* 
+    display: grid;
+    grid-template-columns: 76% repeat(3, 8%); */
+}
+
+.skill .skillName {
+    /* flex: 1 */
+    /* width: 100%; */
+    /* flex: auto; */
+    width: 80%;
+    /* flex: 50%; */
+}
+
+.skillPool {
+    width: 2.5em;
+    text-align: center;
+}
+
+.skill input[type='checkbox'] {
+    width: 1em;
+}
+
+/* info areas */
+.info textarea {
+    resize: vertical;
+    height: 15em;
+}
+
+.info h3 {
+    text-align: center;
+}
+
+.info {
+    margin: 1em 0;
+}
+
+
+/* footer */
+
+footer {
+    padding: 2em 0;
+    padding-top: 1em;
+    padding-bottom: 2em;
+    text-align: center;
+
+    background-color: var(--accent);
+
+    /* 
+    position: absolute; */
+    bottom: 0;
+    width: 100%;
+    height: 2.5em;
+    height: min-content;
+}
+
+
+/* ability/cipher selection */
+#popupMask {
+    opacity: 50%;
+    pointer-events: auto;
+    align-items: center;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    /* pointer-events: none; */
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 9;
+    background-color: grey;
+    display: none;
+}
+
+.popup {
+    z-index: 10;
+}
+
+
+
+#filteredAbilities, #allCyphers {
+    margin: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* height: 60vh; */
+    height: 88%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#filteredWrapper {
+    height: 100%;
+}
+
+
+#abilityWindow, #cypherWindow {
+
+    max-width: 1100px;
+
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    margin: auto;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background-color: var(--background-darker);
+    /* change this? */
+    color: #fff;
+
+    padding: 0.6em 1em;
+    border-radius: 0.5em;
+
+    /* width: 80%;
+    height: 80%; */
+    width: 80vw;
+    height: 80vh;
+    display: none;
+
+    box-shadow: 0 0 10px #00000059;
+}
+
+#confirmWindow {
+    max-width: 1100px;
+
+    display: grid;
+    /* grid-template-columns: repeat(1fr, 2);
+    grid-template-areas:
+        "message message",
+        "yes" "no"; */
+
+    grid-template-columns: 50% 50%;
+    grid-template-areas:
+        "message    message"
+        "yes        no";
+    position: fixed;
+    margin: auto;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: var(--card);
+    /* change this? */
+    color: #fff;
+
+    padding: 0.6em 1em;
+    border-radius: 0.5em;
+
+    width: 40vw;
+    height: 20vh;
+    display: none;
+
+    box-shadow: 0 0 10px #00000059;
+
+    padding: 2em;
+}
+
+#confirmMessage {
+    grid-area: message;
+    font-size: 4vw;
+    text-align: center;
+}
+
+#confirmYes, #confirmNo {
+    font-size: 2.5em;
+    margin: auto;
+    margin-bottom: 0;
+    padding: 0.5em 1em;
+    width: 90%;
+    height: min-content;
+}
+
+
+#confirmYes {
+    grid-area: yes;
+    background-color: hsl(0, 45%, 55%);
+}
+#confirmNo {
+    grid-area: no;
+}
+
+.closeSelector {
+    font-size: 2em;
+    padding: 0;
+}
+
+
+
+
+.windowHeader {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+h1 {
+    margin: 0;
+}
+
+#tierSelection {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.tierSelect {
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+
+
+
+/* medium screen layout */
+
+@media(max-width:1000px) {}
+
+/* mobile layout */
+@media(max-width:700px) {
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1%;
+    }
+}

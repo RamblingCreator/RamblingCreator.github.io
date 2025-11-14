@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Sheet</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="jquery-3.7.1.min.js"></script>
+  <script src="abilities_array.js"></script>
+  <script src="cyphers.js"></script>
+
+</head>
+
+<body>
+  <header>
+
+  </header>
+  <button type="button" id="save">SAVE</button>
+  <main>
+
+    <label class="toggle">
+      <input type="checkbox" id="btnToggle" name="btnToggle" />
+      <span class="supernaturalIcon"></span>
+      <span class="slider"></span>
+    </label>
+    <form>
+
+      <div class="left-side">
+        <div id="details">
+          <div id="title">
+            <input id="name" class="save"> <!-- <br> -->
+            is a
+            <!-- <input id="descriptor"> -->
+            <select name="descriptor" id="descriptor" class="save">
+              <option value="NONE">--</option>
+              <option value="BOLD">Bold</option>
+              <option value="BRAVE">Brave</option>
+              <option value="CARING">Caring</option>
+              <option value="CAUTIOUS">Cautious</option>
+              <option value="CHEERFUL">Cheerful</option>
+              <option value="CYNICAL">Cynical</option>
+              <option value="ENIGMATIC">Enigmatic</option>
+              <option value="FASTIDIOUS">Fastidious</option>
+              <option value="FEARLESS">Fearless</option>
+              <option value="FEROCIOUS">Ferocious</option>
+              <option value="HOPEFUL">Hopeful</option>
+              <option value="INQUISITIVE">Inquisitive</option>
+              <option value="INTIMIDATING">Intimidating</option>
+              <option value="LIKEABLE">Likeable</option>
+              <option value="MUSCULAR">Muscular</option>
+              <option value="NERVOUS">Nervous</option>
+              <option value="NO_NONSENSE">No-Nonsense</option>
+              <option value="OBSESSIVE">Obsessive</option>
+              <option value="PRETENTIOUS">Pretentious</option>
+              <option value="QUICK">Quick</option>
+              <option value="RUTHLESS">Ruthless</option>
+              <option value="SCHOLARLY">Scholarly</option>
+              <option value="SMART">Smart</option>
+              <option value="STURDY">Sturdy</option>
+              <option value="SUPERSTITIOUS">Superstitious</option>
+              <option value="SUSPICIOUS">Suspicious</option>
+              <option value="TECH_SAVVY">Tech-Savvy</option>
+            </select>
+            <!-- <input id="type"> -->
+            <select name="type" id="type" class="save">
+              <option value="NONE">--</option>
+              <option value="INVESTIGATOR">Investigator</option>
+              <option value="PROTECTOR">Protector</option>
+              <option value="OCCULTIST">Occultist</option>
+              <option value="ELECUTIONIST">Elecutionist</option>
+            </select>
+            who <!-- <br> -->
+            <!-- <input id="focus"> -->
+            <select name="focus" id="focus" class="save">
+              <option value="NONE">--</option>
+              <option value="CARRIES_A_GUN">Carries a Gun</option>
+              <option value="DOES_A_BIT_OF_THIS_AND_THAT">Does a Bit of This and That</option>
+              <option value="EXPLORES_DARK_PLACES">Explores Dark Places</option>
+              <option value="FIGHTS_DIRTY">Fights Dirty</option>
+              <option value="HELPS_THEIR_FRIENDS">Helps Their Friends</option>
+              <option value="INFILTRATES">Infiltrates</option>
+              <option value="LEADS">Leads</option>
+              <option value="LEARNS_QUICKLY">Learns Quickly</option>
+              <option value="LOOKS_FOR_TROUBLE">Looks for Trouble</option>
+              <option value="MOVES_LIKE_A_CAT">Moves Like a Cat</option>
+              <option value="NEEDS_NO_WEAPON">Needs No Weapon</option>
+              <option value="NEVER_SAYS_DIE">Never Says Die</option>
+              <option value="PRACTICALLY_LIVES_ONLINE">Practically Lives Online</option>
+              <option value="RUNS_AWAY">Runs Away</option>
+              <option value="SOLVES_MYSTERIES">Solves Mysteries</option>
+              <option value="WEARS_A_BADGE">Wears a Badge</option>
+              <option value="WORKS_THE_BACK_ALLEYS">Works the Back Alleys</option>
+              <option value="WOULD_RATHER_BE_READING">Would Rather Be Reading</option>
+            </select>
+          </div>
+
+          <div id="levels">
+            <label for="tier" class="level">tier
+              <input class="tier save" id="tier">
+            </label>
+            <label for="effort" class="level">effort
+              <input class="effort save" id="effort">
+            </label>
+            <label for="XP" class="level">XP
+              <input class="XP save" id="XP">
+            </label>
+          </div>
+
+          <div id="stats" class="stats">
+            <label for="might" class="stat">might
+              <div class="stat might" id="might">
+                <input class="currentPool statField might save" id="currentPool_might" name="mightPool">
+                <label for="maxPool_might">pool</label>
+                <input class="maxPool statField might save" id="maxPool_might" name="mightMax">
+                <label for="edge_migmaxPool_might">edge</label>
+                <input class="edge statField might save" id="edge_might" name="mightEdge">
+              </div>
+            </label>
+
+            <label for="speed" class="stat">speed
+              <div class="stat speed" id="speed">
+                <input class="currentPool statField speed save" id="currentPool_speed" name="speedPool">
+                <label for="maxPool_speed">pool</label>
+                <input class="maxPool statField speed save" id="maxPool_speed" name="speedMax">
+                <label for="edge_speed">edge</label>
+                <input class="edge statField speed save" id="edge_speed" name="speedEdge">
+              </div>
+            </label>
+
+            <label for="intellect" class="stat">intellect
+              <div class="stat int" id="intellect">
+                <input class="currentPool statField int save" id="currentPool_int" name="intPool">
+                <label for="maxPool_int">pool</label>
+                <input class="maxPool statField int save" id="maxPool_int" name="intMax">
+                <label for="edge_int">edge</label>
+                <input class="edge statField int save" id="edge_int" name="intEdge">
+              </div>
+            </label>
+          </div>
+        </div>
+        <div id="status">
+
+          <div id="recoverySection">
+            Recovery rolls
+            <div id="recoveryAmount">1d6+</div>
+            <!-- <input type="range" id="recovery" name="recovery" min="0" max="3" class="save" />
+            <div id="recoveryText"></div> -->
+
+            <div id="recovery">
+              <label for="recoverTime0"> <input type="checkbox" class="recoverTime" id="recoverTime0" /> 1 action</label>
+              <label for="recoverTime1"> <input type="checkbox" class="recoverTime" id="recoverTime1" /> 10 min</label>
+              <label for="recoverTime2"> <input type="checkbox" class="recoverTime" id="recoverTime2" /> 1 hour</label>
+              <label for="recoverTime3"> <input type="checkbox" class="recoverTime" id="recoverTime3" /> 10 hours</label>
+            </div>
+          </div>
+          <!-- <label for="damage" class="damage">Damage
+            <div id="damageSection">
+
+              <input type="range" id="damage" name="damage" min="0" max="4" class="save" />
+              <div id="damageText"></div>
+            </div>
+          </label> -->
+
+
+          <div id="damageSection">
+            <label for="damage" class="damage">Damage</label>
+            <input type="range" id="damage" name="damage" min="0" max="4" class="save" />
+            <div id="damageText"></div>
+          </div>
+
+
+
+          <div id="stressSection">
+            <div id="stressNumbers">
+              <label for="stress" class="stress stressAmount">Stress<input class="save" id="stress">
+              </label>
+              <label for="stressLevel" class="stress stressLevel">Stress<br>Level<input class="save" id="stressLevel">
+              </label>
+            </div>
+            <label class="stress supernaturalStress">Stress levels from supernatural sources:
+              <!-- <input class="supernaturalStress save" id="supernaturalStress"> -->
+              <div id="supernaturalStress">
+                <input type="checkbox" class="superStressBox" />
+                <input type="checkbox" class="superStressBox" />
+                <input type="checkbox" class="superStressBox" />
+                <input type="checkbox" class="superStressBox" />
+                <input type="checkbox" class="superStressBox" />
+                <input type="checkbox" class="superStressBox" />
+                <input type="checkbox" class="superStressBox" />
+                <input type="checkbox" class="superStressBox" />
+                <input type="checkbox" class="superStressBox" />
+                <input type="checkbox" class="superStressBox" />
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div id="advancement">
+          <label for="increaseCapabilities" class="advancement">
+            <input type="checkbox" class="save" id="increaseCapabilities" /> Increase Capabilities: +4 points into stat Pools</label>
+          <label for="moveTowardPerfection" class="advancement">
+            <input type="checkbox" class="save" id="moveTowardPerfection" /> Move Toward Perfection: +1 to the Edge of your choice</label>
+          <label for="extraEffort" class="advancement">
+            <input type="checkbox" class="save" id="extraEffort" /> Extra Effort: +1 to effort</label>
+          <label for="skillTraining" class="advancement">
+            <input type="checkbox" class="save" id="skillTraining" /> Skill Training: Train in a skill or specialize in a trained skill</label>
+          <label for="other" class="advancement">
+            <input type="checkbox" class="save" id="other" /> Other Options: See page 141 of The Magnus Archives book</label>
+        </div>
+        <div id="attacks">
+          <div id="attacksHeader">
+            <h1 id="attackNameLabel">Attacks:</h1>
+            <h1></h1>
+            <div id="attackDiffcultyLabel">Eased/<br>Hindered</div>
+            <div id="attackDamageLabel">Damage</div>
+          </div>
+          <div id="attacksList">
+            <div class="attack">
+              <input class="attackName"></input>
+              <input class="attackDifficulty"></input>
+              <input class="attackDamage"></input>
+            </div>
+          </div>
+          <button type="button" id="addAttack">New Attack</button>
+        </div>
+
+      </div>
+
+      <div id="abilities">
+        <h1>Special abilities</h1>
+        <div id="abilitiesList">
+
+
+          <!-- <div class="ability">
+            <div class="abilityHeader">
+              <div class="abilityNameBlock">
+                <label class="toggle">
+                  <input type="checkbox" class="isSupernatural" name="btnToggle" />
+                  <span class="supernaturalIcon">&#10700;</span>
+                </label>
+                <input class="abilityName" value="${Json.name}">
+              </div>
+              <div class="abilityDetails">
+
+                <div class="spaceFiller"></div>
+                <label for="abilityContext" class="abilityField"> <input class="abilityContext" value="${Json.context}"></label>
+                <label for="abilityCost" class="abilityField">Cost: <input class="abilityCost" value="${Json.cost}"></label>
+                <label for="abilityTier" class="abilityField">Tier: <input class="abilityTier" value="${Json.tier}"></label>
+              </div>
+            </div>
+            <textarea class="abilityDescription" rows="2" cols="10">${Json.description}</textarea>
+          </div> -->
+
+        </div>
+        <button type="button" class="addButton" id="newAbility">New Ability</button>
+
+      </div>
+
+      <div class="right-side">
+        <div id="cyphers">
+          <h1>Cyphers</h1>
+          <div id="cyphersList">
+
+
+            <!-- <div class="cypher">
+              <div class="cypherHeader">
+                <input class="cypherName" value="${Json.name}" size="5">
+                <div class="cypherDetails">
+                  <label for="cypherUse" class="cypherField"> <input class="cypherUse" value="${Json.use}"></label>
+                  <label for="cypherLevel" class="cypherField">Level: <input class="cypherLevel" value="${Json.level}"></label>
+                  <label for="cypherRange" class="cypherField"> <input class="cypherRange" value="${Json.range}"></label>
+                </div>
+                <button type="button" class="removeCypher confirm" value="${Json.id}">X</button>
+              </div>
+              <textarea class="cypherDescription" rows="2" cols="10">${Json.description}</textarea>
+            </div> -->
+
+          </div>
+          <button type="button" class="addButton" id="newCypher">New Cypher</button>
+
+        </div>
+        <br>
+        <div id="skills">
+
+          <div id="skillsHeader">
+            <h1 id="skillNameLabel">Skills:</h1>
+            <div id="skillKey">T = trained, S = specialized, I = inability</div>
+
+            <div id="skillPoolLabel"> Pool</div>
+            <div type="checkbox" id="trainedLabel">T</div>
+            <div type="checkbox" id="specializedLabel">S</div>
+            <div type="checkbox" id="inabilityLabel">I</div>
+          </div>
+          <div id="skillsList">
+            <!-- <div class="skill">
+              <input class="skillName"></input>
+              <input class="skillPool"></input>
+              <input type="checkbox" class="trained" />
+              <input type="checkbox" class="specialized" />
+              <input type="checkbox" class="inability" />
+            </div> -->
+          </div>
+          <button type="button" id="addSkill">New Skill</button>
+        </div>
+      </div>
+
+      <div class="right-side">
+        <div class="appearance info">
+          <!-- <label for="appearance">Appearance</label> -->
+          <h3>Appearance</h3>
+          <textarea id="appearance" class="appearance save" rows="2" cols="10"></textarea>
+        </div>
+        <div class="background info">
+          <!-- <label for="background">Background</label> -->
+          <h3>Background</h3>
+          <textarea id="background" class="background save" rows="2" cols="10"></textarea>
+        </div>
+
+        <div class="equipment info">
+          <!-- <label for="equipment">Equipment</label> -->
+          <h3>Equipment</h3>
+          <textarea id="equipment" class="equipment save" rows="2" cols="10"></textarea>
+        </div>
+      </div>
+
+      <div class="middle">
+        <div class="arcs info">
+          <!-- <label for="arcs">Arcs</label> -->
+          <h3>Arcs</h3>
+          <textarea id="arcs" class="arcs save" rows="2" cols="10"></textarea>
+        </div>
+
+
+        <div class="notes info">
+          <!-- <label for="notes">Notes</label> -->
+          <h3>Notes</h3>
+          <textarea id="notes" class="notes save" rows="2" cols="10"></textarea>
+        </div>
+      </div>
+      <div class="log info">
+        <!-- <label for="log">Log</label> -->
+        <h3>Log</h3>
+        <textarea id="log" class="log save" rows="2" cols="10"></textarea>
+      </div>
+
+
+    </form>
+  </main>
+  <footer> THE MAGNUS ARCHIVES and its logo are trademarks belonging to Rusty Quill| All Cypher System content © 2024 Monte Cook Games, LLC. <br> Character sheet created by Ruby Leroux </footer>
+  <div id="cypherWindow">
+    <div class="windowHeader">
+      <h1>Add New Cypher:</h1>
+      <button class="closeSelector">X</button>
+    </div>
+    <div id="allCyphers">
+
+      <!-- <div class="newCypher">
+        <div class="cypherHeader">
+          <div class="cypherName">${Json.name}</div>
+          <div class="cypherDetails">
+            <label for="cypherRange" class="cypherField">
+              <div class="cypherRange">${Json.range}</div>
+            </label>
+            <label for="cypherLevel" class="cypherField">Cost: <div class="cypherLevel">${Json.level}</div></label>
+            <label for="cypherUse" class="cypherField">Tier: <div class="cypherUse">${Json.use}</div></label>
+          </div>
+        </div>
+        <p class="cypherDescription">${Json.description}</p>
+        <button type="button" class="addCypher" value="${Json.id}">Add</button>
+      </div> -->
+
+
+
+    </div>
+
+  </div>
+  </div>
+
+  <div id="popupMask">
+
+  </div>
+
+  <div id="confirmWindow" class="popup">
+    <h1 id="confirmMessage">Are you sure?</h1>
+    <button id="confirmYes">Confirm</button>
+    <button id="confirmNo">Cancel</button>
+  </div>
+
+  <div id="abilityWindow" class="popup">
+    <div class="windowHeader">
+      <h1>Add New Ability:</h1>
+      <button class="closeSelector">X</button>
+    </div>
+    <div class="sourceSelection">
+      <input type="radio" id="type-filter" name="source" class="source" value="type" checked="true">
+      <label for="type-filter">type</label>
+
+      <input type="radio" id="focus-filter" name="source" class="source" value="focus">
+      <label for="focus-filter">focus</label>
+
+      <input type="radio" id="descriptor-filter" name="source" class="source" value="descriptor">
+      <label for="descriptor-filter">descriptor</label>
+    </div>
+
+    <div id="tierSelection">
+      Tier:
+
+      <label for="1" class="tierSelect">1 <input type="checkbox" class="tierSelect" value="1" name="1"></label>
+      <label for="2" class="tierSelect">2 <input type="checkbox" class="tierSelect" value="2" name="2"></label>
+      <label for="3" class="tierSelect">3 <input type="checkbox" class="tierSelect" value="3" name="3"></label>
+      <label for="4" class="tierSelect">4 <input type="checkbox" class="tierSelect" value="4" name="4"></label>
+      <label for="5" class="tierSelect">5 <input type="checkbox" class="tierSelect" value="5" name="5"></label>
+      <label for="6" class="tierSelect">6 <input type="checkbox" class="tierSelect" value="6" name="6"></label>
+      <label for="7" class="tierSelect">7 <input type="checkbox" class="tierSelect" value="7" name="7"></label>
+    </div>
+
+    <button type="button" class="addButton" id="filterAbilities">Search</button>
+
+    <div id="filteredWrapper" class="popup">
+      <div id="filteredAbilities">
+
+
+        <div class="newAbility">
+          <div class="abilityHeader">
+            <div class="abilityName">${Json.name}</div>
+            <div class="isSupernatural"></div>
+            <label for="abilityContext" class="abilityField">
+              <div class="abilityContext">${Json.context}</div>
+            </label>
+            <label for="abilityCost" class="abilityField">Cost: <div class="abilityCost">${Json.cost}</div></label>
+            <label for="abilityTier" class="abilityField">Tier: <div class="abilityTier">${Json.tier}</div></label>
+          </div>
+          <p class="abilityDescription" rows="1" cols="10">${Json.description}</p>
+          <button type="button" class="addAbility" name="${Json.type}" value="${Json.id}">Add</button>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- <label for="type">Type</label>
+    <select name="type" id="type-select">
+      <option value="">--</option>
+      <option value="investigator">Investigator</option>
+      <option value="protector">Protector</option>
+      <option value="occultist">Occultist</option>
+      <option value="elecutionist">Elecutionist</option>
+    </select>
+
+    <label for="descriptor">Descriptor</label>
+    <select name="descriptor" id="descriptor-select">
+      <option value="">--</option>
+      <option value="investigator">Investigator</option>
+      <option value="protector">Protector</option>
+      <option value="occultist">Occultist</option>
+      <option value="elecutionist">Elecutionist</option>
+    </select>
+
+    <label for="focus">Focus</label>
+    <select name="focus" id="focus-select">
+      <option value="">--</option>
+      <option value="investigator">Investigator</option>
+      <option value="protector">Protector</option>
+      <option value="occultist">Occultist</option>
+      <option value="elecutionist">Elecutionist</option>
+    </select> -->
+
+
+
+  </div>
+</body>
+
+</html>
+
+<script src="charsheet.js"></script>
