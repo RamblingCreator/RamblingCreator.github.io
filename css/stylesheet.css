@@ -1362,6 +1362,12 @@ form.solver {
     .solver .text-card {
         margin: 0.2em auto;
         padding: 0.5em 0.5em;
+        font-size: 0.9em;
+    }
+
+    .lengthSelection input {
+        width: 1.5em;
+        height: 1.5em;
     }
 
     #ignore, #include {
