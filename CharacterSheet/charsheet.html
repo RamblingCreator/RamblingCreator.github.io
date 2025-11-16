@@ -7,6 +7,7 @@
   <title>Character Sheet</title>
   <link rel="stylesheet" href="style.css">
   <script src="../js/jquery-3.7.1.min.js"></script>
+  <!-- <script src="jquery-3.7.1.min.js"></script> -->
   <script src="abilities_array.js"></script>
   <script src="cyphers.js"></script>
 
@@ -26,119 +27,119 @@
     </label>
     <form>
 
-      <div class="left-side">
-        <div id="details">
-          <div id="title">
-            <input id="name" class="save"> <!-- <br> -->
-            is a
-            <!-- <input id="descriptor"> -->
-            <select name="descriptor" id="descriptor" class="save">
-              <option value="NONE">--</option>
-              <option value="BOLD">Bold</option>
-              <option value="BRAVE">Brave</option>
-              <option value="CARING">Caring</option>
-              <option value="CAUTIOUS">Cautious</option>
-              <option value="CHEERFUL">Cheerful</option>
-              <option value="CYNICAL">Cynical</option>
-              <option value="ENIGMATIC">Enigmatic</option>
-              <option value="FASTIDIOUS">Fastidious</option>
-              <option value="FEARLESS">Fearless</option>
-              <option value="FEROCIOUS">Ferocious</option>
-              <option value="HOPEFUL">Hopeful</option>
-              <option value="INQUISITIVE">Inquisitive</option>
-              <option value="INTIMIDATING">Intimidating</option>
-              <option value="LIKEABLE">Likeable</option>
-              <option value="MUSCULAR">Muscular</option>
-              <option value="NERVOUS">Nervous</option>
-              <option value="NO_NONSENSE">No-Nonsense</option>
-              <option value="OBSESSIVE">Obsessive</option>
-              <option value="PRETENTIOUS">Pretentious</option>
-              <option value="QUICK">Quick</option>
-              <option value="RUTHLESS">Ruthless</option>
-              <option value="SCHOLARLY">Scholarly</option>
-              <option value="SMART">Smart</option>
-              <option value="STURDY">Sturdy</option>
-              <option value="SUPERSTITIOUS">Superstitious</option>
-              <option value="SUSPICIOUS">Suspicious</option>
-              <option value="TECH_SAVVY">Tech-Savvy</option>
-            </select>
-            <!-- <input id="type"> -->
-            <select name="type" id="type" class="save">
-              <option value="NONE">--</option>
-              <option value="INVESTIGATOR">Investigator</option>
-              <option value="PROTECTOR">Protector</option>
-              <option value="OCCULTIST">Occultist</option>
-              <option value="ELECUTIONIST">Elecutionist</option>
-            </select>
-            who <!-- <br> -->
-            <!-- <input id="focus"> -->
-            <select name="focus" id="focus" class="save">
-              <option value="NONE">--</option>
-              <option value="CARRIES_A_GUN">Carries a Gun</option>
-              <option value="DOES_A_BIT_OF_THIS_AND_THAT">Does a Bit of This and That</option>
-              <option value="EXPLORES_DARK_PLACES">Explores Dark Places</option>
-              <option value="FIGHTS_DIRTY">Fights Dirty</option>
-              <option value="HELPS_THEIR_FRIENDS">Helps Their Friends</option>
-              <option value="INFILTRATES">Infiltrates</option>
-              <option value="LEADS">Leads</option>
-              <option value="LEARNS_QUICKLY">Learns Quickly</option>
-              <option value="LOOKS_FOR_TROUBLE">Looks for Trouble</option>
-              <option value="MOVES_LIKE_A_CAT">Moves Like a Cat</option>
-              <option value="NEEDS_NO_WEAPON">Needs No Weapon</option>
-              <option value="NEVER_SAYS_DIE">Never Says Die</option>
-              <option value="PRACTICALLY_LIVES_ONLINE">Practically Lives Online</option>
-              <option value="RUNS_AWAY">Runs Away</option>
-              <option value="SOLVES_MYSTERIES">Solves Mysteries</option>
-              <option value="WEARS_A_BADGE">Wears a Badge</option>
-              <option value="WORKS_THE_BACK_ALLEYS">Works the Back Alleys</option>
-              <option value="WOULD_RATHER_BE_READING">Would Rather Be Reading</option>
-            </select>
-          </div>
-
-          <div id="levels">
-            <label for="tier" class="level">tier
-              <input class="tier save" id="tier">
-            </label>
-            <label for="effort" class="level">effort
-              <input class="effort save" id="effort">
-            </label>
-            <label for="XP" class="level">XP
-              <input class="XP save" id="XP">
-            </label>
-          </div>
-
-          <div id="stats" class="stats">
-            <label for="might" class="stat">might
-              <div class="stat might" id="might">
-                <input class="currentPool statField might save" id="currentPool_might" name="mightPool">
-                <label for="maxPool_might">pool</label>
-                <input class="maxPool statField might save" id="maxPool_might" name="mightMax">
-                <label for="edge_migmaxPool_might">edge</label>
-                <input class="edge statField might save" id="edge_might" name="mightEdge">
-              </div>
-            </label>
-
-            <label for="speed" class="stat">speed
-              <div class="stat speed" id="speed">
-                <input class="currentPool statField speed save" id="currentPool_speed" name="speedPool">
-                <label for="maxPool_speed">pool</label>
-                <input class="maxPool statField speed save" id="maxPool_speed" name="speedMax">
-                <label for="edge_speed">edge</label>
-                <input class="edge statField speed save" id="edge_speed" name="speedEdge">
-              </div>
-            </label>
-
-            <label for="intellect" class="stat">intellect
-              <div class="stat int" id="intellect">
-                <input class="currentPool statField int save" id="currentPool_int" name="intPool">
-                <label for="maxPool_int">pool</label>
-                <input class="maxPool statField int save" id="maxPool_int" name="intMax">
-                <label for="edge_int">edge</label>
-                <input class="edge statField int save" id="edge_int" name="intEdge">
-              </div>
-            </label>
-          </div>
+      <div class="left-side upper">
+        <!-- <div id="details"> -->
+        <div id="title">
+          <input id="name" class="save"> <!-- <br> -->
+          is a
+          <!-- <input id="descriptor"> -->
+          <select name="descriptor" id="descriptor" class="save">
+            <option value="NONE">--</option>
+            <option value="BOLD">Bold</option>
+            <option value="BRAVE">Brave</option>
+            <option value="CARING">Caring</option>
+            <option value="CAUTIOUS">Cautious</option>
+            <option value="CHEERFUL">Cheerful</option>
+            <option value="CYNICAL">Cynical</option>
+            <option value="ENIGMATIC">Enigmatic</option>
+            <option value="FASTIDIOUS">Fastidious</option>
+            <option value="FEARLESS">Fearless</option>
+            <option value="FEROCIOUS">Ferocious</option>
+            <option value="HOPEFUL">Hopeful</option>
+            <option value="INQUISITIVE">Inquisitive</option>
+            <option value="INTIMIDATING">Intimidating</option>
+            <option value="LIKEABLE">Likeable</option>
+            <option value="MUSCULAR">Muscular</option>
+            <option value="NERVOUS">Nervous</option>
+            <option value="NO_NONSENSE">No-Nonsense</option>
+            <option value="OBSESSIVE">Obsessive</option>
+            <option value="PRETENTIOUS">Pretentious</option>
+            <option value="QUICK">Quick</option>
+            <option value="RUTHLESS">Ruthless</option>
+            <option value="SCHOLARLY">Scholarly</option>
+            <option value="SMART">Smart</option>
+            <option value="STURDY">Sturdy</option>
+            <option value="SUPERSTITIOUS">Superstitious</option>
+            <option value="SUSPICIOUS">Suspicious</option>
+            <option value="TECH_SAVVY">Tech-Savvy</option>
+          </select>
+          <!-- <input id="type"> -->
+          <select name="type" id="type" class="save">
+            <option value="NONE">--</option>
+            <option value="INVESTIGATOR">Investigator</option>
+            <option value="PROTECTOR">Protector</option>
+            <option value="OCCULTIST">Occultist</option>
+            <option value="ELECUTIONIST">Elecutionist</option>
+          </select>
+          who <!-- <br> -->
+          <!-- <input id="focus"> -->
+          <select name="focus" id="focus" class="save">
+            <option value="NONE">--</option>
+            <option value="CARRIES_A_GUN">Carries a Gun</option>
+            <option value="DOES_A_BIT_OF_THIS_AND_THAT">Does a Bit of This and That</option>
+            <option value="EXPLORES_DARK_PLACES">Explores Dark Places</option>
+            <option value="FIGHTS_DIRTY">Fights Dirty</option>
+            <option value="HELPS_THEIR_FRIENDS">Helps Their Friends</option>
+            <option value="INFILTRATES">Infiltrates</option>
+            <option value="LEADS">Leads</option>
+            <option value="LEARNS_QUICKLY">Learns Quickly</option>
+            <option value="LOOKS_FOR_TROUBLE">Looks for Trouble</option>
+            <option value="MOVES_LIKE_A_CAT">Moves Like a Cat</option>
+            <option value="NEEDS_NO_WEAPON">Needs No Weapon</option>
+            <option value="NEVER_SAYS_DIE">Never Says Die</option>
+            <option value="PRACTICALLY_LIVES_ONLINE">Practically Lives Online</option>
+            <option value="RUNS_AWAY">Runs Away</option>
+            <option value="SOLVES_MYSTERIES">Solves Mysteries</option>
+            <option value="WEARS_A_BADGE">Wears a Badge</option>
+            <option value="WORKS_THE_BACK_ALLEYS">Works the Back Alleys</option>
+            <option value="WOULD_RATHER_BE_READING">Would Rather Be Reading</option>
+          </select>
         </div>
+
+        <div id="levels">
+          <label for="tier" class="level">tier
+            <input class="tier save" id="tier">
+          </label>
+          <label for="effort" class="level">effort
+            <input class="effort save" id="effort">
+          </label>
+          <label for="XP" class="level">XP
+            <input class="XP save" id="XP">
+          </label>
+        </div>
+
+        <div id="stats" class="stats">
+          <label for="might" class="stat">might
+            <div class="stat might" id="might">
+              <input class="currentPool statField might save" id="currentPool_might" name="mightPool">
+              <label for="maxPool_might">pool</label>
+              <input class="maxPool statField might save" id="maxPool_might" name="mightMax">
+              <label for="edge_migmaxPool_might">edge</label>
+              <input class="edge statField might save" id="edge_might" name="mightEdge">
+            </div>
+          </label>
+
+          <label for="speed" class="stat">speed
+            <div class="stat speed" id="speed">
+              <input class="currentPool statField speed save" id="currentPool_speed" name="speedPool">
+              <label for="maxPool_speed">pool</label>
+              <input class="maxPool statField speed save" id="maxPool_speed" name="speedMax">
+              <label for="edge_speed">edge</label>
+              <input class="edge statField speed save" id="edge_speed" name="speedEdge">
+            </div>
+          </label>
+
+          <label for="intellect" class="stat">intellect
+            <div class="stat int" id="intellect">
+              <input class="currentPool statField int save" id="currentPool_int" name="intPool">
+              <label for="maxPool_int">pool</label>
+              <input class="maxPool statField int save" id="maxPool_int" name="intMax">
+              <label for="edge_int">edge</label>
+              <input class="edge statField int save" id="edge_int" name="intEdge">
+            </div>
+          </label>
+        </div>
+        <!-- </div> -->
         <div id="status">
 
           <div id="recoverySection">
@@ -181,16 +182,16 @@
             <label class="stress supernaturalStress">Stress levels from supernatural sources:
               <!-- <input class="supernaturalStress save" id="supernaturalStress"> -->
               <div id="supernaturalStress">
-                <input type="checkbox" class="superStressBox" />
-                <input type="checkbox" class="superStressBox" />
-                <input type="checkbox" class="superStressBox" />
-                <input type="checkbox" class="superStressBox" />
-                <input type="checkbox" class="superStressBox" />
-                <input type="checkbox" class="superStressBox" />
-                <input type="checkbox" class="superStressBox" />
-                <input type="checkbox" class="superStressBox" />
-                <input type="checkbox" class="superStressBox" />
-                <input type="checkbox" class="superStressBox" />
+                <input type="checkbox" id="superStress0" class="superStressBox" />
+                <input type="checkbox" id="superStress1" class="superStressBox" />
+                <input type="checkbox" id="superStress2" class="superStressBox" />
+                <input type="checkbox" id="superStress3" class="superStressBox" />
+                <input type="checkbox" id="superStress4" class="superStressBox" />
+                <input type="checkbox" id="superStress5" class="superStressBox" />
+                <input type="checkbox" id="superStress6" class="superStressBox" />
+                <input type="checkbox" id="superStress7" class="superStressBox" />
+                <input type="checkbox" id="superStress8" class="superStressBox" />
+                <input type="checkbox" id="superStress9" class="superStressBox" />
               </div>
             </label>
           </div>
@@ -206,7 +207,7 @@
           <label for="skillTraining" class="advancement">
             <input type="checkbox" class="save" id="skillTraining" /> Skill Training: Train in a skill or specialize in a trained skill</label>
           <label for="other" class="advancement">
-            <input type="checkbox" class="save" id="other" /> Other Options: See page 141 of The Magnus Archives book</label>
+            <input type="checkbox" class="save" id="otherOptions" /> Other Options: See page 141 of The Magnus Archives book</label>
         </div>
         <div id="attacks">
           <div id="attacksHeader">
@@ -257,7 +258,7 @@
 
       </div>
 
-      <div class="right-side">
+      <div class="right-side upper">
         <div id="cyphers">
           <h1>Cyphers</h1>
           <div id="cyphersList">
@@ -280,32 +281,35 @@
           <button type="button" class="addButton" id="newCypher">New Cypher</button>
 
         </div>
-        <br>
         <div id="skills">
 
           <div id="skillsHeader">
             <h1 id="skillNameLabel">Skills:</h1>
-            <div id="skillKey">T = trained, S = specialized, I = inability</div>
+            <!-- <div id="skillKey">T = trained, S = specialized, I = inability</div> -->
 
             <div id="skillPoolLabel"> Pool</div>
-            <div type="checkbox" id="trainedLabel">T</div>
-            <div type="checkbox" id="specializedLabel">S</div>
-            <div type="checkbox" id="inabilityLabel">I</div>
+            <div id="skillLevelLabel"> Level</div>
+            <!-- <div id="trainedLabel">T</div>
+            <div id="specializedLabel">S</div>
+            <div id="inabilityLabel">I</div> -->
           </div>
+
           <div id="skillsList">
-            <!-- <div class="skill">
+            <div class="skill">
               <input class="skillName"></input>
               <input class="skillPool"></input>
-              <input type="checkbox" class="trained" />
-              <input type="checkbox" class="specialized" />
-              <input type="checkbox" class="inability" />
-            </div> -->
+              <select class="skillLevel">
+                <option value="inability">Inability</option>
+                <option value="trained">Trained</option>
+                <option value="specialized">Specialized</option>
+              </select>
+            </div>
           </div>
           <button type="button" id="addSkill">New Skill</button>
         </div>
       </div>
 
-      <div class="right-side">
+      <div class="right-side lower">
         <div class="appearance info">
           <!-- <label for="appearance">Appearance</label> -->
           <h3>Appearance</h3>
@@ -324,7 +328,7 @@
         </div>
       </div>
 
-      <div class="middle">
+      <div class="middle lower">
         <div class="arcs info">
           <!-- <label for="arcs">Arcs</label> -->
           <h3>Arcs</h3>
@@ -338,10 +342,12 @@
           <textarea id="notes" class="notes save" rows="2" cols="10"></textarea>
         </div>
       </div>
-      <div class="log info">
-        <!-- <label for="log">Log</label> -->
-        <h3>Log</h3>
-        <textarea id="log" class="log save" rows="2" cols="10"></textarea>
+      <div class="left-side lower">
+        <div class="log info">
+          <!-- <label for="log">Log</label> -->
+          <h3>Log</h3>
+          <textarea id="log" class="log save" rows="2" cols="10"></textarea>
+        </div>
       </div>
 
 

@@ -93,6 +93,10 @@ $("#addSkill").on("click", function () {
     $(getEmptySkillHtml()).appendTo("#skillsList");
     // console.log("adding empty skill");
 });
+$("#addAttack").on("click", function () {
+    $(getEmptyAttackHtml()).appendTo("#attacksList");
+    // console.log("adding empty skill");
+});
 
 
 
@@ -212,7 +216,7 @@ function updateRecovery() {
     } else if (recovery.value == 3) {
         text = "10 hours";
     }
-    document.getElementById("recoveryText").innerHTML = text;
+    // document.getElementById("recoveryText").innerHTML = text;
 
 }
 
@@ -281,6 +285,8 @@ var addThisAbility = function () {
     addNewAbility(typeAbilities.find(item => {
         return item.id == attribute
     }));
+
+
     /* 
     
         $(html).appendTo("#abilitiesList");
@@ -322,19 +328,18 @@ function addNewAbility(abilityJson) {
     $(html).appendTo("#abilitiesList");
     let thisAbility = abilities.lastChild;
     let tbox = thisAbility.getElementsByClassName("abilityDescription")[0];
-    // console.log("tbox = " + tbox);
     tbox.style.height = tbox.scrollHeight + "px";
     tbox.style.overflowY = "hidden";
-    $(tbox).on("input", function () {
+    /*$(tbox).on("input", function () {
         this.style.height = "auto";
         this.style.height = this.scrollHeight + "px";
-    });
+    }); */
     for (const element of thisAbility.getElementsByTagName("INPUT")) {
         resizeInput(element);
     }
     thisAbility.getElementsByClassName("isSupernatural")[0].checked = abilityJson.supernatural;
 
-    
+
     let thisButton = thisAbility.getElementsByClassName("removeAbility")[0];
     thisButton.addEventListener('click', function () { confirmDelete(thisButton, "ability") }, false);
 
@@ -349,10 +354,9 @@ function addNewCypher(cypherJson) {
     $(html).appendTo("#cyphersList");
     let thisCypher = cyphers.lastChild;
     let tbox = thisCypher.getElementsByClassName("cypherDescription")[0];
-    console.log("tbox = " + tbox);
-    /* tbox.style.height = tbox.scrollHeight + "px";
+    tbox.style.height = tbox.scrollHeight + "px";
     tbox.style.overflowY = "hidden";
-    $(tbox).on("input", function () {
+    /*$(tbox).on("input", function () {
         this.style.height = "auto";
         this.style.height = this.scrollHeight + "px";
     }); */
@@ -369,7 +373,7 @@ function addNewCypher(cypherJson) {
         thisButton = this;
         confirmDelete(this, "cypher");
     }); */
-} 
+}
 
 function deleteCypher(button) {
     console.log("this = " + this.className);
@@ -495,45 +499,55 @@ function getAddCypherHtml(Json) {
 function addNewSkill(skillJson) {
     $(getSkillHtml(skillJson)).appendTo("#skillsList");
     let thisSkill = skills.lastChild;
-    thisSkill.getElementsByClassName("trained")[0].checked = skillJson.trained;
+    thisSkill.getElementsByClassName("skillLevel")[0].value = skillJson.level
+    /* thisSkill.getElementsByClassName(skillJson.level)[0].value = skillJson.level */
+    /*thisSkill.getElementsByClassName("trained")[0].checked = skillJson.trained;
     thisSkill.getElementsByClassName("specialized")[0].checked = skillJson.specialized;
-    thisSkill.getElementsByClassName("inability")[0].checked = skillJson.inability;
+    thisSkill.getElementsByClassName("inability")[0].checked = skillJson.inability; */
 }
 function getSkillHtml(Json) {
     return `<div class="skill">
-            <input class="skillName" value=${Json.name}></input>
-            <input class="skillPool" value=${Json.pool}></input>
-              <input type="checkbox" class="trained" />
-              <input type="checkbox" class="specialized" />
-              <input type="checkbox" class="inability" />
-          </div>`
+              <input class="skillName" value=${Json.name}></input>
+              <input class="skillPool" value=${Json.pool}></input>
+              <select class="skillLevel">
+                <option value="inability">Inability</option>
+                <option value="trained">Trained</option>
+                <option value="specialized">Specialized</option>
+              </select>
+            </div>`;
 }
-
-
 function getEmptySkillHtml() {
     return `<div class="skill">
-            <input class="skillName"></input>
-            <input class="skillPool"></input>
-              <input type="checkbox" class="trained" />
-              <input type="checkbox" class="specialized" />
-              <input type="checkbox" class="inability" />
-          </div>`
+              <input class="skillName"></input>
+              <input class="skillPool"></input>
+              <select class="skillLevel">
+                <option value="inability">Inability</option>
+                <option value="trained">Trained</option>
+                <option value="specialized">Specialized</option>
+              </select>
+            </div>`;
 }
-
 
 function addNewAttack(attackJson) {
-    $(getAttackHtml(attackJson)).appendTo("#skillsList");
+    $(getAttackHtml(attackJson)).appendTo("#attacksList");
 }
-
-
-
 function getAttackHtml(Json) {
     return `<div class="attack">
               <input class="attackName" value=${Json.name}></input>
               <input class="attackDifficulty" value=${Json.difficulty}></input>
               <input class="attackDamage" value=${Json.damage}></input>
-            </div>`
+            </div>`;
 }
+function getEmptyAttackHtml() {
+    return `<div class="attack">
+              <input class="attackName"></input>
+              <input class="attackDifficulty"></input>
+              <input class="attackDamage"></input>
+            </div>`;
+}
+
+
+
 
 function saveForm() {
     localStorage.clear();
@@ -555,9 +569,8 @@ function saveForm() {
                 localStorage.setItem(input.id, input.value);
             }
         }
-        console.log("saving " + input.nodeName + " (" + input.type + ") " + input.id + " as " + input.value);
+        // console.log("saving " + input.nodeName + " (" + input.type + ") " + input.id + " as " + input.value);
     }
-    // save owned abilities to json strings, to load later
 
     let abilitiesList = [];
     for (const ability of abilities.getElementsByClassName('ability')) {
@@ -591,9 +604,10 @@ function saveForm() {
         let thisJSON = {}
         thisJSON.name = skill.getElementsByClassName("skillName")[0].value;
         thisJSON.pool = skill.getElementsByClassName("skillPool")[0].value;
+        thisJSON.level = skill.getElementsByClassName("skillLevel")[0].value;/* 
         thisJSON.trained = skill.getElementsByClassName("trained")[0].checked;
         thisJSON.specialized = skill.getElementsByClassName("specialized")[0].checked;
-        thisJSON.inability = skill.getElementsByClassName("inability")[0].checked;
+        thisJSON.inability = skill.getElementsByClassName("inability")[0].checked; */
         skillsList.push(thisJSON);
     }
     localStorage.setItem("skillsList", JSON.stringify(skillsList));
@@ -616,10 +630,18 @@ function saveForm() {
 
 
 function loadForm() {
-    for (const input of inputs) {
+
+    inputsToLoad = document.getElementsByClassName("save");
+
+    for (const input of inputsToLoad) {
         if (input.nodeName === "INPUT" /* && input.type === "text" */) {
             if (input.type === "checkbox") {
-                input.checked = localStorage.getItem(input.id)
+                if (localStorage.getItem(input.id) === "true") {
+                    input.checked = localStorage.getItem(input.id);
+                    console.log(input.id + " saved as 'true' ");
+                }
+                console.log("setting " + input.id + ".checked to " + localStorage.getItem(input.id));
+                console.log(input.id + ".checked = " + input.checked);
             } else {
                 input.value = localStorage.getItem(input.id);
             }
@@ -630,20 +652,18 @@ function loadForm() {
             input.value = localStorage.getItem(input.id);
 
         }
-        console.log("setting " + input.nodeName + " (" + input.type + ") " + input.id + " to " + input.value);
+        // console.log("setting " + input.nodeName + " (" + input.type + ") " + input.id + " to " + input.value);
     }
 
     let abilitiesList = JSON.parse(localStorage.getItem("abilitiesList"));
     if (abilitiesList != null) {
         abilitiesList.forEach(thisAbility => {
-            // $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
             addNewAbility(thisAbility);
         });
     }
     let cyphersList = JSON.parse(localStorage.getItem("cyphersList"));
     if (cyphersList != null) {
         cyphersList.forEach(thisCypher => {
-            // $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
             addNewCypher(thisCypher);
         });
     }
@@ -651,9 +671,13 @@ function loadForm() {
     let skillsList = JSON.parse(localStorage.getItem("skillsList"));
     if (skillsList != null) {
         skillsList.forEach(thisSkill => {
-            // $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
-
             addNewSkill(thisSkill);
+        });
+    }
+    let attacksList = JSON.parse(localStorage.getItem("attacksList"));
+    if (attacksList != null) {
+        attacksList.forEach(thisAttack => {
+            addNewAttack(thisAttack);
         });
     }
 
