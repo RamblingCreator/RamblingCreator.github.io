@@ -197,18 +197,21 @@
           </div>
         </div>
 
-        <div id="advancement">
-          <label for="increaseCapabilities" class="advancement">
-            <input type="checkbox" class="save" id="increaseCapabilities" /> Increase Capabilities: +4 points into stat Pools</label>
-          <label for="moveTowardPerfection" class="advancement">
-            <input type="checkbox" class="save" id="moveTowardPerfection" /> Move Toward Perfection: +1 to the Edge of your choice</label>
-          <label for="extraEffort" class="advancement">
-            <input type="checkbox" class="save" id="extraEffort" /> Extra Effort: +1 to effort</label>
-          <label for="skillTraining" class="advancement">
-            <input type="checkbox" class="save" id="skillTraining" /> Skill Training: Train in a skill or specialize in a trained skill</label>
-          <label for="other" class="advancement">
-            <input type="checkbox" class="save" id="otherOptions" /> Other Options: See page 141 of The Magnus Archives book</label>
-        </div>
+        <span>
+          <h3>Advancement</h3>
+          <div id="advancement">
+            <label for="increaseCapabilities" class="advancement">
+              <input type="checkbox" class="save" id="increaseCapabilities" /> Increase Capabilities: +4 points into stat Pools</label>
+            <label for="moveTowardPerfection" class="advancement">
+              <input type="checkbox" class="save" id="moveTowardPerfection" /> Move Toward Perfection: +1 to the Edge of your choice</label>
+            <label for="extraEffort" class="advancement">
+              <input type="checkbox" class="save" id="extraEffort" /> Extra Effort: +1 to effort</label>
+            <label for="skillTraining" class="advancement">
+              <input type="checkbox" class="save" id="skillTraining" /> Skill Training: Train in a skill or specialize in a trained skill</label>
+            <label for="otherOptions" class="advancement">
+              <input type="checkbox" class="save" id="otherOptions" /> Other Options: See page 141 of The Magnus Archives book</label>
+          </div>
+        </span>
         <div id="attacks">
           <div id="attacksHeader">
             <h1 id="attackNameLabel">Attacks:</h1>
@@ -228,34 +231,37 @@
 
       </div>
 
-      <div id="abilities">
-        <h1>Special abilities</h1>
-        <div id="abilitiesList">
+      <div class="middle upper">
+        <div id="abilities">
+          <h1>Special abilities</h1>
+          <a href="#cyphers" id="abilitiesJump">↓</a>
+          <div id="abilitiesList">
 
 
-          <!-- <div class="ability">
-            <div class="abilityHeader">
-              <div class="abilityNameBlock">
-                <label class="toggle">
-                  <input type="checkbox" class="isSupernatural" name="btnToggle" />
-                  <span class="supernaturalIcon">&#10700;</span>
-                </label>
-                <input class="abilityName" value="${Json.name}">
+            <!-- <div class="ability">
+              <div class="abilityHeader">
+                <div class="abilityNameBlock">
+                  <label class="toggle">
+                    <input type="checkbox" class="isSupernatural" name="btnToggle" />
+                    <span class="supernaturalIcon">&#10700;</span>
+                  </label>
+                  <input class="abilityName" value="${Json.name}">
+                </div>
+                <div class="abilityDetails">
+  
+                  <div class="spaceFiller"></div>
+                  <label for="abilityContext" class="abilityField"> <input class="abilityContext" value="${Json.context}"></label>
+                  <label for="abilityCost" class="abilityField">Cost: <input class="abilityCost" value="${Json.cost}"></label>
+                  <label for="abilityTier" class="abilityField">Tier: <input class="abilityTier" value="${Json.tier}"></label>
+                </div>
               </div>
-              <div class="abilityDetails">
+              <textarea class="abilityDescription" rows="2" cols="10">${Json.description}</textarea>
+            </div> -->
 
-                <div class="spaceFiller"></div>
-                <label for="abilityContext" class="abilityField"> <input class="abilityContext" value="${Json.context}"></label>
-                <label for="abilityCost" class="abilityField">Cost: <input class="abilityCost" value="${Json.cost}"></label>
-                <label for="abilityTier" class="abilityField">Tier: <input class="abilityTier" value="${Json.tier}"></label>
-              </div>
-            </div>
-            <textarea class="abilityDescription" rows="2" cols="10">${Json.description}</textarea>
-          </div> -->
+          </div>
+          <button type="button" class="addButton" id="newAbility">New Ability</button>
 
         </div>
-        <button type="button" class="addButton" id="newAbility">New Ability</button>
-
       </div>
 
       <div class="right-side upper">
@@ -355,7 +361,7 @@
   </main>
   <footer> THE MAGNUS ARCHIVES and its logo are trademarks belonging to Rusty Quill| All Cypher System content © 2024 Monte Cook Games, LLC. <br> Character sheet created by Ruby Leroux </footer>
   <div id="cypherWindow">
-    <div class="windowHeader">
+    <div class="windowTitle">
       <h1>Add New Cypher:</h1>
       <button class="closeSelector">X</button>
     </div>
@@ -394,34 +400,36 @@
   </div>
 
   <div id="abilityWindow" class="popup">
-    <div class="windowHeader">
+    <div class="windowTitle">
       <h1>Add New Ability:</h1>
       <button class="closeSelector">X</button>
     </div>
-    <div class="sourceSelection">
-      <input type="radio" id="type-filter" name="source" class="source" value="type" checked="true">
-      <label for="type-filter">type</label>
+    <div class="abilitySelectors">
+      <div id="sourceSelection">
+        <input type="radio" id="type-filter" name="source" class="source" value="type" checked="true">
+        <label for="type-filter">type</label>
 
-      <input type="radio" id="focus-filter" name="source" class="source" value="focus">
-      <label for="focus-filter">focus</label>
+        <input type="radio" id="focus-filter" name="source" class="source" value="focus">
+        <label for="focus-filter">focus</label>
 
-      <input type="radio" id="descriptor-filter" name="source" class="source" value="descriptor">
-      <label for="descriptor-filter">descriptor</label>
+        <input type="radio" id="descriptor-filter" name="source" class="source" value="descriptor">
+        <label for="descriptor-filter">descriptor</label>
+      </div>
+
+      <div id="tierSelection">
+        Tier:
+
+        <label for="1" class="tierSelect">1 <input type="checkbox" class="tierSelect" value="1" name="1"></label>
+        <label for="2" class="tierSelect">2 <input type="checkbox" class="tierSelect" value="2" name="2"></label>
+        <label for="3" class="tierSelect">3 <input type="checkbox" class="tierSelect" value="3" name="3"></label>
+        <label for="4" class="tierSelect">4 <input type="checkbox" class="tierSelect" value="4" name="4"></label>
+        <label for="5" class="tierSelect">5 <input type="checkbox" class="tierSelect" value="5" name="5"></label>
+        <label for="6" class="tierSelect">6 <input type="checkbox" class="tierSelect" value="6" name="6"></label>
+        <label for="7" class="tierSelect">7 <input type="checkbox" class="tierSelect" value="7" name="7"></label>
+      </div>
+
+      <button type="button" class="addButton" id="filterAbilities">Search</button>
     </div>
-
-    <div id="tierSelection">
-      Tier:
-
-      <label for="1" class="tierSelect">1 <input type="checkbox" class="tierSelect" value="1" name="1"></label>
-      <label for="2" class="tierSelect">2 <input type="checkbox" class="tierSelect" value="2" name="2"></label>
-      <label for="3" class="tierSelect">3 <input type="checkbox" class="tierSelect" value="3" name="3"></label>
-      <label for="4" class="tierSelect">4 <input type="checkbox" class="tierSelect" value="4" name="4"></label>
-      <label for="5" class="tierSelect">5 <input type="checkbox" class="tierSelect" value="5" name="5"></label>
-      <label for="6" class="tierSelect">6 <input type="checkbox" class="tierSelect" value="6" name="6"></label>
-      <label for="7" class="tierSelect">7 <input type="checkbox" class="tierSelect" value="7" name="7"></label>
-    </div>
-
-    <button type="button" class="addButton" id="filterAbilities">Search</button>
 
     <div id="filteredWrapper" class="popup">
       <div id="filteredAbilities">

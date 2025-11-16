@@ -389,7 +389,6 @@ function confirmDelete(thisButton, type) {
 
     $('#confirmYes').click(function () {
         console.log("confirmed");
-        // yesCallback();
         console.log("removing");
         if (type == "cypher") {
             // console.log("removing parent parent parent = " + thisButton.parentNode.parentNode.parentNode.getAttribute("cypherName"));
@@ -405,7 +404,6 @@ function confirmDelete(thisButton, type) {
 
     $('#confirmNo').click(function () {
         console.log("canceled");
-        noCallback();
         $("#confirmWindow").css('display', 'none');
         $("#popupMask").css('display', 'none');
     });
