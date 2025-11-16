@@ -25,6 +25,7 @@
 
     /* media query values */
     --mobile-size: 800px;
+    --medium-size: 1200px;
 }
 
 h1, h2, h3, h4 {
@@ -227,6 +228,11 @@ label.damage {
 
 }
 
+.stressLevel {
+    white-space: wrap;
+    text-wrap: wrap;
+}
+
 .stressLevel, .stressAmount {
     display: flex;
     gap: 5px;
@@ -246,6 +252,7 @@ label.stress {
     text-transform: uppercase;
     background-color: var(--card);
     padding: 0.5em;
+    vertical-align: middle;
 }
 
 #recoverySection, #damageSection {
@@ -268,7 +275,7 @@ label.stress {
     width: min-content;
 }
 
-@media(max-width:700px) {
+@media(max-width:1500px) {
     #status {
 
         grid-template-columns: 25% 75%;
@@ -314,12 +321,15 @@ label.stress {
         font-size: 1em;
         padding: 0.5em 0;
         padding: 0.5em 1em;
+        padding: 0.5em 0.5em;
         /* display: flex;
         flex-direction: row; */
     }
 
     label.stressAmount, label.stressLevel {
-        width: max-content;
+        /* width: max-content; */
+        /* text-wrap: nowrap; */
+        width: 100%;
     }
 
 }
@@ -356,6 +366,16 @@ label.stress {
     text-align: left;
     width: min-content;
     display: block;
+}
+
+@media (max-width:1500px) {
+
+    #advancement {
+        flex-direction: column;
+    }
+    .advancement input {
+        display: inline;
+    }
 }
 
 #attackNameLabel {
@@ -476,10 +496,7 @@ label.level {
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-
     font-size: 1.9vw;
-
-
     gap: 5px;
 }
 
@@ -487,15 +504,13 @@ label.level {
     font-family: 'Special Elite', serif;
     font-family: 'Courier Prime', serif;
     font-family: 'Courier New', 'Courier', serif;
-
     letter-spacing: -0.05em;
-
     vertical-align: middle;
     /* line-height: 1px;
         padding-top: 0.1em; */
 }
 
-label.stat {
+label.stat { /* group labels */
     font-size: 0.75em;
     /* font-size: 1em; */
     font-family: 'Courier New', 'Courier', serif;
@@ -507,7 +522,7 @@ label.stat {
     padding: 0 0.5em;
 }
 
-.stat label {
+.stat label { /* individual labels */
     font-size: 0.4em;
     font-family: 'Alegreya', serif;
     text-align: center;
@@ -520,12 +535,8 @@ label.stat {
 }
 
 
-label .stat {
+label .stat { /* inner groups */
     /* font-size: 30px; */
-    font-size: 25px;
-    font-size: 30px;
-    font-size: 2.4vw;
-    font-size: 3.2vw;
     font-size: 2.8vw;
     /*  
     30/1250 = s/100
@@ -550,7 +561,7 @@ label .stat {
     /* width: 50%; */
 }
 
-@media(max-width:700px) {
+@media(max-width:1000px) {
     label .stat {
         font-size: 9vw;
     }
@@ -1094,9 +1105,9 @@ h1 {
         grid-template-columns: 40% 60%;
         background-color: var(--background);
 
-        grid-template-areas: 
-        "left center"
-        "right right";
+        grid-template-areas:
+            "left center"
+            "right right";
     }
     .left-side.upper {
         grid-area: left;
@@ -1120,17 +1131,15 @@ h1 {
     }
 
 
-    #skillsHeader{
+    #skillsHeader {
         flex-wrap: wrap;
     }
-    
+
 }
 
 
-@media(max-width:1000px) {}
-
 /* mobile layout */
-@media(max-width:700px) {
+@media(max-width:1000px) {
     form {
         display: flex;
         flex-direction: column;
