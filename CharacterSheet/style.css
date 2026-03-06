@@ -755,12 +755,14 @@ label .stat {
     font-size: 18px;
     background-color: var(--field);
     resize: vertical;
+    margin: 0.25em 0;
+    /* margin-top: 0.2em; */
     /* border: none; */
     /* border-bottom: 1px solid black; */
 }
 
 .newAbility .abilityDescription {
-    margin: 0;
+    /* margin: 0; */
 }
 
 textarea {
@@ -805,33 +807,76 @@ textarea {
 .newAbility div {
     white-space: nowrap;
 }
+.fixedSupernatural {
+    user-select: none;
+    font-size: 40px;
+    line-height: 30px;
+    text-align: center;
+    /* margin: 0 auto; */
+    width: min-content;
+    color: purple;
+    display: block;
+}
 
+/* .newAbility .abilityHeader {
 
+} */
+.newAbility .abilityName {
+    display: inline;
+}
+.newAbility .abilityNameBlock {
+    white-space: wrap;
+    gap: 5px;
+    display: flex;
+}
+.tmp-element {
+    visibility: hidden;
+    white-space: pre;
+}
+.abilityName, .abilityField div, .cypherField div {
+    background-color: var(--field);
+}
 
+label.abilityField {
+    /* line-height: 1.075em; */
+}
+label.abilityField input {
+    /* line-height: 1em; */
+}
 
 .abilityName, .cypherName {
     font-size: 1.4em;
     /* width: 12em; */
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
-
+.abilityContext, .abilityCost {
+    padding: 0 0.5em;
+}
 .abilityContext, .abilityCost, .abilityTier {
     text-align: center;
-    font-size: 18px;
+    /* font-size: 18px; */
+    font-size: 1.125em;
     display: inline;
 }
-
+.abilityTier {
+    width: 1em;
+}
 
 .abilityField, .cypherField {
     display: flex;
     flex-direction: row;
+    gap: 6px;
     margin: auto 0;
+    margin: 0;
+    margin-top: auto;
     width: min-content;
+
 }
 
 .ability input[type='checkbox'] {
     display: none;
 }
+
 input:checked+.supernaturalIcon {
     /* display: block; */
     color: purple;
@@ -847,6 +892,12 @@ input:checked+.supernaturalIcon {
 .newAbility {
     /* margin: 0 1em; */
     padding: 0.5em;
+}
+
+.addAbility {
+    padding: 0 3em;
+    margin: auto;
+    display: block;
 }
 
 .toggle input {
@@ -872,6 +923,10 @@ input:checked+.supernaturalIcon {
     padding: 0.5em;
 }
 
+#cyphers label {
+    background-color: var(--card);
+}
+
 .cypherLevel, .cypherRange, .cypherUse {
     /* .cypherDetails{ */
     white-space: nowrap;
@@ -884,11 +939,6 @@ input:checked+.supernaturalIcon {
 .cypherUse {
     width: 4em;
 }
-
-
-
-
-
 
 .cypher {
     width: 100%;
@@ -933,6 +983,10 @@ input:checked+.supernaturalIcon {
     text-align: center;
 }
 
+#skillLevelLabel {
+    margin-right: 1em;
+}
+
 .skill {
     display: flex;
     flex-direction: row;
@@ -970,6 +1024,9 @@ input:checked+.supernaturalIcon {
     #skills {
         flex: 1;
     }
+    #cyphers {
+        flex: 1;
+    }
 }
 
 /* info areas */
@@ -986,6 +1043,238 @@ input:checked+.supernaturalIcon {
 .info {
     margin: 1em 0;
 }
+
+/* items */
+
+
+
+#itemNameLabel {
+    width: min-content;
+    /* width: 80%; */
+    font-size: 1.2em;
+    /* padding-right: 0.5em; */
+    flex: 1;
+    margin-top: auto;
+    padding-left: 0.6em;
+
+}
+
+
+#itemDescriptionLabel, #itemPrice {
+    font-size: 1em;
+    width: 5em;
+
+    font-size: 0.8em;
+    width: 6.25em;
+
+
+    text-align: center;
+    margin-top: auto;
+
+}
+#itemsHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    width: 100%;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.itemName {
+    width: 80%;
+}
+
+.itemDescription {
+    width: 5em;
+    text-align: center;
+}
+
+.itemPrice {
+    width: 5em;
+    text-align: center;
+}
+
+.item input {
+    background-color: var(--field);
+    border: none;
+    border: 0.81px solid black;
+    font-size: 1em;
+}
+/* advancement 2 */
+
+#advancement2 {
+    display: flex;
+    flex-direction: column;
+}
+
+#advancement2Header {
+    display: flex;
+    flex-direction: row;
+}
+
+#XP2, #progress {
+    font-family: 'Courier New', 'Courier', serif;
+    letter-spacing: -0.05em;
+    width: 2em;
+    font-size: 1.2em;
+
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+
+    border: none;
+    border-radius: 0;
+    background-color: var(--field);
+}
+
+
+label.advancement2 {
+    font-size: 1.5em;
+    line-height: 1.5em;
+
+    font-family: 'Courier New', 'Courier', serif;
+    text-align: center;
+    flex: 1;
+    text-transform: uppercase;
+    background-color: var(--card);
+    display: flex;
+    gap: 10px;
+    padding: 0.5em;
+}
+
+
+/* header input[type='checkbox'], header label {
+    display: none;
+}
+
+header label {
+    flex: 1;
+    line-height: 1em;
+    margin: auto 0;
+} */
+/* input:not(:checked)+#XPoptions {
+    display: none;
+}
+
+#spendXP not(:checked) {
+    background-color: red;
+}
+
+ */
+/* 
+#spendEXP button {
+    position: relative;
+    padding-top: 0.2em;
+    display: block;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+}
+
+#spendEXP:hover #XPoptions{
+    display: flex;
+} */
+
+.XPoptions {
+    display: none;
+    position: absolute;
+    padding: 0;
+    padding-top: 10px;
+    text-align: center;
+    width: fit-content;
+    flex-direction: column;
+}
+
+#spendXP {
+    /* background-color: cyan; */
+    flex: 1;
+    flex: 1;
+    font-size: 1.5em;
+    background-color: var(--accent);
+    border-radius: 1em;
+    border: none;
+    margin: 0.2em;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#spendXP:hover {
+
+    /* background-color: red; */
+    color: red;
+}
+#spendXP:hover .XPoptions {
+    display: flex;
+
+}
+
+.logHeader {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border: 0.81px solid black;
+    background-color: var(--card);
+    justify-content: space-between;
+}
+
+
+.logItem {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border: 0.81px solid black;
+    background-color: var(--card);
+}
+
+.logOption {
+    width: min-content;
+}
+
+.logDescription {
+    flex: 1;
+    text-align: center;
+}
+
+.logItem input {
+    background-color: var(--field);
+    border: none;
+    /* border: 0.81px solid black; */
+    font-size: 1em;
+}
+
+.dragHandle {
+    cursor: grab;
+    padding: 0 0.1em;
+    background-color: var(--card);
+    font-size: 1.4em;
+    line-height: 1.1em;
+    height: 100%;
+    border-radius: 0.25em;
+    margin: auto 0;
+    width: 1em;
+}
+.dragHandle:hover {
+    color: white;
+}
+
+/* .reorderItem:hover {
+    background: #e8f0ff;
+} */
+.dragging {
+    opacity: 0.7;
+    /* transform: rotate(-2deg); */
+}
+
+/* .over {
+    border: 2px dashed #ff8c42;
+    background: grey;
+} */
 
 
 /* footer */
@@ -1054,7 +1343,7 @@ footer {
 
 #abilityWindow, #cypherWindow {
 
-    max-width: 1100px;
+    max-width: 1500px;
 
     display: flex;
     flex-direction: column;
@@ -1076,8 +1365,8 @@ footer {
 
     /* width: 80%;
     height: 80%; */
-    width: 80vw;
-    height: 80vh;
+    width: 90vw;
+    height: 90vh;
     display: none;
 
     box-shadow: 0 0 10px #00000059;
@@ -1143,6 +1432,7 @@ footer {
 #confirmNo {
     grid-area: no;
 }
+
 
 @media (max-width:1000px) {
     #confirmWindow {
@@ -1227,6 +1517,45 @@ h1 {
     flex-direction: row;
 }
 
+
+#quickstartWindow {
+
+    max-width: 1100px;
+
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    margin: auto;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background-color: var(--background);
+    border: 10px solid var(--background-darker);
+    color: #fff;
+
+    border-radius: 0.5em;
+
+    width: 80vw;
+    height: 80vh;
+    display: none;
+    padding: 1em;
+
+    box-shadow: 0 0 10px #00000059;
+
+}
+
+#quickstartDescription {
+    margin-bottom: 1em;
+}
+#quickstartWindow label {
+    font-size: 1em;
+}
+select.quickstart {
+    width: min-content;
+}
 
 
 

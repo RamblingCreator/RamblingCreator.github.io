@@ -21,7 +21,7 @@
  */
 
 
-INVESTIGATOR_ABILITIES = [{
+var INVESTIGATOR_ABILITIES = [{
     id: "CAREFUL_OBSERVATION",
     name: "Careful Observation",
     tier: 1,
@@ -470,7 +470,7 @@ INVESTIGATOR_ABILITIES = [{
     supernatural: false,
     source: "type",
     type: "INVESTIGATOR",
-    description: "Through luck, a hunch, or just general preparedness, you already researched the topic that now faces you, providing you with information and answers as if you took a full week with an appropriate source of information to learn what you could.General Knowledge",
+    description: "Through luck, a hunch, or just general preparedness, you already researched the topic that now faces you, providing you with information and answers as if you took a full week with an appropriate source of information to learn what you could.",
 },
 {
     id: "GENERAL_KNOWLEDGE",
@@ -503,7 +503,7 @@ INVESTIGATOR_ABILITIES = [{
     supernatural: false,
     source: "type",
     type: "INVESTIGATOR",
-    description: "Choose one type of attack in which you are trained: light bashing, light bladed, light ranged, medium bashing, medium bladed, medium ranged, heavy bashing, heavy bladed, or heavy ranged. You are specialized in attacks using that type of weapon. (If you aren’t trained in an attack, select Skill With Attacks to become trained in that attack. )",
+    description: "Choose one type of attack in which you are trained: light bashing, light bladed, light ranged, medium bashing, medium bladed, medium ranged, heavy bashing, heavy bladed, or heavy ranged. You are specialized in attacks using that type of weapon. (If you aren’t trained in an attack, select Skill With Attacks to become trained in that attack.)",
 },
 {
     id: "SEE_THE_FUTURE",
@@ -514,9 +514,9 @@ INVESTIGATOR_ABILITIES = [{
     supernatural: true,
     source: "type",
     type: "INVESTIGATOR",
-    description: `Based on all the variables you perceive, you can predict the next few minutes. This has the following effects:
-    • For the next ten minutes, your defense rolls gain an asset.
-    • You have a sort of danger sense. For the next ten minutes, you gain an asset in seeing through deceptions and attempts to betray you, as well as avoiding traps and ambushes.
+    description: `Based on all the variables you perceive, you can predict the next few minutes. This has the following effects:\r
+    • For the next ten minutes, your defense rolls gain an asset.\r
+    • You have a sort of danger sense. For the next ten minutes, you gain an asset in seeing through deceptions and attempts to betray you, as well as avoiding traps and ambushes.\r
     • You know what people are probably thinking and what they will say before they say it. For the next ten minutes, you gain an asset to tasks involving interaction and deception.`,
 }]
 

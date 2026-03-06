@@ -29,38 +29,31 @@ const attacks = document.getElementById('attacksList');
 const abilityWindow = document.getElementById("abilityWindow");
 
 $(document).ready(function () {
-    // $("input:text").focus(function () { $(this).select(); });
-    // const inputs = form.elements;
-
-    // Iterate over the form controls
-    /* for (const input of inputs) {
-        if (input.nodeName === "INPUT" && input.type === "text") {
-            // Update text input
-            console.log("class: " + input.className + ", value: " + input.value);
-            // input.value = input.value.toLocaleUpperCase();
-        }
-    } */
     loadForm();
 
     CYPHERS.forEach(element => {
-        // console.log(element);
         $(getAddCypherHtml(element)).appendTo("#allCyphers");
     });
 
     var elements = document.getElementsByClassName("addCypher");
     Array.from(elements).forEach(function (element) {
-        // console.log("adding listener to: ", element.value);
         element.addEventListener('click', addThisCypher);
     });
 
     document.querySelector('input[name="source"]:checked').value = "type";
 
-
-
+    let tierFilters = document.querySelectorAll('#tierSelection input[type="checkbox"]')
+    /* for (let i = 0; i < tier.value; i++) {
+        tierFilters[i].checked = true;
+    } */
+    tierFilters[5].checked = true;
 });
 
 $("#save").on("click", function () {
     saveForm();
+});
+$("#export").on("click", function () {
+    exportSave();
 });
 $("form :input").on("input", function () {
     saveForm();
@@ -77,16 +70,17 @@ $(document).keydown(function (e) {
         $("#abilityWindow").css('display', 'none');
         $("#cypherWindow").css('display', 'none');
         $("#confirmWindow").css('display', 'none');
+        $("#quickstartWindow").css('display', 'none');
         $("#popupMask").css('display', 'none');
     }
 });
 $("#newAbility").on("click", function () {
-    $("#abilityWindow").css('display', 'block');
+    $("#abilityWindow").css('display', 'flex');
     $("#popupMask").css('display', 'flex');
     filterAbilities();
 });
 $("#newCypher").on("click", function () {
-    $("#cypherWindow").css('display', 'block');
+    $("#cypherWindow").css('display', 'flex');
     $("#popupMask").css('display', 'flex');
 });
 $("#addSkill").on("click", function () {
@@ -97,6 +91,67 @@ $("#addAttack").on("click", function () {
     $(getEmptyAttackHtml()).appendTo("#attacksList");
     // console.log("adding empty skill");
 });
+$("#spendXP").on("click", function () {
+    addNewLogItem();
+});
+
+
+$("#quickstart").on("click", function () {
+    $("#quickstartWindow").css('display', 'block');
+    $("#popupMask").css('display', 'flex');
+});
+
+
+
+$("#quickstartAutofill").on("click", function () {
+    autofill()
+    $("#quickstartWindow").css('display', 'none');
+    $("#popupMask").css('display', 'none');
+});
+
+
+function autofill() {
+    let quickstartForm = document.getElementById("quickstartWindow");
+}
+
+$(".reorderList").sortable({
+    handle: ".dragHandle",
+    snap: true,
+    containment: "parent",
+    snapMode: "outer",
+    // helper: "clone",
+    placeholder: "sortable-placeholder",
+    forcePlaceholderSize: true,
+    // forceHelperSize: true
+})
+
+
+function addNewLogItem() {
+    // let selectedOption = $()
+    let html = `<div class="logItem reorderItem">
+              <div class="logOption"></div>
+              <select class="logOption" value=>
+                <option value="increaseCapabilities">Increase Capabilities</option>
+                <option value="moveTowardPerfection">Move Toward Perfection</option>
+                <option value="extraEffort">Extra Effort</option>
+                <option value="skillTraining">Skill Training</option>
+                <option value="otherOptions">Other Options</option>
+              </select>
+              <div class="logDescription"></div>
+              <div class="dragHandle">≣</div>
+            </div>`
+    $(html).appendTo("#purchaseLog");
+    let thisItem = document.getElementById("purchaseLog").lastChild;
+    /* $(thisItem).draggable({
+        handle: ".dragHandle",
+        snap: true,
+        containment: "parent",
+        snapMode: "outer",
+        drag: function (event, ui) {
+            ui.position.left = Math.min(100, ui.position.left);
+        }
+    }); */
+}
 
 
 
@@ -225,7 +280,6 @@ function filterAbilities() {
     let allAbilities = ["TEST", "test2"];
     let sourceSelector = document.querySelector('input[name="source"]:checked');
 
-    console.log("sourceSelector = " + sourceSelector.value);
 
     if (sourceSelector == null) {
         return;
@@ -242,30 +296,39 @@ function filterAbilities() {
         return;
     }
     let abilities = [];
-    abilities = allAbilities;
-    let tierSelector = document.getElementById("tierSelection");
+    // abilities = allAbilities;
+    // let tierSelector = document.getElementById("tierSelection");
+    console.log("abilities: " + abilities.length);
 
-    /*  for (const ability of allAbilities) {
- 
-     } */
-
-    allAbilities.forEach(ability => {
-        if (tierSelector.children[ability.tier].checked) {
-            abilities.push(ability);
+    let tierFilters = document.querySelectorAll('#tierSelection input[type="checkbox"]')
+    useTier = false;
+    for (let i = 0; i < tierFilters.length; i++) {
+        if (tierFilters[i].checked) {
+            useTier = true;
         }
-    });
+        // console.log("tierselector " + i + " is " + tierFilters[i].checked);
+    }
 
+    if (useTier) {
+        allAbilities.forEach(ability => {
+            if (tierFilters[ability.tier - 1].checked) {
+                abilities.push(ability);
+                // console.log("tier " + ability.tier + " is checked? " + tierFilters[ability.tier - 1].checked);
+            }
+        });
+    }
+    console.log("abilities: " + abilities.length);
     document.getElementById("filteredAbilities").innerHTML = "";
 
     abilities.forEach(element => {
+        /* thisAbility = element;
+        thisAbility.description = thisAbility.description.replace(/(\r\n|\r|\n)/i, "<br>"); */
         $(getAddAbilityHtml(element)).appendTo("#filteredAbilities");
     });
-    /* $(".addAbility").on("click", function () {
-        console.log("adding " + $(this).name);
-    }); */
+
+
     var elements = document.getElementsByClassName("addAbility");
     Array.from(elements).forEach(function (element) {
-        // console.log("adding listener to: ", element.value);
         element.addEventListener('click', addThisAbility);
     });
 }
@@ -275,32 +338,11 @@ function filterAbilities() {
 
 var addThisAbility = function () {
     var attribute = this.value; //getAttribute("data-myattribute");
-    console.log("looking for " + this.name + "_ABILITIES");
+    // console.log("looking for " + this.name + "_ABILITIES");
     typeAbilities = window[this.name + "_ABILITIES"];
-    console.log("");
-    let html = getAbilityHtml(typeAbilities.find(item => {
-        return item.id == attribute
-    }));
-
     addNewAbility(typeAbilities.find(item => {
         return item.id == attribute
     }));
-
-
-    /* 
-    
-        $(html).appendTo("#abilitiesList");
-    
-        console.log(attribute);
-    
-        let tbox = abilities.lastChild.getElementsByClassName("abilityDescription")[0];
-        console.log("tbox = " + tbox);
-        tbox.style.height = tbox.scrollHeight + "px";
-        tbox.style.overflowY = "hidden";
-        $(tbox).on("input", function () {
-            this.style.height = "auto";
-            this.style.height = this.scrollHeight + "px";
-        }); */
 };
 
 var addThisCypher = function () {
@@ -334,8 +376,10 @@ function addNewAbility(abilityJson) {
         this.style.height = "auto";
         this.style.height = this.scrollHeight + "px";
     }); */
-    for (const element of thisAbility.getElementsByTagName("INPUT")) {
-        resizeInput(element);
+    // for (const element of thisAbility.getElementsByTagName("INPUT")) {
+    for (const element of thisAbility.querySelectorAll("input.resize")) {
+        // resizeInput(element);
+        adjustWidthOfInput(element);
     }
     thisAbility.getElementsByClassName("isSupernatural")[0].checked = abilityJson.supernatural;
 
@@ -356,24 +400,39 @@ function addNewCypher(cypherJson) {
     let tbox = thisCypher.getElementsByClassName("cypherDescription")[0];
     tbox.style.height = tbox.scrollHeight + "px";
     tbox.style.overflowY = "hidden";
-    /*$(tbox).on("input", function () {
-        this.style.height = "auto";
-        this.style.height = this.scrollHeight + "px";
-    }); */
-    for (const element of thisCypher.getElementsByTagName("INPUT")) {
-        resizeInput(element);
+    // for (const element of thisCypher.getElementsByTagName("INPUT")) {
+    for (const element of thisCypher.querySelectorAll("input.resize")) {
+        // resizeInput(element);
+        adjustWidthOfInput(element);
     }
     let thisButton = thisCypher.getElementsByClassName("removeCypher")[0];
     thisButton.addEventListener('click', function () { confirmDelete(thisButton, "cypher") }, false);
-    /* $(".removeCypher").on("click", function () {
-        thisButton = this;
-        confirmDelete(this, "cypher");
-    }); */
-    /*  $(".removeAbility").on("click", function () {
-        thisButton = this;
-        confirmDelete(this, "cypher");
-    }); */
 }
+function resizeInput(element) {
+    // console.log("resizing " + element);
+    $(element).attr('size', $(element).val().length);
+    // $(element).css('width', $(element).val().length+"em");
+    // element.style.width = element.value.length + "em"
+}
+
+function getWidthOfInput(inputEl) {
+    var tmp = document.createElement("span");
+    tmp.className = "input-element tmp-element";
+    tmp.innerHTML = inputEl.value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    let style = getComputedStyle(inputEl);
+    $(tmp).css("font-size", style.fontSize);
+    $(tmp).css("padding", style.padding);
+    document.body.appendChild(tmp);
+    var theWidth = tmp.getBoundingClientRect().width;
+    document.body.removeChild(tmp);
+    return theWidth;
+}
+
+function adjustWidthOfInput(inputEl) {
+    inputEl.style.width = getWidthOfInput(inputEl) + "px";
+}
+
+
 
 function deleteCypher(button) {
     console.log("this = " + this.className);
@@ -391,10 +450,8 @@ function confirmDelete(thisButton, type) {
         console.log("confirmed");
         console.log("removing");
         if (type == "cypher") {
-            // console.log("removing parent parent parent = " + thisButton.parentNode.parentNode.parentNode.getAttribute("cypherName"));
             thisButton.parentNode.parentNode.parentNode.remove();
         } else if (type == "ability") {
-            // console.log("removing parent parent parent = " + thisButton.parentNode.parentNode.parentNode.getAttribute("abilityName"));
             thisButton.parentNode.parentNode.parentNode.remove();
 
         }
@@ -419,11 +476,6 @@ function confirmDelete(thisButton, type) {
 }
 
 
-function resizeInput(element) {
-    // console.log("resizing " + element);
-    $(element).attr('size', $(element).val().length);
-}
-
 
 function getAbilityHtml(Json) {
     return `<div class="ability" abilityName=${Json.name} >
@@ -433,12 +485,12 @@ function getAbilityHtml(Json) {
                     <input type="checkbox" class="isSupernatural" name="btnToggle" />
                     <span class="supernaturalIcon">&#10700;</span>
                   </label>
-                <input class="abilityName" value="${Json.name}">
+                <input class="abilityName resize" value="${Json.name}">
               </div>
               <div class="abilityDetails">
-                <label for="abilityContext" class="abilityField"> <input class="abilityContext" value="${Json.context}"></label>
-                <label for="abilityCost" class="abilityField">Cost: <input class="abilityCost" value="${Json.cost}"></label>
-                <label for="abilityTier" class="abilityField">Tier: <input class="abilityTier" value="${Json.tier}"></label>
+                <label class="abilityField"> <input class="abilityContext resize" value="${Json.context}"></label>
+                <label class="abilityField">Cost: <input class="abilityCost resize" value="${Json.cost}"></label>
+                <label class="abilityField">Tier: <input class="abilityTier" value="${Json.tier}"></label>
                 <button type="button" class="removeAbility confirm" value="${Json.id}">X</button>
               </div>
             </div>
@@ -446,18 +498,30 @@ function getAbilityHtml(Json) {
           </div>`
 }
 
+
+
+
 function getAddAbilityHtml(Json) {
+    console.log("original description: " + Json.description);
+    let newDesc = Json.description.replaceAll(/\r\n|\r|\n/gi, "<br>"); //•
+    console.log("new description: " + newDesc);
+    let supernaturalIcon = "";
+    if (Json.supernatural) {
+        supernaturalIcon = '<div class="fixedSupernatural">&#10700;</div>';
+    }
     return `<div class="newAbility">
           <div class="abilityHeader">
-            <div class="abilityName">${Json.name}</div>
-            <div class="isSupernatural"></div>
-            <label for="abilityContext" class="abilityField">
+            <div class="abilityNameBlock">
+                ${supernaturalIcon}
+                <div class="abilityName">${Json.name}</div>
+            </div>
+            <label class="abilityField">
               <div class="abilityContext">${Json.context}</div>
             </label>
-            <label for="abilityCost" class="abilityField">Cost:  <div class="abilityCost">${Json.cost}</div></label>
-            <label for="abilityTier" class="abilityField">Tier:  <div class="abilityTier">${Json.tier}</div></label>
+            <label class="abilityField">Cost:  <div class="abilityCost">${Json.cost}</div></label>
+            <label class="abilityField">Tier:  <div class="abilityTier">${Json.tier}</div></label>
           </div>
-          <p class="abilityDescription" rows="1" cols="10">${Json.description}</p>
+          <p class="abilityDescription" rows="1" cols="10">${newDesc}</p>
           <button type="button" class="addAbility" name="${Json.type}" value="${Json.id}">Add</button>
         </div>`
 }
@@ -465,11 +529,11 @@ function getAddAbilityHtml(Json) {
 function getCypherHtml(Json) {
     return `<div class="cypher" cypherName=${Json.name}>
             <div class="cypherHeader">
-              <input class="cypherName" value="${Json.name}">
+              <input class="cypherName resize"  value="${Json.name}">
               <div class="cypherDetails">
-                <label for="cypherUse" class="cypherField"> <input class="cypherUse" value="${Json.use}"></label>
-                <label for="cypherLevel" class="cypherField">Level: <input class="cypherLevel" value="${Json.level}"></label>
-                <label for="cypherRange" class="cypherField"> <input class="cypherRange" value="${Json.range}"></label>
+                <label class="cypherField resize"> <input class="cypherUse" value="${Json.use}"></label>
+                <label class="cypherField">Level: <input class="cypherLevel" value="${Json.level}"></label>
+                <label class="cypherField"> <input class="cypherRange" value="${Json.range}"></label>
                 <button type="button" class="removeCypher confirm" value="${Json.id}">X</button>
               </div>
             </div>
@@ -484,9 +548,9 @@ function getAddCypherHtml(Json) {
         <div class="cypherHeader">
           <div class="cypherName">${Json.name}</div>
           <div class="cypherDetails">
-            <label for="cypherRange" class="cypherField"><div class="cypherRange">${Json.range}</div></label>
-            <label for="cypherLevel" class="cypherField">Level: <div class="cypherLevel">${Json.level}</div></label>
-            <label for="cypherUse" class="cypherField"><div class="cypherUse">${Json.use}</div></label>
+            <label class="cypherField"><div class="cypherRange">${Json.range}</div></label>
+            <label class="cypherField">Level: <div class="cypherLevel">${Json.level}</div></label>
+            <label class="cypherField"><div class="cypherUse">${Json.use}</div></label>
           </div>
         </div>
         <p class="cypherDescription">${Json.description}</p>
@@ -505,13 +569,14 @@ function addNewSkill(skillJson) {
 }
 function getSkillHtml(Json) {
     return `<div class="skill">
-              <input class="skillName" value=${Json.name}></input>
-              <input class="skillPool" value=${Json.pool}></input>
+              <input class="skillName" value="${Json.name}"></input>
+              <input class="skillPool" value="${Json.pool}"></input>
               <select class="skillLevel">
                 <option value="inability">Inability</option>
                 <option value="trained">Trained</option>
                 <option value="specialized">Specialized</option>
               </select>
+              <div class="dragHandle" draggable="false">≣</div>
             </div>`;
 }
 function getEmptySkillHtml() {
@@ -523,6 +588,7 @@ function getEmptySkillHtml() {
                 <option value="trained">Trained</option>
                 <option value="specialized">Specialized</option>
               </select>
+              <div class="dragHandle" draggable="false">≣</div>
             </div>`;
 }
 
@@ -531,9 +597,10 @@ function addNewAttack(attackJson) {
 }
 function getAttackHtml(Json) {
     return `<div class="attack">
-              <input class="attackName" value=${Json.name}></input>
-              <input class="attackDifficulty" value=${Json.difficulty}></input>
-              <input class="attackDamage" value=${Json.damage}></input>
+              <input class="attackName" value="${Json.name}"></input>
+              <input class="attackDifficulty" value="${Json.difficulty}"></input>
+              <input class="attackDamage" value="${Json.damage}"></input>
+              <div class="dragHandle" draggable="false">≣</div>
             </div>`;
 }
 function getEmptyAttackHtml() {
@@ -541,10 +608,9 @@ function getEmptyAttackHtml() {
               <input class="attackName"></input>
               <input class="attackDifficulty"></input>
               <input class="attackDamage"></input>
+              <div class="dragHandle" draggable="false">≣</div>
             </div>`;
 }
-
-
 
 
 function saveForm() {
@@ -619,18 +685,26 @@ function saveForm() {
         attacksList.push(thisJSON);
     }
     localStorage.setItem("attacksList", JSON.stringify(attacksList));
-
-
     localStorage.setItem("supernaturalStress", document.querySelectorAll('#supernaturalStress > input[type=checkbox]:checked').length);
 
-
+    let logItemsList = [];
+    for (const logItem of document.getElementById("purchaseLog").children) {
+        let thisJSON = {}
+        if (logItem.classList.contains("logHeader")) {
+            thisJSON.isHeader = true;
+        } else {
+            thisJSON.isHeader = false;
+            thisJSON.source = logItem.getElementsByClassName("logSource")[0].value;
+        }
+        logItemsList.push(thisJSON);
+    }
+    localStorage.setItem("logItemsList", JSON.stringify(logItemsList));
 }
 
+var tierCount = 0;
 
 function loadForm() {
-
     inputsToLoad = document.getElementsByClassName("save");
-
     for (const input of inputsToLoad) {
         if (input.nodeName === "INPUT" /* && input.type === "text" */) {
             if (input.type === "checkbox") {
@@ -684,7 +758,13 @@ function loadForm() {
         superStressBoxes[i].checked = true;
     }
 
-
+    let logItemsList = JSON.parse(localStorage.getItem("logItemsList"));
+    if (logItemsList != null) {
+        logItemsList.forEach(thislogItem => {
+            addLogItem(thislogItem);
+            // input.value = selectedOption;
+        });
+    }
 
     updateDamage();
     updateInfo();
@@ -693,7 +773,141 @@ function loadForm() {
 }
 
 
+function addLogItem(Json) {
+    let html = ``;
+    if (Json.isHeader) {
+        html = `<div class="logHeader reorderItem">
+              <span class="logDescription">Tier ${tierCount}</span>
+              <div class="dragHandle" draggable="false">≣</div>
+            </div>`
+        tierCount++;
+    } else {
+        html = `<div class="logItem reorderItem">
+              <input class="logSource" value="${Json.source}"></input>              
+              <input class="logDescription" value="${Json.description}"></input>
+              <div class="dragHandle" draggable="false">≣</div>
+            </div>`
+    }
 
+    $(html).appendTo("#purchaseLog");
+
+}
+
+
+function download(data, filename, type) {
+    var file = new Blob([data], { type: type });
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+            url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
+}
+/* function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+} */
+
+
+function exportSave() {
+    /* amount = localStorage.length;
+    for (let i = 0; i < amount; i++) {
+        const element = localStorage.key(i);   
+    } */
+    /* var a = document.createElement("a");
+    console.log(JSON.stringify(localStorage));
+    var json = JSON.stringify(localStorage),
+        blob = new Blob([json], { type: "octet/stream" }),
+        url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = "exported save";
+    a.click(); */
+    // download()
+    download(JSON.stringify(localStorage), "MAGRPG save (" + document.getElementById('name').value + ")", ".txt")
+}
+
+function importSave(fileData) {
+    if (document.getElementById('upload').value == null) {
+        console.log("please put a file");
+    } else {
+
+        let newData = JSON.parse(fileData)
+        console.log(newData);
+
+        /* let fl_files = evt.target.files; // JS FileList object
+
+        // use the 1st file from the list
+        let fl_file = fl_files[0];
+
+        let reader = new FileReader(); // built in API
+        let display_file = (e) => { // set the contents of the <textarea>
+            console.info('. . got: ', e.target.result.length, e);
+            document.getElementById('upload_file').innerHTML = e.target.result;
+        };
+
+        let on_reader_load = (fl) => {
+            console.info('. file reader load', fl);
+            document.getElementById('upload_file').innerHTML = e.target.result;
+            importSave();
+        };
+
+        // Closure to capture the file information.
+        reader.onload = on_reader_load(fl_file);
+
+        // Read the file as text.
+        reader.readAsText(fl_file); */
+    }
+}
+
+function handle_file_select(evt) {
+    console.info("[Event] file chooser");
+
+    let fl_files = evt.target.files; // JS FileList object
+
+    // use the 1st file from the list
+    let fl_file = fl_files[0];
+
+    let reader = new FileReader(); // built in API
+    // reader.addEventListener("loadend", handleEvent);
+
+    let display_file = (e) => { // set the contents of the <textarea>
+        console.info('. . got: ', e.target.result.length, e);
+        document.getElementById('upload_file').innerHTML = e.target.result;
+    };
+
+    let on_reader_load = (fl) => {
+        console.info('. file reader load', fl);
+        document.getElementById('upload_file').innerHTML = f1.target.result;
+        importSave(f1.target.result);
+        // return display_file; // a function
+    };
+
+    // Closure to capture the file information.
+    reader.onload = on_reader_load(fl_file);
+
+    // Read the file as text.
+    reader.readAsText(fl_file);
+
+}
+
+// add a function to call when the <input type=file> status changes, but don't "submit" the form
+document.getElementById('upload').addEventListener('change', handle_file_select, false);
 /* // function saveForm(form) {
 let f = JSON.stringify(form);
 window.localStorage.setItem('form', f);
