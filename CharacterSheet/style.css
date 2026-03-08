@@ -54,7 +54,7 @@ textarea, input, select {
 
 button {
     background-color: var(--accent);
-    border-radius: 1em;
+    border-radius: 0.5em;
     border: none;
     margin: 0.2em;
     height: min-content;
@@ -242,6 +242,14 @@ label.damage {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
 }
 label.stress {
     font-size: 0.75em;
@@ -251,6 +259,17 @@ label.stress {
     width: 100%;
     text-transform: uppercase;
     background-color: var(--card);
+    padding: 0.5em;
+    vertical-align: middle;
+}
+
+.supernaturalStress {
+
+    font-family: 'Courier New', 'Courier', serif;
+    text-align: center;
+    width: 100%;
+    text-transform: uppercase;
+    background-color: var(--card);  
     padding: 0.5em;
     vertical-align: middle;
 }
@@ -273,6 +292,11 @@ label.stress {
     grid-template-columns: repeat(5, 2em);
     margin: auto;
     width: min-content;
+}
+
+#superStress {
+
+    width: 100%;
 }
 
 @media(max-width:1500px) {
@@ -409,6 +433,25 @@ label.stress {
     padding-left: 0.6em;
 
 }
+
+
+
+#attacksHeader {
+    background-color: var(--card);
+    margin-bottom: 0.2em;
+    /* padding: 0.1em; */
+    padding-top: 0.3em;
+}
+
+#attacks {
+    background-color: var(--background-darker);
+    /* padding: 0.5em; */
+}
+
+#attacksList {
+    margin: 0 0.1em;
+}
+
 
 
 #attackDiffcultyLabel, #attackDamageLabel {
@@ -678,13 +721,24 @@ label .stat {
     border-bottom: solid 1px black;
 }
 
+
+
 #abilities {
     /* grid-area: abilities; */
     /* display: flex;
     flex-direction: column; */
     background-color: var(--background-darker);
-    padding: 0.5em;
+    /* padding: 0.5em; */
 }
+
+
+#abilities h1 {
+    background-color: var(--card);
+    margin-bottom: 0.2em;
+    padding: 0.2em;
+    padding-top: 0.3em;
+}
+
 
 #abilitiesJump {
     display: none;
@@ -692,11 +746,14 @@ label .stat {
 
 
 #abilitiesList {
+    margin: 0 0.5em;
+    padding-right: 0.25em;
     display: flex;
     flex-direction: column;
 
     gap: 10px;
-    padding: 1em;
+    /* padding: 1em; */
+    
 
     overflow-y: scroll;
     overflow-x: hidden;
@@ -738,7 +795,17 @@ label .stat {
     padding: 0.5em;
 
     background-color: var(--card);
+}
 
+.ability .dragHandle, .cypher .dragHandle {
+    /* position: relative; */
+    height: min-content;
+    background-color: var(--field);
+    display: inline;
+}
+.ability .sortable-placeholder, .cypher .sortable-placeholder {
+       padding: 0.25em 1em;
+    padding: 0.5em; 
 }
 
 .ability h1 {
@@ -916,11 +983,20 @@ input:checked+.supernaturalIcon {
 }
 
 
-
+#cyphers h1 {
+    background-color: var(--card);
+    margin-bottom: 0.2em;
+    padding: 0.2em;
+    padding-top: 0.3em;
+}
 
 #cyphers {
     background-color: var(--background-darker);
-    padding: 0.5em;
+    /* padding: 0.5em; */
+}
+
+#cyphersList {
+    margin: 0 0.5em;
 }
 
 #cyphers label {
@@ -949,6 +1025,26 @@ input:checked+.supernaturalIcon {
 
 
 #skillsHeader {
+    background-color: var(--card);
+    margin-bottom: 0.2em;
+    /* padding: 0.1em; */
+    padding-top: 0.3em;
+}
+
+#skills {
+    background-color: var(--background-darker);
+    /* padding: 0.5em; */
+}
+
+#skillsList {
+    margin: 0 0.1em;
+}
+
+#skills {
+    background-color: var(--background-darker);
+    /* padding: 0.5em; */
+}
+#skillsHeader {
     display: flex;
     flex-direction: row;
     justify-content: end;
@@ -963,12 +1059,19 @@ input:checked+.supernaturalIcon {
     font-size: 0.7vw;
 }
 
+#skillsList {
+    /* padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.5em; */
+}
+
 #skillNameLabel {
     width: min-content;
     /* width: 80%; */
     font-size: 1.2em;
     flex: 1;
     padding-right: 0.5em;
+    padding-left: 0.5em;
 }
 
 #skillPoolLabel {
@@ -984,7 +1087,7 @@ input:checked+.supernaturalIcon {
 }
 
 #skillLevelLabel {
-    margin-right: 1em;
+    margin-right: 1.75em;
 }
 
 .skill {
@@ -992,17 +1095,25 @@ input:checked+.supernaturalIcon {
     flex-direction: row;
     width: 100%;
     font-size: 1em;
+    background-color: var(--card);
     /* 
     display: grid;
     grid-template-columns: 76% repeat(3, 8%); */
 }
+.skill input, .skill select {
+    background-color: var(--field);
+    border: none;
+    border: 0.81px solid black;
+    font-size: 1em;
+}
+
+.removeSkill, .removeAttack {
+    margin:0;
+    padding: 0.1em;
+}
 
 .skill .skillName {
     flex: 1;
-    /* width: 100%; */
-    /* flex: auto; */
-    /* width: 80%; */
-    /* flex: 50%; */
 }
 
 .skillName, .skillPool, .skillLevel {
@@ -1019,6 +1130,7 @@ input:checked+.supernaturalIcon {
     text-align: center;
     letter-spacing: 1em;
 }
+
 
 @media (max-width:1500px) {
     #skills {
@@ -1042,6 +1154,8 @@ input:checked+.supernaturalIcon {
 
 .info {
     margin: 1em 0;
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
 }
 
 /* items */
@@ -1181,6 +1295,38 @@ header label {
     display: flex;
 } */
 
+
+
+#lower {
+    margin: 0 1em;
+    margin-top: 0.25em;
+    grid-column: span 3;
+    gap: 0em 1em;
+    display: grid;
+    grid-template-areas:
+        "looks  equip   arcs"
+        "hist   notes   log";
+}
+
+.appearance {
+    grid-area: looks;
+}
+.background {
+    grid-area: hist;
+}
+.equipment {
+    grid-area: equip;
+}
+.arcs {
+    grid-area: arcs;
+}
+.notes {
+    grid-area: notes;
+}
+.log {
+    grid-area: log;
+}
+
 .XPoptions {
     display: none;
     position: absolute;
@@ -1258,10 +1404,13 @@ header label {
     border-radius: 0.25em;
     margin: auto 0;
     width: 1em;
+    color:#6d6d6d
 }
 .dragHandle:hover {
     color: white;
 }
+
+
 
 /* .reorderItem:hover {
     background: #e8f0ff;
@@ -1411,12 +1560,20 @@ footer {
 
 #confirmMessage {
     grid-area: message;
-    font-size: 4vw;
+    /* font-size: 5vw; */
     text-align: center;
 }
-
+#confirmTarget {
+    font-size: 1.2em;
+}
+/* @media (min-width:600) {
+    #confirmMessage {
+        font-size: 2em;
+    }
+}
+ */
 #confirmYes, #confirmNo {
-    font-size: 2.5em;
+    font-size: 1.5em;
     margin: auto;
     margin-bottom: 0;
     padding: 0.5em 1em;

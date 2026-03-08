@@ -26,7 +26,7 @@
   <input id="upload" type="file" accept=".txt" name="files" size=30>
   <!-- <textarea id="filePreview"></textarea> -->
 
-  <textarea class="form-control" rows=35 cols=120 id="upload_file"></textarea>
+  <!-- <textarea class="form-control" rows=35 cols=120 id="upload_file"></textarea> -->
   <button type="button" id="quickstart">New Character</button>
   <main>
 
@@ -189,21 +189,18 @@
               <label for="stressLevel" class="stress stressLevel">Stress Level<input class="save" id="stressLevel">
               </label>
             </div>
-            <label class="stress supernaturalStress">Stress levels from supernatural sources:
-              <!-- <input class="supernaturalStress save" id="supernaturalStress"> -->
-              <div id="supernaturalStress">
-                <input type="checkbox" id="superStress0" class="superStressBox" />
-                <input type="checkbox" id="superStress1" class="superStressBox" />
-                <input type="checkbox" id="superStress2" class="superStressBox" />
-                <input type="checkbox" id="superStress3" class="superStressBox" />
-                <input type="checkbox" id="superStress4" class="superStressBox" />
-                <input type="checkbox" id="superStress5" class="superStressBox" />
-                <input type="checkbox" id="superStress6" class="superStressBox" />
-                <input type="checkbox" id="superStress7" class="superStressBox" />
-                <input type="checkbox" id="superStress8" class="superStressBox" />
-                <input type="checkbox" id="superStress9" class="superStressBox" />
-              </div>
-            </label>
+
+            <div class="stress supernaturalStress">
+              <label for="superStress" id="superStressText">Stress levels from supernatural sources:</label>
+              <input type="range" id="superStress" name="superStress" min="0" max="10" class="save" />
+            </div>
+
+
+            <!-- <label id="superStressText" class="stress supernaturalStress">Stress levels from supernatural sources:
+
+              <input type="range" id="superStress" name="superStress" min="0" max="10" class="save" />
+
+            </label> -->
           </div>
         </div>
 
@@ -327,8 +324,8 @@
           <button type="button" id="addSkill">New Skill</button>
         </div>
       </div>
+      <div id="lower">
 
-      <div class="right-side lower">
         <div class="appearance info">
           <!-- <label for="appearance">Appearance</label> -->
           <h3>Appearance</h3>
@@ -344,7 +341,7 @@
           <!-- <label for="equipment">Equipment</label> -->
           <h3>Equipment</h3>
           <textarea id="equipment" class="equipment save" rows="2" cols="10"></textarea>
-          <div id="itemsHeader">
+          <!-- <div id="itemsHeader">
             <h1 id="itemNameLabel">Items:</h1>
             <h1></h1>
             <div id="itemDiffcultyLabel">Description</div>
@@ -357,11 +354,9 @@
               <input class="itemPrice"></input>
             </div>
           </div>
-          <button type="button" id="additem">New item</button>
+          <button type="button" id="additem">New item</button> -->
         </div>
-      </div>
 
-      <div class="middle lower">
         <div class="arcs info">
           <!-- <label for="arcs">Arcs</label> -->
           <h3>Arcs</h3>
@@ -374,31 +369,18 @@
           <h3>Notes</h3>
           <textarea id="notes" class="notes save" rows="2" cols="10"></textarea>
         </div>
-      </div>
-      <div class="left-side lower">
+
         <div class="log info">
           <!-- <label for="log">Log</label> -->
           <h3>Advancement Log</h3>
           <textarea id="log" class="log save" rows="2" cols="10"></textarea>
         </div>
-        
+
+
+
       </div>
 
 
-
-      <!-- <div class="logItem reorderItem">
-              <div class="logOption"></div>
-              <select class="logOption">
-                <option value="increaseCapabilities">Increase Capabilities</option>
-                <option value="moveTowardPerfection">Move Toward Perfection</option>
-                <option value="extraEffort">Extra Effort</option>
-                <option value="skillTraining">Skill Training</option>
-                <option value="otherOptions">Other Options</option>
-              </select>
-              <input class="logSource"></input>              
-              <input class="logDescription"></input>
-              <div class="dragHandle" draggable="false">≣</div>
-            </div> -->
 
 
     </form>
@@ -418,7 +400,12 @@
   <div id="popupMask"> </div>
 
   <div id="confirmWindow" class="popup">
-    <h1 id="confirmMessage">Are you sure?</h1>
+    <div id="confirmMessage">
+      <h1>Are you sure?</h1>
+      <!-- <p>This can't be undone. Are you sure you want to delete</p> -->
+      <p id="confirmTarget"></p>
+    </div>
+
     <button id="confirmYes">Confirm</button>
     <button id="confirmNo">Cancel</button>
   </div>

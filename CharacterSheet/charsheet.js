@@ -63,6 +63,7 @@ $(".closeSelector").on("click", function () {
     $("#abilityWindow").css('display', 'none');
     $("#cypherWindow").css('display', 'none');
     $("#popupMask").css('display', 'none');
+    $("#quickstartWindow").css('display', 'none');
 });
 $(document).keydown(function (e) {
     // ESCAPE key pressed
@@ -72,6 +73,9 @@ $(document).keydown(function (e) {
         $("#confirmWindow").css('display', 'none');
         $("#quickstartWindow").css('display', 'none');
         $("#popupMask").css('display', 'none');
+    } else if (event.ctrlKey && event.keyCode == 83) {
+        event.preventDefault()
+        saveForm();
     }
 });
 $("#newAbility").on("click", function () {
@@ -115,6 +119,7 @@ function autofill() {
 }
 
 $(".reorderList").sortable({
+    axis: "y",
     handle: ".dragHandle",
     snap: true,
     containment: "parent",
@@ -122,6 +127,7 @@ $(".reorderList").sortable({
     // helper: "clone",
     placeholder: "sortable-placeholder",
     forcePlaceholderSize: true,
+    tolerance: "pointer",
     // forceHelperSize: true
 })
 
@@ -219,6 +225,11 @@ $("#filterAbilities").on("click", function () {
 $("#damage").on("input", function () {
     updateDamage();
 });
+
+
+$("#superStress").on("input", function () {
+    updateSuperStress();
+});
 $("#recovery").on("input", function () {
     updateRecovery();
 });
@@ -227,6 +238,12 @@ $("#recovery").on("input", function () {
 function updateInfo() {
     document.getElementById("recoveryAmount").innerHTML = "1d6+" + tier.value;
     // updateDamage();
+}
+
+function updateSuperStress() {
+    let superStress = document.getElementById("superStress");
+    document.getElementById("superStressText").innerHTML = "Stress levels from supernatural sources: "+ superStress.value+"/10";
+    // 
 }
 
 function updateDamage() {
@@ -279,15 +296,16 @@ function updateRecovery() {
 function filterAbilities() {
     let allAbilities = ["TEST", "test2"];
     let sourceSelector = document.querySelector('input[name="source"]:checked');
-
+    console.log("filtering abilities");
 
     if (sourceSelector == null) {
         return;
     } else if (sourceSelector.value == "type") {
         allAbilities = window[type.value + "_ABILITIES"];
-        console.log("allAbilities = " + type.value + "_ABILITIES");
+        // console.log("allAbilities = " + type.value + "_ABILITIES");
     } else if (sourceSelector.value == "focus") {
         allAbilities = window[focus.value + "_ABILITIES"];
+        console.log("allAbilities = " + focus.value + "_ABILITIES");
     } else {
         return;
     }
@@ -298,7 +316,7 @@ function filterAbilities() {
     let abilities = [];
     // abilities = allAbilities;
     // let tierSelector = document.getElementById("tierSelection");
-    console.log("abilities: " + abilities.length);
+    // console.log("abilities: " + abilities.length);
 
     let tierFilters = document.querySelectorAll('#tierSelection input[type="checkbox"]')
     useTier = false;
@@ -385,7 +403,7 @@ function addNewAbility(abilityJson) {
 
 
     let thisButton = thisAbility.getElementsByClassName("removeAbility")[0];
-    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "ability") }, false);
+    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "ability", abilityJson.name) }, false);
 
     /* $(".removeAbility").on("click", function () {
         thisButton = this;
@@ -406,7 +424,10 @@ function addNewCypher(cypherJson) {
         adjustWidthOfInput(element);
     }
     let thisButton = thisCypher.getElementsByClassName("removeCypher")[0];
-    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "cypher") }, false);
+    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "cypher", cypherJson.name) }, false);
+    console.log($(thisButton).parent().parent().parent().data());
+    $(thisButton).parent().parent().parent().data('test', cypherJson.name + "TEST")
+    console.log(thisButton.parentNode.parentNode.parentNode.className);
 }
 function resizeInput(element) {
     // console.log("resizing " + element);
@@ -434,27 +455,52 @@ function adjustWidthOfInput(inputEl) {
 
 
 
-function deleteCypher(button) {
+/* function deleteCypher(button) {
     console.log("this = " + this.className);
-    console.log("parent = " + this.parentNode.className);
+    console.log("parent = " + this.parentNode);
     console.log("parent parent= " + this.parentNode.parentNode.className);
     console.log("parent parent parent = " + this.parentNode.parentNode.parentNode.className);
-}
+} */
 
-function confirmDelete(thisButton, type) {
+function confirmDelete(thisButton, type, messageIn) {
     console.log("confirming...?");
     $("#confirmWindow").css('display', 'grid');
     $("#popupMask").css('display', 'flex');
 
+    let parent = thisButton.parentNode.parentNode.parentNode;
+    if (type == "skill") {
+        parent = thisButton.parentNode;
+        console.log(parent.className);
+    } else if (type == "attack") {
+        thisButton.parentNode.parentNode.parentNode.remove();
+    }
+
+    // document.getElementById("confirmTarget").innerHTML = "This can't be undone. Are you sure you want to delete \"" + message + "\" ?";
+    let message = messageIn;
+    if (type == "cypher") {
+        message = parent.getElementsByClassName("cypherName")[0].value
+    } else if (type == "ability") {
+        message = parent.getElementsByClassName("abilityName")[0].value
+    } else if (type == "skill") {
+        message = parent.getElementsByClassName("skillName")[0].value
+    } else if (type == "attack") {
+        message = parent.getElementsByClassName("attackName")[0].value
+    }
+    document.getElementById("confirmTarget").innerHTML = "This can't be undone. Are you sure you want to delete \"" + message + "\" ?";
     $('#confirmYes').click(function () {
         console.log("confirmed");
         console.log("removing");
         if (type == "cypher") {
-            thisButton.parentNode.parentNode.parentNode.remove();
+            // thisButton.parentNode.parentNode.parentNode.remove();
+
         } else if (type == "ability") {
             thisButton.parentNode.parentNode.parentNode.remove();
-
+        } else if (type == "skill") {
+            thisButton.parentNode.parentNode.parentNode.remove();
+        } else if (type == "attack") {
+            thisButton.parentNode.parentNode.parentNode.remove();
         }
+        parent.remove();
         $("#confirmWindow").css('display', 'none');
         $("#popupMask").css('display', 'none');
     });
@@ -478,14 +524,16 @@ function confirmDelete(thisButton, type) {
 
 
 function getAbilityHtml(Json) {
-    return `<div class="ability" abilityName=${Json.name} >
+    return `<div class="ability" abilityName="${Json.name}" >
+    
             <div class="abilityHeader">
               <div class="abilityNameBlock">
+            <div class="dragHandle" draggable="false">↕</div>
+                <input class="abilityName resize" value="${Json.name}">
                 <label class="toggle">
                     <input type="checkbox" class="isSupernatural" name="btnToggle" />
                     <span class="supernaturalIcon">&#10700;</span>
                   </label>
-                <input class="abilityName resize" value="${Json.name}">
               </div>
               <div class="abilityDetails">
                 <label class="abilityField"> <input class="abilityContext resize" value="${Json.context}"></label>
@@ -502,9 +550,9 @@ function getAbilityHtml(Json) {
 
 
 function getAddAbilityHtml(Json) {
-    console.log("original description: " + Json.description);
+    // console.log("original description: " + Json.description);
     let newDesc = Json.description.replaceAll(/\r\n|\r|\n/gi, "<br>"); //•
-    console.log("new description: " + newDesc);
+    // console.log("new description: " + newDesc);
     let supernaturalIcon = "";
     if (Json.supernatural) {
         supernaturalIcon = '<div class="fixedSupernatural">&#10700;</div>';
@@ -527,13 +575,16 @@ function getAddAbilityHtml(Json) {
 }
 
 function getCypherHtml(Json) {
-    return `<div class="cypher" cypherName=${Json.name}>
+    return `<div class="cypher" cypherName="${Json.name}">
             <div class="cypherHeader">
-              <input class="cypherName resize"  value="${Json.name}">
-              <div class="cypherDetails">
-                <label class="cypherField resize"> <input class="cypherUse" value="${Json.use}"></label>
-                <label class="cypherField">Level: <input class="cypherLevel" value="${Json.level}"></label>
-                <label class="cypherField"> <input class="cypherRange" value="${Json.range}"></label>
+                <div class=cypherNameBlock>
+                    <div class="dragHandle" draggable="false">↕</div>
+                    <input class="cypherName resize"  value="${Json.name}">
+                </div>
+                <div class="cypherDetails">
+                    <label class="cypherField resize"> <input class="cypherUse" value="${Json.use}"></label>
+                    <label class="cypherField">Level: <input class="cypherLevel" value="${Json.level}"></label>
+                    
                 <button type="button" class="removeCypher confirm" value="${Json.id}">X</button>
               </div>
             </div>
@@ -541,7 +592,7 @@ function getCypherHtml(Json) {
           </div>`
 }
 
-
+// <label class="cypherField"> <input class="cypherRange" value="${Json.range}"></label>
 
 function getAddCypherHtml(Json) {
     return `<div class="newCypher">
@@ -562,14 +613,19 @@ function addNewSkill(skillJson) {
     $(getSkillHtml(skillJson)).appendTo("#skillsList");
     let thisSkill = skills.lastChild;
     thisSkill.getElementsByClassName("skillLevel")[0].value = skillJson.level
+
+    let thisButton = thisSkill.getElementsByClassName("removeSkill")[0];
+    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "skill", skillJson.name) }, false);
     /* thisSkill.getElementsByClassName(skillJson.level)[0].value = skillJson.level */
     /*thisSkill.getElementsByClassName("trained")[0].checked = skillJson.trained;
     thisSkill.getElementsByClassName("specialized")[0].checked = skillJson.specialized;
     thisSkill.getElementsByClassName("inability")[0].checked = skillJson.inability; */
 }
 function getSkillHtml(Json) {
+    console.log(Json);
     return `<div class="skill">
               <input class="skillName" value="${Json.name}"></input>
+              <button type="button" class="removeSkill confirm" value="${Json.name}">X</button>
               <input class="skillPool" value="${Json.pool}"></input>
               <select class="skillLevel">
                 <option value="inability">Inability</option>
@@ -580,7 +636,7 @@ function getSkillHtml(Json) {
             </div>`;
 }
 function getEmptySkillHtml() {
-    return `<div class="skill">
+    /* return `<div class="skill">
               <input class="skillName"></input>
               <input class="skillPool"></input>
               <select class="skillLevel">
@@ -589,7 +645,8 @@ function getEmptySkillHtml() {
                 <option value="specialized">Specialized</option>
               </select>
               <div class="dragHandle" draggable="false">≣</div>
-            </div>`;
+            </div>`; */
+    return getSkillHtml({ name: '', pool: '', level: '' });
 }
 
 function addNewAttack(attackJson) {
@@ -598,18 +655,20 @@ function addNewAttack(attackJson) {
 function getAttackHtml(Json) {
     return `<div class="attack">
               <input class="attackName" value="${Json.name}"></input>
+              <button type="button" class="removeAttack confirm" value="${Json.name}">X</button>
               <input class="attackDifficulty" value="${Json.difficulty}"></input>
               <input class="attackDamage" value="${Json.damage}"></input>
               <div class="dragHandle" draggable="false">≣</div>
             </div>`;
 }
 function getEmptyAttackHtml() {
-    return `<div class="attack">
+    return getAttackHtml({ name: '', difficulty: '', damage: '' });
+    /* return `<div class="attack">
               <input class="attackName"></input>
               <input class="attackDifficulty"></input>
               <input class="attackDamage"></input>
               <div class="dragHandle" draggable="false">≣</div>
-            </div>`;
+            </div>`; */
 }
 
 
@@ -654,7 +713,7 @@ function saveForm() {
         let thisJSON = {}
         // thisJSON.id = ability.getElementsByClassName("abilityName")[0].value;
         thisJSON.name = cypher.getElementsByClassName("cypherName")[0].value;
-        thisJSON.range = cypher.getElementsByClassName("cypherRange")[0].value;
+        // thisJSON.range = cypher.getElementsByClassName("cypherRange")[0].value;
         thisJSON.level = cypher.getElementsByClassName("cypherLevel")[0].value;
         thisJSON.use = cypher.getElementsByClassName("cypherUse")[0].value;
         thisJSON.description = cypher.getElementsByClassName("cypherDescription")[0].value;
@@ -666,7 +725,7 @@ function saveForm() {
     let skillsList = [];
     for (const skill of skills.getElementsByClassName('skill')) {
         let thisJSON = {}
-        thisJSON.name = skill.getElementsByClassName("skillName")[0].value;
+        thisJSON.name = skill.getElementsByClassName("skillName")[0].value/* .replaceall(" ", "_") */;
         thisJSON.pool = skill.getElementsByClassName("skillPool")[0].value;
         thisJSON.level = skill.getElementsByClassName("skillLevel")[0].value;/* 
         thisJSON.trained = skill.getElementsByClassName("trained")[0].checked;
@@ -686,19 +745,19 @@ function saveForm() {
     }
     localStorage.setItem("attacksList", JSON.stringify(attacksList));
     localStorage.setItem("supernaturalStress", document.querySelectorAll('#supernaturalStress > input[type=checkbox]:checked').length);
-
-    let logItemsList = [];
-    for (const logItem of document.getElementById("purchaseLog").children) {
-        let thisJSON = {}
-        if (logItem.classList.contains("logHeader")) {
-            thisJSON.isHeader = true;
-        } else {
-            thisJSON.isHeader = false;
-            thisJSON.source = logItem.getElementsByClassName("logSource")[0].value;
+    /* 
+        let logItemsList = [];
+        for (const logItem of document.getElementById("purchaseLog").children) {
+            let thisJSON = {}
+            if (logItem.classList.contains("logHeader")) {
+                thisJSON.isHeader = true;
+            } else {
+                thisJSON.isHeader = false;
+                thisJSON.source = logItem.getElementsByClassName("logSource")[0].value;
+            }
+            logItemsList.push(thisJSON);
         }
-        logItemsList.push(thisJSON);
-    }
-    localStorage.setItem("logItemsList", JSON.stringify(logItemsList));
+        localStorage.setItem("logItemsList", JSON.stringify(logItemsList)); */
 }
 
 var tierCount = 0;
@@ -767,6 +826,7 @@ function loadForm() {
     }
 
     updateDamage();
+    updateSuperStress();
     updateInfo();
 
 
