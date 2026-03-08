@@ -88,10 +88,12 @@ $("#newCypher").on("click", function () {
     $("#popupMask").css('display', 'flex');
 });
 $("#addSkill").on("click", function () {
-    $(getEmptySkillHtml()).appendTo("#skillsList");
+    // $(getEmptySkillHtml()).appendTo("#skillsList");
+    addEmptySkill();
     // console.log("adding empty skill");
 });
 $("#addAttack").on("click", function () {
+    addEmptyAttack();
     $(getEmptyAttackHtml()).appendTo("#attacksList");
     // console.log("adding empty skill");
 });
@@ -242,7 +244,7 @@ function updateInfo() {
 
 function updateSuperStress() {
     let superStress = document.getElementById("superStress");
-    document.getElementById("superStressText").innerHTML = "Stress levels from supernatural sources: "+ superStress.value+"/10";
+    document.getElementById("superStressText").innerHTML = "Stress levels from supernatural sources: " + superStress.value + "/10";
     // 
 }
 
@@ -462,35 +464,35 @@ function adjustWidthOfInput(inputEl) {
     console.log("parent parent parent = " + this.parentNode.parentNode.parentNode.className);
 } */
 
-function confirmDelete(thisButton, type, messageIn) {
+function confirmDelete(thisButton, type) {
     console.log("confirming...?");
     $("#confirmWindow").css('display', 'grid');
     $("#popupMask").css('display', 'flex');
 
     let parent = thisButton.parentNode.parentNode.parentNode;
-    if (type == "skill") {
+    if (type == "skill" || type == "attack") {
         parent = thisButton.parentNode;
-        console.log(parent.className);
-    } else if (type == "attack") {
-        thisButton.parentNode.parentNode.parentNode.remove();
+        // console.log(parent.className);
     }
 
     // document.getElementById("confirmTarget").innerHTML = "This can't be undone. Are you sure you want to delete \"" + message + "\" ?";
-    let message = messageIn;
-    if (type == "cypher") {
-        message = parent.getElementsByClassName("cypherName")[0].value
-    } else if (type == "ability") {
-        message = parent.getElementsByClassName("abilityName")[0].value
-    } else if (type == "skill") {
-        message = parent.getElementsByClassName("skillName")[0].value
-    } else if (type == "attack") {
-        message = parent.getElementsByClassName("attackName")[0].value
-    }
+    let message = "";
+
+    message = parent.getElementsByClassName(type + "Name")[0].value
+    /*  if (type == "cypher") {
+         message = parent.getElementsByClassName("cypherName")[0].value
+     } else if (type == "ability") {
+         message = parent.getElementsByClassName("abilityName")[0].value
+     } else if (type == "skill") {
+         message = parent.getElementsByClassName("skillName")[0].value
+     } else if (type == "attack") {
+         message = parent.getElementsByClassName("attackName")[0].value
+     } */
     document.getElementById("confirmTarget").innerHTML = "This can't be undone. Are you sure you want to delete \"" + message + "\" ?";
     $('#confirmYes').click(function () {
         console.log("confirmed");
         console.log("removing");
-        if (type == "cypher") {
+        /* if (type == "cypher") {
             // thisButton.parentNode.parentNode.parentNode.remove();
 
         } else if (type == "ability") {
@@ -499,7 +501,7 @@ function confirmDelete(thisButton, type, messageIn) {
             thisButton.parentNode.parentNode.parentNode.remove();
         } else if (type == "attack") {
             thisButton.parentNode.parentNode.parentNode.remove();
-        }
+        } */
         parent.remove();
         $("#confirmWindow").css('display', 'none');
         $("#popupMask").css('display', 'none');
@@ -613,20 +615,36 @@ function addNewSkill(skillJson) {
     $(getSkillHtml(skillJson)).appendTo("#skillsList");
     let thisSkill = skills.lastChild;
     thisSkill.getElementsByClassName("skillLevel")[0].value = skillJson.level
+    thisSkill.getElementsByClassName("skillPool")[0].value = skillJson.pool
 
     let thisButton = thisSkill.getElementsByClassName("removeSkill")[0];
-    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "skill", skillJson.name) }, false);
+    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "skill") }, false);
     /* thisSkill.getElementsByClassName(skillJson.level)[0].value = skillJson.level */
     /*thisSkill.getElementsByClassName("trained")[0].checked = skillJson.trained;
     thisSkill.getElementsByClassName("specialized")[0].checked = skillJson.specialized;
     thisSkill.getElementsByClassName("inability")[0].checked = skillJson.inability; */
+}
+
+function addEmptySkill() {
+    $(getEmptySkillHtml()).appendTo("#skillsList");
+    let thisSkill = skills.lastChild;
+    // thisSkill.getElementsByClassName("skillLevel")[0].value = skillJson.level
+    // thisSkill.getElementsByClassName("skillPool")[0].value = skillJson.pool
+
+    let thisButton = thisSkill.getElementsByClassName("removeSkill")[0];
+    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "skill") }, false);
 }
 function getSkillHtml(Json) {
     console.log(Json);
     return `<div class="skill">
               <input class="skillName" value="${Json.name}"></input>
               <button type="button" class="removeSkill confirm" value="${Json.name}">X</button>
-              <input class="skillPool" value="${Json.pool}"></input>
+              <!--  <input class="skillPool" value="${Json.pool}"></input> -->
+              <select class="skillPool">
+                <option value="might">Might</option>
+                <option value="speed">Speed</option>
+                <option value="intellect">Intellect</option>
+              </select>
               <select class="skillLevel">
                 <option value="inability">Inability</option>
                 <option value="trained">Trained</option>
@@ -636,39 +654,40 @@ function getSkillHtml(Json) {
             </div>`;
 }
 function getEmptySkillHtml() {
-    /* return `<div class="skill">
-              <input class="skillName"></input>
-              <input class="skillPool"></input>
-              <select class="skillLevel">
-                <option value="inability">Inability</option>
-                <option value="trained">Trained</option>
-                <option value="specialized">Specialized</option>
-              </select>
-              <div class="dragHandle" draggable="false">≣</div>
-            </div>`; */
     return getSkillHtml({ name: '', pool: '', level: '' });
 }
 
 function addNewAttack(attackJson) {
     $(getAttackHtml(attackJson)).appendTo("#attacksList");
+    let thisAttack = attacks.lastChild;
+    thisAttack.getElementsByClassName("attackDifficulty")[0].value = attackJson.difficulty
+
+    let thisButton = thisAttack.getElementsByClassName("removeAttack")[0];
+    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "attack") }, false);
+}
+function addEmptyAttack() {
+    $(getEmptyAttackHtml()).appendTo("#attacksList");
+    let thisAttack = attacks.lastChild;
+
+    let thisButton = thisAttack.getElementsByClassName("removeAttack")[0];
+    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "attack") }, false);
 }
 function getAttackHtml(Json) {
     return `<div class="attack">
               <input class="attackName" value="${Json.name}"></input>
               <button type="button" class="removeAttack confirm" value="${Json.name}">X</button>
-              <input class="attackDifficulty" value="${Json.difficulty}"></input>
+              <select class="attackDifficulty">
+                <option value="eased">Eased</option>
+                <option value="-">    -Normal</option>
+                <option value="hindered">Hindered</option>
+              </select>
               <input class="attackDamage" value="${Json.damage}"></input>
               <div class="dragHandle" draggable="false">≣</div>
             </div>`;
 }
+//   <input class="attackDifficulty" value="${Json.difficulty}"></input>
 function getEmptyAttackHtml() {
     return getAttackHtml({ name: '', difficulty: '', damage: '' });
-    /* return `<div class="attack">
-              <input class="attackName"></input>
-              <input class="attackDifficulty"></input>
-              <input class="attackDamage"></input>
-              <div class="dragHandle" draggable="false">≣</div>
-            </div>`; */
 }
 
 
@@ -903,35 +922,26 @@ function exportSave() {
 }
 
 function importSave(fileData) {
+    console.log("importing save");
     if (document.getElementById('upload').value == null) {
         console.log("please put a file");
     } else {
 
         let newData = JSON.parse(fileData)
         console.log(newData);
+        // console.log(JSON.parse(newData));
 
-        /* let fl_files = evt.target.files; // JS FileList object
+        for (const [key, value] of Object.entries(newData)) {
+            console.log(`${key}: ${value}`);
+            localStorage.setItem(key, value)
+        }
+        loadForm();
 
-        // use the 1st file from the list
-        let fl_file = fl_files[0];
-
-        let reader = new FileReader(); // built in API
-        let display_file = (e) => { // set the contents of the <textarea>
-            console.info('. . got: ', e.target.result.length, e);
-            document.getElementById('upload_file').innerHTML = e.target.result;
-        };
-
-        let on_reader_load = (fl) => {
-            console.info('. file reader load', fl);
-            document.getElementById('upload_file').innerHTML = e.target.result;
-            importSave();
-        };
-
-        // Closure to capture the file information.
-        reader.onload = on_reader_load(fl_file);
-
-        // Read the file as text.
-        reader.readAsText(fl_file); */
+        // localStorage.clear()
+        /* console.log("length: " + newData.length);
+        for (let i = 0; i < newData.length; i++) {
+            console.log(newData[i]);
+        } */
     }
 }
 
@@ -940,29 +950,40 @@ function handle_file_select(evt) {
 
     let fl_files = evt.target.files; // JS FileList object
 
+    // console.log(fl_files[0]);
+
     // use the 1st file from the list
     let fl_file = fl_files[0];
 
     let reader = new FileReader(); // built in API
-    // reader.addEventListener("loadend", handleEvent);
-
-    let display_file = (e) => { // set the contents of the <textarea>
-        console.info('. . got: ', e.target.result.length, e);
-        document.getElementById('upload_file').innerHTML = e.target.result;
-    };
-
-    let on_reader_load = (fl) => {
-        console.info('. file reader load', fl);
-        document.getElementById('upload_file').innerHTML = f1.target.result;
-        importSave(f1.target.result);
-        // return display_file; // a function
-    };
-
-    // Closure to capture the file information.
-    reader.onload = on_reader_load(fl_file);
-
-    // Read the file as text.
     reader.readAsText(fl_file);
+    reader.onload = function () {
+        console.log(reader.result);
+        importSave(reader.result);
+    };
+    // console.log(reader.readAsText(fl_file));
+
+    // reader.addEventListener("loadend", handleEvent);
+    /* 
+        let display_file = (e) => { // set the contents of the <textarea>
+            console.info('. . got: ', e.target.result.length, e);
+            document.getElementById('upload_file').innerHTML = e.target.result;
+        };
+    
+        let on_reader_load = (fl) => {
+            console.info('. file reader load', fl);
+            document.getElementById('upload_file').innerHTML = f1.target.result;
+            importSave(f1.target.result);
+            // return display_file; // a function
+        };*/
+
+
+    // Closure to capture the file information. 
+    // reader.onload = on_reader_load(fl_file);
+
+    // importSave(fl_file.target.result);
+    // Read the file as text.
+    // 
 
 }
 

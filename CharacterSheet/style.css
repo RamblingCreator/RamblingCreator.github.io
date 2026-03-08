@@ -54,7 +54,9 @@ textarea, input, select {
 
 button {
     background-color: var(--accent);
-    border-radius: 0.5em;
+    /* border-radius: 0.5em; */
+    border-radius: 0.75em;
+
     border: none;
     margin: 0.2em;
     height: min-content;
@@ -243,7 +245,7 @@ label.damage {
     flex-direction: column;
     gap: 10px;
 
-    
+
     -webkit-user-select: none;
     /* Safari */
     -ms-user-select: none;
@@ -269,7 +271,7 @@ label.stress {
     text-align: center;
     width: 100%;
     text-transform: uppercase;
-    background-color: var(--card);  
+    background-color: var(--card);
     padding: 0.5em;
     vertical-align: middle;
 }
@@ -451,20 +453,25 @@ label.stress {
 #attacksList {
     margin: 0 0.1em;
 }
+#attackDamageLabel {
+    margin-right: 1.75em;
 
-
-
+}
 #attackDiffcultyLabel, #attackDamageLabel {
     font-size: 1em;
     width: 5em;
 
     font-size: 0.8em;
     width: 6.25em;
+    width: 4em;
 
 
     text-align: center;
     margin-top: auto;
+}
 
+#attackDiffcultyLabel {
+    width: 2.75em;
 }
 #attacksHeader {
     display: flex;
@@ -477,27 +484,39 @@ label.stress {
     display: flex;
     flex-direction: row;
     width: 100%;
+    font-size: 1em;
+    background-color: var(--card);
+    height: min-content;
 }
 
 .attackName {
     width: 80%;
 }
-
+/* 
 .attackDifficulty {
     width: 5em;
     text-align: center;
+} */
+
+.attackDifficulty {
+    width: 2.25em;
+    text-align: center;
+    letter-spacing: 1em;
 }
 
 .attackDamage {
-    width: 5em;
+    width: 3.5em;
     text-align: center;
 }
 
-.attack input {
+.attack input, .attack select {
     background-color: var(--field);
     border: none;
     border: 0.81px solid black;
     font-size: 1em;
+    
+    border-right-width: 0;
+    height: 100%;
 }
 
 
@@ -751,9 +770,9 @@ label .stat {
     display: flex;
     flex-direction: column;
 
-    gap: 10px;
+    gap: 8px;
     /* padding: 1em; */
-    
+
 
     overflow-y: scroll;
     overflow-x: hidden;
@@ -793,6 +812,7 @@ label .stat {
     /* margin: 0 1em; */
     padding: 0.25em 1em;
     padding: 0.5em;
+    padding-bottom: 0.1em;
 
     background-color: var(--card);
 }
@@ -804,8 +824,8 @@ label .stat {
     display: inline;
 }
 .ability .sortable-placeholder, .cypher .sortable-placeholder {
-       padding: 0.25em 1em;
-    padding: 0.5em; 
+    padding: 0.25em 1em;
+    padding: 0.5em;
 }
 
 .ability h1 {
@@ -823,6 +843,7 @@ label .stat {
     background-color: var(--field);
     resize: vertical;
     margin: 0.25em 0;
+    margin-bottom: 0;
     /* margin-top: 0.2em; */
     /* border: none; */
     /* border-bottom: 1px solid black; */
@@ -992,16 +1013,48 @@ input:checked+.supernaturalIcon {
 
 #cyphers {
     background-color: var(--background-darker);
+    /* display: flex;
+    flex-direction: column; */
     /* padding: 0.5em; */
+    display: block;
+}
+
+#cyphersBottom {
+    display: block;
+    margin-top: 0.25em;
+    padding: 0.25em;
 }
 
 #cyphersList {
     margin: 0 0.5em;
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+    /* padding: 1em; */
+
+
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 775px;
 }
 
 #cyphers label {
     background-color: var(--card);
+    padding: 0.5em;
 }
+#cypherLimit {
+    background-color: var(--field);
+    border: none;
+    /* border: 0.81px solid black; */
+    font-size: 1em;
+    width: 2em;
+    font-size: 1.25em;
+}
+
+/* label:has(#cypherLimit) {
+    
+} */
 
 .cypherLevel, .cypherRange, .cypherUse {
     /* .cypherDetails{ */
@@ -1104,12 +1157,23 @@ input:checked+.supernaturalIcon {
     background-color: var(--field);
     border: none;
     border: 0.81px solid black;
+    border-right-width: 0;
     font-size: 1em;
 }
 
 .removeSkill, .removeAttack {
-    margin:0;
-    padding: 0.1em;
+    margin: 0;
+    padding: 0;
+    padding: 1px 10px;
+    background-color: transparent;
+    color: #a19d94;
+    /* font-size: 0.9em;     */
+    background-color: var(--field);
+    border-radius: 0;
+    
+    border: 0.81px solid black;
+    border-left-width: 0;
+    height: 100%;
 }
 
 .skill .skillName {
@@ -1121,12 +1185,13 @@ input:checked+.supernaturalIcon {
 }
 
 .skillPool {
-    width: 2.5em;
+    width: 2.25em;
     text-align: center;
+    letter-spacing: 1em;
 }
 
 .skillLevel {
-    width: 2em;
+    width: 2.5em;
     text-align: center;
     letter-spacing: 1em;
 }
@@ -1404,7 +1469,7 @@ header label {
     border-radius: 0.25em;
     margin: auto 0;
     width: 1em;
-    color:#6d6d6d
+    color: #6d6d6d
 }
 .dragHandle:hover {
     color: white;
@@ -1756,6 +1821,14 @@ select.quickstart {
         flex-wrap: wrap;
     }
 
+
+    #lower {
+        grid-template-areas:
+            "looks  hist"
+            "equip  notes"
+            "arcs   log";
+    }
+
 }
 
 
@@ -1768,5 +1841,15 @@ select.quickstart {
     }
     .right-side.upper {
         flex-direction: column;
+    }
+
+    #lower {
+        grid-template-areas:
+            "looks"
+            "hist"
+            "equip"
+            "notes"
+            "arcs"
+            "log";
     }
 }
