@@ -20,14 +20,37 @@
   <header>
 
   </header>
-  <button type="button" id="save">SAVE</button>
-  <button type="button" id="export">EXPORT</button>
-  <button type="button" id="import">import</button>
-  <input id="upload" type="file" accept=".txt" name="files" size=30>
-  <!-- <textarea id="filePreview"></textarea> -->
-
-  <!-- <textarea class="form-control" rows=35 cols=120 id="upload_file"></textarea> -->
-  <button type="button" id="quickstart">New Character</button>
+  <label for="settingsToggle" id="settingsIcon" tabindex="0">&#9881;</label>
+  <input id='settingsToggle' type='checkbox' />
+  <div id="management" class="popup">
+    <div class="windowTitle">
+      <h1>Manage character data:</h1>
+      <button class="closeSelector">X</button>
+    </div>
+    <div class="settingsContent">
+      <button type="button" id="save">SAVE</button>
+      <h4>export save</h4>
+      <div id="exportButtons">
+        <button type="button" id="export">Download Data</button>
+        <button type="button" id="copy">Copy Data</button>
+      </div>
+      <h4>import save</h4>
+      <div id="importFields">
+        <div>paste here or upload file:</div>
+        <input class="form-control" id="upload_file"></input>
+        <input id="upload" type="file" accept=".txt" name="files" size=40>
+      </div>
+      <!-- <textarea id="filePreview"></textarea> -->
+  
+      <!-- <textarea class="form-control" rows=35 cols=120 id="upload_file"></textarea> -->
+      
+      <button type="button" id="import">Import Data</button>
+  
+  
+      <button type="button" id="quickstart">New Character</button>
+  
+    </div>
+  </div>
   <main>
 
     <label class="toggle">
@@ -203,7 +226,7 @@
             </label> -->
           </div>
         </div>
- 
+
         <span>
           <h3>Advancement</h3>
           <div id="advancement">
@@ -224,8 +247,8 @@
             <h1 id="attackNameLabel">Attacks:</h1>
             <h1></h1>
             <!-- <div id="attackDiffcultyLabel">Eased/<br>Hindered</div> -->
-             <div id="attackDiffcultyLabel">diff.</div>
-             
+            <div id="attackDiffcultyLabel">diff.</div>
+
             <div id="attackDamageLabel">Damage</div>
           </div>
           <div id="attacksList" class="reorderList">
@@ -403,6 +426,9 @@
 
   <div id="popupMask"> </div>
 
+
+
+
   <div id="confirmWindow" class="popup">
     <div id="confirmMessage">
       <h1>Are you sure?</h1>
@@ -516,6 +542,9 @@
       </select></label>
   </div>
   </div>
+
+
+
 </body>
 
 </html>

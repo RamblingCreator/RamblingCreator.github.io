@@ -55,6 +55,12 @@ $("#save").on("click", function () {
 $("#export").on("click", function () {
     exportSave();
 });
+$("#copy").on("click", function () {
+    copySave();
+});
+$("#import").on("click", function () {
+    importSave();
+});
 $("form :input").on("input", function () {
     saveForm();
     updateInfo();
@@ -918,8 +924,46 @@ function exportSave() {
     a.download = "exported save";
     a.click(); */
     // download()
-    download(JSON.stringify(localStorage), "MAGRPG save (" + document.getElementById('name').value + ")", ".txt")
+    // download(JSON.stringify(localStorage), "MAGRPG save (" + document.getElementById('name').value + ")", ".txt")
+    
+    download(localStorage, "MAGRPG save (" + document.getElementById('name').value + ")", ".json")
+
 }
+
+
+function copySave() {
+    navigator.clipboard.writeText(JSON.stringify(localStorage))
+    // alert('Save data copied to clipboard')
+    /* try {
+              const data = JSON.stringify(localStorage);
+              const blob = data.blob();
+              navigator.clipboard.write([
+                  new ClipboardItem({
+                      [blob.type]: blob,
+                  }),
+              ]);
+              console.log('data copied.');
+          } catch (err) {
+              console.error(err.name, err.message);
+          } */
+}
+
+/* 
+async function copyImgToClipboard(imgUrl) {
+        try {
+            const data = await fetch(imgUrl);
+            const blob = await data.blob();
+            await navigator.clipboard.write([
+                new ClipboardItem({
+                    [blob.type]: blob,
+                }),
+            ]);
+            console.log('Image copied.');
+        } catch (err) {
+            console.error(err.name, err.message);
+        }
+    }
+*/
 
 function importSave(fileData) {
     console.log("importing save");
@@ -948,48 +992,18 @@ function importSave(fileData) {
 function handle_file_select(evt) {
     console.info("[Event] file chooser");
 
-    let fl_files = evt.target.files; // JS FileList object
-
-    // console.log(fl_files[0]);
-
-    // use the 1st file from the list
-    let fl_file = fl_files[0];
+    let fl_file = evt.target.files[0];
 
     let reader = new FileReader(); // built in API
     reader.readAsText(fl_file);
     reader.onload = function () {
         console.log(reader.result);
-        importSave(reader.result);
+        // importSave(reader.result);
+        document.getElementById('upload_file').innerHTML = reader.result
     };
-    // console.log(reader.readAsText(fl_file));
 
-    // reader.addEventListener("loadend", handleEvent);
-    /* 
-        let display_file = (e) => { // set the contents of the <textarea>
-            console.info('. . got: ', e.target.result.length, e);
-            document.getElementById('upload_file').innerHTML = e.target.result;
-        };
-    
-        let on_reader_load = (fl) => {
-            console.info('. file reader load', fl);
-            document.getElementById('upload_file').innerHTML = f1.target.result;
-            importSave(f1.target.result);
-            // return display_file; // a function
-        };*/
-
-
-    // Closure to capture the file information. 
-    // reader.onload = on_reader_load(fl_file);
-
-    // importSave(fl_file.target.result);
-    // Read the file as text.
-    // 
 
 }
 
 // add a function to call when the <input type=file> status changes, but don't "submit" the form
 document.getElementById('upload').addEventListener('change', handle_file_select, false);
-/* // function saveForm(form) {
-let f = JSON.stringify(form);
-window.localStorage.setItem('form', f);
-// } */

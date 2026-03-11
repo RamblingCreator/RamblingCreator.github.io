@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tower of God Character Sheet</title>
+  <link rel="stylesheet" href="style_ToG.css">
+  <!-- <script src="../js/jquery-3.7.1.min.js"></script> -->
+  <!-- <script src="jquery-3.7.1.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+  <script src="charsheet_ToG.js"></script>
+
+
+</head>
+
+
+<body>
+
+  <div id="stats">
+    <div class="statLabel might">might
+      <div class="statFrame" id="might">
+
+
+        <div class="baseStat statBox">
+          <input type="number" class="baseStat" id="baseMight" value="1" disabled>
+        </div>
+
+        <div class="tempBonuses statBox">
+          <span class="addSign">+</span><input type="number" class="tempBonuses" id="tempMightMods" value="1">
+        </div>
+
+        <div class="permBonuses statBox">
+          <span class>+</span><input type="number" class="permBonuses" id="permMightMods" value="1">
+        </div>
+        <div class="currentStat statBox">
+          <input type="number" class="currentStat" id="currentMight" value="1" disabled>
+        </div>
+
+        <div class="edge statBox" id="mightEdge">
+          <input type="number" class="edge" id="mightEdge" value="1" disabled>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="skills">
+
+
+  </div>
+
+  <div id="conditions">
+    <!-- 
+Hindered
+Slowed
+Pinned
+Paralyzed
+Blind
+Impaired
+Dying
+Fragile
+Weakened
+Anxious
+Volatile 
+-->
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Hindered</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Slowed</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Pinned</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Paralyzed</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Blind</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Impaired</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Dying</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Fragile</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Weakened</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Anxious</span>
+    </label>
+    <label class="toggle">
+      <input type="checkbox" class="condition" name="btnToggle" />
+      <span class="conditionIcon">Volatile </span>
+    </label>
+  </div>
+
+</body>
+
+
+</html>
+
+<!-- 
+
+Brawl
+Finesse
+Throw
+Move
+Reach Out
+Attune
+Manipulate
+Threaten
+Think
+
+
+
+
+
+-->

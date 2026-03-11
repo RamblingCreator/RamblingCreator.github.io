@@ -1,0 +1,204 @@
+* {
+    box-sizing: border-box;
+    color: black;
+    font-family: sans-serif;
+}
+
+:root {
+    /* defining colors */
+
+    --might-dark: #e0371a;
+    --might-main: #FF6347;
+    --might-light: #ff9582;
+
+    --agility-dark: #c1a60c;
+    --agility-main: #ffe23d;
+    --agility-light: #ffe865;
+
+    --hearts-dark: #9921b7;
+    --hearts-main: #BA55D3;
+    --hearts-light: #e684ff;
+
+    --wits-dark: #489dd1;
+    --wits-main: #87CEFA;
+    --wits-light: #b1e1ff;
+
+    --resistance-dark: #52c852;
+    --resistance-main: #74f174;
+    --resistance-light: #b7feb7;
+
+
+
+    /* media query values */
+    --mobile-size: 800px;
+    --medium-size: 1200px;
+}
+
+
+#stats {
+    /* grid-area: stats;
+    grid-column: 1;
+    grid-row: 0; */
+    font-size: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    /* display: grid;
+grid-template-columns: repeat(5, 1fr);
+column-gap: 10px; */
+    text-align: center;
+    width: 100%;
+}
+
+.statLabel.might {
+    background-color: var(--might-main);
+}
+.statLabel.agility {
+    background-color: var(--agility-main);
+}
+.statLabel.hearts {
+    background-color: var(--hearts-main);
+}
+.statLabel.wits {
+    background-color: var(--wits-main);
+}
+.statLabel.resistance {
+    background-color: var(--resistance-main);
+}
+
+.statFrame {
+    display: grid;
+    grid-template-columns: 1.5em 2em 2em;
+    /* grid-template-columns: repeat(3, 2em); */
+    
+    /* grid-template-rows: 2fr 1fr; */
+    grid-template-rows: 1em 2em 1.5em;
+    /* background-color: whitesmoke; */
+}
+.currentStat.statBox {
+    grid-column: span 3;
+    font-size: 2em;
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+input.currentStat, input.edge {
+    text-align: center;
+}
+.statBox.edge {
+    grid-column: span 3;
+    font-size: 1.4em;
+}
+
+
+.statBox input::-webkit-outer-spin-button,
+.statBox input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.statBox input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+.statBox {
+    /* width: min-content; */
+    white-space: nowrap;
+    height: 100%;
+    
+    height: 100%;
+    vertical-align:middle;
+    margin: auto 0;
+}
+
+.statBox.baseStat, .statBox.tempBonuses, .statBox.permBonuses {
+    font-size: 0.75em;
+    background-color: rgba(255, 255, 255, 0.5);
+    /* border: rgba(0, 0, 0, 0.572) 1px solid; */
+    /* background-color: red; */
+    /* width: min-content; */
+    /* width: 2em; */
+    width: 100%;
+    height: 100%;
+    /* height: min-content; */
+    /* margin: auto 0; */
+    /* padding: 6px 0; */
+}
+
+.baseStat.statBox span, .baseStat.statBox div {
+    margin: auto;
+    height: min-content;
+    display: block;
+}
+
+.statBox input {
+    width: 2em;
+    /* width: 70%; */
+    font-size: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 100%;
+
+    border-radius: 0;
+    border: 0;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+.addSign {
+    display: inline;
+    font-size: 1em;
+    /* width: min-content; */
+}
+
+/* 
+.toggle input {
+    display: none;
+}
+
+ */
+
+#conditions {
+    display: flex;
+    flex-direction: column;
+}
+
+.conditionIcon {
+    user-select: none;
+    font-size: 40px;
+    line-height: 30px;
+    text-align: center;
+    color: grey;
+    opacity: 50%;
+    margin: 0 auto;
+}
+
+
+
+.toggle input[type='checkbox'] {
+    display: none;
+}
+
+
+.toggle input:checked+.conditionIcon {
+    
+    color: purple;
+    opacity: 100%;
+
+}
+
+/* 
+might
+agility
+hearts
+wits
+resistance
+
+
+Agility
+Hearts
+Wits
+Resistance
+ */
