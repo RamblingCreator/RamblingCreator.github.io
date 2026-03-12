@@ -46,9 +46,21 @@ $(document).ready(function () {
     $("#save").on("click", function () {
         saveForm();
     });
+    $("#calculatestats").on("click", function () {
+        calculateStats();
+    });
     $("#sourceSelection").on("input", function () {
         filterAbilities();
     });
+    /* $(".addBonus").on("click", function () {
+        addStatBonus();
+    }); */
+
+    var elements = document.getElementsByClassName("addBonus");
+    Array.from(elements).forEach(function (element) {
+        element.addEventListener('click', addNewStatBonus);
+    });
+
     // calculateStats();
 });
 
@@ -186,20 +198,6 @@ function getAddAbilityHtml(Json) {
 */
 
 
-function calculateStats() {
-    // console.log(stats);
-    for (const stat of stats.children) {
-        current = stat.querySelector('input.currentStat');
-        base = stat.querySelector('input.baseStat');
-        temp = stat.querySelector('input.tempBonuses');
-        permanent = stat.querySelector('input.permBonuses');
-        edge = stat.querySelector('input.edge');
-        current.value = (parseInt(base.value) + parseInt(temp.value) + parseInt(permanent.value));
-        edge.value = Math.floor(parseInt(current.value) / 10);
-
-    }
-}
-
 
 function confirmDelete(thisButton, type) {
     console.log("confirming...?");
@@ -265,6 +263,71 @@ function getWidthOfInput(inputEl) {
 }
 
 
+function calculateStats() {
+    console.log("calculating stats");
+    for (const stat of stats.children) {
+        let tempTotal = 0;
+        temp = stat.querySelector('.tempBonuses .bonusList');
+        for (const listItem of temp.getElementsByClassName('bonusListItem')) {
+            tempTotal += parseInt(listItem.querySelector(".bonusAmount").value);
+            console.log("adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
+        }
+
+        stat.querySelector('span.tempBonuses').innerHTML = tempTotal;
+
+        console.log("temp span: " + stat.querySelector('span.tempBonuses'));
+
+        let permTotal = 0;
+        perm = stat.querySelector('.permBonuses .bonusList');
+        for (const listItem of perm.getElementsByClassName('bonusListItem')) {
+            permTotal += parseInt(listItem.querySelector(".bonusAmount").value);
+            console.log("adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
+        }
+
+        stat.querySelector('span.permBonuses').innerHTML = permTotal;
+
+
+        base = stat.querySelector('input.baseStat');
+        current = stat.querySelector('input.currentStat');
+        edge = stat.querySelector('input.edge');
+        current.value = (parseInt(base.value) + parseInt(permTotal) + parseInt(tempTotal));
+        edge.value = Math.floor(parseInt(current.value) / 10);
+
+    }
+}
+
+function addStatBonus(source, amount, parent) {
+    html = `<li class="bonusListItem">
+                    <input type="number" class="bonusAmount"  value=${amount}>
+                    <input class="bonusSource" value="${source}">
+                    <button type="button" class="removeBonus" value="">X</button>
+                  </li>`;
+    $(parent).append(html);
+
+    let thisButton = parent.lastChild.getElementsByClassName("removeBonus")[0];
+    thisButton.addEventListener('click', function () { this.parentNode.remove() }, false);
+}
+
+function addNewStatBonus() {
+
+    html = `<li class="bonusListItem">
+                    <input type="number" class="bonusAmount">
+                    <input class="bonusSource">
+                    <button type="button" class="removeBonus" value="">X</button>
+                  </li>`;
+    // $(html).appendTo("#abilitiesList");
+    console.log("adding stat bonus to " + this.parentNode.parentNode);
+    $(this.parentNode.parentNode).append(html);
+
+    let thisButton = this.parentNode.parentNode.lastChild.getElementsByClassName("removeBonus")[0];
+    thisButton.addEventListener('click', function () { this.parentNode.remove() }, false);
+}
+
+function deleteStatBonus() {
+
+}
+
+
 function saveForm() {
     localStorage.clear();
     inputsToSave = document.getElementsByClassName("save");
@@ -299,31 +362,30 @@ function saveForm() {
         abilitiesList.push(thisJSON);
     }
     localStorage.setItem("abilitiesList", JSON.stringify(abilitiesList));
-
-
-    let bonusLists = [];
-
     // console.log(stats);
     for (const stat of stats.children) {
         let tempBonuses = {}
-        temp = stat.querySelector('input.tempBonuses .bonusList');
-        for (const listItem of temp.getElementsByClassName('ability')) {
-            tempBonuses[listItem.querySelector(".bonusSource")] = listItem.querySelector(".bonusAmount");
+        temp = stat.querySelector('.tempBonuses .bonusList');
+        console.log(stat);
+        console.log(stat.querySelector('.tempBonuses .bonusList'));
+        for (const listItem of temp.getElementsByClassName('bonusListItem')) {
+            tempBonuses[listItem.querySelector(".bonusSource").value] = listItem.querySelector(".bonusAmount").value;
         }
+
+
+        localStorage.setItem("tempBonuses_" + stat.id, JSON.stringify(tempBonuses));
+
         let permBonuses = {}
-        permanent = stat.querySelector('input.permBonuses .bonusList');
-        for (const listItem of temp.getElementsByClassName('ability')) {
-            tempBonuses[listItem.querySelector(".bonusSource")] = listItem.querySelector(".bonusAmount");
+        permanent = stat.querySelector('.permBonuses .bonusList');
+        for (const listItem of temp.getElementsByClassName('bonusListItem')) {
+            tempBonuses[listItem.querySelector(".bonusSource").value] = listItem.querySelector(".bonusAmount").value;
         }
+        console.log("permbonuses: " + JSON.stringify(permBonuses));
+        localStorage.setItem("permBonuses_" + stat.id, JSON.stringify(permBonuses));
+        // console.log("temp: "+ tempBonuses+", perm: "+permBonuses);
+        // console.log("temp: " + JSON.stringify(tempBonuses) + ", perm: " + JSON.stringify(permBonuses));
 
     }
-
-
-
-
-
-
-
 }
 
 function loadForm() {
@@ -364,5 +426,24 @@ function loadForm() {
         abilitiesList.forEach(thisAbility => {
             addNewAbility(thisAbility);
         });
+    }
+
+    for (const stat of stats.children) {
+        let tempBonuses = JSON.parse(localStorage.getItem("tempBonuses_" + stat.id));
+        temp = stat.querySelector('.tempBonuses .bonusList');
+        console.log("tempBonuses_" + stat.id + " = " + tempBonuses);
+        for (const [key, value] of Object.entries(tempBonuses)) {
+            addStatBonus(key, value, temp);
+        }
+        /* for (const listItem of tempBonuses) {
+            console.log(listItem);
+        }
+
+        let permBonuses = localStorage.getItem("tempBonuses_" + stat.id);
+        permanent = stat.querySelector('input.permBonuses .bonusList');
+        for (const listItem of temp.getElementsByClassName('bonusListItem')) {
+
+        } */
+
     }
 }

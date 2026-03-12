@@ -56,18 +56,33 @@ column-gap: 10px; */
 
 .statLabel.might {
     background-color: var(--might-main);
+    --dark: var(--might-dark);
+    --main: var(--might-main);
+    --light: var(--might-light);
 }
 .statLabel.agility {
     background-color: var(--agility-main);
+    --dark: var(--agility-dark);
+    --main: var(--agility-main);
+    --light: var(--agility-light);
 }
 .statLabel.hearts {
     background-color: var(--hearts-main);
+    --dark: var(--hearts-dark);
+    --main: var(--hearts-main);
+    --light: var(--hearts-light);
 }
 .statLabel.wits {
     background-color: var(--wits-main);
+    --dark: var(--wits-dark);
+    --main: var(--wits-main);
+    --light: var(--wits-light);
 }
 .statLabel.resistance {
     background-color: var(--resistance-main);
+    --dark: var(--resistance-dark);
+    --main: var(--resistance-main);
+    --light: var(--resistance-light);
 }
 
 .statFrame {
@@ -184,7 +199,21 @@ input.baseStat, input.tempBonuses, input.permBonuses {
     padding-top: 10px;
     text-align: center;
     width: min-content;
-    background-color:var(--card);
+    background-color: var(--card);
+    margin-block-start: 0;
+    margin-block-end: 0;
+    background-color: var(--main);
+}
+
+.bonusHeader *{
+    display: inline;
+}
+.bonusList input {
+    background-color: var(--light);
+}
+
+.bonusList h5 {
+    margin: 0;
 }
 
 .bonusList li .bonusSource {

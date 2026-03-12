@@ -20,6 +20,7 @@
 <body>
   <main>
     <button type="button" id="save">SAVE</button>
+    <button type="button" id="calculatestats">Calculate stats</button>
     <form>
 
       <div id="basicInfo">
@@ -72,54 +73,49 @@
         </label>
       </div>
       <div id="stats">
-        <div class="statLabel might">might
-          <div class="statFrame" id="might">
+        <div class="statLabel might" id="might">might
+          <div class="statFrame">
             <div class="statParts" id="mightParts">
               <div class="baseStat statBox">&nbsp;
                 <input type="number" class="baseStat save" id="baseMight" value="1" disabled>
               </div>
 
-              <div class="tempBonuses statBox">
-                <span class="addSign">+</span><input type="number" class="tempBonuses save" id="tempMightMods" value="1">
-              </div>
-
-              <div class="tempBonuses statBox">
-                <label for="mightPermBonusList" id="mightPermBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="tempBonuses save" id="tempMightMods">1000000</span>
-                </label>
-                <input class="dropdownToggle" id='mightPermBonusList' type='checkbox'/>
-                <ul class="bonusList dropdown">
-                  <li class="bonusListItem">
-                    <input type="number" class="bonusAmount" value="0">
-                    <input class="bonusSource" value="(source)">
-                  </li>
-                  
-                  <li class="bonusListItem">
-                    <input type="number" class="bonusAmount" value="1">
-                    <input class="bonusSource" value="(source2)">
-                  </li>
-                </ul>
-              </div>
-
 
               <div class="permBonuses statBox">
                 <label for="mightPermBonusList" id="mightPermBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="permBonuses save" id="permMightMods">1000000</span>
+                  <span class>+</span><span class="permBonuses save" id="permMightMods"></span>
                 </label>
-                <input class="dropdownToggle" id='mightPermBonusList' type='checkbox'/>
+                <input class="dropdownToggle" id='mightPermBonusList' type='checkbox' />
                 <ul class="bonusList dropdown">
-                  <li class="bonusListItem">
-                    <input type="number" class="bonusAmount" value="0">
-                    <input class="bonusSource" value="(source)">
-                  </li>
-                  
-                  <li class="bonusListItem">
-                    <input type="number" class="bonusAmount" value="1">
-                    <input class="bonusSource" value="(source2)">
-                  </li>
+                  <span class="bonusHeader"><h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button></span>
                 </ul>
               </div>
-              
+
+              <div class="tempBonuses statBox">
+                <label for="mightTempBonusList" id="mightTempBonus" class="bonusToggler" tabindex="0">
+                  <span class>+</span><span class="tempBonuses save" id="tempMightMods"></span>
+                </label>
+                <input class="dropdownToggle" id='mightTempBonusList' type='checkbox' />
+                <ul class="bonusList dropdown">
+                  <span class="bonusHeader"><h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button></span>
+                </ul>
+              </div>
+
+              <!-- <div class="permBonuses statBox">
+                <label for="mightPermBonusList" id="mightPermBonus" class="bonusToggler" tabindex="0">
+                  <span class>+</span><span class="permBonuses save" id="permMightMods">1000000</span>
+                </label>
+                <input class="dropdownToggle" id='mightPermBonusList' type='checkbox' />
+                <ul class="bonusList dropdown">
+                  Permanent Bonuses:
+
+                  <li class="bonusListItem">
+                    <input type="number" class="bonusAmount">
+                    <input class="bonusSource">
+                  </li>
+                </ul>
+              </div> -->
+
             </div>
 
             <div class="currentStat statBox">
