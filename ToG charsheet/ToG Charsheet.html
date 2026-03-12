@@ -11,106 +11,270 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
-  <script src="charsheet_ToG.js"></script>
+  <script src="ToG_abilities.js"></script>
 
 
 </head>
 
 
 <body>
+  <main>
+    <button type="button" id="save">SAVE</button>
+    <form>
 
-  <div id="stats">
-    <div class="statLabel might">might
-      <div class="statFrame" id="might">
+      <div id="basicInfo">
+
+        <label for="name" class="basicInfo">name
+          <input class="name save" id="name">
+        </label>
+        <label for="pronouns" class="basicInfo">pronouns
+          <input class="pronouns save" id="pronouns">
+        </label>
+        <label for="race" class="basicInfo">race
+          <select name="race" id="race" class="save">
+            <option value="human">Human</option>
+            <option value="crocodile">Crocodile</option>
+            <option value="canine">Canine</option>
+            <option value="silverdwarf">Silver Dwarf</option>
+            <option value="redwitch">Red Witch</option>
+            <option value="noble">Noble</option>
+            <option value="heir">Heir</option>
+            <option value="irregular">Irregular</option>
+          </select>
+        </label>
+        <label for="noble" class="basicInfo">noble family
+          <select name="noble" id="noble" class="save">
+            <option value="none">----</option>
+            <option value="keene">Keene</option>
+            <option value="trumbald">Trumbald</option>
+            <option value="haas">Haas</option>
+            <option value="lemarque">Lemarque</option>
+            <option value="halleck">Halleck</option>
+            <option value="posada">Posada</option>
+            <option value="aven">Aven</option>
+            <option value="yanetta">Yanetta</option>
+          </select>
+        </label>
+        <label for="position" class="basicInfo">position
+          <select name="position" id="position" class="save">
+            <option value="fisherman">Fisherman</option>
+            <option value="lightbearer">Lightbearer</option>
+            <option value="scout">Scout</option>
+            <option value="spearbearer">Spearbearer</option>
+            <option value="wavecontroller">Wave Controller</option>
+          </select>
+        </label>
+        <label for="shinsu" class="basicInfo">shinsu quality
+          <input class="shinsu save" id="shinsu">
+        </label>
+        <label for="age" class="basicInfo">age
+          <input class="age save" id="age">
+        </label>
+      </div>
+      <div id="stats">
+        <div class="statLabel might">might
+          <div class="statFrame" id="might">
+            <div class="statParts" id="mightParts">
+              <div class="baseStat statBox">&nbsp;
+                <input type="number" class="baseStat save" id="baseMight" value="1" disabled>
+              </div>
+
+              <div class="tempBonuses statBox">
+                <span class="addSign">+</span><input type="number" class="tempBonuses save" id="tempMightMods" value="1">
+              </div>
+
+              <div class="tempBonuses statBox">
+                <label for="mightPermBonusList" id="mightPermBonus" class="bonusToggler" tabindex="0">
+                  <span class>+</span><span class="tempBonuses save" id="tempMightMods">1000000</span>
+                </label>
+                <input class="dropdownToggle" id='mightPermBonusList' type='checkbox'/>
+                <ul class="bonusList dropdown">
+                  <li class="bonusListItem">
+                    <input type="number" class="bonusAmount" value="0">
+                    <input class="bonusSource" value="(source)">
+                  </li>
+                  
+                  <li class="bonusListItem">
+                    <input type="number" class="bonusAmount" value="1">
+                    <input class="bonusSource" value="(source2)">
+                  </li>
+                </ul>
+              </div>
 
 
-        <div class="baseStat statBox">
-          <input type="number" class="baseStat" id="baseMight" value="1" disabled>
+              <div class="permBonuses statBox">
+                <label for="mightPermBonusList" id="mightPermBonus" class="bonusToggler" tabindex="0">
+                  <span class>+</span><span class="permBonuses save" id="permMightMods">1000000</span>
+                </label>
+                <input class="dropdownToggle" id='mightPermBonusList' type='checkbox'/>
+                <ul class="bonusList dropdown">
+                  <li class="bonusListItem">
+                    <input type="number" class="bonusAmount" value="0">
+                    <input class="bonusSource" value="(source)">
+                  </li>
+                  
+                  <li class="bonusListItem">
+                    <input type="number" class="bonusAmount" value="1">
+                    <input class="bonusSource" value="(source2)">
+                  </li>
+                </ul>
+              </div>
+              
+            </div>
+
+            <div class="currentStat statBox">
+              <input type="number" class="currentStat save" id="currentMight" value="1" disabled>
+            </div>
+
+            <div class="edge statBox" id="mightEdge">
+              <input type="number" class="edge save" id="mightEdge" value="1" disabled>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="tempBonuses statBox">
-          <span class="addSign">+</span><input type="number" class="tempBonuses" id="tempMightMods" value="1">
-        </div>
+      <div id="skills">
 
-        <div class="permBonuses statBox">
-          <span class>+</span><input type="number" class="permBonuses" id="permMightMods" value="1">
-        </div>
-        <div class="currentStat statBox">
-          <input type="number" class="currentStat" id="currentMight" value="1" disabled>
-        </div>
 
-        <div class="edge statBox" id="mightEdge">
-          <input type="number" class="edge" id="mightEdge" value="1" disabled>
+      </div>
+      <!-- 
+    Hindered
+    Slowed
+    Pinned
+    Paralyzed
+    Blind
+    Impaired
+    Dying
+    Fragile
+    Weakened
+    Anxious
+    Volatile 
+    -->
+      <!--  <div id="conditions">
+        
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Hindered</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Slowed</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Pinned</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Paralyzed</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Blind</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Impaired</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Dying</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Fragile</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Weakened</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Anxious</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" class="condition" name="btnToggle" />
+          <span class="conditionIcon">Volatile </span>
+        </label>
+      </div> -->
+
+
+      <div id="abilities">
+        <h1>Special abilities</h1>
+        <div id="abilitiesList" class="reorderList">
+          <!-- <div class="newAbility">
+          <div class="abilityHeader">
+            <div class="abilityNameBlock">
+                <div class="abilityName">${Json.name}</div>
+            </div>
+            <div class="abilityOrigin">
+                <div class="abilitySource">${Json.source}</div>:
+                <div class="abilityType">${Json.type}</div>
+            </div>
+          </div>
+          <p class="abilityDescription" rows="1" cols="10">${newDesc}</p>
+          <button type="button" class="addAbility" name="${Json.type}" value="${Json.id}">Add</button>
+        </div> -->
         </div>
+        <button type="button" class="addButton" id="newAbility">New Ability</button>
+
+      </div>
+    </form>
+  </main>
+
+  <div id="confirmWindow" class="popup">
+    <div id="confirmMessage">
+      <h1>Are you sure?</h1>
+      <!-- <p>This can't be undone. Are you sure you want to delete</p> -->
+      <p id="confirmTarget"></p>
+    </div>
+
+    <button id="confirmYes">Confirm</button>
+    <button id="confirmNo">Cancel</button>
+  </div>
+  <div id="popupMask"> </div>
+
+  <div id="abilityWindow" class="popup">
+    <div class="windowTitle">
+      <h1>Add New Ability:</h1>
+      <button class="closeSelector">X</button>
+    </div>
+    <div class="abilitySelectors">
+      <div id="sourceSelection">
+        <input type="radio" id="race-filter" name="source" class="source" value="race" checked="true">
+        <label for="race-filter">race</label>
+
+        <input type="radio" id="universal-filter" name="source" class="source" value="universal">
+        <label for="universal-filter">universal</label>
+
+        <input type="radio" id="lightbearer-filter" name="source" class="source" value="lightbearer">
+        <label for="lightbearer-filter">lightbearer</label>
+
+        <input type="radio" id="scout-filter" name="source" class="source" value="scout">
+        <label for="scout-filter">scout</label>
+
+        <input type="radio" id="fisherman-filter" name="source" class="source" value="fisherman">
+        <label for="fisherman-filter">fisherman</label>
+
+        <input type="radio" id="spearbearer-filter" name="source" class="source" value="spearbearer">
+        <label for="spearbearer-filter">spearbearer</label>
+
+
+        <input type="radio" id="wavecontroller-filter" name="source" class="source" value="wavecontroller">
+        <label for="wavecontroller-filter">wave controller</label>
+
+
+      </div>
+
+
+      <!-- <button type="button" class="addButton" id="filterAbilities">Search</button> -->
+    </div>
+
+    <div id="filteredWrapper" class="popup">
+      <div id="filteredAbilities">
       </div>
     </div>
   </div>
-
-  <div id="skills">
-
-
-  </div>
-
-  <div id="conditions">
-    <!-- 
-Hindered
-Slowed
-Pinned
-Paralyzed
-Blind
-Impaired
-Dying
-Fragile
-Weakened
-Anxious
-Volatile 
--->
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Hindered</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Slowed</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Pinned</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Paralyzed</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Blind</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Impaired</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Dying</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Fragile</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Weakened</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Anxious</span>
-    </label>
-    <label class="toggle">
-      <input type="checkbox" class="condition" name="btnToggle" />
-      <span class="conditionIcon">Volatile </span>
-    </label>
-  </div>
-
 </body>
 
 
@@ -133,3 +297,5 @@ Think
 
 
 -->
+
+<script src="charsheet_ToG.js"></script>

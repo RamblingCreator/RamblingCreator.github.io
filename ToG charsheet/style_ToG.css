@@ -27,7 +27,10 @@
     --resistance-main: #74f174;
     --resistance-light: #b7feb7;
 
-
+    --background: #97928e;
+    --background-darker: #595855;
+    --card: #cdcac3;
+    --field: #bab5aa;
 
     /* media query values */
     --mobile-size: 800px;
@@ -68,12 +71,13 @@ column-gap: 10px; */
 }
 
 .statFrame {
-    display: grid;
-    grid-template-columns: 1.5em 2em 2em;
+    display: flex;
+    flex-direction: row;
+    /* grid-template-columns: 1.5em 2em 2em; */
     /* grid-template-columns: repeat(3, 2em); */
-    
+
     /* grid-template-rows: 2fr 1fr; */
-    grid-template-rows: 1em 2em 1.5em;
+    /* grid-template-rows: 1em 2em 1.5em; */
     /* background-color: whitesmoke; */
 }
 .currentStat.statBox {
@@ -81,6 +85,7 @@ column-gap: 10px; */
     font-size: 2em;
     background-color: rgba(255, 255, 255, 0.8);
     text-align: center;
+    height: 100%;
 }
 input.currentStat, input.edge {
     text-align: center;
@@ -90,43 +95,40 @@ input.currentStat, input.edge {
     font-size: 1.4em;
 }
 
-
-.statBox input::-webkit-outer-spin-button,
-.statBox input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.statBox input::-webkit-outer-spin-button, .statBox input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
-
 /* Firefox */
 .statBox input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
-
 
 .statBox {
     /* width: min-content; */
     white-space: nowrap;
     height: 100%;
-    
+
     height: 100%;
-    vertical-align:middle;
+    vertical-align: middle;
     margin: auto 0;
+}
+.statParts {
+    display: flex;
+    flex-direction: column;
 }
 
 .statBox.baseStat, .statBox.tempBonuses, .statBox.permBonuses {
     font-size: 0.75em;
     background-color: rgba(255, 255, 255, 0.5);
-    /* border: rgba(0, 0, 0, 0.572) 1px solid; */
-    /* background-color: red; */
-    /* width: min-content; */
-    /* width: 2em; */
     width: 100%;
     height: 100%;
-    /* height: min-content; */
-    /* margin: auto 0; */
-    /* padding: 6px 0; */
 }
 
+
+input.baseStat, input.tempBonuses, input.permBonuses {
+    text-align: right;
+}
 .baseStat.statBox span, .baseStat.statBox div {
     margin: auto;
     height: min-content;
@@ -134,8 +136,8 @@ input.currentStat, input.edge {
 }
 
 .statBox input {
+    width: 70%;
     width: 2em;
-    /* width: 70%; */
     font-size: 1em;
     overflow: hidden;
     white-space: nowrap;
@@ -152,6 +154,46 @@ input.currentStat, input.edge {
     font-size: 1em;
     /* width: min-content; */
 }
+
+.dropdownToggle {
+    display: none;
+}
+
+.bonusToggler {
+    /* display: block;
+    padding: 5px 20px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 3em; */
+
+
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    /* background-color: var(--card);
+    padding: 10px; */
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.bonusList {
+    display: none;
+    position: absolute;
+    padding: 0;
+    padding-top: 10px;
+    text-align: center;
+    width: min-content;
+    background-color:var(--card);
+}
+
+.bonusList li .bonusSource {
+    width: 15em;
+}
+input[type='checkbox']:checked+.bonusList {
+    display: block;
+}
+
 
 /* 
 .toggle input {
@@ -183,7 +225,7 @@ input.currentStat, input.edge {
 
 
 .toggle input:checked+.conditionIcon {
-    
+
     color: purple;
     opacity: 100%;
 
@@ -202,3 +244,383 @@ Hearts
 Wits
 Resistance
  */
+
+#abilities {
+    /* grid-area: abilities; */
+    /* display: flex;
+    flex-direction: column; */
+    background-color: var(--background-darker);
+    /* padding: 0.5em; */
+}
+
+
+#abilities h1 {
+    background-color: var(--card);
+    margin-bottom: 0.2em;
+    padding: 0.2em;
+    padding-top: 0.3em;
+}
+
+
+#abilitiesJump {
+    display: none;
+}
+
+
+#abilitiesList {
+    margin: 0 0.5em;
+    padding-right: 0.25em;
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+    /* padding: 1em; */
+
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 775px;
+    /* height: 60vh; */
+    /* height: 88%; */
+}
+
+
+/* ability/cipher selection */
+#popupMask {
+    height: 100%;
+
+    opacity: 50%;
+    pointer-events: auto;
+    align-items: center;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    /* pointer-events: none; */
+    /* position: absolute; */
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 9;
+    background-color: grey;
+    display: none;
+}
+
+.popup {
+    z-index: 10;
+}
+
+
+#filteredAbilities, #allCyphers {
+    margin: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    /* height: 60vh; */
+    height: 88%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 0.5em;
+    margin: auto 0.5em;
+}
+
+#filteredWrapper {
+    height: 100%;
+}
+
+
+.windowTitle {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: space-between;
+    /* width: 100%; */
+
+    background-color: var(--card);
+    padding: 0.4em 1em;
+}
+
+
+#abilityWindow, #cypherWindow {
+
+    max-width: 1500px;
+
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    margin: auto;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background-color: var(--background);
+    border: 10px solid var(--background-darker);
+    /* change this? */
+    color: #fff;
+
+    /* padding: 0.6em 1em; */
+    border-radius: 0.5em;
+
+    /* width: 80%;
+    height: 80%; */
+    width: 90vw;
+    height: 90vh;
+    display: none;
+
+    box-shadow: 0 0 10px #00000059;
+}
+
+
+#confirmWindow {
+    max-width: 1100px;
+
+    display: grid;
+    /* grid-template-columns: repeat(1fr, 2);
+    grid-template-areas:
+        "message message",
+        "yes" "no"; */
+
+    grid-template-columns: 50% 50%;
+    grid-template-areas:
+        "message    message"
+        "yes        no";
+    position: fixed;
+    margin: auto;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: var(--card);
+    /* change this? */
+    color: #fff;
+
+    padding: 0.6em 1em;
+    border-radius: 0.5em;
+
+    width: 40vw;
+    height: 20vh;
+    display: none;
+
+    box-shadow: 0 0 10px #00000059;
+
+    padding: 2em;
+}
+
+#confirmMessage {
+    grid-area: message;
+    /* font-size: 5vw; */
+    text-align: center;
+}
+#confirmTarget {
+    font-size: 1.2em;
+}
+/* @media (min-width:600) {
+    #confirmMessage {
+        font-size: 2em;
+    }
+}
+ */
+#confirmYes, #confirmNo {
+    font-size: 1.5em;
+    margin: auto;
+    margin-bottom: 0;
+    padding: 0.5em 1em;
+    width: 90%;
+    height: min-content;
+}
+
+
+#confirmYes {
+    grid-area: yes;
+    background-color: hsl(0, 45%, 55%);
+}
+#confirmNo {
+    grid-area: no;
+}
+
+
+/* 
+button {
+    background-color: var(--accent);
+    border-radius: 0.75em;
+
+    border: none;
+    margin: 0.2em;
+    height: min-content;
+
+
+    font-family: 'Alegreya', serif;
+    font-size: 1em;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s;
+
+    display: inline-block;
+
+} */
+
+button:hover {
+    background-color: var(--accent-darker);
+}
+
+
+.ability .dragHandle, .cypher .dragHandle {
+    /* position: relative; */
+    height: min-content;
+    background-color: var(--field);
+    display: inline;
+}
+.ability .sortable-placeholder, .cypher .sortable-placeholder {
+    padding: 0.25em 1em;
+    padding: 0.5em;
+}
+
+.ability h1 {
+    font-size: 1.25em;
+    margin: 0;
+}
+.ability p {
+    margin: 0;
+}
+
+.abilityDescription, .cypherDescription {
+    width: 100%;
+    border: 0;
+    font-size: 18px;
+    background-color: var(--field);
+    resize: vertical;
+    margin: 0.25em 0;
+    margin-bottom: 0;
+    /* margin-top: 0.2em; */
+    /* border: none; */
+    /* border-bottom: 1px solid black; */
+}
+
+.newAbility .abilityDescription {
+    /* margin: 0; */
+}
+
+
+.abilityHeader, .cypherHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    row-gap: 8px
+        /* 
+    align-items: center
+    align-items: flex-start; */
+}
+
+.abilityDetails, .cypherDetails {
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.cypherDetails {
+    gap: 15px;
+}
+
+.ability input, .cypher input {
+    display: inline;
+    border: none;
+    border-radius: 0;
+    /* margin: 0 auto; */
+    background-color: var(--field);
+}
+
+.newAbility div {
+    white-space: nowrap;
+}
+
+.newAbility .abilityName {
+    display: inline;
+}
+.newAbility .abilityNameBlock {
+    white-space: wrap;
+    gap: 5px;
+    display: flex;
+}
+.tmp-element {
+    visibility: hidden;
+    white-space: pre;
+}
+.abilityName, .abilityField div, .cypherField div {
+    background-color: var(--field);
+}
+
+label.abilityField {
+    /* line-height: 1.075em; */
+}
+label.abilityField input {
+    /* line-height: 1em; */
+}
+
+.abilityName, .cypherName {
+    font-size: 1.4em;
+    /* width: 12em; */
+    /* border: 1px solid black; */
+}
+.abilityContext, .abilityCost {
+    padding: 0 0.5em;
+}
+.abilityContext, .abilityCost, .abilityTier {
+    text-align: center;
+    /* font-size: 18px; */
+    font-size: 1.125em;
+    display: inline;
+}
+.abilityTier {
+    width: 1em;
+}
+
+.abilityField, .cypherField {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    margin: auto 0;
+    margin: 0;
+    margin-top: auto;
+    width: min-content;
+
+}
+
+.ability input[type='checkbox'] {
+    display: none;
+}
+
+input:checked+.supernaturalIcon {
+    /* display: block; */
+    color: purple;
+    opacity: 100%;
+
+}
+
+.ability, .newAbility {
+    background-color: var(--card);
+    color: black;
+}
+
+.newAbility {
+    /* margin: 0 1em; */
+    padding: 0.5em;
+}
+
+.addAbility {
+    padding: 0 3em;
+    margin: auto;
+    display: block;
+}
+.abilityOrigin div {
+    display: inline;
+    white-space: nowrap;
+    width: max-content;
+}

@@ -837,10 +837,10 @@ function loadForm() {
         });
     }
 
-    superStressBoxes = document.querySelectorAll('#supernaturalStress > input[type=checkbox]');
+   /*  superStressBoxes = document.querySelectorAll('#supernaturalStress > input[type=checkbox]');
     for (let i = 0; i < localStorage.getItem("supernaturalStress"); i++) {
         superStressBoxes[i].checked = true;
-    }
+    } */
 
     let logItemsList = JSON.parse(localStorage.getItem("logItemsList"));
     if (logItemsList != null) {
