@@ -12,6 +12,8 @@ const position = document.getElementById('position');
 
 let stats = document.getElementById("stats");
 const abilities = document.getElementById('abilitiesList');
+
+let toggles = document.getElementsByClassName("dropdownToggle");
 // const cyphers = document.getElementById('cyphersList');
 // const skills = document.getElementById('skillsList');
 // const attacks = document.getElementById('attacksList');
@@ -52,6 +54,18 @@ $(document).ready(function () {
     $("#sourceSelection").on("input", function () {
         filterAbilities();
     });
+
+    $(".dropdownToggle").on("input", function () {
+        /* toggles.forEach(element => {
+            element.checked = false;
+        }); */
+
+        for (const element of toggles) {
+            if (element != this) {
+                element.checked = false;
+            }
+        }
+    });
     /* $(".addBonus").on("click", function () {
         addStatBonus();
     }); */
@@ -60,8 +74,19 @@ $(document).ready(function () {
     Array.from(elements).forEach(function (element) {
         element.addEventListener('click', addNewStatBonus);
     });
-
-    // calculateStats();
+    $(".reorderList").sortable({
+        axis: "y",
+        handle: ".dragHandle",
+        snap: true,
+        containment: "parent",
+        snapMode: "outer",
+        // helper: "clone",
+        placeholder: "sortable-placeholder",
+        forcePlaceholderSize: true,
+        tolerance: "pointer",
+        // forceHelperSize: true
+    })
+    calculateStats();
 });
 
 function filterAbilities() {
@@ -269,8 +294,13 @@ function calculateStats() {
         let tempTotal = 0;
         temp = stat.querySelector('.tempBonuses .bonusList');
         for (const listItem of temp.getElementsByClassName('bonusListItem')) {
-            tempTotal += parseInt(listItem.querySelector(".bonusAmount").value);
-            console.log("adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
+            // tempTotal += parseInt(listItem.querySelector(".bonusAmount").value);
+            if (listItem.querySelector(".bonusAmount").value != "") {
+                tempTotal += parseInt(listItem.querySelector(".bonusAmount").value);
+            } else {
+                console.log("empty amount, add nothing");
+            }
+            console.log("[" + stat.id + "]adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
         }
 
         stat.querySelector('span.tempBonuses').innerHTML = tempTotal;
@@ -280,8 +310,12 @@ function calculateStats() {
         let permTotal = 0;
         perm = stat.querySelector('.permBonuses .bonusList');
         for (const listItem of perm.getElementsByClassName('bonusListItem')) {
-            permTotal += parseInt(listItem.querySelector(".bonusAmount").value);
-            console.log("adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
+            if (listItem.querySelector(".bonusAmount").value != "") {
+                permTotal += parseInt(listItem.querySelector(".bonusAmount").value);
+            } else {
+                console.log("empty amount, add nothing");
+            }
+            console.log("[" + stat.id + "]adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
         }
 
         stat.querySelector('span.permBonuses').innerHTML = permTotal;
@@ -358,7 +392,7 @@ function saveForm() {
         // thisJSON.id = ability.getElementsByClassName("abilityid")[0].value;
         thisJSON.description = ability.getElementsByClassName("abilityDescription")[0].value;
         thisJSON.source = ability.getElementsByClassName("abilitySource")[0].value;
-        thisJSON.type = ability.getElementsByClassName("abilityType")[0].checked;
+        thisJSON.type = ability.getElementsByClassName("abilityType")[0].value;
         abilitiesList.push(thisJSON);
     }
     localStorage.setItem("abilitiesList", JSON.stringify(abilitiesList));
@@ -397,8 +431,8 @@ function loadForm() {
                     input.checked = localStorage.getItem(input.id);
                     console.log(input.id + " saved as 'true' ");
                 }
-                console.log("setting " + input.id + ".checked to " + localStorage.getItem(input.id));
-                console.log(input.id + ".checked = " + input.checked);
+                // console.log("setting " + input.id + ".checked to " + localStorage.getItem(input.id));
+                // console.log(input.id + ".checked = " + input.checked);
             } else {
                 // console.log("");
                 if (localStorage.getItem(input.id) == null) {
@@ -418,7 +452,7 @@ function loadForm() {
             input.value = localStorage.getItem(input.id);
 
         }
-        console.log("setting " + input.nodeName + " (" + input.type + ") " + input.id + " to [" + input.value + "]");
+        // console.log("setting " + input.nodeName + " (" + input.type + ") " + input.id + " to [" + input.value + "]");
     }
 
     let abilitiesList = JSON.parse(localStorage.getItem("abilitiesList"));
@@ -432,18 +466,25 @@ function loadForm() {
         let tempBonuses = JSON.parse(localStorage.getItem("tempBonuses_" + stat.id));
         temp = stat.querySelector('.tempBonuses .bonusList');
         console.log("tempBonuses_" + stat.id + " = " + tempBonuses);
-        for (const [key, value] of Object.entries(tempBonuses)) {
-            addStatBonus(key, value, temp);
-        }
-        /* for (const listItem of tempBonuses) {
-            console.log(listItem);
+        if (tempBonuses != null) {
+            for (const [key, value] of Object.entries(tempBonuses)) {
+                addStatBonus(key, value, temp);
+            }
+        } else {
+            addStatBonus("", "", temp);
         }
 
-        let permBonuses = localStorage.getItem("tempBonuses_" + stat.id);
-        permanent = stat.querySelector('input.permBonuses .bonusList');
-        for (const listItem of temp.getElementsByClassName('bonusListItem')) {
+        let permBonuses = JSON.parse(localStorage.getItem("permBonuses_" + stat.id));
+        perm = stat.querySelector('.permBonuses .bonusList');
+        console.log("permBonuses_" + stat.id + " = " + permBonuses);
+        if (permBonuses != null) {
+            for (const [key, value] of Object.entries(permBonuses)) {
+                addStatBonus(key, value, perm);
+            }
+        } else {
+            addStatBonus("", "", perm);
+        }
 
-        } */
 
     }
 }

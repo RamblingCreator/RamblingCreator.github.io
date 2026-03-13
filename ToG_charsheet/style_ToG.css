@@ -88,6 +88,7 @@ column-gap: 10px; */
 .statFrame {
     display: flex;
     flex-direction: row;
+    background-color: rgba(255, 255, 255, 0.676);
     /* grid-template-columns: 1.5em 2em 2em; */
     /* grid-template-columns: repeat(3, 2em); */
 
@@ -652,4 +653,20 @@ input:checked+.supernaturalIcon {
     display: inline;
     white-space: nowrap;
     width: max-content;
+}
+
+.dragHandle {
+    cursor: grab;
+    padding: 0 0.1em;
+    background-color: var(--card);
+    font-size: 1.4em;
+    line-height: 1.1em;
+    height: 100%;
+    border-radius: 0.25em;
+    margin: auto 0;
+    width: 1em;
+    color: #6d6d6d
+}
+.dragHandle:hover {
+    color: white;
 }
