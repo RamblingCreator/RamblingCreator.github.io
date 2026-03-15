@@ -51,9 +51,64 @@ $(document).ready(function () {
     $("#calculatestats").on("click", function () {
         calculateStats();
     });
+    $("#calculateexp").on("click", function () {
+        calculateExperience();
+    });
+    $("#addCustomAbility").on("click", function () {
+        addCustomAbility();
+    });
     $("#sourceSelection").on("input", function () {
         filterAbilities();
     });
+    $("#applyQuickstart").on("click", function () {
+        applyQuickstart();
+    });
+
+
+
+
+    $("#quickstart").on("click", function () {
+        $("#quickstartWindow").css('display', 'block');
+        $("#popupMask").css('display', 'flex');
+    });
+
+
+    $("#quickstartRace").on("input", function () {
+        if (this.value === "noble") {
+            $("#quickstartNoble").parent().css('display', 'inline');
+        } else {
+            $("#quickstartNoble").parent().css('display', 'none');
+            $("#quickstartNoble").val("none");
+        }
+    });
+
+
+    $("#race").on("input", function () {
+        if (this.value === "noble") {
+            $("#noble").parent().css('display', 'inline');
+        } else {
+            $("#noble").parent().css('display', 'none');
+            $("#noble").val("none");
+        }
+    });
+
+    $("#quickstartPosition").on("input", function () {
+        if (this.value === "fisherman") {
+            $("#fishermanStartWeapon").parent().css('display', 'inline');
+        } else {
+            $("#fishermanStartWeapon").parent().css('display', 'none');
+            $("#fishermanStartWeapon").val("none");
+        }
+    });
+
+
+    $("#quickstartStats input").on("input", function () {
+        calculateStarterStats(this);
+    });
+    $(".quickstartDropdown").on("input", function () {
+        getStarterAbilities();
+    });
+
 
     $(".dropdownToggle").on("input", function () {
         /* toggles.forEach(element => {
@@ -120,14 +175,51 @@ function filterAbilities() {
         $(getAddAbilityHtml(element)).appendTo("#filteredAbilities");
     });
 
-
+    let cost = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4));
+    if (cost > $("#currentExperience").val()) {
+        costMessage = "Cannot afford"
+    }
     var elements = document.getElementsByClassName("addAbility");
     Array.from(elements).forEach(function (element) {
         element.addEventListener('click', addThisAbility);
     });
+
+    updateAbilityCosts();
+
+}
+
+function addCustomAbility() {
+    addNewAbility({ name: "", source: "any", type: "custom", id: "", description: "" });
+
+}
+
+function updateAbilityCosts() {
+    let cost = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4));
+    var elements = document.getElementsByClassName("addAbility");
+    Array.from(elements).forEach(function (element) {
+
+        let buttonMessage = "Purchase this ability (Cost: " + cost + ")"
+        if (cost > $("#currentExperience").val()) {
+            buttonMessage = "Purchase this ability (Cannot afford)"
+            element.disabled = true;
+        }
+        element.innerHTML = buttonMessage;
+    });
+    if (cost > $("#currentExperience").val()) {
+        document.getElementById("addCustomAbility").disabled = true;
+        document.getElementById("addCustomAbility").innerHTML = "Add custom ability (Cannot afford)";
+    } else {
+        document.getElementById("addCustomAbility").innerHTML = "Add custom ability (cost: " + cost + ")";
+    }
 }
 
 var addThisAbility = function () {
+    let cost = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4));
+    $("#currentExperience").val($("#currentExperience").val() - cost);
+
+    $("#experienceSpent").val($("#experienceSpent").val() - (cost * -1));
+    $("#abilitiesBought").val($("#abilitiesBought").val() + 1);
+    updateAbilityCosts();
     var attribute = this.value; //getAttribute("data-myattribute");
     // console.log("looking for " + this.name + "_ABILITIES");
     typeAbilities = window[this.name + "_abilities"];
@@ -142,9 +234,12 @@ var addThisAbility = function () {
         }
     }
 
-};
 
+
+};
 function addNewAbility(abilityJson) {
+
+
     html = getAbilityHtml(abilityJson);
     $(html).appendTo("#abilitiesList");
     let thisAbility = abilities.lastChild;
@@ -159,7 +254,9 @@ function addNewAbility(abilityJson) {
     // for (const element of thisAbility.getElementsByTagName("INPUT")) {
     for (const element of thisAbility.querySelectorAll("input.resize")) {
         // resizeInput(element);
-        adjustWidthOfInput(element);
+        if (element.value != "") {
+            adjustWidthOfInput(element);
+        }
     }
 
     let thisButton = thisAbility.getElementsByClassName("removeAbility")[0];
@@ -183,10 +280,19 @@ function getAbilityHtml(Json) {
             <textarea class="abilityDescription resize" rows="2" cols="10">${Json.description}</textarea>
           </div>`;
 }
+
 function getAddAbilityHtml(Json) {
     // console.log("original description: " + Json.description);
     let newDesc = Json.description.replaceAll(/\r\n|\r|\n/gi, "<br>"); //•
     // console.log("new description: " + newDesc);
+    let cost = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4));
+    if (Json.source == "position" && Json.type != $("#position").val()) {
+        cost = cost * 2;
+    }
+    let costMessage = "Cost: " + cost
+    if (cost > $("#currentExperience").val()) {
+        costMessage = "Cannot afford"
+    }
 
     return `<div class="newAbility">
           <div class="abilityHeader">
@@ -199,7 +305,24 @@ function getAddAbilityHtml(Json) {
             </div>
           </div>
           <p class="abilityDescription" rows="1" cols="10">${newDesc}</p>
-          <button type="button" class="addAbility" name="${Json.type}" value="${Json.id}">Add</button>
+          <button type="button" class="addAbility" name="${Json.type}" value="${Json.id}">Purchase this ability (${costMessage})</button>
+        </div>`
+}
+
+function getPreviewAbilityHtml(Json) {
+    let newDesc = Json.description.replaceAll(/\r\n|\r|\n/gi, "<br>");
+
+    return `<div class="newAbility">
+          <div class="abilityHeader">
+            <div class="abilityNameBlock">
+                <div class="abilityName">${Json.name}</div>
+            </div>
+            <div class="abilityOrigin">
+                <div class="abilitySource">${Json.source}</div>:
+                <div class="abilityType">${Json.type}</div>
+            </div>
+          </div>
+          <p class="abilityDescription" rows="1" cols="10">${newDesc}</p>
         </div>`
 }
 
@@ -324,7 +447,11 @@ function calculateStats() {
         base = stat.querySelector('input.baseStat');
         current = stat.querySelector('input.currentStat');
         edge = stat.querySelector('input.edge');
-        current.value = (parseInt(base.value) + parseInt(permTotal) + parseInt(tempTotal));
+        if (base.value == "") {
+            current.value = (parseInt(permTotal) + parseInt(tempTotal));
+        } else {
+            current.value = (parseInt(base.value) + parseInt(permTotal) + parseInt(tempTotal));
+        }
         edge.value = Math.floor(parseInt(current.value) / 10);
 
     }
@@ -357,11 +484,153 @@ function addNewStatBonus() {
     thisButton.addEventListener('click', function () { this.parentNode.remove() }, false);
 }
 
-function deleteStatBonus() {
+/* experience */
+
+function calculateExperience() {
+    $("#tier").val(Math.floor(Math.log10($("#experienceSpent").val() / 500)) + 2);
 
 }
 
 
+/* quickstart */
+
+
+function getStarterAbilities() {
+    console.log("getting starter abilities for ");
+    let startAbilityIDs = []
+    document.getElementById("startAbilitiesList").innerHTML = "";
+    if ($("#quickstartRace").val() != "none") {
+        // startAbilityIDs = startAbilityIDs.concat(window[$("#quickstartRace").val() + "_startAbilities"]);
+        window[$("#quickstartRace").val() + "_startAbilities"].forEach(ID => {
+            var thisAbility = window[$("#quickstartRace").val() + "_abilities"].find(item => {
+                return item.id == ID;
+            })
+            console.log(thisAbility);
+            if (thisAbility != null) {
+                $(getPreviewAbilityHtml(thisAbility)).appendTo("#startAbilitiesList");
+            }
+        });
+        // console.log("(1)"+window[$("#quickstartRace").val() + "_startAbilities"]+" from " +$("#quickstartRace").val() + "_startAbilities");
+    }
+    if ($("#quickstartNoble").val() != "none") {
+        // startAbilityIDs = startAbilityIDs.concat(window[$("#quickstartNoble").val() + "_startAbilities"]);
+        window[$("#quickstartNoble").val() + "_startAbilities"].forEach(ID => {
+            var thisAbility = window[$("#quickstartNoble").val() + "_abilities"].find(item => {
+                return item.id == ID;
+            })
+            console.log(thisAbility);
+            if (thisAbility != null) {
+                $(getPreviewAbilityHtml(thisAbility)).appendTo("#startAbilitiesList");
+            }
+        });
+        // console.log("(2)"+window[$("#quickstartNoble").val() + "_startAbilities"]+" from " +$("#quickstartNoble").val() + "_startAbilities");
+    }
+    if ($("#quickstartPosition").val() != "none") {
+        // startAbilityIDs = startAbilityIDs.concat(window[$("#quickstartPosition").val() + "_startAbilities"]);
+        window[$("#quickstartPosition").val() + "_startAbilities"].forEach(ID => {
+            var thisAbility = window[$("#quickstartPosition").val() + "_abilities"].find(item => {
+                return item.id == ID;
+            })
+            console.log(thisAbility);
+            if (thisAbility != null) {
+                $(getPreviewAbilityHtml(thisAbility)).appendTo("#startAbilitiesList");
+            }
+        });
+        // console.log("(3)"+window[$("#quickstartPosition").val() + "_startAbilities"]+" from " +$("#quickstartPosition").val() + "_startAbilities");
+    }
+    if ($("#fishermanStartWeapon").val() != "none") {
+        // startAbilityIDs = startAbilityIDs.concat(window[$("#fishermanStartWeapon").val() + "_startAbilities"]);
+        console.log("fish: " + window["fisherman_abilities"]);
+        // let ID = window[$("#fishermanStartWeapon").val() + "_startAbilities"]
+        var thisAbility = window["fisherman_abilities"].find(item => {
+            return item.id == $("#fishermanStartWeapon").val();
+        })
+        console.log(thisAbility);
+        if (thisAbility != null) {
+            $(getPreviewAbilityHtml(thisAbility)).appendTo("#startAbilitiesList");
+        }
+
+    }
+    console.log(startAbilityIDs);
+}
+
+function calculateStarterStats(modifiedStat) {
+    let totalPoints = 10;
+    let pointsSpent = 0;
+    let startStats = document.getElementById("quickstartStats");
+    for (const stat of startStats.children) {
+        pointsSpent += stat.querySelector("input").value - 2;
+    }
+
+    if (pointsSpent > totalPoints) {
+        modifiedStat.value = 2 + totalPoints - (pointsSpent - (modifiedStat.value - 2));
+    } else {
+        document.getElementById("statPoints").innerHTML = totalPoints - pointsSpent;
+    }
+    // console.log("points remaining: "+(totalPoints-pointsSpent));
+}
+
+function applyQuickstart() {
+    /* validate - all points spent, everythign selected */
+
+
+
+    let startStats = document.getElementById("quickstartStats");
+
+    console.log("applying quickstart");
+    for (const stat of startStats.children) {
+        console.log("#base" + stat.querySelector("input").id.substring(5));
+        $("#base" + stat.querySelector("input").id.substring(5)).val(stat.querySelector("input").value);
+
+    }
+    calculateStats();
+    if ($("#quickstartRace").val() != "none") {
+        window[$("#quickstartRace").val() + "_startAbilities"].forEach(ID => {
+            var thisAbility = window[$("#quickstartRace").val() + "_abilities"].find(item => {
+                return item.id == ID;
+            })
+            console.log(thisAbility);
+            if (thisAbility != null) {
+                $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
+            }
+        });
+    }
+    if ($("#quickstartNoble").val() != "none") {
+        window[$("#quickstartNoble").val() + "_startAbilities"].forEach(ID => {
+            var thisAbility = window[$("#quickstartNoble").val() + "_abilities"].find(item => {
+                return item.id == ID;
+            })
+            console.log(thisAbility);
+            if (thisAbility != null) {
+                $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
+            }
+        });
+    }
+    if ($("#quickstartPosition").val() != "none") {
+        window[$("#quickstartPosition").val() + "_startAbilities"].forEach(ID => {
+            var thisAbility = window[$("#quickstartPosition").val() + "_abilities"].find(item => {
+                return item.id == ID;
+            })
+            console.log(thisAbility);
+            if (thisAbility != null) {
+                $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
+            }
+        });
+    }
+    if ($("#fishermanStartWeapon").val() != "none") {
+        console.log("fish: " + window["fisherman_abilities"]);
+        var thisAbility = window["fisherman_abilities"].find(item => {
+            return item.id == $("#fishermanStartWeapon").val();
+        })
+        console.log(thisAbility);
+        if (thisAbility != null) {
+            $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
+        }
+
+    }
+}
+
+/* saving/loading */
 function saveForm() {
     localStorage.clear();
     inputsToSave = document.getElementsByClassName("save");
@@ -369,17 +638,17 @@ function saveForm() {
         // console.log("saving " + input.nodeName);
         if (input.nodeName === "INPUT" /* && input.type === "text" */) {
             if (input.type === "checkbox") {
-                localStorage.setItem(input.id, input.checked);
+                setThisStorage(input.id, input.checked);
             } else {
-                localStorage.setItem(input.id, input.value);
+                setThisStorage(input.id, input.value);
             }
         } else if (input.nodeName == "SELECT") {
             if (input.value != "NONE") {
-                localStorage.setItem(input.id, input.value);
+                setThisStorage(input.id, input.value);
             }
         } else if (input.nodeName == "TEXTAREA") {
             if (input.value != "NONE") {
-                localStorage.setItem(input.id, input.value);
+                setThisStorage(input.id, input.value);
             }
         }
         // console.log("saving " + input.nodeName + " (" + input.type + ") " + input.id + " as " + input.value);
@@ -395,7 +664,7 @@ function saveForm() {
         thisJSON.type = ability.getElementsByClassName("abilityType")[0].value;
         abilitiesList.push(thisJSON);
     }
-    localStorage.setItem("abilitiesList", JSON.stringify(abilitiesList));
+    setThisStorage("abilitiesList", JSON.stringify(abilitiesList));
     // console.log(stats);
     for (const stat of stats.children) {
         let tempBonuses = {}
@@ -407,7 +676,7 @@ function saveForm() {
         }
 
 
-        localStorage.setItem("tempBonuses_" + stat.id, JSON.stringify(tempBonuses));
+        setThisStorage("tempBonuses_" + stat.id, JSON.stringify(tempBonuses));
 
         let permBonuses = {}
         permanent = stat.querySelector('.permBonuses .bonusList');
@@ -415,11 +684,19 @@ function saveForm() {
             tempBonuses[listItem.querySelector(".bonusSource").value] = listItem.querySelector(".bonusAmount").value;
         }
         console.log("permbonuses: " + JSON.stringify(permBonuses));
-        localStorage.setItem("permBonuses_" + stat.id, JSON.stringify(permBonuses));
+        setThisStorage("permBonuses_" + stat.id, JSON.stringify(permBonuses));
         // console.log("temp: "+ tempBonuses+", perm: "+permBonuses);
         // console.log("temp: " + JSON.stringify(tempBonuses) + ", perm: " + JSON.stringify(permBonuses));
 
     }
+}
+
+function getThisStorage(key) {
+    return localStorage.getItem("ToG_" + key);
+}
+
+function setThisStorage(key, value) {
+    return localStorage.setItem("ToG_" + key, value);
 }
 
 function loadForm() {
@@ -427,35 +704,36 @@ function loadForm() {
     for (const input of inputsToLoad) {
         if (input.nodeName === "INPUT" /* && input.type === "text" */) {
             if (input.type === "checkbox") {
-                if (localStorage.getItem(input.id) === "true") {
-                    input.checked = localStorage.getItem(input.id);
+                if (getThisStorage(input.id) === "true") {
+                    input.checked = getThisStorage(input.id);
                     console.log(input.id + " saved as 'true' ");
                 }
-                // console.log("setting " + input.id + ".checked to " + localStorage.getItem(input.id));
+                // console.log("setting " + input.id + ".checked to " + getThisStorage(input.id));
                 // console.log(input.id + ".checked = " + input.checked);
             } else {
                 // console.log("");
-                if (localStorage.getItem(input.id) == null) {
+                if (getThisStorage(input.id) == null) {
                     input.value = -1;
-                } if (localStorage.getItem(input.id) === "") {
+                } if (getThisStorage(input.id) === "") {
                     input.value = 0;
                     console.log(input.nodeName + " is empty ");
                 } else {
-                    input.value = localStorage.getItem(input.id);
+                    input.value = getThisStorage(input.id);
+                    console.log(getThisStorage(input.id));
 
                 }
             }
         } else if (input.nodeName == "SELECT") {
-            let selectedOption = localStorage.getItem(input.name);
+            let selectedOption = getThisStorage(input.name);
             input.value = selectedOption;
         } else if (input.nodeName == "TEXTAREA") {
-            input.value = localStorage.getItem(input.id);
+            input.value = getThisStorage(input.id);
 
         }
         // console.log("setting " + input.nodeName + " (" + input.type + ") " + input.id + " to [" + input.value + "]");
     }
 
-    let abilitiesList = JSON.parse(localStorage.getItem("abilitiesList"));
+    let abilitiesList = JSON.parse(getThisStorage("abilitiesList"));
     if (abilitiesList != null) {
         abilitiesList.forEach(thisAbility => {
             addNewAbility(thisAbility);
@@ -463,7 +741,7 @@ function loadForm() {
     }
 
     for (const stat of stats.children) {
-        let tempBonuses = JSON.parse(localStorage.getItem("tempBonuses_" + stat.id));
+        let tempBonuses = JSON.parse(getThisStorage("tempBonuses_" + stat.id));
         temp = stat.querySelector('.tempBonuses .bonusList');
         console.log("tempBonuses_" + stat.id + " = " + tempBonuses);
         if (tempBonuses != null) {
@@ -474,7 +752,7 @@ function loadForm() {
             addStatBonus("", "", temp);
         }
 
-        let permBonuses = JSON.parse(localStorage.getItem("permBonuses_" + stat.id));
+        let permBonuses = JSON.parse(getThisStorage("permBonuses_" + stat.id));
         perm = stat.querySelector('.permBonuses .bonusList');
         console.log("permBonuses_" + stat.id + " = " + permBonuses);
         if (permBonuses != null) {

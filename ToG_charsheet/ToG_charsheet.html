@@ -24,6 +24,8 @@
   <main>
     <button type="button" id="save">SAVE</button>
     <button type="button" id="calculatestats">Calculate stats</button>
+    <button type="button" id="calculateexp">Calculate exp</button>
+    <button type="button" id="quickstart">New Character</button>
     <form>
 
       <div id="basicInfo">
@@ -79,7 +81,7 @@
         <div class="statLabel might" id="might">might
           <div class="statFrame">
             <div class="statParts" id="mightParts">
-              <div class="baseStat statBox">&nbsp;
+              <div class="baseStat statBox noArrows">&nbsp;
                 <input type="number" class="baseStat save" id="baseMight" value="1" disabled>
               </div>
 
@@ -114,16 +116,24 @@
               <input type="number" class="currentStat save" id="currentMight" value="1" disabled>
             </div>
 
-            <div class="edge statBox" id="mightEdge">
-              <input type="number" class="edge save" id="mightEdge" value="1" disabled>
+            <div class="statEffects">
+              <div class="edge statBox noArrows">
+                <input type="number" class="edge" id="mightEdge" value="1" disabled>
+                <span class="fieldTitle">edge</span>
+              </div>
+              <div class="harm statBox noArrows">
+                <input type="number" class="harm save noArrows" id="mightHarm" value="0">
+                <span class="fieldTitle">harm</span>
+              </div>
             </div>
           </div>
+
         </div>
 
         <div class="statLabel agility" id="agility">agility
           <div class="statFrame">
             <div class="statParts" id="agilityParts">
-              <div class="baseStat statBox">&nbsp;
+              <div class="baseStat statBox noArrows">&nbsp;
                 <input type="number" class="baseStat save" id="baseAgility" value="1" disabled>
               </div>
 
@@ -140,10 +150,10 @@
                 </ul>
               </div>
 
-              <div class="tempBonuses statBox">
-                <label for="agilityTempBonusList" id="agilityTempBonus" class="bonusToggler" tabindex="0">
+              <div class="tempBonuses statBox noArrows">
+                <label="agilityTempBonusList" id="agilityTempBonus" class="bonusToggler" tabindex="0">
                   <span class>+</span><span class="tempBonuses save" id="tempAgilityMods"></span>
-                </label>
+                </label=>
                 <input class="dropdownToggle" id='agilityTempBonusList' type='checkbox' />
                 <ul class="bonusList dropdown">
                   <span class="bonusHeader">
@@ -156,18 +166,28 @@
 
             <div class="currentStat statBox">
               <input type="number" class="currentStat save" id="currentAgility" value="1" disabled>
+              <span class="fieldTitle">total</span>
             </div>
 
-            <div class="edge statBox" id="agilityEdge">
-              <input type="number" class="edge save" id="agilityEdge" value="1" disabled>
+            <div class="statEffects">
+              <div class="edge statBox noArrows">
+                <input type="number" class="edge" id="agilityEdge" value="1" disabled>
+                <span class="fieldTitle">edge</span>
+              </div>
+              <div class="harm statBox noArrows">
+                <input type="number" class="harm save noArrows" id="agilityHarm" value="0">
+                <span class="fieldTitle">harm</span>
+              </div>
             </div>
+
+
           </div>
         </div>
 
         <div class="statLabel hearts" id="hearts">hearts
           <div class="statFrame">
             <div class="statParts" id="heartsParts">
-              <div class="baseStat statBox">&nbsp;
+              <div class="baseStat statBox noArrows">&nbsp;
                 <input type="number" class="baseStat save" id="baseHearts" value="1" disabled>
               </div>
 
@@ -184,10 +204,10 @@
                 </ul>
               </div>
 
-              <div class="tempBonuses statBox">
-                <label for="heartsTempBonusList" id="heartsTempBonus" class="bonusToggler" tabindex="0">
+              <div class="tempBonuses statBox noArrows">
+                <label="heartsTempBonusList" id="heartsTempBonus" class="bonusToggler" tabindex="0">
                   <span class>+</span><span class="tempBonuses save" id="tempHeartsMods"></span>
-                </label>
+                </label=>
                 <input class="dropdownToggle" id='heartsTempBonusList' type='checkbox' />
                 <ul class="bonusList dropdown">
                   <span class="bonusHeader">
@@ -202,16 +222,24 @@
               <input type="number" class="currentStat save" id="currentHearts" value="1" disabled>
             </div>
 
-            <div class="edge statBox" id="heartsEdge">
-              <input type="number" class="edge save" id="heartsEdge" value="1" disabled>
+            <div class="statEffects">
+              <div class="edge statBox noArrows">
+                <input type="number" class="edge" id="heartsEdge" value="1" disabled>
+                <span class="fieldTitle">edge</span>
+              </div>
+              <div class="harm statBox noArrows">
+                <input type="number" class="harm save noArrows" id="heartsHarm" value="0">
+                <span class="fieldTitle">harm</span>
+              </div>
             </div>
           </div>
+
         </div>
 
         <div class="statLabel wits" id="wits">wits
           <div class="statFrame">
             <div class="statParts" id="witsParts">
-              <div class="baseStat statBox">&nbsp;
+              <div class="baseStat statBox noArrows">&nbsp;
                 <input type="number" class="baseStat save" id="baseWits" value="1" disabled>
               </div>
 
@@ -228,10 +256,10 @@
                 </ul>
               </div>
 
-              <div class="tempBonuses statBox">
-                <label for="witsTempBonusList" id="witsTempBonus" class="bonusToggler" tabindex="0">
+              <div class="tempBonuses statBox noArrows">
+                <label="witsTempBonusList" id="witsTempBonus" class="bonusToggler" tabindex="0">
                   <span class>+</span><span class="tempBonuses save" id="tempWitsMods"></span>
-                </label>
+                </label=>
                 <input class="dropdownToggle" id='witsTempBonusList' type='checkbox' />
                 <ul class="bonusList dropdown">
                   <span class="bonusHeader">
@@ -246,16 +274,24 @@
               <input type="number" class="currentStat save" id="currentWits" value="1" disabled>
             </div>
 
-            <div class="edge statBox" id="witsEdge">
-              <input type="number" class="edge save" id="witsEdge" value="1" disabled>
+            <div class="statEffects">
+              <div class="edge statBox noArrows">
+                <input type="number" class="edge" id="witsEdge" value="1" disabled>
+                <span class="fieldTitle">edge</span>
+              </div>
+              <div class="harm statBox noArrows">
+                <input type="number" class="harm save noArrows" id="witsHarm" value="0">
+                <span class="fieldTitle">harm</span>
+              </div>
             </div>
           </div>
+
         </div>
 
         <div class="statLabel resistance" id="resistance">resistance
           <div class="statFrame">
             <div class="statParts" id="resistanceParts">
-              <div class="baseStat statBox">&nbsp;
+              <div class="baseStat statBox noArrows">&nbsp;
                 <input type="number" class="baseStat save" id="baseResistance" value="1" disabled>
               </div>
 
@@ -272,10 +308,10 @@
                 </ul>
               </div>
 
-              <div class="tempBonuses statBox">
-                <label for="resistanceTempBonusList" id="resistanceTempBonus" class="bonusToggler" tabindex="0">
+              <div class="tempBonuses statBox noArrows">
+                <label="resistanceTempBonusList" id="resistanceTempBonus" class="bonusToggler" tabindex="0">
                   <span class>+</span><span class="tempBonuses save" id="tempResistanceMods"></span>
-                </label>
+                </label=>
                 <input class="dropdownToggle" id='resistanceTempBonusList' type='checkbox' />
                 <ul class="bonusList dropdown">
                   <span class="bonusHeader">
@@ -290,10 +326,18 @@
               <input type="number" class="currentStat save" id="currentResistance" value="1" disabled>
             </div>
 
-            <div class="edge statBox" id="resistanceEdge">
-              <input type="number" class="edge save" id="resistanceEdge" value="1" disabled>
+            <div class="statEffects">
+              <div class="edge statBox noArrows">
+                <input type="number" class="edge" id="resistanceEdge" value="1" disabled>
+                <span class="fieldTitle">edge</span>
+              </div>
+              <div class="harm statBox noArrows">
+                <input type="number" class="harm save noArrows" id="resistanceHarm" value="0">
+                <span class="fieldTitle">harm</span>
+              </div>
             </div>
           </div>
+
         </div>
 
 
@@ -385,6 +429,26 @@
         <button type="button" class="addButton" id="newAbility">New Ability</button>
 
       </div>
+
+      <div id="leveling">
+        <label for="abilitiesBought" class="leveling">Abilities purchased: 
+          <input class="save noArrows" type="number" id="abilitiesBought">
+        </label>
+        <label for="currentExperience" class="leveling">Current experience: 
+          <input class="save noArrows" type="number" id="currentExperience">
+        </label>
+        <label for="experienceSpent" class="leveling">Experience spent: 
+          <input class="save noArrows" type="number" id="experienceSpent">
+        </label>
+      
+        <label for="tier" class="leveling">Tier: 
+          <input class="save noArrows" type="number" id="tier">
+        </label>
+
+
+
+      </div>
+
     </form>
   </main>
 
@@ -403,6 +467,7 @@
   <div id="abilityWindow" class="popup">
     <div class="windowTitle">
       <h1>Add New Ability:</h1>
+      <button id="addCustomAbility">Add custom ability (cost: ?)</button>
       <button class="closeSelector">X</button>
     </div>
     <div class="abilitySelectors">
@@ -441,7 +506,85 @@
       </div>
     </div>
   </div>
+
+  <div id="quickstartWindow" class="popup">
+    <div class="windowTitle">
+      <h2>Quickstart new character</h2>
+      <button class="closeSelector">X</button>
+    </div>
+    <div id="quickstartDescription">Enter information below to autofill fields with the starting values for this character:</div>
+    <label for="quickstartRace" class="quickstartDropdown">race
+      <select name="quickstartRace" id="quickstartRace">
+        <option value="none">----</option>
+        <option value="human">Human</option>
+        <option value="crocodile">Crocodile</option>
+        <option value="canine">Canine</option>
+        <option value="silverdwarf">Silver Dwarf</option>
+        <option value="redwitch">Red Witch</option>
+        <option value="noble">Noble</option>
+        <option value="heir">Heir</option>
+        <option value="irregular">Irregular</option>
+      </select>
+    </label>
+    <label for="quickstartNoble" class="quickstartDropdown">noble family
+      <select name="quickstartNoble" id="quickstartNoble">
+        <option value="none">----</option>
+        <option value="keene">Keene</option>
+        <option value="trumbald">Trumbald</option>
+        <option value="haas">Haas</option>
+        <option value="lemarque">Lemarque</option>
+        <option value="halleck">Halleck</option>
+        <option value="posada">Posada</option>
+        <option value="aven">Aven</option>
+        <option value="yanetta">Yanetta</option>
+      </select>
+    </label>
+    <label for="quickstartPosition" class="quickstartDropdown">position
+      <select name="quickstartPosition" id="quickstartPosition">
+        <option value="none">----</option>
+        <option value="fisherman">Fisherman</option>
+        <option value="lightbearer">Lightbearer</option>
+        <option value="scout">Scout</option>
+        <option value="spearbearer">Spearbearer</option>
+        <option value="wavecontroller">Wave Controller</option>
+      </select>
+    </label>
+
+    <label for="fishermanStartWeapon" class="quickstartDropdown">Starting Weapon:
+      <select name="fishermanStartWeapon" id="fishermanStartWeapon">
+        <option value="none">----</option>
+        <option value="WEAPON_SKILLS_(HOOK)">Hook</option>
+        <option value="WEAPON_SKILLS_(NEEDLE)">Needle</option>
+        <option value="WEAPON_SKILLS_(BLADE)">Blade</option>
+        <option value="WEAPON_SKILLS_(BLUDGEON)">Bludgeon</option>
+        <option value="WEAPON_SKILLS_(UNARMED)">Unarmed</option>
+      </select>
+    </label>
+
+    starting stats:
+    <div>
+      Points remaining: <span id="statPoints">10</span>
+    </div>
+    <div id="quickstartStats">
+      <label>Might: <input type="number" id="startMight" min="2" max="12" value="2"></label>
+      <label>Agility: <input type="number" id="startAgility" min="2" max="12" value="2"></label>
+      <label>Hearts: <input type="number" id="startHearts" min="2" max="12" value="2"></label>
+      <label>Wits: <input type="number" id="startWits" min="2" max="12" value="2"></label>
+      <label>Resistance: <input type="number" id="startResistance" min="2" max="12" value="2"></label>
+
+    </div>
+
+    Starting abilities:
+    <div id="startAbilitiesList">
+    </div>
+    <button id="applyQuickstart">Apply to sheet</button>
+  </div>
+
 </body>
+
+
+
+
 
 
 </html>

@@ -1,3 +1,31 @@
+/* 
+^([^:]*?)\s*:\s*
+(.*\n){2} 
+*/
+
+var fisherman_startAbilities = []
+var lightbearer_startAbilities = ["LIGHTHOUSE"]
+var scout_startAbilities = ["OBSERVER"]
+var spearbearer_startAbilities = ["THROWER"]
+var wavecontroller_startAbilities = ["BEADS"]
+var human_startAbilities = ["TRAINED", "CLIMBER", "WHY_WE_KEEP_GOING", "SAVINGS"]
+var crocodile_startAbilities = ["TOUGH", "BIG", "SHARP", "LIVE_TO_HUNT", "DOESN'T_HUNT_MONEY"]
+var canine_startAbilities = ["BORN_FIGHTER", "IMPLANTED_WEAKNESS", "NOT_DOWN_YET", "TRANSFORMATION", "SINK_OR_SWIM"]
+var silverdwarf_startAbilities = ["THE_PATH_FORWARD", "PATHFINDER", "SUPPORT_OF_YOUR_PEOPLE"]
+var redwitch_startAbilities = ["WHERE_FATE_LEADS", "GUIDE", "GIFTS"]
+var noble_startAbilities = ["NEPOTISM", "ALLOWANCE", "FROWNED_UPON", "BLOODLINE", "YOU_HAVE_YOUR_PARENTS'_FIRE", "MAKING_THE_FAMILY_PROUD", "WEALTH"]
+var heir_startAbilities = ["ROYAL_BLOOD", "COMPETITION", "RICH"]
+var irregular_startAbilities = ["LEARN_BY_DOING", "SHAKE_THE_FOUNDATIONS_OF_THE_TOWER", "RAPID_GROWTH", "SURPRISINGLY_DURABLE", "ENTER_ALONE", "STARTING_SMALL"]
+var keene_startAbilities = ["COLD-HEARTED"]
+var trumbald_startAbilities = ["CRAFTER"]
+var haas_startAbilities = ["STRONGEST_BODY"]
+var lemarque_startAbilities = ["CAPTURE"]
+var halleck_startAbilities = ["MADE_OF_GRANITE"]
+var posada_startAbilities = ["ANALYSIS"]
+var aven_startAbilities = ["FAMILY_SWORDSMANSHIP"]
+var yanetta_startAbilities = ["SHROUDED_IN_FLAME"]
+
+
 var universal_abilities = [{
     name: "Beads",
     id: "BEADS",
@@ -84,10 +112,40 @@ var universal_abilities = [{
     type: "universal",
 }]
 var fisherman_abilities = [{
+    name: "Weapon Skills (Hook)",
+    id: "WEAPON_SKILLS_(HOOK)",
+    description: "While wielding a hook, you can use two stunts on a Brawl roll to stab your enemy and hold them in place. While they’re held, they are Pinned unless they pull it out (requiring a Brawl roll against your Brawl) or tear it out, which causes them to take Unresisted Injuries equal to your Might Edge. Additionally, while you have them held you gain the following stunts for Brawl: pull your enemy anywhere within your reach; and twist the hook to make them Hindered on Wits and Heart rolls for the next round (using this stunt more than once doesn’t increase its effects or duration in any way). While holding an enemy in this way, you can’t use stunts to deal additional Harm with the hook.",
+    source: "position",
+    type: "fisherman",
+}, {
+    name: "Weapon Skills (Needle)",
+    id: "WEAPON_SKILLS_(NEEDLE)",
+    description: "While wielding a needle, you can accept two Fatigue to make two melee attacks with one action. For every five dice you have to Brawl (not including automatic successes), you can accept another two Fatigue to make another attack in this way. You have to declare that you’re doing this (and how many attacks you’re making) before you start making attacks.",
+    source: "position",
+    type: "fisherman",
+}, {
+    name: "Weapon Skills (Blade)",
+    id: "WEAPON_SKILLS_(BLADE)",
+    description: "While wielding a blade, you can hit additional enemies with the same roll. Each enemy has to be within your reach. You take two Fatigue for each enemy past the first attacked in this way.",
+    source: "position",
+    type: "fisherman",
+}, {
+    name: "Weapon Skills (Bludgeon)",
+    id: "WEAPON_SKILLS_(BLUDGEON)",
+    description: "While wielding a blunt weapon, you can use Brawl stunts to knock an enemy down or back. Knocking an enemy down requires two stunts; that enemy is considered Slowed until the start of their turn. Knocking an enemy back requires two stunts to move them to Close range, six stunts to move them to Short range, fourteen stunts to move them to Medium range, and thirty stunts to move them to Long range. If they hit a solid barrier, or otherwise end their movement, they take 1d6 Injuries for every stunt used this way (e.g. moving them to Short range means they take 6d6 Injuries).",
+    source: "position",
+    type: "fisherman",
+}, {
+    name: "Weapon Skills (Unarmed)",
+    id: "WEAPON_SKILLS_(UNARMED)",
+    description: "While you aren’t wielding any other weapons (except gauntlets, handwraps, or other minimal weapons), blocking bare-handed does not cause you to take damage. If you block a ranged weapon bare-handed, you can catch any projectiles involved. This negates the effects of Rebound, if applicable. You can choose to attack as though you were dual wielding or using any additional number of weapons.",
+    source: "position",
+    type: "fisherman",
+}, {
     name: "Called Shot",
     id: "CALLED_SHOT",
     description: "Before you make a Brawl roll, Throw roll, or roll with the Shot ability (or any other ability that seems applicable), you can reduce your total dice by some amount to target a specific part of your enemy or their person. The penalty amount increases with the target's Tier. If you hit, you resolve the roll as normal and may also cause your enemy to suffer an additional effect. If you're using Rapid Shot, Shot, or another ability that allows you to make multiple attacks on separate targets, you can use these attacks to target multiple parts of the same enemy. \nArm: -(Tier) dice. The enemy is Hindered on Brawl rolls with that arm for the next two rounds. \nChest: -(Tier) dice. The enemy is Hindered on Agility rolls for the next two rounds. \nEye: -(5*Tier) dice. The enemy is Blinded for the next two rounds. \nHand: -(3*Tier) dice. The enemy is disarmed and is Hindered on Brawl rolls with that hand for the next two rounds. \nHead: -(3*Tier) dice. The enemy is Hindered on Wits rolls for the next two rounds. \nHeart: -(5*Tier) dice. The enemy takes additional Unresisted Injuries equal to their Might Edge. If your attack would leave them Fragile or worse, they die. \nLeg: -(Tier) dice. The enemy is Slowed for the next round unless they are flying. \nNeck: -(5*Tier) dice. The enemy can't speak for the next two rounds. If your attack would cause them to take at least as many Injuries as half their Might (after applying Resistance and other reductions), they die. \nVitals: -(3*Tier) dice. The enemy is Hindered on all rolls for the next round. \nArmor/Shield: -(Tier) dice. The enemy can't attempt to block this attack. \nWeapon: -(2*Tier) dice. The enemy can attempt to block this, but must choose another item to take the attack instead.",
-    source: "any",
+    source: "position",
     type: "fisherman",
 }, {
     name: "Disarm",
@@ -175,6 +233,12 @@ var fisherman_abilities = [{
     type: "fisherman",
 }]
 var lightbearer_abilities = [{
+    name: "Lighthouse",
+    id: "LIGHTHOUSE",
+    description: "You can use a Lighthouse, a small floating cube with a variety of functions. Which functions are available is affected by the rank of the Lighthouse. You can control a number of Lighthouses at one time equal to your Wits Edge. You can only control a Lighthouse as long as it stays within a certain range, which varies depending on the rank. The Lighthouse has an Agility equal to its controller’s Wits. Any rolls you make using a Lighthouse receive bonus dice for each Lighthouse you use. The number of bonus dice depends on the rank of the Lighthouse.",
+    source: "position",
+    type: "lightbearer",
+}, {
     name: "Brains",
     id: "BRAINS",
     description: "Add your Wits Edge to your Think rolls.",
@@ -260,6 +324,12 @@ var lightbearer_abilities = [{
     type: "lightbearer",
 }]
 var scout_abilities = [{
+    name: "Observer",
+    id: "OBSERVER",
+    description: "You can summon a small flying robot called an Observer. You must purchase this Observer before you can use it. You need to use an action to summon the Observer, but not to control it. For the purposes of dodging and taking hits, the Observer has 10 Might and Agility equal to its controller’s. This Observer can do the following: \n Record and transmit audio and video to an allied Lighthouse. \n Play recorded audio. \n Spread light in a small cone. \n Support the weight of a small child (maximum ~50 lb or ~20 kg).",
+    source: "position",
+    type: "scout",
+}, {
     name: "Advanced Observer",
     id: "ADVANCED_OBSERVER",
     description: "Adds the following abilities to the Observer. These abilities can't be used unless you possess an advanced Observer.\n Create a hologram up to human size within Close range. This hologram can move and is virtually indistinguishable from an imitated object or person. This ability can be used in conjunction with the basic ability to play recorded audio. The hologram does not have any physical substance. The hologram fools anyone who observes it unless they attempt to physically touch it.\n Slow creatures in a small cone for one round (this requires your action). The creatures must be within Close range.\n Counter the above slowing ability (this does not need to be done on your turn, but leaves you Hindered on any rolls taken as part of your next action).\n Support the weight of a single person",
@@ -345,6 +415,12 @@ var scout_abilities = [{
     type: "scout",
 }]
 var spearbearer_abilities = [{
+    name: "Thrower",
+    id: "THROWER",
+    description: "Add either your Might Edge or your Agility Edge to your Throw rolls.",
+    source: "position",
+    type: "spearbearer",
+}, {
     name: "Stabber",
     id: "STABBER",
     description: "When using a spear or ranged weapon in melee, you increase your Brawl by an amount of dice equal to either your Agility Edge or Might Edge. Regardless of which one you choose, you still deal damage according to your Might.",
@@ -430,6 +506,12 @@ var spearbearer_abilities = [{
     type: "spearbearer",
 }]
 var wavecontroller_abilities = [{
+    name: "Beads",
+    id: "BEADS",
+    description: "You start with the Beads universal ability.",
+    source: "position",
+    type: "wavecontroller",
+}, {
     name: "Precision",
     id: "PRECISION",
     description: "Add your Heart Edge to your Attune rolls.",
@@ -601,8 +683,8 @@ var canine_abilities = [{
     source: "race",
     type: "canine",
 }, {
-    name: "Transformation ",
-    id: "TRANSFORMATION_",
+    name: "Transformation",
+    id: "TRANSFORMATION",
     description: "You gain access to the Canine family's set of abilities. You need to purchase all of these abilities, as normal.",
     source: "race",
     type: "canine",
@@ -800,21 +882,21 @@ var lemarque_abilities = [{
     id: "CAPTURE",
     description: "You can use your action and accept Stress equal to twice your Heart Edge to attempt to exert your will over a divine fish within Short range. Make an Attune roll against the fish's Resistance (this roll is Impaired by an amount equal to their Heart plus their Wits if used against an intelligent creature). If you succeed, you have complete control over that fish for as long as you want, until either you fall unconscious for any reason, someone else uses this ability on the fish (which uses a Attune roll against your Attune), or you choose to release the fish.",
     source: "family",
-    type: "lemarque ",
+    type: "lemarque",
 }]
 var halleck_abilities = [{
     name: "Made of Granite",
     id: "MADE_OF_GRANITE",
     description: "When you first take this ability, double your Resistance. Anything that would increase your Resistance (including spending experience) increases it by twice as much.",
     source: "family",
-    type: "halleck ",
+    type: "halleck",
 }]
 var posada_abilities = [{
     name: "Analysis",
     id: "ANALYSIS",
     description: "Through sheer intelligence, you've managed to partially replicate the essential ability of a Guide. You can ask the GM any one question. If you have the minimum information necessary to reach an answer through logic and thought, the GM answers you and you accept Confusion equal to your Wits Edge. If you don't have enough information, you accept Confusion equal to half your Wits Edge (round up).",
     source: "family",
-    type: "posada ",
+    type: "posada",
 }]
 var aven_abilities = [{
     name: "Family Swordsmanship",
