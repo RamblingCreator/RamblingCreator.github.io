@@ -38,7 +38,7 @@
 }
 
 
-#basicInfo label {
+#basicInfo label, #quickstartInfo label {
     white-space: nowrap;
 }
 
@@ -134,7 +134,7 @@ input.currentStat, input.edge {
 span.fieldTitle {
     font-size: 0.4em;
 }
- 
+
 
 input.noArrows::-webkit-outer-spin-button, input.noArrows::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -292,6 +292,63 @@ input[type='checkbox']:checked+.bonusList {
 
 }
 
+
+/* skills */
+
+#brawl, #threatenM{
+    /* background-color: var(--might-main); */
+    --dark: var(--might-dark);
+    --main: var(--might-main);
+    --light: var(--might-light);
+}
+#finesse, #throw, #move{
+    /* background-color: var(--agility-main); */
+    --dark: var(--agility-dark);
+    --main: var(--agility-main);
+    --light: var(--agility-light);
+}
+#reachOut, #attune{
+    /* background-color: var(--hearts-main); */
+    --dark: var(--hearts-dark);
+    --main: var(--hearts-main);
+    --light: var(--hearts-light);
+}
+#manipulate, #think, #threatenW{
+    /* background-color: var(--wits-main); */
+    --dark: var(--wits-dark);
+    --main: var(--wits-main);
+    --light: var(--wits-light);
+}
+
+.skill {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--main);
+}
+
+.overwhelmIcon {
+    user-select: none;
+    font-size: 40px;
+    line-height: 30px;
+    text-align: center;
+    color: grey;
+    opacity: 50%;
+    margin: 0 auto;
+}
+
+
+
+.toggle input[type='checkbox'] {
+    display: none;
+}
+
+.toggle input:checked+.overwhelmIcon {
+
+    color: var(--dark);
+    opacity: 100%;
+
+}
+
 /* 
 might
 agility
@@ -328,7 +385,7 @@ Resistance
 }
 
 
-#abilitiesList {
+#abilitiesList, #startAbilitiesList {
     margin: 0 0.5em;
     padding-right: 0.25em;
     display: flex;
@@ -345,6 +402,16 @@ Resistance
     /* height: 88%; */
 }
 
+#quickstartWindow {
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#startAbilitiesList {
+    /* max-height: 50vh; */
+    height: 100%;
+}
 
 
 
@@ -658,8 +725,32 @@ input:checked+.supernaturalIcon {
     height: 100%;
 }
 
+.popup {
+    max-width: 1500px;
 
-#abilityWindow, #cypherWindow {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    margin: auto;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: var(--background);
+    border: 10px solid var(--background-darker);
+    color: #fff;
+
+    border-radius: 0.5em;
+
+    width: 90vw;
+    height: 90vh;
+    display: none;
+
+    box-shadow: 0 0 10px #00000059;
+}
+/* 
+#abilityWindow {
 
     max-width: 1500px;
 
@@ -670,55 +761,27 @@ input:checked+.supernaturalIcon {
 
     top: 50%;
     left: 50%;
-
     transform: translate(-50%, -50%);
 
     background-color: var(--background);
     border: 10px solid var(--background-darker);
-    /* change this? */
     color: #fff;
 
-    /* padding: 0.6em 1em; */
     border-radius: 0.5em;
 
-    /* width: 80%;
-    height: 80%; */
     width: 90vw;
     height: 90vh;
     display: none;
 
     box-shadow: 0 0 10px #00000059;
 }
-
+ */
 /* quickstart */
 
 #quickstartWindow {
-
-    max-width: 1100px;
-
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    margin: auto;
-
-    top: 50%;
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
-    background-color: var(--background);
-    border: 10px solid var(--background-darker);
-    color: #fff;
-
-    border-radius: 0.5em;
-
     width: 80vw;
     height: 80vh;
-    display: none;
     padding: 1em;
-
-    box-shadow: 0 0 10px #00000059;
-
 }
 
 #quickstartDescription {
@@ -748,4 +811,38 @@ select.quickstart {
 }
 .dragHandle:hover {
     color: white;
+}
+
+/* stat purchase window */
+
+#statPurchaseSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#statPurchaseSection label div {
+    display: flex;
+    flex-direction: column;
+    width: 4em;
+    /* font-size: 1.5em; */
+}
+#statPurchaseSection label input {
+    font-size: 1.25em;
+    text-align: center;
+}
+
+#statPurchaseSection label {
+    font-size: 1.5em;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+#statCost {
+    font-size: 2em;
+}
+#tierUpMessage {
+    display: none;
+}
+.windowBody {
+    padding: 1em;
 }

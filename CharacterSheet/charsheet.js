@@ -698,7 +698,7 @@ function getEmptyAttackHtml() {
 
 
 function saveForm() {
-    localStorage.clear();
+    // localStorage.clear();
     inputsToSave = document.getElementsByClassName("save");
     for (const input of inputsToSave) {
         // console.log("saving " + input.nodeName);

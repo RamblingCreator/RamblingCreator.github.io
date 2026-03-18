@@ -31,6 +31,7 @@ $(document).ready(function () {
         $("#cypherWindow").css('display', 'none');
         $("#popupMask").css('display', 'none');
         $("#quickstartWindow").css('display', 'none');
+        $(".popup").css('display', 'none');
     });
     $(document).keydown(function (e) {
         // ESCAPE key pressed
@@ -40,8 +41,9 @@ $(document).ready(function () {
             $("#confirmWindow").css('display', 'none');
             $("#quickstartWindow").css('display', 'none');
             $("#popupMask").css('display', 'none');
-        } else if (event.ctrlKey && event.keyCode == 83) {
-            event.preventDefault()
+            $(".popup").css('display', 'none');
+        } else if (e.ctrlKey && e.keyCode == 83) {
+            e.preventDefault()
             saveForm();
         }
     });
@@ -65,13 +67,29 @@ $(document).ready(function () {
     });
 
 
+    $(".raiseStat").on("click", function () {
+        changeBoughtStat(this, 1);
+    });
+    $(".lowerStat").on("click", function () {
+        changeBoughtStat(this, -1);
+    });
+    $(".statPurchase").on("input", function () {
+        changeBoughtStat(this, 0);
+    });
+    $("#applyStatPurchase").on("click", function () {
+        purchaseStats();
+    });
 
 
     $("#quickstart").on("click", function () {
-        $("#quickstartWindow").css('display', 'block');
+        $("#quickstartWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
     });
 
+    $("#buyStats").on("click", function () {
+        $("#statPurchaseWindow").css('display', 'flex');
+        $("#popupMask").css('display', 'flex');
+    });
 
     $("#quickstartRace").on("input", function () {
         if (this.value === "noble") {
@@ -79,6 +97,15 @@ $(document).ready(function () {
         } else {
             $("#quickstartNoble").parent().css('display', 'none');
             $("#quickstartNoble").val("none");
+        }
+
+        if (this.value === "irregular") {
+            let startStats = document.getElementById("quickstartStats");
+            for (const stat of startStats.children) {
+                stat.querySelector("input").value = 2;
+            }
+            document.getElementById("statPoints").innerHTML = 0;
+
         }
     });
 
@@ -101,6 +128,18 @@ $(document).ready(function () {
         }
     });
 
+    if ($("#quickstartRace").val() === "noble") {
+        $("#quickstartNoble").parent().css('display', 'inline');
+    } else {
+        $("#quickstartNoble").parent().css('display', 'none');
+        $("#quickstartNoble").val("none");
+    }
+    if ($("#quickstartPosition").val() === "fisherman") {
+        $("#fishermanStartWeapon").parent().css('display', 'inline');
+    } else {
+        $("#fishermanStartWeapon").parent().css('display', 'none');
+        $("#fishermanStartWeapon").val("none");
+    }
 
     $("#quickstartStats input").on("input", function () {
         calculateStarterStats(this);
@@ -108,6 +147,8 @@ $(document).ready(function () {
     $(".quickstartDropdown").on("input", function () {
         getStarterAbilities();
     });
+
+
 
 
     $(".dropdownToggle").on("input", function () {
@@ -234,12 +275,11 @@ var addThisAbility = function () {
         }
     }
 
+    // addAbilityBonuses(abilityJson);
 
 
 };
 function addNewAbility(abilityJson) {
-
-
     html = getAbilityHtml(abilityJson);
     $(html).appendTo("#abilitiesList");
     let thisAbility = abilities.lastChild;
@@ -259,12 +299,44 @@ function addNewAbility(abilityJson) {
         }
     }
 
+
     let thisButton = thisAbility.getElementsByClassName("removeAbility")[0];
     thisButton.addEventListener('click', function () { confirmDelete(thisButton, "ability", abilityJson.name) }, false);
 }
 
+function addAbilityBonuses(Json) {
+    /* var thisAbility = window[$("#quickstartRace").val() + "_abilities"].find(item => {
+        return item.id == ID;
+    }) */
+    console.log(document.querySelector("#mightPermBonusList + ul"));
+    if (Json.id === "TOUGH") {
+        addStatBonus("Tough (Crocodile)", 3, document.querySelector("#mightPermBonusList + ul"));
+        addStatBonus("Tough (Crocodile)", 3, document.querySelector("#resistancePermBonusList + ul"));
+    } else if (Json.id === "TRAINED") {
+        addStatBonus("Trained (Human)", 1, document.querySelector("#mightPermBonusList + ul"));
+        addStatBonus("Trained (Human)", 1, document.querySelector("#agilityPermBonusList + ul"));
+        addStatBonus("Trained (Human)", 1, document.querySelector("#heartsPermBonusList + ul"));
+        addStatBonus("Trained (Human)", 1, document.querySelector("#witsPermBonusList + ul"));
+        addStatBonus("Trained (Human)", 1, document.querySelector("#resistancePermBonusList + ul"));
+    } else if (Json.id === "BORN_FIGHTER") {
+        addStatBonus("Born Fighter (Canine)", 2, document.querySelector("#mightPermBonusList + ul"));
+        addStatBonus("Born Fighter (Canine)", 2, document.querySelector("#agilityPermBonusList + ul"));
+        addStatBonus("Born Fighter (Canine)", 2, document.querySelector("#resistancePermBonusList + ul"));
+    } else if (Json.id === "ROYAL_BLOOD") {
+        addStatBonus("Royal Blood (Heir)", 3, document.querySelector("#mightPermBonusList + ul"));
+        addStatBonus("Royal Blood (Heir)", 3, document.querySelector("#agilityPermBonusList + ul"));
+        addStatBonus("Royal Blood (Heir)", 3, document.querySelector("#heartsPermBonusList + ul"));
+        addStatBonus("Royal Blood (Heir)", 3, document.querySelector("#witsPermBonusList + ul"));
+        addStatBonus("Royal Blood (Heir)", 3, document.querySelector("#resistancePermBonusList + ul"));
+    } /* else if (Json.id === "TOUGH") {
+        addStatBonus("Tough (Crocodile)", 3, document.querySelector("#mightPermBonusList + ul"));
+        addStatBonus("Tough (Crocodile)", 3, document.querySelector("#resistancePermBonusList + ul"));
+    } */
+    calculateStats();
+}
+
 function getAbilityHtml(Json) {
-    return `<div class="ability" abilityName="${Json.name}">
+    return `<div class="ability" abilityName="${Json.name}" id="${Json.id}">
 
             <div class="abilityHeader">
               <div class="abilityNameBlock">
@@ -385,7 +457,7 @@ function confirmDelete(thisButton, type) {
     $(document).keydown(function (e) {
         // ESCAPE key pressed
         if (e.keyCode == 27) {
-            noCallback();
+            // noCallback();
             $("#confirmWindow").css('display', 'none');
             $("#popupMask").css('display', 'none');
         }
@@ -421,9 +493,9 @@ function calculateStats() {
             if (listItem.querySelector(".bonusAmount").value != "") {
                 tempTotal += parseInt(listItem.querySelector(".bonusAmount").value);
             } else {
-                console.log("empty amount, add nothing");
+                // console.log("empty amount, add nothing");
             }
-            console.log("[" + stat.id + "]adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
+            // console.log("[" + stat.id + "]adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
         }
 
         stat.querySelector('span.tempBonuses').innerHTML = tempTotal;
@@ -436,9 +508,9 @@ function calculateStats() {
             if (listItem.querySelector(".bonusAmount").value != "") {
                 permTotal += parseInt(listItem.querySelector(".bonusAmount").value);
             } else {
-                console.log("empty amount, add nothing");
+                // console.log("empty amount, add nothing");
             }
-            console.log("[" + stat.id + "]adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
+            // console.log("[" + stat.id + "]adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
         }
 
         stat.querySelector('span.permBonuses').innerHTML = permTotal;
@@ -458,6 +530,8 @@ function calculateStats() {
 }
 
 function addStatBonus(source, amount, parent) {
+    // console.log("parent is " + parent);
+    // [object HTMLUListElement]
     html = `<li class="bonusListItem">
                     <input type="number" class="bonusAmount"  value=${amount}>
                     <input class="bonusSource" value="${source}">
@@ -484,14 +558,157 @@ function addNewStatBonus() {
     thisButton.addEventListener('click', function () { this.parentNode.remove() }, false);
 }
 
+
+/* skills */
+
+function calculateSkills(params) {
+    let skills = document.getElementById("skills");
+    for (const skill of skills.children) {
+    }
+}
+
 /* experience */
 
 function calculateExperience() {
-    $("#tier").val(Math.floor(Math.log10($("#experienceSpent").val() / 500)) + 2);
+    $("#tier").val(getTier($("#experienceSpent").val()));
 
 }
 
+console.log("tier(2) = " + getTier(2));
+console.log("tier(250) = " + getTier(250));
+console.log("tier(1250) = " + getTier(1250));
+console.log("tier(6250) = " + getTier(6250));
 
+function getTier(exp) {
+    if (checkForAbility("ROYAL_BLOOD")) {
+        if (exp < 5000) {
+            return 2;
+        } else {
+            return Math.floor(Math.log10(exp / 500)) + 2
+        }
+    } else if (checkForAbility("RAPID_GROWTH")) {
+        if (exp < 5) {
+            return 1;
+        }
+        console.log("base tier");
+        return Math.floor(Math.log(exp / 500)/Math.log(5)) + 2;
+        // Math.log(x) / Math.log(otherBase)
+    }
+    if (exp < 5) {
+        return 1;
+    }
+    console.log("base tier");
+    return Math.floor(Math.log10(exp / 500)) + 2;
+
+}
+/* leveling modifiers:
+
+Tough: You increase your Might and Resistance increase by your Tier plus one.
+Born Fighter: Might, Resistance, and Agility scores by 2 increase  by your Tier plus one
+Royal Blood:  Whenever you spend experience to increase one of your attributes, you increase that attribute by your Tier plus one
+
+*/
+
+function purchaseStats() {
+    for (const stat of document.getElementById("statPurchaseSection").children) {
+        let input = stat.querySelector("input");
+        let statName = input.id.substring(0, input.id.length - 8);
+        let baseID = "#base" + statName.charAt(0).toUpperCase() + statName.substring(1)
+        $(baseID).val(parseInt($(baseID).val()) + parseInt(input.value));
+        input.value = 0;
+    }
+    getStatCost();
+    $("#popupMask").css('display', 'none');
+    $(".popup").css('display', 'none');
+    calculateStats();
+}
+
+function changeBoughtStat(origin, direction) {
+    let stat = origin.parentNode.querySelector("input");
+    // console.log("parent: " + origin.parentNode);
+    // console.log("changing " + stat.id + " by " + direction);
+    let increaseAmount = parseInt($("#tier").val());
+
+    if (checkForAbility("TOUGH")) {
+        if (stat.id.substring(0, 5) === "might" || stat.id.substring(0, 5) === "resistance") {
+            increaseAmount++;
+        }
+    } else if (checkForAbility("BORN_FIGHTER")) {
+        if (stat.id.substring(0, 5) === "might" || stat.id.substring(0, 5) === "agility" || stat.id.substring(0, 5) === "resistance") {
+            increaseAmount++;
+        }
+    } else if (checkForAbility("ROYAL_BLOOD")) {
+        increaseAmount++;
+    }
+
+    if (direction == 0) {
+        // console.log("floor ("+parseInt(stat.value) +"/"+increaseAmount+") = "+Math.floor(parseInt(stat.value) / increaseAmount));
+        // stat.value = Math.floor(parseInt(stat.value) / increaseAmount);
+        stat.value -= parseInt(stat.value) % increaseAmount;
+    } else {
+        stat.value = parseInt(stat.value) + parseInt(increaseAmount * direction);
+        stat.value = Math.max(0, parseInt(stat.value))
+    }
+    getStatCost();
+}
+
+function checkForAbility(abilityID) {
+    if (abilities.querySelector("#" + abilityID) != null) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+function getStatCost() {
+    let totalExpCost = 0;
+    let statPurchases = document.getElementById("statPurchaseSection");
+    let tier = $("#tier").val();
+    $(".raiseStat").prop("disabled", false);
+    $("#tierUpMessage").css('display', 'none');
+    for (const stat of statPurchases.children) {
+        let input = stat.querySelector("input");
+        increaseAmount = tier;
+        let statName = input.id.substring(0, input.id.length - 8)
+        if (checkForAbility("TOUGH")) {
+            if (statName === "might" || statName === "resistance") {
+                increaseAmount++;
+            }
+        } else if (checkForAbility("BORN_FIGHTER")) {
+            if (statName === "might" || statName === "agility" || statName === "resistance") {
+                increaseAmount++;
+            }
+        } else if (checkForAbility("ROYAL_BLOOD")) {
+            increaseAmount++;
+        }
+
+        // console.log("input: "+input);
+        let levels = input.value;
+        let thisExpCost = 0;
+        let initialValue = $("#base" + statName.charAt(0).toUpperCase() + statName.substring(1)).val();
+        // let costMessage = statName + " cost: "
+        // console.log(levels + " / " + increaseAmount + " = " + (levels / increaseAmount));
+
+        for (let i = 0; i < Math.floor(levels / increaseAmount); i++) {
+            thisExpCost = parseInt(thisExpCost) + parseInt((increaseAmount * i)) + parseInt(initialValue);
+            // costMessage += (parseInt((increaseAmount * i)) + parseInt(initialValue)) + " + ";
+        }
+        totalExpCost += thisExpCost;
+        // console.log(costMessage.substring(0, costMessage.length - 2) + "= " + thisExpCost);
+    }
+
+    console.log("total exp spent: " + (totalExpCost + parseInt($("#experienceSpent").val())));
+    console.log(getTier(totalExpCost + parseInt($("#experienceSpent").val())) + " >? " + $("#tier").val());
+
+    if (getTier(totalExpCost + parseInt($("#experienceSpent").val())) > parseInt($("#tier").val())) {
+        // document.getElementsByClassName("raiseStat").disabled = true;
+        $(".raiseStat").prop("disabled", true);
+        $("#tierUpMessage").css('display', 'inline');
+        console.log("raised tier");
+    }
+    document.querySelector("#statCost span").innerHTML = totalExpCost;
+}
 /* quickstart */
 
 
@@ -556,6 +773,9 @@ function getStarterAbilities() {
 
 function calculateStarterStats(modifiedStat) {
     let totalPoints = 10;
+    if ($("#quickstartRace").val() === "irregular") {
+        totalPoints = 0;
+    }
     let pointsSpent = 0;
     let startStats = document.getElementById("quickstartStats");
     for (const stat of startStats.children) {
@@ -570,10 +790,46 @@ function calculateStarterStats(modifiedStat) {
     // console.log("points remaining: "+(totalPoints-pointsSpent));
 }
 
+
+
+
+function validateQuickstart() {
+    let message = "";
+    if ($("#quickstartRace").val() === "none") {
+        message += "You need to select a race!\n";
+    }
+    if ($("#quickstartRace").val() === "fisherman" && $("#quickstartNoble").val() === "none") {
+        message += "You need to select a noble family!\n";
+    }
+    if ($("#quickstartPosition").val() === "none") {
+        message += "You need to select a position!\n";
+    }
+    if ($("#quickstartPosition").val() === "fisherman" && $("#fishermanStartWeapon").val() === "none") {
+        message += "You need to select a starting weapon!\n";
+    }
+
+    if (parseInt(document.getElementById("statPoints").innerHTML) > 0) {
+        message += "You have unspent stat points!\n";
+    }
+
+    /* if (parseInt(document.getElementById("statPoints").innerHTML) > 0) {
+        message += "You have unspent stat points!\n";
+    } */
+
+    document.getElementById("quickstartMessage").innerHTML = message;
+    if (message === "") {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function applyQuickstart() {
     /* validate - all points spent, everythign selected */
 
-
+    if (!validateQuickstart()) {
+        return;
+    }
 
     let startStats = document.getElementById("quickstartStats");
 
@@ -584,6 +840,8 @@ function applyQuickstart() {
 
     }
     calculateStats();
+
+    document.getElementById("abilitiesList").innerHTML = "";
     if ($("#quickstartRace").val() != "none") {
         window[$("#quickstartRace").val() + "_startAbilities"].forEach(ID => {
             var thisAbility = window[$("#quickstartRace").val() + "_abilities"].find(item => {
@@ -592,6 +850,7 @@ function applyQuickstart() {
             console.log(thisAbility);
             if (thisAbility != null) {
                 $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
+                addAbilityBonuses(thisAbility);
             }
         });
     }
@@ -603,6 +862,7 @@ function applyQuickstart() {
             console.log(thisAbility);
             if (thisAbility != null) {
                 $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
+                addAbilityBonuses(thisAbility);
             }
         });
     }
@@ -614,6 +874,7 @@ function applyQuickstart() {
             console.log(thisAbility);
             if (thisAbility != null) {
                 $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
+                addAbilityBonuses(thisAbility);
             }
         });
     }
@@ -625,14 +886,18 @@ function applyQuickstart() {
         console.log(thisAbility);
         if (thisAbility != null) {
             $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
+            addAbilityBonuses(thisAbility);
         }
 
     }
+    $("#abilitiesBought").val(0);
+    $("#experienceSpent").val(0);
+    $("#tier").val(1);
 }
 
 /* saving/loading */
 function saveForm() {
-    localStorage.clear();
+    // localStorage.clear();
     inputsToSave = document.getElementsByClassName("save");
     for (const input of inputsToSave) {
         // console.log("saving " + input.nodeName);
@@ -658,7 +923,7 @@ function saveForm() {
     for (const ability of abilities.getElementsByClassName('ability')) {
         let thisJSON = {}
         thisJSON.name = ability.getElementsByClassName("abilityName")[0].value;
-        // thisJSON.id = ability.getElementsByClassName("abilityid")[0].value;
+        thisJSON.id = ability.id;
         thisJSON.description = ability.getElementsByClassName("abilityDescription")[0].value;
         thisJSON.source = ability.getElementsByClassName("abilitySource")[0].value;
         thisJSON.type = ability.getElementsByClassName("abilityType")[0].value;
@@ -669,8 +934,8 @@ function saveForm() {
     for (const stat of stats.children) {
         let tempBonuses = {}
         temp = stat.querySelector('.tempBonuses .bonusList');
-        console.log(stat);
-        console.log(stat.querySelector('.tempBonuses .bonusList'));
+        // console.log(stat);
+        // console.log(stat.querySelector('.tempBonuses .bonusList'));
         for (const listItem of temp.getElementsByClassName('bonusListItem')) {
             tempBonuses[listItem.querySelector(".bonusSource").value] = listItem.querySelector(".bonusAmount").value;
         }
@@ -683,7 +948,7 @@ function saveForm() {
         for (const listItem of temp.getElementsByClassName('bonusListItem')) {
             tempBonuses[listItem.querySelector(".bonusSource").value] = listItem.querySelector(".bonusAmount").value;
         }
-        console.log("permbonuses: " + JSON.stringify(permBonuses));
+        // console.log("permbonuses: " + JSON.stringify(permBonuses));
         setThisStorage("permBonuses_" + stat.id, JSON.stringify(permBonuses));
         // console.log("temp: "+ tempBonuses+", perm: "+permBonuses);
         // console.log("temp: " + JSON.stringify(tempBonuses) + ", perm: " + JSON.stringify(permBonuses));
@@ -743,7 +1008,7 @@ function loadForm() {
     for (const stat of stats.children) {
         let tempBonuses = JSON.parse(getThisStorage("tempBonuses_" + stat.id));
         temp = stat.querySelector('.tempBonuses .bonusList');
-        console.log("tempBonuses_" + stat.id + " = " + tempBonuses);
+        // console.log("tempBonuses_" + stat.id + " = " + tempBonuses);
         if (tempBonuses != null) {
             for (const [key, value] of Object.entries(tempBonuses)) {
                 addStatBonus(key, value, temp);
@@ -754,7 +1019,7 @@ function loadForm() {
 
         let permBonuses = JSON.parse(getThisStorage("permBonuses_" + stat.id));
         perm = stat.querySelector('.permBonuses .bonusList');
-        console.log("permBonuses_" + stat.id + " = " + permBonuses);
+        // console.log("permBonuses_" + stat.id + " = " + permBonuses);
         if (permBonuses != null) {
             for (const [key, value] of Object.entries(permBonuses)) {
                 addStatBonus(key, value, perm);
