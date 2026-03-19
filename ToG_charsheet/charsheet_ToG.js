@@ -24,7 +24,40 @@ $(document).ready(function () {
         $("#abilityWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
         filterAbilities();
-        console.log("add ability");
+    });
+    $("#buyCanineStage").on("click", function () {
+        $("#caninePurchaseWindow").css('display', 'flex');
+        $("#popupMask").css('display', 'flex');
+        getTransformationPurchases();
+    });
+
+    $("#purchaseCanineUpgrade").on("click", function () {
+        buyCanineUpgrade();
+    });
+
+    if (parseInt($("#canineMaxLevel").val()) == 0) {
+        $("#raiseCanineLevel").prop("disabled", true);
+        $("#lowerCanineLevel").prop("disabled", true);
+    } else if ($("#canineLevel").val() >= $("#canineMaxLevel").val()) {
+        $("#canineLevel").val($("#canineMaxLevel").val());
+        $("#raiseCanineLevel").prop("disabled", true);
+        $("#lowerCanineLevel").prop("disabled", false);
+
+    } else if (parseInt($("#canineLevel").val()) < 1) {
+        $("#canineLevel").val(0);
+        $("#raiseCanineLevel").prop("disabled", false);
+        $("#lowerCanineLevel").prop("disabled", true);
+
+    } else {
+        $("#raiseCanineLevel").prop("disabled", false);
+        $("#lowerCanineLevel").prop("disabled", false);
+    }
+
+    $("#raiseCanineLevel").on("click", function () {
+        changeCanineLevel(1);
+    });
+    $("#lowerCanineLevel").on("click", function () {
+        changeCanineLevel(-1);
     });
     $(".closeSelector").on("click", function () {
         $("#abilityWindow").css('display', 'none');
@@ -56,6 +89,9 @@ $(document).ready(function () {
     $("#calculateexp").on("click", function () {
         calculateExperience();
     });
+    $("#calculaterolls").on("click", function () {
+        calculateRolls();
+    });
     $("#addCustomAbility").on("click", function () {
         addCustomAbility();
     });
@@ -65,6 +101,9 @@ $(document).ready(function () {
     $("#applyQuickstart").on("click", function () {
         applyQuickstart();
     });
+
+
+
 
 
     $(".raiseStat").on("click", function () {
@@ -113,11 +152,17 @@ $(document).ready(function () {
     $("#race").on("input", function () {
         if (this.value === "noble") {
             $("#noble").parent().css('display', 'inline');
+        } else if (this.value === "canine") {
+            $("#canineTransformations").css('display', 'block');
+            $("#noble").parent().css('display', 'none');
+            $("#noble").val("none");
         } else {
+            $("#canineTransformations").css('display', 'none');
             $("#noble").parent().css('display', 'none');
             $("#noble").val("none");
         }
     });
+            
 
     $("#quickstartPosition").on("input", function () {
         if (this.value === "fisherman") {
@@ -171,19 +216,120 @@ $(document).ready(function () {
         element.addEventListener('click', addNewStatBonus);
     });
     $(".reorderList").sortable({
-        axis: "y",
-        handle: ".dragHandle",
-        snap: true,
-        containment: "parent",
-        snapMode: "outer",
-        // helper: "clone",
-        placeholder: "sortable-placeholder",
-        forcePlaceholderSize: true,
-        tolerance: "pointer",
-        // forceHelperSize: true
+        axis:
+            "y",
+        handle:
+            ".dragHandle",
+        snap:
+            true,
+        containment:
+            "parent",
+        snapMode:
+            "outer",
+        // helper: 
+        // "clone",
+        placeholder:
+            "sortable-placeholder",
+        forcePlaceholderSize:
+            true,
+        tolerance:
+            "pointer",
+        // forceHelperSize: 
+        // true
     })
     calculateStats();
 });
+
+
+/* Canine transformation */
+
+
+function changeCanineLevel(direction) {
+    document.getElementById("canineLevel").value -= -direction;
+    let mobilityLevel = Math.min(parseInt($("#canineMaxMobility").val()), parseInt($("#canineLevel").val()));
+    let weaponLevel = Math.min(parseInt($("#canineMaxWeapon").val()), parseInt($("#canineLevel").val()));
+
+    if (parseInt($("#canineMaxLevel").val()) == 0) {
+        $("#raiseCanineLevel").prop("disabled", true);
+        $("#lowerCanineLevel").prop("disabled", true);
+    } else if ($("#canineLevel").val() >= $("#canineMaxLevel").val()) {
+        $("#canineLevel").val($("#canineMaxLevel").val());
+        $("#raiseCanineLevel").prop("disabled", true);
+        $("#lowerCanineLevel").prop("disabled", false);
+
+    } else if (parseInt($("#canineLevel").val()) < 1) {
+        $("#canineLevel").val(0);
+        $("#raiseCanineLevel").prop("disabled", false);
+        $("#lowerCanineLevel").prop("disabled", true);
+
+    } else {
+        $("#raiseCanineLevel").prop("disabled", false);
+        $("#lowerCanineLevel").prop("disabled", false);
+    }
+    $("#canineAbilities").html("");
+    if (weaponLevel > 0) {
+        $("#canineAbilities").append(getAbilityHtml(canine_transformation_abilities.find(item => {
+            return item.id == "WEAPON_" + weaponLevel;
+        })))
+
+    }
+    if (mobilityLevel > 0) {
+        $("#canineAbilities").append(getAbilityHtml(canine_transformation_abilities.find(item => {
+            return item.id == "MOBILITY_" + mobilityLevel;
+        })))
+        /* $(getAbilityHtml(canine_transformation_abilities.find(item => {
+            return item.id == "MOBILITY_" + mobilityLevel;
+        }))).appendTo("#canineAbilities"); */
+    }
+
+
+    console.log($("#canineLevel").val() + "<? 1 = " + ($("#canineLevel").val() < 1));
+}
+
+function buyCanineUpgrade() {
+    if (document.querySelector('input[name="caninePurchase"]:checked').value === "mobility") {
+        document.getElementById("canineMaxMobility").value++;
+    } else if (document.querySelector('input[name="caninePurchase"]:checked').value === "weapon") {
+        document.getElementById("canineMaxWeapon").value++;
+    }
+    document.getElementById("canineMaxLevel").value++;
+
+    $("#caninePurchaseWindow").css('display', 'none');
+    $("#popupMask").css('display', 'none');
+
+    if (parseInt($("#canineLevel").val()) < 1) {
+        $("#lowerCanineLevel").prop("disabled", true);
+    } else {
+        $("#lowerCanineLevel").prop("disabled", false);
+    }
+    $("#raiseCanineLevel").prop("disabled", false);
+
+}
+
+function getTransformationPurchases() {
+    let canineAbilities = document.getElementById("canineAbilities").children;
+    let weaponLevel = parseInt($("#canineMaxWeapon").val());
+    let mobilityLevel = parseInt($("#canineMaxMobility").val());
+    console.log("stageDesc: canineStageInfo[" + $("#canineMaxLevel").val());
+    document.querySelector("#canineStageDescription").innerHTML = canineStageInfo[$("#canineMaxLevel").val()]
+    console.log("mobility choice: " + (document.querySelector("#mobilityChoice + label")));
+    if (mobilityLevel < 7) {
+        document.querySelector("#mobilityDescription").innerHTML = canineMobilityChoices[mobilityLevel]
+    } else {
+        document.querySelector("#mobilityDescription").innerHTML = "all mobility abilities purchased"
+    }
+
+    if (weaponLevel < 7) {
+        document.querySelector("#weaponDescription").innerHTML = canineWeaponChoices[weaponLevel]
+    } else {
+        document.querySelector("#weaponDescription").innerHTML = "all weapon abilities purchased"
+    }
+
+    // document.querySelector("#newCanineStageCost span").innerHTML = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4)) * (mobilityLevel + weaponLevel + 1);
+    document.querySelector("#newCanineStageCost span").innerHTML = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4)) * (parseInt($("#canineMaxLevel").val()) + 1);
+}
+
+
 
 function filterAbilities() {
     let abilities = ["TEST", "test2"];
@@ -206,7 +352,8 @@ function filterAbilities() {
     }
     // abilities = abilities;
     // let tierSelector = document.getElementById("tierSelection");
-    // console.log("abilities: " + abilities.length);
+    // console.log("abilities: 
+    // " + abilities.length);
     console.log("abilities: " + abilities.length);
     document.getElementById("filteredAbilities").innerHTML = "";
 
@@ -214,8 +361,11 @@ function filterAbilities() {
         /* thisAbility = element;
         thisAbility.description = thisAbility.description.replace(/(\r\n|\r|\n)/i, "<br>"); */
         $(getAddAbilityHtml(element)).appendTo("#filteredAbilities");
+        if (!checkAbilityBuyable(element)) {
+            filteredAbilities.lastChild.querySelector(".addAbility").disabled = true;
+            filteredAbilities.lastChild.querySelector(".addAbility").innerHTML = "you don't meet the requirements for this ability";
+        }
     });
-
     let cost = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4));
     if (cost > $("#currentExperience").val()) {
         costMessage = "Cannot afford"
@@ -224,22 +374,95 @@ function filterAbilities() {
     Array.from(elements).forEach(function (element) {
         element.addEventListener('click', addThisAbility);
     });
-
     updateAbilityCosts();
-
 }
 
-function addCustomAbility() {
-    addNewAbility({ name: "", source: "any", type: "custom", id: "", description: "" });
 
+function checkAbilityBuyable(abilityJson) {
+    if ((abilityJson.id == "SUPERHUMAN_STRENGTH" && $("#baseMight").val() < 50) ||
+        (abilityJson.id == "SUPERHUMAN_SPEED" && $("#baseAgility").val() < 50) ||
+        (abilityJson.id == "OVERWHELMING_FORCE" && $("#baseMight").val() < 50 && $("#baseResistance").val() < 50) ||
+        (abilityJson.id == "OVERWHELMING_MIND" && $("#baseWits").val() < 50 && $("#baseHeart").val() < 50) ||
+        (abilityJson.id == "OVERWHELMING_SPEED" && $("#baseAgility").val() < 50 && $("#baseWits").val() < 50) ||
+        (abilityJson.id == "OVERWHELMING_ACCURACY" && $("#baseAgility").val() < 50 && $("#baseMight").val() < 50) ||
+        (abilityJson.id == "OVERWHELMING_CONTROL" && $("#baseAgility").val() < 50 && $("#baseHeart").val() < 50) ||
+        (abilityJson.id == "SPIDER_FOOT" && !checkForAbility("FEATHER_FOOT"))) {
+        return false;
+    } else if ((abilityJson.id == "LIGHTNING_STRIKE" || abilityJson.id == "CHAIN_LIGHTNING" || abilityJson.id == "BOLT_RIDER")
+        && !checkForAbility("SHINSU_QUALITY_(LIGHTNING)")) {
+        return false;
+    } else if ((abilityJson.id == "WHIRLWIND_[EXTENDED]" || abilityJson.id == "GUST" || abilityJson.id == "STILL_AND_STIR_THE_AIR")
+        && !checkForAbility("SHINSU_QUALITY_(WIND)")) {
+        return false;
+    } else if ((abilityJson.id == "ICE_RINK" || abilityJson.id == "POLAR_MIDNIGHT" || abilityJson.id == "FROZEN_GRAPESHOT")
+        && !checkForAbility("SHINSU_QUALITY_(ICE)")) {
+        return false;
+    } else if ((abilityJson.id == "INFERNO_[EXTENDED]" || abilityJson.id == "FIREBALL" || abilityJson.id == "FLARE_[EXTENDED]")
+        && !checkForAbility("SHINSU_QUALITY_(FIRE)")) {
+        return false;
+    } else if ((abilityJson.id == "STONE_SKIN" || abilityJson.id == "TOUGHNESS" || abilityJson.id == "CLOSED_MIND")
+        && !checkForAbility("SHINSU_QUALITY_(ROCK)")) {
+        return false;
+    } else if ((abilityJson.id == "CRASHING_WAVE" || abilityJson.id == "MAELSTROM_[EXTENDED]" || abilityJson.id == "PURIFY_BODY")
+        && !checkForAbility("SHINSU_QUALITY_(WATER)")) {
+        return false;
+    } else if ((abilityJson.id == "PLACEHOLDER" || abilityJson.id == "ARMED_AND_READY" || abilityJson.id == "ARMOR_STORM")
+        && !checkForAbility("SHINSU_QUALITY_(STEEL)")) {
+        return false;
+    }
+    return true;
+}
+
+
+/* 
+LIGHTNING_STRIKE
+CHAIN_LIGHTNING
+BOLT_RIDER
+WHIRLWIND_[EXTENDED]
+GUST
+STILL_AND_STIR_THE_AIR
+ICE_RINK
+POLAR_MIDNIGHT
+FROZEN_GRAPESHOT
+INFERNO_[EXTENDED]
+FIREBALL
+FLARE_[EXTENDED]
+STONE_SKIN
+TOUGHNESS
+CLOSED_MIND
+CRASHING_WAVE
+MAELSTROM_[EXTENDED]
+PURIFY_BODY
+PLACEHOLDER
+ARMED_AND_READY
+ARMOR_STORM
+ */
+
+function addCustomAbility() {
+    addNewAbility({
+        name:
+            "", source: "any", type: "custom", id: "", description: ""
+    });
 }
 
 function updateAbilityCosts() {
     let cost = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4));
     var elements = document.getElementsByClassName("addAbility");
     Array.from(elements).forEach(function (element) {
-
+        cost = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4));
+        /* var thisAbility = typeAbilities.find(item => {
+            return item.id == this.value;
+        })
+        
+        if (thisAbility.source === "position" && thisAbility.type != position.value) {
+            cost = cost * 2;
+        } */
+        console.log("source: " + element.getAttribute("source") + " name: " + element.name);
+        if (element.getAttribute("source") === "position" && element.name != position.value) {
+            cost = cost * 2;
+        }
         let buttonMessage = "Purchase this ability (Cost: " + cost + ")"
+
         if (cost > $("#currentExperience").val()) {
             buttonMessage = "Purchase this ability (Cannot afford)"
             element.disabled = true;
@@ -250,25 +473,32 @@ function updateAbilityCosts() {
         document.getElementById("addCustomAbility").disabled = true;
         document.getElementById("addCustomAbility").innerHTML = "Add custom ability (Cannot afford)";
     } else {
-        document.getElementById("addCustomAbility").innerHTML = "Add custom ability (cost: " + cost + ")";
+        document.getElementById("addCustomAbility").innerHTML = "Add custom ability (cost: " + cost + ") ";
     }
 }
 
-var addThisAbility = function () {
-    let cost = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4));
-    $("#currentExperience").val($("#currentExperience").val() - cost);
 
-    $("#experienceSpent").val($("#experienceSpent").val() - (cost * -1));
-    $("#abilitiesBought").val($("#abilitiesBought").val() + 1);
+var addThisAbility = function () {
+
     updateAbilityCosts();
-    var attribute = this.value; //getAttribute("data-myattribute");
+    var thisID = this.value; //getAttribute("data-myattribute");
+
     // console.log("looking for " + this.name + "_ABILITIES");
     typeAbilities = window[this.name + "_abilities"];
-    console.log(this.name + "_abilities: " + typeAbilities);
+    // console.log(this.name + "_abilities: " + typeAbilities);
     if (typeAbilities != null) {
         var thisAbility = typeAbilities.find(item => {
-            return item.id == attribute
+            return item.id == thisID;
         })
+
+        let cost = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4));
+        if (thisAbility.source === "position" && thisAbility.type != position.value) {
+            cost = cost * 2;
+        }
+        $("#currentExperience").val($("#currentExperience").val() - cost);
+        $("#experienceSpent").val($("#experienceSpent").val() - (cost * -1));
+        $("#abilitiesBought").val(parseInt($("#abilitiesBought").val()) + 1);
+
         console.log(thisAbility);
         if (thisAbility != null) {
             addNewAbility(thisAbility);
@@ -283,7 +513,7 @@ function addNewAbility(abilityJson) {
     html = getAbilityHtml(abilityJson);
     $(html).appendTo("#abilitiesList");
     let thisAbility = abilities.lastChild;
-    console.log(thisAbility.getElementsByClassName("abilityDescription"));
+    // console.log(thisAbility.getElementsByClassName("abilityDescription"));
     let tbox = thisAbility.getElementsByClassName("abilityDescription")[0];
     tbox.style.height = tbox.scrollHeight + "px";
     tbox.style.overflowY = "hidden";
@@ -354,9 +584,11 @@ function getAbilityHtml(Json) {
 }
 
 function getAddAbilityHtml(Json) {
-    // console.log("original description: " + Json.description);
+    // console.log("original description: 
+    // " + Json.description);
     let newDesc = Json.description.replaceAll(/\r\n|\r|\n/gi, "<br>"); //•
-    // console.log("new description: " + newDesc);
+    // console.log("new description: 
+    // " + newDesc);
     let cost = Math.pow(3, 1 + Math.floor($("#abilitiesBought").val() / 4));
     if (Json.source == "position" && Json.type != $("#position").val()) {
         cost = cost * 2;
@@ -377,7 +609,7 @@ function getAddAbilityHtml(Json) {
             </div>
           </div>
           <p class="abilityDescription" rows="1" cols="10">${newDesc}</p>
-          <button type="button" class="addAbility" name="${Json.type}" value="${Json.id}">Purchase this ability (${costMessage})</button>
+          <button type="button" class="addAbility" name="${Json.type}" source="${Json.source}" value="${Json.id}">Purchase this ability (${costMessage})</button>
         </div>`
 }
 
@@ -483,6 +715,7 @@ function getWidthOfInput(inputEl) {
 }
 
 
+
 function calculateStats() {
     console.log("calculating stats");
     for (const stat of stats.children) {
@@ -495,12 +728,14 @@ function calculateStats() {
             } else {
                 // console.log("empty amount, add nothing");
             }
-            // console.log("[" + stat.id + "]adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
+            // console.log("[" + stat.id + "]adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: 
+            // " + tempTotal);
         }
 
         stat.querySelector('span.tempBonuses').innerHTML = tempTotal;
-
-        console.log("temp span: " + stat.querySelector('span.tempBonuses'));
+        console.log(stat.querySelector('span.tempBonuses') + " => " + tempTotal);
+        // console.log("temp span: 
+        // " + stat.querySelector('span.tempBonuses'));
 
         let permTotal = 0;
         perm = stat.querySelector('.permBonuses .bonusList');
@@ -510,7 +745,8 @@ function calculateStats() {
             } else {
                 // console.log("empty amount, add nothing");
             }
-            // console.log("[" + stat.id + "]adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: " + tempTotal);
+            // console.log("[" + stat.id + "]adding " + listItem.querySelector(".bonusAmount").value + "(" + listItem.querySelector(".bonusSource").value + ") to temp total: 
+            // " + tempTotal);
         }
 
         stat.querySelector('span.permBonuses').innerHTML = permTotal;
@@ -540,7 +776,12 @@ function addStatBonus(source, amount, parent) {
     $(parent).append(html);
 
     let thisButton = parent.lastChild.getElementsByClassName("removeBonus")[0];
-    thisButton.addEventListener('click', function () { this.parentNode.remove() }, false);
+    thisButton.addEventListener('click', function () { this.parentNode.remove(); calculateStats(); }, false);
+    /* thisButton.addEventListener('click', () => {
+        this.parentNode.remove();
+        calculateStats();
+        console.log("removed added bonus");
+    }, false); */
 }
 
 function addNewStatBonus() {
@@ -555,15 +796,149 @@ function addNewStatBonus() {
     $(this.parentNode.parentNode).append(html);
 
     let thisButton = this.parentNode.parentNode.lastChild.getElementsByClassName("removeBonus")[0];
-    thisButton.addEventListener('click', function () { this.parentNode.remove() }, false);
-}
 
+    /* thisButton.addEventListener('click', () => {
+        this.parentNode.remove();
+        calculateStats();
+        console.log("removed new bonus");
+    }, false); */
+    thisButton.addEventListener('click', function () { this.parentNode.remove(); calculateStats(); }, false);
+    // thisButton.addEventListener('click', function () { this.parentNode.remove(); calculateStats();}, false);
+}
+function removeBonus(thisButton) {
+    this.parentNode.remove();
+    calculateStats();
+}
 
 /* skills */
 
-function calculateSkills(params) {
+/* function calculateSkills(params) {
     let skills = document.getElementById("skills");
     for (const skill of skills.children) {
+    }
+} */
+
+
+
+function calculateRolls() {
+
+    if ($("#Slowed").is(':checked')) {
+        document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #move .hinderedRoll input").checked = true;
+    }
+    if ($("#Pinned").is(':checked')) {
+        document.querySelector("#rolls #agilityRoll .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #finesse .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #move .hinderedRoll input").checked = true;
+    }
+    if ($("#Paralyzed").is(':checked')) {
+        document.querySelector("#rolls .hinderedRoll input").checked = true;
+    }
+    if ($("#Blind").is(':checked')) {
+        document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #finesse .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #move .hinderedRoll input").checked = true;
+    }
+    if ($("#Weakened").is(':checked')) {
+        document.querySelector("#rolls #mightRoll .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #threatenM .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #agilityRoll .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #finesse .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #move .hinderedRoll input").checked = true;
+    }
+    if ($("#Anxious").is(':checked')) {
+        document.querySelector("#rolls #heartsRoll .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #reachOut .hinderedRoll input").checked = true;
+        document.querySelector("#rolls #attune .hinderedRoll input").checked = true;
+    }
+
+
+    if (checkForAbility("BRUISER")) {
+        document.querySelector("#rolls #brawl .addEdge").innerHTML = $("#mightEdge").val();
+    }
+    if (checkForAbility("SNEAKY")) {
+        document.querySelector("#rolls #finesse .addEdge").innerHTML = $("#agilityEdge").val();
+    }
+    if (checkForAbility("SPEEDY")) {
+        document.querySelector("#rolls #move .addEdge").innerHTML = $("#agilityEdge").val();
+    }
+    if (checkForAbility("THROWER")) {
+        if ($("#agilityEdge").val > $("#mightEdge").val) {
+            document.querySelector("#rolls #throw .addEdge").innerHTML = $("#agilityEdge").val();
+        } else {
+            document.querySelector("#rolls #throw .addEdge").innerHTML = $("#mightEdge").val();
+        }
+    }
+    if (checkForAbility("PRECISION")) {
+        document.querySelector("#rolls #attune .addEdge").innerHTML = $("#heartsEdge").val();
+    }
+    if (checkForAbility("BRAINS")) {
+        document.querySelector("#rolls #think .addEdge").innerHTML = $("#witsEdge").val();
+    }
+    if (checkForAbility("SMOOTH_TALKER")) {
+        document.querySelector("#rolls #manipulate .addEdge").innerHTML = $("#witsEdge").val();
+    }
+
+
+    let rolls = document.querySelector("#rolls table");
+    let thisStat = "might"
+    console.log("rolls: " + rolls.querySelectorAll("tbody tr") + "[" + rolls.querySelectorAll("tbody tr").length + "]");
+    for (const roll of rolls.querySelectorAll("tbody tr")) {
+        // console.log(roll.id.substring(roll.id.length - 4, roll.id.length));
+        // console.log(roll.id.substring(roll.id.length - 4, roll.id.length) + "=? Roll");
+        if (roll.id.substring(roll.id.length - 4, roll.id.length) === "Roll") {
+            thisStat = roll.id.substring(0, roll.id.length - 4);
+        }
+        roll.querySelector(".baseDice").innerHTML = 1 + Math.floor($("#" + thisStat + "Base").val() / 5);
+        let diceAmount = 1 + Math.floor($("#" + thisStat + "Base").val() / 5);
+        diceAmount += parseInt(roll.querySelector("input.bonusDice").value) + parseInt(roll.querySelector("span.bonusDice").innerHTML);
+
+        console.log(roll.id + " bonusDice: " + parseInt(roll.querySelector("input.bonusDice").value));
+        console.log(roll.id + " bonusDice: " + roll.querySelector("input.bonusDice"));
+        console.log(roll.id + " bonusDice2: " + parseInt(roll.querySelector("span.bonusDice").innerHTML));
+
+
+        roll.querySelector(".totalDice").innerHTML = diceAmount;
+        // $("#"+thisStat+"Base").val();
+    }
+    if (checkForAbility("OVERWHELMING_FORCE")) {
+        $("#brawl .overwhelm span").css('display', 'inline');
+    } else if (checkForAbility("OVERWHELMING_MIND")) {
+        $("#think .overwhelm span").css('display', 'inline');
+    } else if (checkForAbility("OVERWHELMING_SPEED")) {
+        $("#move .overwhelm span").css('display', 'inline');
+    } else if (checkForAbility("OVERWHELMING_ACCURACY")) {
+        $("#throw .overwhelm span").css('display', 'inline');
+    } else if (checkForAbility("OVERWHELMING_CONTROL")) {
+        $("#attune .overwhelm span").css('display', 'inline');
+    }
+
+
+    /* OVERWHELMING_FORCE
+    OVERWHELMING_MIND
+    OVERWHELMING_SPEED
+    OVERWHELMING_ACCURACY
+    OVERWHELMING_CONTROL */
+
+    /* auto fail conditions */
+    if ($("#Pinned").is(':checked')) {
+        document.querySelector("#rolls #move .totalDice").innerHTML = 0;
+    }
+    if ($("#Paralyzed").is(':checked')) {
+        document.querySelector("#rolls #mightRoll .totalDice").innerHTML = 0;
+        document.querySelector("#rolls #brawl .totalDice").innerHTML = 0;
+        document.querySelector("#rolls #threatenM .totalDice").innerHTML = 0;
+        document.querySelector("#rolls #agilityRoll .totalDice").innerHTML = 0;
+        document.querySelector("#rolls #finesse .totalDice").innerHTML = 0;
+        document.querySelector("#rolls #throw .totalDice").innerHTML = 0;
+        document.querySelector("#rolls #move .totalDice").innerHTML = 0;
+    }
+    if ($("#Blind").is(':checked')) {
+        document.querySelector("#rolls #throw .totalDice").innerHTML = 0;
     }
 }
 
@@ -591,7 +966,7 @@ function getTier(exp) {
             return 1;
         }
         console.log("base tier");
-        return Math.floor(Math.log(exp / 500)/Math.log(5)) + 2;
+        return Math.floor(Math.log(exp / 500) / Math.log(5)) + 2;
         // Math.log(x) / Math.log(otherBase)
     }
     if (exp < 5) {
@@ -603,9 +978,12 @@ function getTier(exp) {
 }
 /* leveling modifiers:
 
-Tough: You increase your Might and Resistance increase by your Tier plus one.
-Born Fighter: Might, Resistance, and Agility scores by 2 increase  by your Tier plus one
-Royal Blood:  Whenever you spend experience to increase one of your attributes, you increase that attribute by your Tier plus one
+Tough: 
+You increase your Might and Resistance increase by your Tier plus one.
+Born Fighter: 
+Might, Resistance, and Agility scores by 2 increase  by your Tier plus one
+Royal Blood: 
+ Whenever you spend experience to increase one of your attributes, you increase that attribute by your Tier plus one
 
 */
 
@@ -613,7 +991,7 @@ function purchaseStats() {
     for (const stat of document.getElementById("statPurchaseSection").children) {
         let input = stat.querySelector("input");
         let statName = input.id.substring(0, input.id.length - 8);
-        let baseID = "#base" + statName.charAt(0).toUpperCase() + statName.substring(1)
+        let baseID = "#" + statName + "Base"
         $(baseID).val(parseInt($(baseID).val()) + parseInt(input.value));
         input.value = 0;
     }
@@ -625,7 +1003,8 @@ function purchaseStats() {
 
 function changeBoughtStat(origin, direction) {
     let stat = origin.parentNode.querySelector("input");
-    // console.log("parent: " + origin.parentNode);
+    // console.log("parent: 
+    // " + origin.parentNode);
     // console.log("changing " + stat.id + " by " + direction);
     let increaseAmount = parseInt($("#tier").val());
 
@@ -651,7 +1030,7 @@ function changeBoughtStat(origin, direction) {
     }
     getStatCost();
 }
-
+// checkForAbility("WEAPON_SKILLS_[HOOK]");
 function checkForAbility(abilityID) {
     if (abilities.querySelector("#" + abilityID) != null) {
         return true;
@@ -683,11 +1062,13 @@ function getStatCost() {
             increaseAmount++;
         }
 
-        // console.log("input: "+input);
+        // console.log("input: 
+        // "+input);
         let levels = input.value;
         let thisExpCost = 0;
-        let initialValue = $("#base" + statName.charAt(0).toUpperCase() + statName.substring(1)).val();
-        // let costMessage = statName + " cost: "
+        let initialValue = $("#" + statName + "Base").val();
+        // let costMessage = statName + " cost: 
+        // "
         // console.log(levels + " / " + increaseAmount + " = " + (levels / increaseAmount));
 
         for (let i = 0; i < Math.floor(levels / increaseAmount); i++) {
@@ -722,7 +1103,7 @@ function getStarterAbilities() {
             var thisAbility = window[$("#quickstartRace").val() + "_abilities"].find(item => {
                 return item.id == ID;
             })
-            console.log(thisAbility);
+            // console.log(thisAbility);
             if (thisAbility != null) {
                 $(getPreviewAbilityHtml(thisAbility)).appendTo("#startAbilitiesList");
             }
@@ -735,7 +1116,7 @@ function getStarterAbilities() {
             var thisAbility = window[$("#quickstartNoble").val() + "_abilities"].find(item => {
                 return item.id == ID;
             })
-            console.log(thisAbility);
+            // console.log(thisAbility);
             if (thisAbility != null) {
                 $(getPreviewAbilityHtml(thisAbility)).appendTo("#startAbilitiesList");
             }
@@ -748,7 +1129,7 @@ function getStarterAbilities() {
             var thisAbility = window[$("#quickstartPosition").val() + "_abilities"].find(item => {
                 return item.id == ID;
             })
-            console.log(thisAbility);
+            // console.log(thisAbility);
             if (thisAbility != null) {
                 $(getPreviewAbilityHtml(thisAbility)).appendTo("#startAbilitiesList");
             }
@@ -757,18 +1138,19 @@ function getStarterAbilities() {
     }
     if ($("#fishermanStartWeapon").val() != "none") {
         // startAbilityIDs = startAbilityIDs.concat(window[$("#fishermanStartWeapon").val() + "_startAbilities"]);
-        console.log("fish: " + window["fisherman_abilities"]);
+        // console.log("fish: 
+        // " + window["fisherman_abilities"]);
         // let ID = window[$("#fishermanStartWeapon").val() + "_startAbilities"]
         var thisAbility = window["fisherman_abilities"].find(item => {
             return item.id == $("#fishermanStartWeapon").val();
         })
-        console.log(thisAbility);
+        // console.log(thisAbility);
         if (thisAbility != null) {
             $(getPreviewAbilityHtml(thisAbility)).appendTo("#startAbilitiesList");
         }
 
     }
-    console.log(startAbilityIDs);
+    // console.log(startAbilityIDs);
 }
 
 function calculateStarterStats(modifiedStat) {
@@ -787,7 +1169,8 @@ function calculateStarterStats(modifiedStat) {
     } else {
         document.getElementById("statPoints").innerHTML = totalPoints - pointsSpent;
     }
-    // console.log("points remaining: "+(totalPoints-pointsSpent));
+    // console.log("points remaining: 
+    // "+(totalPoints-pointsSpent));
 }
 
 
@@ -835,8 +1218,12 @@ function applyQuickstart() {
 
     console.log("applying quickstart");
     for (const stat of startStats.children) {
-        console.log("#base" + stat.querySelector("input").id.substring(5));
-        $("#base" + stat.querySelector("input").id.substring(5)).val(stat.querySelector("input").value);
+        // console.log("#base" + stat.querySelector("input").id.substring(5));
+        // console.log("#" + stat.querySelector("input").id.substring(5).toLowerCase()+"Base");
+        // $("#base" + stat.querySelector("input").id.substring(5)).val(stat.querySelector("input").value);
+        let baseStat = "#" + stat.querySelector("input").id.substring(5).toLowerCase() + "Base"
+        $(baseStat).val(stat.querySelector("input").value);
+
 
     }
     calculateStats();
@@ -847,7 +1234,7 @@ function applyQuickstart() {
             var thisAbility = window[$("#quickstartRace").val() + "_abilities"].find(item => {
                 return item.id == ID;
             })
-            console.log(thisAbility);
+            // console.log(thisAbility);
             if (thisAbility != null) {
                 $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
                 addAbilityBonuses(thisAbility);
@@ -859,7 +1246,7 @@ function applyQuickstart() {
             var thisAbility = window[$("#quickstartNoble").val() + "_abilities"].find(item => {
                 return item.id == ID;
             })
-            console.log(thisAbility);
+            // console.log(thisAbility);
             if (thisAbility != null) {
                 $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
                 addAbilityBonuses(thisAbility);
@@ -871,7 +1258,7 @@ function applyQuickstart() {
             var thisAbility = window[$("#quickstartPosition").val() + "_abilities"].find(item => {
                 return item.id == ID;
             })
-            console.log(thisAbility);
+            // console.log(thisAbility);
             if (thisAbility != null) {
                 $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
                 addAbilityBonuses(thisAbility);
@@ -879,11 +1266,12 @@ function applyQuickstart() {
         });
     }
     if ($("#fishermanStartWeapon").val() != "none") {
-        console.log("fish: " + window["fisherman_abilities"]);
+        // console.log("fish: 
+        // " + window["fisherman_abilities"]);
         var thisAbility = window["fisherman_abilities"].find(item => {
             return item.id == $("#fishermanStartWeapon").val();
         })
-        console.log(thisAbility);
+        // console.log(thisAbility);
         if (thisAbility != null) {
             $(getAbilityHtml(thisAbility)).appendTo("#abilitiesList");
             addAbilityBonuses(thisAbility);
@@ -948,10 +1336,13 @@ function saveForm() {
         for (const listItem of temp.getElementsByClassName('bonusListItem')) {
             tempBonuses[listItem.querySelector(".bonusSource").value] = listItem.querySelector(".bonusAmount").value;
         }
-        // console.log("permbonuses: " + JSON.stringify(permBonuses));
+        // console.log("permbonuses: 
+        // " + JSON.stringify(permBonuses));
         setThisStorage("permBonuses_" + stat.id, JSON.stringify(permBonuses));
-        // console.log("temp: "+ tempBonuses+", perm: "+permBonuses);
-        // console.log("temp: " + JSON.stringify(tempBonuses) + ", perm: " + JSON.stringify(permBonuses));
+        // console.log("temp: 
+        // "+ tempBonuses+", perm: "+permBonuses);
+        // console.log("temp: 
+        // " + JSON.stringify(tempBonuses) + ", perm: " + JSON.stringify(permBonuses));
 
     }
 }
@@ -971,7 +1362,7 @@ function loadForm() {
             if (input.type === "checkbox") {
                 if (getThisStorage(input.id) === "true") {
                     input.checked = getThisStorage(input.id);
-                    console.log(input.id + " saved as 'true' ");
+                    // console.log(input.id + " saved as 'true' ");
                 }
                 // console.log("setting " + input.id + ".checked to " + getThisStorage(input.id));
                 // console.log(input.id + ".checked = " + input.checked);
@@ -981,10 +1372,10 @@ function loadForm() {
                     input.value = -1;
                 } if (getThisStorage(input.id) === "") {
                     input.value = 0;
-                    console.log(input.nodeName + " is empty ");
+                    // console.log(input.nodeName + " is empty ");
                 } else {
                     input.value = getThisStorage(input.id);
-                    console.log(getThisStorage(input.id));
+                    // console.log(getThisStorage(input.id));
 
                 }
             }

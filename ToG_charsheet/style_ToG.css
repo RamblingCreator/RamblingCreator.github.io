@@ -42,6 +42,13 @@
     white-space: nowrap;
 }
 
+#name {
+    width: 10em;
+}
+#pronouns {
+    width: 8em;
+}
+
 #stats {
     /* grid-area: stats;
     grid-column: 1;
@@ -294,50 +301,111 @@ input[type='checkbox']:checked+.bonusList {
 
 
 /* skills */
+/* 
+#rolls table {
+    border: 1px solid black;
+}
+/*  */
 
-#brawl, #threatenM{
+table {
+    /* border: 1px solid black; */
+    border-collapse: separate;
+    margin: auto;
+    /* width: 100%; */
+    border-spacing: 0;
+    table-layout: fixed;
+    
+
+}
+
+table td {
+    border: 1px solid black;
+}
+
+table th {
+    font-weight: bold;
+    border: 1px solid black;
+    /* border: "1"; */
+    /* width: 100px; */
+    width: min-content;
+    white-space: wrap;
+}
+
+tr {
+    background-color: var(--main);
+    border-collapse: collapse;
+    /* box-shadow: 0 0 10px #00000059; */
+}
+#rollNameHeader, #autoSuccessHeader{
+    width: 6em;
+}
+#baseDiceHeader, #totalDiceHeader, #bonusDiceHeader{
+    width: 4em;
+}
+
+#bonusPercentDiceHeader{
+    width: 5em;
+}
+
+#bonusSuccessHeader{
+    width: 3em;
+}
+
+
+#mightRoll, #agilityRoll, #heartsRoll, #witsRoll, #resistanceRoll {
+    font-weight: bold;
+}
+
+#brawl, #threatenM, #mightRoll{
     /* background-color: var(--might-main); */
     --dark: var(--might-dark);
     --main: var(--might-main);
     --light: var(--might-light);
 }
-#finesse, #throw, #move{
+#finesse, #throw, #move, #agilityRoll{
     /* background-color: var(--agility-main); */
     --dark: var(--agility-dark);
     --main: var(--agility-main);
     --light: var(--agility-light);
 }
-#reachOut, #attune{
+#reachOut, #attune, #heartsRoll{
     /* background-color: var(--hearts-main); */
     --dark: var(--hearts-dark);
     --main: var(--hearts-main);
     --light: var(--hearts-light);
 }
-#manipulate, #think, #threatenW{
+#manipulate, #think, #threatenW, #witsRoll{
     /* background-color: var(--wits-main); */
     --dark: var(--wits-dark);
     --main: var(--wits-main);
     --light: var(--wits-light);
 }
-
-.skill {
-    display: flex;
-    flex-direction: row;
-    background-color: var(--main);
+#resistanceRoll{
+    --dark: var(--resistance-dark);
+    --main: var(--resistance-main);
+    --light: var(--resistance-light);
 }
 
-.overwhelmIcon {
+span.overwhelmIcon {
     user-select: none;
-    font-size: 40px;
+    font-size: 30px;
     line-height: 30px;
     text-align: center;
     color: grey;
     opacity: 50%;
     margin: 0 auto;
+    display: none;
+}
+
+.bonusDice input, .bonusPercentDice input, .bonusSuccesses input {
+    width: 3em;
+}
+.totalDice, #totalDiceHeader {
+    border-right: 2px solid black;
 }
 
 
-
+/* 
 .toggle input[type='checkbox'] {
     display: none;
 }
@@ -348,7 +416,7 @@ input[type='checkbox']:checked+.bonusList {
     opacity: 100%;
 
 }
-
+ */
 /* 
 might
 agility
@@ -401,6 +469,35 @@ Resistance
     /* height: 60vh; */
     /* height: 88%; */
 }
+
+/* transformations */
+#newCanineAbilities{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 1em;
+}
+
+#newCanineAbilities input{
+    margin-bottom: auto;
+}
+
+/* 
+#caninePurchaseWindow{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+} */
+
+#newCanineAbilities label {
+    display: flex;
+}
+
+#raiseCanineLevel, #canineLevel, #canineMaxLevel, #lowerCanineLevel, #canineMaxWeapon, #canineMaxMobility {
+    width: 2em;
+}
+
+
 
 #quickstartWindow {
 
@@ -708,12 +805,15 @@ input:checked+.supernaturalIcon {
 
 /* ability selection window */
 
-#filteredAbilities, #allCyphers {
+#filteredAbilities{
     margin: auto;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     overflow-x: hidden;
     /* height: 60vh; */
-    height: 88%;
+    /* height: 88%; */
+    /* height: 10%; */
+    /* height: min-content; */
+
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -723,6 +823,9 @@ input:checked+.supernaturalIcon {
 
 #filteredWrapper {
     height: 100%;
+    overflow-y: scroll;
+    /* height: anchor-size(height); */
+    /* height: min-content; */
 }
 
 .popup {
@@ -749,6 +852,12 @@ input:checked+.supernaturalIcon {
 
     box-shadow: 0 0 10px #00000059;
 }
+/* #abilityWindow {
+    height: 80%;
+    width: 80%;
+    margin: 10%;
+    overflow: hidden;
+} */
 /* 
 #abilityWindow {
 

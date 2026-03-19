@@ -1,34 +1,3 @@
-/* 
-^([^:]*?)\s*:\s*
-(.*\n){2} 
-*/
-
-/* 
-Abilities that use beads automatically use shinsu.
- */
-
-var fisherman_startAbilities = []
-var lightbearer_startAbilities = ["LIGHTHOUSE"]
-var scout_startAbilities = ["OBSERVER"]
-var spearbearer_startAbilities = ["THROWER"]
-var wavecontroller_startAbilities = ["BEADS"]
-var human_startAbilities = ["TRAINED", "CLIMBER", "WHY_WE_KEEP_GOING", "SAVINGS"]
-var crocodile_startAbilities = ["TOUGH", "BIG", "SHARP", "LIVE_TO_HUNT", "DOESN'T_HUNT_MONEY"]
-var canine_startAbilities = ["BORN_FIGHTER", "IMPLANTED_WEAKNESS", "NOT_DOWN_YET", "TRANSFORMATION", "SINK_OR_SWIM"]
-var silverdwarf_startAbilities = ["THE_PATH_FORWARD", "PATHFINDER", "SUPPORT_OF_YOUR_PEOPLE"]
-var redwitch_startAbilities = ["WHERE_FATE_LEADS", "GUIDE", "GIFTS"]
-var noble_startAbilities = ["NEPOTISM", "ALLOWANCE", "FROWNED_UPON", "BLOODLINE", "YOU_HAVE_YOUR_PARENTS'_FIRE", "MAKING_THE_FAMILY_PROUD", "WEALTH"]
-var heir_startAbilities = ["ROYAL_BLOOD", "COMPETITION", "RICH"]
-var irregular_startAbilities = ["LEARN_BY_DOING", "SHAKE_THE_FOUNDATIONS_OF_THE_TOWER", "RAPID_GROWTH", "SURPRISINGLY_DURABLE", "ENTER_ALONE", "STARTING_SMALL"]
-var keene_startAbilities = ["COLD-HEARTED"]
-var trumbald_startAbilities = ["CRAFTER"]
-var haas_startAbilities = ["STRONGEST_BODY"]
-var lemarque_startAbilities = ["CAPTURE"]
-var halleck_startAbilities = ["MADE_OF_GRANITE"]
-var posada_startAbilities = ["ANALYSIS"]
-var aven_startAbilities = ["FAMILY_SWORDSMANSHIP"]
-var yanetta_startAbilities = ["SHROUDED_IN_FLAME"]
-
 var universal_abilities = [{
     name: "Beads",
     id: "BEADS",
@@ -137,7 +106,7 @@ var universal_abilities = [{
 }]
 var shinsu_abilities = [{
     name: "Shinsu Quality (Lightning)",
-    id: "SHINSU_QUALITY_[LIGHTNING]",
+    id: "SHINSU_QUALITY_(LIGHTNING)",
     description: "If you deal any amount of Harm to a Lighthouse, Observer, or other electrical device (GM has the final say on what counts), it overloads and stops functioning for the next round.",
     source: "any",
     type: "shinsu",
@@ -165,7 +134,7 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Wind)",
-    id: "SHINSU_QUALITY_[WIND]",
+    id: "SHINSU_QUALITY_(WIND)",
     description: "You do not need to use a bead to use the Flight ability, and using it doesn't require an action. Flight still uses shinsu. Additionally, you are not Hindered on Brawl or Move rolls while airborne.",
     source: "any",
     type: "shinsu",
@@ -193,7 +162,7 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Ice)",
-    id: "SHINSU_QUALITY_[ICE]",
+    id: "SHINSU_QUALITY_(ICE)",
     description: "Any of your abilities that would slow enemies instead pin them for the first round and slow them for the rest of the duration.",
     source: "any",
     type: "shinsu",
@@ -221,7 +190,7 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Fire)",
-    id: "SHINSU_QUALITY_[FIRE]",
+    id: "SHINSU_QUALITY_(FIRE)",
     description: "Whenever you would make an enemy take any number of Injuries, you also give them half that many Unresisted Injuries (rounded down) on their next turn. Calculate based on the post-mitigation Injuries. This does not apply to Injuries dealt by this ability. If you're underwater or in some other fire-resistant environment, this effect is negated (subject to GM interpretation).",
     source: "any",
     type: "shinsu",
@@ -249,7 +218,7 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Rock)",
-    id: "SHINSU_QUALITY_[ROCK]",
+    id: "SHINSU_QUALITY_(ROCK)",
     description: "Whenever someone makes a contested roll against one of your attributes, increase that attribute's Edge by half (rounded down). If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
@@ -277,7 +246,7 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Water)",
-    id: "SHINSU_QUALITY_[WATER]",
+    id: "SHINSU_QUALITY_(WATER)",
     description: "As long as you would get at least one automatic success on a roll, you get additional automatic successes on that roll equal to your Tier. If you would not, you instead get bonus dice on that roll equal to your Tier. If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
@@ -305,7 +274,7 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Steel)",
-    id: "SHINSU_QUALITY_[STEEL]",
+    id: "SHINSU_QUALITY_(STEEL)",
     description: "While wielding a weapon, you get +2 dice on Brawl rolls and take 2 fewer Injuries, Fatigue, Confusion, and Stress from all sources (to a minimum of 0). This does apply to Unresisted Harm. This does not apply to Harm you willingly accept as part of an ability. Apply this after calculating total damage from the source; do not apply this to the Damage Base. If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
@@ -334,35 +303,35 @@ var shinsu_abilities = [{
 }]
 var fisherman_abilities = [{
     name: "Weapon Skills (Hook)",
-    id: "WEAPON_SKILLS_[HOOK]",
+    id: "WEAPON_SKILLS_(HOOK)",
     description: "While wielding a hook, you can use two stunts on a Brawl roll to stab your enemy and hold them in place. While they're held, they are Pinned unless they pull it out (requiring a Brawl roll against your Brawl) or tear it out, which causes them to take Unresisted Injuries equal to your Might Edge. Additionally, while you have them held you gain the following stunts for Brawl: pull your enemy anywhere within your reach; and twist the hook to make them Hindered on Wits and Heart rolls for the next round (using this stunt more than once doesn't increase its effects or duration in any way). While holding an enemy in this way, you can't use stunts to deal additional Harm with the hook.",
     source: "position",
     type: "fisherman",
     shinsu: false
 }, {
     name: "Weapon Skills (Needle)",
-    id: "WEAPON_SKILLS_[NEEDLE]",
+    id: "WEAPON_SKILLS_(NEEDLE)",
     description: "While wielding a needle, you can accept two Fatigue to make two melee attacks with one action. For every five dice you have to Brawl (not including automatic successes), you can accept another two Fatigue to make another attack in this way. You have to declare that you're doing this (and how many attacks you're making) before you start making attacks.",
     source: "position",
     type: "fisherman",
     shinsu: false
 }, {
     name: "Weapon Skills (Blade)",
-    id: "WEAPON_SKILLS_[BLADE]",
+    id: "WEAPON_SKILLS_(BLADE)",
     description: "While wielding a blade, you can hit additional enemies with the same roll. Each enemy has to be within your reach. You take two Fatigue for each enemy past the first attacked in this way.",
     source: "position",
     type: "fisherman",
     shinsu: false
 }, {
     name: "Weapon Skills (Bludgeon)",
-    id: "WEAPON_SKILLS_[BLUDGEON]",
+    id: "WEAPON_SKILLS_(BLUDGEON)",
     description: "While wielding a blunt weapon, you can use Brawl stunts to knock an enemy down or back. Knocking an enemy down requires two stunts; that enemy is considered Slowed until the start of their turn. Knocking an enemy back requires two stunts to move them to Close range, six stunts to move them to Short range, fourteen stunts to move them to Medium range, and thirty stunts to move them to Long range. If they hit a solid barrier, or otherwise end their movement, they take 1d6 Injuries for every stunt used this way (e.g. moving them to Short range means they take 6d6 Injuries).",
     source: "position",
     type: "fisherman",
     shinsu: false
 }, {
     name: "Weapon Skills (Unarmed)",
-    id: "WEAPON_SKILLS_[UNARMED]",
+    id: "WEAPON_SKILLS_(UNARMED)",
     description: "While you aren't wielding any other weapons (except gauntlets, handwraps, or other minimal weapons), blocking bare-handed does not cause you to take damage. If you block a ranged weapon bare-handed, you can catch any projectiles involved. This negates the effects of Rebound, if applicable. You can choose to attack as though you were dual wielding or using any additional number of weapons.",
     source: "position",
     type: "fisherman",
@@ -1005,136 +974,6 @@ var canine_abilities = [{
     type: "canine",
     shinsu: false
 }]
-
-var canine_transformation_abilities = [{
-    name: "Mobility 1",
-    id: "MOBILITY_1",
-    description: "You get twice as many dice to Move rolls as normal, but only when on foot. You can only choose this once.",
-    source: "race",
-    type: "canine",
-    stage: 1
-}, {
-    name: "Mobility 2",
-    id: "MOBILITY_2",
-    description: "You get twice as many dice to Move rolls as normal, but only when on foot.<br> You also gain the ability to slowly fly, swim, or burrow. Pick one; you are Hindered on Brawl and Move when in that situation. If you choose swimming or burrowing, you can breathe underwater or underground, respectively. <br> You must first have Mobility 1 to pick this, and you can only choose this once.",
-    source: "race",
-    type: "canine",
-    stage: 2
-}, {
-    name: "Mobility 3",
-    id: "MOBILITY_3",
-    description: "In addition to the benefits of Mobility 2, choose one additional option from that ability (flying, swimming, or burrowing). You are no longer Hindered when moving in those ways. You must first have Mobility 2 to pick this, and you can only choose this once.",
-    source: "race",
-    type: "canine",
-    stage: 3
-}, {
-    name: "Mobility 4",
-    id: "MOBILITY_4",
-    description: "In addition to the benefits of Mobility 3, you gain the remaining option from Mobility 2. The benefit of Mobility 1 now applies when not on foot. You must have Mobility 3 to <br> You get twice as many dice to Move rolls as normal.<br> You gain the ability to slowly fly, swim, or burrow, and you can breathe underwater or underground. You are Hindered on Brawl when in that situation",
-    source: "race",
-    type: "canine",
-    stage: 4
-}, {
-    name: "Mobility 5",
-    id: "MOBILITY_5",
-    description: "Anything that would slow you doesn't have that effect, and anything that would paralyze you instead slows you for the same duration.<br> You get twice as many dice to Move rolls as normal.<br> You gain the ability to slowly fly, swim, or burrow, and you can breathe underwater or underground. You are Hindered on Brawl when in that situation",
-    source: "race",
-    type: "canine",
-    stage: 5
-}, {
-    name: "Mobility 6",
-    id: "MOBILITY_6",
-    description: "You can no longer be slowed or paralyzed<br> You get twice as many dice to Move rolls as normal.<br> You gain the ability to slowly fly, swim, or burrow, and you can breathe underwater or underground. You are Hindered on Brawl when in that situation",
-    source: "race",
-    type: "canine",
-    stage: 6
-}, {
-    name: "Mobility 7",
-    id: "MOBILITY_7",
-    description: "Instead of rolling twice as many dice with Move, you roll three times as many. <br> Additionally, dodging multiple times in one round doesn't reduce your bonus.",
-    source: "race",
-    type: "canine",
-    stage: 7
-}, {
-    name: "Weapon 1",
-    id: "WEAPON_1",
-    description: "When you first choose this, pick the form you want your weapon to take. <br>If your chosen weapon is ranged, you also need to pick a maximum range. <br>If your chosen weapon is melee, it takes the form of a one-handed weapon. <br>When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 2.",
-    source: "race",
-    type: "canine",
-    stage: 1
-}, {
-    name: "Weapon 2",
-    id: "WEAPON_2",
-    description: "If your chosen weapon is ranged, you also need to pick a maximum range. <br>If your chosen weapon is melee, it takes the form of a one-handed weapon. <br>When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 2.<br>Your weapon also deals Fatigue, Confusion, and Stress equal to your highest Edge minus the enemy's Resistance Edge. ",
-    source: "race",
-    type: "canine",
-    stage: 2
-}, {
-    name: "Weapon 3",
-    id: "WEAPON_3",
-    description: "If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. <br>If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. <br>The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. <br>When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 2.<br>Your weapon also deals Fatigue, Confusion, and Stress equal to your highest Edge minus the enemy's Resistance Edge. ",
-    source: "race",
-    type: "canine",
-    stage: 3
-}, {
-    name: "Weapon 4",
-    id: "WEAPON_4",
-    description: "If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. <br>You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. <br>If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. <br>The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. <br>When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 6.<br>Your weapon also deals Fatigue, Confusion, and Stress equal to three times your highest Edge, minus the enemy's Resistance Edge. <br>The extra Harm your weapon deals triples. ",
-    source: "race",
-    type: "canine",
-    stage: 4
-}, {
-    name: "Weapon 5",
-    id: "WEAPON_5",
-    description: "Whenever you hit an enemy with your weapon, you become invigorated, and heal for an amount of Injuries or Fatigue equal to half your highest Edge. This does not apply if you don't have Injuries equal to or greater than half your Might or Fatigue equal to or greater than half your Agility. If you are Fragile or Weakened, the healing doubles- it heals for an amount equal to your highest Edge. This can only heal you from Dying once per turn.",
-    source: "race",
-    type: "canine",
-    stage: 5
-}, {
-    name: "Weapon 6",
-    id: "WEAPON_6",
-    description: "If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. <br>You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. <br>If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. <br>The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. <br>When you use this weapon to attack, you get a number of bonus dice equal to your two times highest Edge and your Damage Base is increased by 6.<br>Your weapon also deals Fatigue, Confusion, and Stress equal to three times your highest Edge, minus the enemy's Resistance Edge. <br>The extra Harm your weapon deals triples. <br>Whenever you hit an enemy with your weapon, you become invigorated, and heal for an amount of Injuries or Fatigue equal to half your highest Edge. This does not apply if you don't have Injuries equal to or greater than half your Might or Fatigue equal to or greater than half your Agility. If you are Fragile or Weakened, the healing doubles- it heals for an amount equal to your highest Edge. This can only heal you from Dying once per turn.",
-    source: "race",
-    type: "canine",
-    stage: 6
-}, {
-    name: "Weapon 7",
-    id: "WEAPON_7",
-    description: "If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. <br>You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. <br>If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. <br>The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. <br>When you use this weapon to attack, you get a number of bonus dice equal to your two times highest Edge and your Damage Base is increased by 6.<br>Your weapon also deals Fatigue, Confusion, and Stress equal to three times your highest Edge, minus the enemy's Resistance Edge. <br>The extra Harm your weapon deals triples.<br>Whenever you hit an enemy with your weapon, you become invigorated, and heal for an amount of Injuries or Fatigue equal to half your highest Edge. This does not apply if you don't have Injuries equal to or greater than half your Might or Fatigue equal to or greater than half your Agility. If you are Fragile or Weakened, the healing doubles- it heals for an amount equal to your highest Edge. This can only heal you from Dying once per turn.<br>All damage your weapon deals is doubled. This includes the base damage, damage dealt through stunts, extra damage from Weapon 4, and any other damage dealt through your weapon. ",
-    source: "race",
-    type: "canine",
-    stage: 7
-}]
-
-var canineStageInfo = ["Stage 1: A part of your body transforms, granting you mobility or a weapon. Choose one of the following:",
-    "Stage 2: Purchasing this ability requires twice as much experience as any other ability (6, times three for every four abilities you've already bought). The transformed part evolves, becoming more powerful or versatile. Choose one of the following:",
-    "Stage 3: Purchasing this ability requires 3 times as much experience as normal (9, times three for every four abilities bought). With the power of your transformation, you far exceed most others. This is as far as most Canines will ever be able to transform. Choose one of the following:",
-    "Stage 4: Purchasing this ability requires 4 times as much experience (12, times three per four abilities). Your strength continues to grow. Choose one:",
-    "Stage 5: Purchasing this ability requires 5 times as much experience (15 base). Less than a hundred Canines have ever reached this level. Choose one:",
-    "Stage 6: Purchasing this ability requires 6 times as much experience (18 base). You've joined an elite group of a dozen Canines or less. Choose one:",
-    "Stage 7: Purchasing this ability requires 7 times as much experience (21 base). Why do you need this much power? You don't need this much power."]
-
-var canineMobilityChoices = [
-    "Mobility 1: You get twice as many dice to Move rolls as normal, but only when on foot. ",
-    "Mobility 2: In addition to the benefits of Mobility 1, you also gain the ability to slowly fly, swim, or burrow. Pick one; you are Hindered on Brawl and Move when in that situation. If you choose swimming or burrowing, you can breathe underwater or underground, respectively. You must first have Mobility 1 to pick this.",
-    "Mobility 3: In addition to the benefits of Mobility 2, choose one additional option from that ability (flying, swimming, or burrowing). You are no longer Hindered when moving in those ways. You must first have Mobility 2 to pick this.",
-    "Mobility 4: In addition to the benefits of Mobility 3, you gain the remaining option from Mobility 2. The benefit of Mobility 1 now applies when not on foot. You must have Mobility 3 to pick this.",
-    "Mobility 5: In addition to the benefits of Mobility 4, you're harder to slow. Anything that would slow you doesn't have that effect, and anything that would paralyze you instead slows you for the same duration. You must first have Mobility 4.",
-    "Mobility 6: In addition to the benefits of Mobility 5, you can no longer be slowed or paralyzed. You must first have Mobility 5.",
-    "Mobility 7: Instead of rolling twice as many dice with Move, you roll three times as many. Additionally, dodging multiple times in one round doesn't reduce your bonus."
-]
-
-var canineWeaponChoices = [
-    "Weapon 1: When you first choose this, pick the form you want your weapon to take. <br>If your chosen weapon is ranged, you also need to pick a maximum range. <br>If your chosen weapon is melee, it takes the form of a one-handed weapon. <br>When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 2. ",
-    "Weapon 2: In addition to the benefits of Weapon 1, your weapon also deals Fatigue, Confusion, and Stress equal to your highest Edge minus the enemy's Resistance Edge. You must first have Weapon 1 to pick this.",
-    "Weapon 3: If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. You must first have Weapon 2.",
-    "Weapon 4: In addition to the benefits of Weapon 3, the extra Harm your weapon deals triples. It now deals Fatigue, Confusion, and Stress equal to three times your highest Edge, minus the enemy's Resistance Edge. Increase the Damage Base by 6 instead of by 2. You must first have Weapon 3 to choose this.",
-    "Weapon 5: Whenever you hit an enemy with your weapon, you become invigorated, and heal for an amount of Injuries or Fatigue equal to half your highest Edge. This does not apply if you don't have Injuries equal to or greater than half your Might or Fatigue equal to or greater than half your Agility. If you are Fragile or Weakened, the healing doubles- it heals for an amount equal to your highest Edge. This can only heal you from Dying once per turn. You must first have Weapon 4.",
-    "Weapon 6: In addition to the benefits of Weapon 5, the bonus dice granted by Weapon 1 are doubled. You must first have Weapon 5.",
-    "Weapon 7: All damage your weapon deals is doubled. This includes the base damage, damage dealt through stunts, extra damage from Weapon 4, and any other damage dealt through your weapon. You must first have Weapon 6."]
-
-
-
 var silverdwarf_abilities = [{
     name: "The Path Forward",
     id: "THE_PATH_FORWARD",
