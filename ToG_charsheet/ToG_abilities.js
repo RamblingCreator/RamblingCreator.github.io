@@ -7,13 +7,50 @@
 Abilities that use beads automatically use shinsu.
  */
 
+
+var conditions = [{
+    name: "Hindered",
+    description: "if you are Hindered on any roll, you only get half as many dice on that roll as normal. If you would have any automatic successes, you only get half of those as well. Round down in both cases. Apply this reduction after any flat bonuses or penalties. If multiple effects would make you Hindered on a roll, you only apply it once."
+}, {
+    name: "Slowed",
+    description: "While Slowed, you are Hindered on Brawl, Throw, and Move rolls."
+}, {
+    name: "Pinned",
+    description: "While Pinned, you can't move and are Hindered on all Agility rolls."
+}, {
+    name: "Paralyzed",
+    description: "While paralyzed, you can't move, automatically fail all Might and Agility rolls, can't speak, and are Hindered on all rolls."
+}, {
+    name: "Blind",
+    description: "In areas of total darkness, or any other situation where you can't see your targets, you automatically fail any Throw rolls. You are also Hindered on Finesse, Move, and Brawl rolls."
+}, {
+    name: "Impaired",
+    description: "While Impaired, you reduce your dice for a certain type of roll by some amount. For example, if you were Impaired 3 on Agility rolls, you'd have 3 fewer dice on all Agility rolls. If this would reduce your total dice to or below 0, you automatically fail that roll. If multiple effects would make you Impaired on a roll, add them together to find the total effect."
+}, {
+    name: "Fragile",
+    description: "You have at least as many Injuries as 90% of your Might (rounded up). Any strenuous actions cause you to accept an Injury."
+}, {
+    name: "Dying",
+    description: "You have as many Injuries as your Might. You have a number of minutes equal to your Might Edge before you die. Each Injury taken while Dying reduces this countdown by five seconds."
+}, {
+    name: "Weakened",
+    description: "You have at least as much Fatigue as 90% of your Agility (rounded up). You are Hindered on Might and Agility rolls. Any strenuous actions cause you to accept a Fatigue and an Injury."
+}, {
+    name: "Anxious",
+    description: "You have at least as much Confusion as ¾ of your Wits (rounded up). You are Hindered on Heart rolls."
+}, {
+    name: "Volatile",
+    description: "You have at least as much Stress as 90% of your Heart (rounded up). Using shinsu causes you to accept one Stress."
+}]
+
+
 var fisherman_startAbilities = []
 var lightbearer_startAbilities = ["LIGHTHOUSE"]
 var scout_startAbilities = ["OBSERVER"]
 var spearbearer_startAbilities = ["THROWER"]
 var wavecontroller_startAbilities = ["BEADS"]
 var human_startAbilities = ["TRAINED", "CLIMBER", "WHY_WE_KEEP_GOING", "SAVINGS"]
-var crocodile_startAbilities = ["TOUGH", "BIG", "SHARP", "LIVE_TO_HUNT", "DOESN'T_HUNT_MONEY"]
+var crocodile_startAbilities = ["TOUGH", "BIG", "SHARP", "LIVE_TO_HUNT", "DOESNT_HUNT_MONEY"]
 var canine_startAbilities = ["BORN_FIGHTER", "IMPLANTED_WEAKNESS", "NOT_DOWN_YET", "TRANSFORMATION", "SINK_OR_SWIM"]
 var silverdwarf_startAbilities = ["THE_PATH_FORWARD", "PATHFINDER", "SUPPORT_OF_YOUR_PEOPLE"]
 var redwitch_startAbilities = ["WHERE_FATE_LEADS", "GUIDE", "GIFTS"]
@@ -28,6 +65,71 @@ var halleck_startAbilities = ["MADE_OF_GRANITE"]
 var posada_startAbilities = ["ANALYSIS"]
 var aven_startAbilities = ["FAMILY_SWORDSMANSHIP"]
 var yanetta_startAbilities = ["SHROUDED_IN_FLAME"]
+
+var exp_triggers = [
+    {
+        source: "human",
+        trigger: `Climber: Whenever you go up a floor, you gain experience equal to half the floor (round down). 
+        Why We Keep Going: You have a dream of some sort. Whenever you make progress towards this dream (other than going up the tower), gain experience equal to the highest floor you've reached. You can change your dream up to once per floor. When you do, you don't gain any experience the next time you make progress towards your dream. Changing your dream causes you to gain one Exhaustion. If you achieve your dream, you retire permanently.` },
+    {
+        source: "crocodile",
+        trigger: `Live to Hunt: Each time you fight a single opponent (i.e. fighting multiple at once does not qualify), you gain experience equal to half their highest attribute (rounded down). This only applies once per person per month.`
+    },
+    {
+        source: "canine",
+        trigger: `Not Down Yet: Every time you become Fragile (maximum once per day) or gain an Exhaustion or Trauma, you gain experience equal to the highest floor you've reached. Additionally, taking strenuous actions while Fragile does not cause you to gain an Injury. You can continue to act normally while Dying; any strenuous actions while Dying still cause you to accept an Injury. You are immune to any instant-death effects of Called Shots.`
+    },
+    {
+        source: "silverdwarf",
+        trigger: `Pathfinder: Whenever you help someone find the correct path or help them with their journey, gain experience equal to their highest attribute minus the greatest type of Harm they currently have (minimum 1). This can only apply once per person per floor.`
+    },
+    {
+        source: "redwitch",
+        trigger: `Guide:  Whenever you guide someone where they need to go, and whenever a Regular changes their Dream because of you (directly or indirectly), gain experience equal to the total number of Harms they have. Calculate this after the Regular takes the Exhaustion for changing their Dream. Whenever someone takes Exhaustion or Trauma, or enters Weakened, Fragile, Anxious, or Volatile status because of advice or help you gave, gain experience equal to the Harms they have.`
+    },
+    {
+        source: "irregular",
+        trigger: `Learn By Doing: When you are hit by a shinsu attack, you can choose to treat the damage from that as Unresisted and gain experience equal to the Harm you take. 
+        Shake the Foundations of the Tower: Whenever you shake the status quo, you gain experience:
+              - Equal to the current floor for a tiny or temporary change.
+              - Equal to twice the current floor for a significant and long-lasting change.
+              - Equal to three times the current floor for a total upheaval.` },
+    {
+        source: "keene",
+        trigger: `Whenever you manipulate someone into helping you, you gain experience equal to their Wits.`
+    },
+    {
+        source: "trumbald",
+        trigger: `Whenever you make an item, you get one experience, plus one for every five hundred credits that item costs.`
+    },
+    {
+        source: "haas",
+        trigger: `Whenever you intentionally disobey someone with authority over you, you gain experience equal to their lowest attribute. This only applies once per person.`
+    },
+    {
+        source: "lemarque",
+        trigger: `Whenever you capture a divine fish, you gain experience equal to the current floor.`
+    },
+    {
+        source: "halleck",
+        trigger: `Whenever you reduce the Damage Base or total damage of an attack against you to 1 or less, gain experience equal to your Resistance, with a maximum of once per day.`
+    },
+    {
+        source: "posada",
+        trigger: `Whenever you uncover some significant, new piece of information that isn't commonly known (as determined by the GM), you gain an amount of experience: equal to the highest floor you've reached for information that is known only to High Rankers or other very important people; equal to twice that floor for information that is only known by a handful of people in the Tower; equal to five times that floor for information that isn't known by anyone else in the Tower.`
+    },
+    {
+        source: "aven",
+        trigger: `Whenever you kill someone who wasn't a threat to you (or otherwise didn't need to die), gain experience equal to the highest floor you've reached.`
+    },
+    {
+        source: "yanetta",
+        trigger: `When you pick this family, choose one of the following to be your experience trigger for this family. You can't change your decision later. Both only apply once per person per day.
+        Whenever you heal someone of Injuries equal to or greater than their Might Edge, gain experience equal to their Might.
+        Whenever you cause someone to take Injuries equal to or greater than half their Might, gain experience equal to their Might Edge.` }
+]
+
+
 
 var universal_abilities = [{
     name: "Beads",
@@ -115,7 +217,7 @@ var universal_abilities = [{
     shinsu: false
 }, {
     name: "Titan's Grip",
-    id: "TITAN'S_GRIP",
+    id: "TITANS_GRIP",
     description: "You can wield a two-handed weapon in one hand without penalties, as though it was a one-handed weapon.",
     source: "any",
     type: "universal",
@@ -956,7 +1058,7 @@ var crocodile_abilities = [{
     shinsu: false
 }, {
     name: "Doesn't Hunt Money",
-    id: "DOESN'T_HUNT_MONEY",
+    id: "DOESNT_HUNT_MONEY",
     description: "Start with 2,000 credits.",
     source: "race",
     type: "crocodile",

@@ -532,26 +532,25 @@ function confirmDelete(thisButton, type) {
 
 
 function getAbilityHtml(Json) {
-    return `<div class="ability" abilityName="${Json.name}" >
-    
+    return `<div class="ability" abilityName="${Json.name}">
             <div class="abilityHeader">
-              <div class="abilityNameBlock">
-            <div class="dragHandle" draggable="false">↕</div>
+                <div class="abilityNameBlock">
+                <div class="dragHandle" draggable="false">↕</div>
                 <input class="abilityName resize" value="${Json.name}">
                 <label class="toggle">
                     <input type="checkbox" class="isSupernatural" name="btnToggle" />
                     <span class="supernaturalIcon">&#10700;</span>
-                  </label>
-              </div>
-              <div class="abilityDetails">
+                </label>
+                </div>
+                <div class="abilityDetails">
                 <label class="abilityField"> <input class="abilityContext resize" value="${Json.context}"></label>
                 <label class="abilityField">Cost: <input class="abilityCost resize" value="${Json.cost}"></label>
                 <label class="abilityField">Tier: <input class="abilityTier" value="${Json.tier}"></label>
                 <button type="button" class="removeAbility confirm" value="${Json.id}">X</button>
-              </div>
+                </div>
             </div>
             <textarea class="abilityDescription resize" rows="2" cols="10">${Json.description}</textarea>
-          </div>`
+            </div>`
 }
 
 

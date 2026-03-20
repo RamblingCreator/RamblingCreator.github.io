@@ -1,7 +1,29 @@
+/* placed at top to select in javascript */
+.ability[hidden-ability="true"] {
+    /* display: none; */
+    /* background-color: red; */
+}
+
+.ability[hidden-ability="true"]  .hideThisAbility {
+    /* display: none; */
+    background-color: grey;
+    /* background-color: red; */
+}
+
+
 * {
     box-sizing: border-box;
     color: black;
     font-family: sans-serif;
+}
+
+html {
+    height: 100%;
+}
+
+h1, h2, h3, h4, h5 {
+    /* removing automatic margin */
+    margin: 0;
 }
 
 :root {
@@ -41,6 +63,7 @@
 #basicInfo label, #quickstartInfo label {
     white-space: nowrap;
 }
+
 
 #name {
     width: 10em;
@@ -230,6 +253,11 @@ input.baseStat, input.tempBonuses, input.permBonuses {
     cursor: pointer;
     text-decoration: none;
 }
+input[type='checkbox']:checked+.bonusList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
 
 .bonusList {
     display: none;
@@ -244,24 +272,53 @@ input.baseStat, input.tempBonuses, input.permBonuses {
     background-color: var(--main);
 }
 
+
+
 .bonusHeader * {
     display: inline;
+}
+
+.bonusListItem {
+    /* width: 100%;
+    text-align: left; */
+    height: 100%;
+    height: 1.16em;
+    font-size: 1em;
+    display: flex;
+    gap: 2px;
+}
+
+.bonusListItem * {
+    margin: 0;
+    padding: 0;
 }
 .bonusList input {
     background-color: var(--light);
 }
 
-.bonusList h5 {
-    margin: 0;
-}
-
 .bonusList li .bonusSource {
     width: 15em;
 }
-input[type='checkbox']:checked+.bonusList {
-    display: block;
+.bonusList li .bonusAmount {
+    width: 2em;
+}
+.addBonus {
+    margin: auto;
 }
 
+.removeBonus {
+
+    font-size: 0.75em;
+    height: 100%;
+    height: 2em;
+    height: inherit;
+    display: inline;
+    margin: 0;
+    padding: 0 0.15em;
+    border: none;
+    /* height: 2em; */
+    /* width: 1.5em; */
+}
 
 /* 
 .toggle input {
@@ -273,11 +330,12 @@ input[type='checkbox']:checked+.bonusList {
 #conditions {
     display: flex;
     flex-direction: column;
+    /* display: none; */
 }
 
 .conditionIcon {
     user-select: none;
-    font-size: 40px;
+    /* font-size: 40px; */
     line-height: 30px;
     text-align: center;
     color: grey;
@@ -314,7 +372,7 @@ table {
     /* width: 100%; */
     border-spacing: 0;
     table-layout: fixed;
-    
+
 
 }
 
@@ -336,18 +394,26 @@ tr {
     border-collapse: collapse;
     /* box-shadow: 0 0 10px #00000059; */
 }
-#rollNameHeader, #autoSuccessHeader{
+#rollNameHeader, #autoSuccessHeader {
     width: 6em;
 }
-#baseDiceHeader, #totalDiceHeader, #bonusDiceHeader{
+#bonusDiceHeader {
     width: 4em;
 }
 
-#bonusPercentDiceHeader{
+#impairedRollHeader, #hinderedRollHeader {
+    width: 4em;
+    font-size: 0.75em;
+}
+#hinderedRollHeader {
+    width: 3em;
+}
+
+#bonusPercentDiceHeader {
     width: 5em;
 }
 
-#bonusSuccessHeader{
+#totalDiceHeader, #baseDiceHeader, #bonusSuccessHeader {
     width: 3em;
 }
 
@@ -356,31 +422,31 @@ tr {
     font-weight: bold;
 }
 
-#brawl, #threatenM, #mightRoll{
+#brawl, #threatenM, #mightRoll {
     /* background-color: var(--might-main); */
     --dark: var(--might-dark);
     --main: var(--might-main);
     --light: var(--might-light);
 }
-#finesse, #throw, #move, #agilityRoll{
+#finesse, #throw, #move, #agilityRoll {
     /* background-color: var(--agility-main); */
     --dark: var(--agility-dark);
     --main: var(--agility-main);
     --light: var(--agility-light);
 }
-#reachOut, #attune, #heartsRoll{
+#reachOut, #attune, #heartsRoll {
     /* background-color: var(--hearts-main); */
     --dark: var(--hearts-dark);
     --main: var(--hearts-main);
     --light: var(--hearts-light);
 }
-#manipulate, #think, #threatenW, #witsRoll{
+#manipulate, #think, #threatenW, #witsRoll {
     /* background-color: var(--wits-main); */
     --dark: var(--wits-dark);
     --main: var(--wits-main);
     --light: var(--wits-light);
 }
-#resistanceRoll{
+#resistanceRoll {
     --dark: var(--resistance-dark);
     --main: var(--resistance-main);
     --light: var(--resistance-light);
@@ -396,13 +462,33 @@ span.overwhelmIcon {
     margin: 0 auto;
     display: none;
 }
+#rolls input {
+    overflow: hidden;
+    white-space: nowrap;
 
-.bonusDice input, .bonusPercentDice input, .bonusSuccesses input {
-    width: 3em;
+    border-radius: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+
+.bonusDice input, .bonusPercentDice input, .bonusSuccesses input, .impairedRoll input {
+    font-size: 16px;
+    width: 2em;
 }
 .totalDice, #totalDiceHeader {
     border-right: 2px solid black;
 }
+
+.hinderedRoll input {
+    /* font-size: 2em; */
+    width: 1.5em;
+    height: 1.5em;
+    margin: auto;
+}
+
+
 
 
 /* 
@@ -440,13 +526,104 @@ Resistance
 }
 
 
-#abilities h1 {
+/* #abilities h1 {
     background-color: var(--card);
     margin-bottom: 0.2em;
     padding: 0.2em;
     padding-top: 0.3em;
 }
+ */
 
+.hideAbilities input[type='checkbox'] {
+    display: none;
+}
+
+.hideAbilities {
+    position: relative;
+    user-select: none;
+}
+
+#abilitiesShownIcon, #abilitiesHiddenIcon {
+    user-select: none;
+    /* position: absolute;
+    margin: 0 auto;
+    right: 0.5em;
+    bottom: -0.2em; */
+    font-size: 3em;
+    line-height: 0.75em;
+}
+
+/* #abilitiesHiddenIcon {
+    opacity: 0%;
+    right: 0.6em;
+} */
+
+input:checked~#abilitiesHiddenIcon {
+    /* display: block; */
+    /* color: rgb(0, 0, 0); */
+    opacity: 100%;
+    color: gray;
+    /* background-color: red; */
+    /* text-shadow: none; */
+}
+
+
+#abilitiesHiddenText, #abilitiesShownText {
+    /* width: min-content;
+    white-space: wrap; */
+    display: inline-block;
+}
+#abilitiesHiddenText {
+    display: none;
+}
+
+input:checked~#abilitiesHiddenText {
+    display: inline-block;
+}
+
+
+input:checked~#abilitiesShownText {
+    display: none;
+}
+
+
+#abilitiesHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: var(--card);
+
+    margin-bottom: 0.2em;
+    padding: 0.2em 0.5em;
+    padding-top: 0.3em;
+}
+
+label.hideAbilities {
+    position: relative;
+    /* transform: translate(15em, -3em); */
+}
+
+
+
+#abilitiesHiddenHover {
+    display: none;
+    position: absolute;
+    /* transform: translate(0, 0.5em); */
+    right: 5em;
+    top: 0.5em;
+    width: max-content;
+
+
+    font-size: 1em;
+}
+
+.hideAbilities:hover{
+    /* background-color: cyan; */
+}
+
+.abilitiesShownIcon:hover+#abilitiesHiddenHover, .abilitiesShownIcon:focus+#abilitiesHiddenHover {
+    display: inline-block;
+}
 
 #abilitiesJump {
     display: none;
@@ -471,14 +648,14 @@ Resistance
 }
 
 /* transformations */
-#newCanineAbilities{
+#newCanineAbilities {
     display: flex;
     flex-direction: column;
     gap: 10px;
     padding: 1em;
 }
 
-#newCanineAbilities input{
+#newCanineAbilities input {
     margin-bottom: auto;
 }
 
@@ -610,13 +787,13 @@ button:hover {
 /* abilities */
 
 
-.ability .dragHandle, .cypher .dragHandle {
+.ability .dragHandle {
     /* position: relative; */
     height: min-content;
     background-color: var(--field);
     display: inline;
 }
-.ability .sortable-placeholder, .cypher .sortable-placeholder {
+.ability .sortable-placeholder {
     padding: 0.25em 1em;
     padding: 0.5em;
 }
@@ -628,8 +805,72 @@ button:hover {
 .ability p {
     margin: 0;
 }
+/* 
+.ability[hidden-ability="true"] {
+    display: none;
+    background-color: red;
 
-.abilityDescription, .cypherDescription {
+}
+ */
+
+.ability[hidden-ability="false"] {
+    display: block;
+    /* background-color: cyan; */
+}
+
+.ability .hideThisAbility, .ability .removeAbility {
+    font-size: 2em;
+    margin: 0;
+    padding: 0;
+    line-height: 0.75em;
+}
+
+.shinsuIcon {
+    user-select: none;
+    /* font-size: 40px;
+    line-height: 30px;
+    text-align: center; */
+    /* display: none; */
+    /* color: #808080;
+    opacity: 50%; */
+    margin: 0 auto;
+
+    color: transparent;
+    text-shadow: 0 0 1px rgba(128, 128, 128, 0.25);
+}
+
+
+input:checked+.shinsuIcon {
+    /* display: block; */
+    color: rgb(0, 238, 255);
+    opacity: 100%;
+    /* text-shadow: none; */
+
+}
+
+
+.shinsuHover {
+    display: none;
+    position: absolute;
+    /* left:15em; */
+    /* top: 0em; */
+    /* transform: translate(-0, -20%); */
+    /* transform: translate(0, -1em); */
+    transform: translate(0, 0.5em);
+    font-size: 0.8em;
+
+    /* 
+    top: -1em; */
+}
+
+input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.shinsuHover {
+    display: inline-block;
+}
+
+
+
+
+.abilityDescription {
     width: 100%;
     border: 0;
     font-size: 18px;
@@ -647,7 +888,7 @@ button:hover {
 }
 
 
-.abilityHeader, .cypherHeader {
+.abilityHeader {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -659,7 +900,7 @@ button:hover {
     align-items: flex-start; */
 }
 
-.abilityDetails, .cypherDetails {
+.abilityDetails {
 
     display: flex;
     flex-wrap: wrap;
@@ -668,7 +909,7 @@ button:hover {
 }
 
 
-.ability input, .cypher input {
+.ability input {
     display: inline;
     border: none;
     border-radius: 0;
@@ -683,45 +924,29 @@ button:hover {
 .newAbility .abilityName {
     display: inline;
 }
-.newAbility .abilityNameBlock {
-    white-space: wrap;
+/* .newAbility .abilityNameBlock {
+    white-space: nowrap;
     gap: 5px;
     display: flex;
-}
+} */
+
+
 .tmp-element {
     visibility: hidden;
     white-space: pre;
 }
-.abilityName, .abilityField div, .cypherField div {
+.abilityName, .abilityField div{
     background-color: var(--field);
 }
 
-label.abilityField {
-    /* line-height: 1.075em; */
-}
-label.abilityField input {
-    /* line-height: 1em; */
-}
 
-.abilityName, .cypherName {
+.abilityName{
     font-size: 1.4em;
     /* width: 12em; */
     /* border: 1px solid black; */
 }
-.abilityContext, .abilityCost {
-    padding: 0 0.5em;
-}
-.abilityContext, .abilityCost, .abilityTier {
-    text-align: center;
-    /* font-size: 18px; */
-    font-size: 1.125em;
-    display: inline;
-}
-.abilityTier {
-    width: 1em;
-}
 
-.abilityField, .cypherField {
+.abilityField {
     display: flex;
     flex-direction: row;
     gap: 6px;
@@ -734,13 +959,6 @@ label.abilityField input {
 
 .ability input[type='checkbox'] {
     display: none;
-}
-
-input:checked+.supernaturalIcon {
-    /* display: block; */
-    color: purple;
-    opacity: 100%;
-
 }
 
 .ability, .newAbility {
@@ -758,8 +976,9 @@ input:checked+.supernaturalIcon {
     margin: auto;
     display: block;
 }
-.abilityOrigin div {
-    display: inline;
+.abilityOrigin {
+    margin-left: 10em;
+    display: inline-block;
     white-space: nowrap;
     width: max-content;
 }
@@ -803,9 +1022,66 @@ input:checked+.supernaturalIcon {
 }
 
 
+/* experience section */
+
+#leveling {
+    background-color: var(--background);
+    padding: 0.5em 1em;
+}
+
+#leveling label {
+    white-space: nowrap;
+}
+
+#leveling label[for="experienceTrigger"] {
+    width: 100%;
+}
+
+
+#levelBody {
+    /* display: flex; */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+#abilitiesBought {
+    width: 3em;
+}
+#currentExperience, #experienceSpent {
+    width: 6em;
+}
+#tier {
+    width: 2em;
+}
+
+#experienceTrigger {
+    font-size: 1em;
+    width: 100%;
+}
+
+
+/* footer */
+
+footer {
+    padding: 2em 0;
+    padding-top: 1em;
+    padding-bottom: 2em;
+    text-align: center;
+
+    background-color: var(--accent);
+
+    /* 
+    position: absolute; */
+    bottom: 0;
+    width: 100%;
+    height: 2.5em;
+    height: min-content;
+}
+
+
 /* ability selection window */
 
-#filteredAbilities{
+#filteredAbilities {
     margin: auto;
     /* overflow-y: scroll; */
     overflow-x: hidden;
@@ -928,16 +1204,23 @@ select.quickstart {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
 }
+
+
+
 #statPurchaseSection label div {
     display: flex;
     flex-direction: column;
-    width: 4em;
+    width: 3em;
+    margin: auto;
     /* font-size: 1.5em; */
 }
 #statPurchaseSection label input {
     font-size: 1.25em;
     text-align: center;
+    padding: 0;
+
 }
 
 #statPurchaseSection label {
@@ -945,6 +1228,11 @@ select.quickstart {
     display: flex;
     flex-direction: row;
     gap: 5px;
+}
+@media(max-width:920px) {
+    #statPurchaseSection label {
+        flex-direction: column;
+    }
 }
 #statCost {
     font-size: 2em;
