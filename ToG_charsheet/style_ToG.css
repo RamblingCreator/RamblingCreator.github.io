@@ -4,7 +4,7 @@
     /* background-color: red; */
 }
 
-.ability[hidden-ability="true"]  .hideThisAbility {
+.ability[hidden-ability="true"] .hideThisAbility {
     /* display: none; */
     background-color: grey;
     /* background-color: red; */
@@ -60,6 +60,67 @@ h1, h2, h3, h4, h5 {
 }
 
 
+/* overall layout */
+/* 
+#basicInfo {
+    grid-area: info;
+}
+#stats {
+    grid-area: stats;
+}
+#rolls {
+    grid-area: rolls;
+    width: min-content;
+}
+#conditions {
+    grid-area: conditions;
+}
+#abilities {
+    grid-area: abilities;
+}
+#canineTransformations {
+    grid-area: canine;
+}
+#leveling {
+    grid-area: levels;
+}
+ */
+
+
+form {
+    /* width: 100vw; */
+    /* display: grid; */
+    /* grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 30% 45% 25%;
+    grid-template-areas:
+        "info info info"
+        "stats abilities conditions"; */
+    /* grid-template-columns: 35% 70%; */
+    /* grid-template-columns: repeat(5, 1fr); */
+    /* grid-template-areas:
+        "info info info info info"
+        "stats stats abilities abilities abilities"
+        "rolls rolls rolls conditions conditions"
+        "levels levels levels canine canine"; */
+
+    /* background-color: var(--background); */
+    display: flex;
+    /* flex-wrap: wrap; */
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* @media(max-width:1500px) {
+    form {
+        display: grid;
+        grid-template-columns: 40% 60%;
+        grid-template-areas:
+            "left center"
+            "right right";
+    }
+} */
+
+
 #basicInfo label, #quickstartInfo label {
     white-space: nowrap;
 }
@@ -72,6 +133,9 @@ h1, h2, h3, h4, h5 {
     width: 8em;
 }
 
+#credits {
+    width: 5em;
+}
 #stats {
     /* grid-area: stats;
     grid-column: 1;
@@ -88,6 +152,11 @@ h1, h2, h3, h4, h5 {
 grid-template-columns: repeat(5, 1fr);
 column-gap: 10px; */
     width: 100%;
+    height: min-content;
+}
+.statLabel {
+    height: min-content;
+    padding-bottom: 0.2em;
 }
 
 .statLabel.might {
@@ -135,12 +204,13 @@ column-gap: 10px; */
 }
 .currentStat.statBox {
     grid-column: span 3;
-    font-size: 2em;
+    font-size: 1.75em;
     background-color: rgba(255, 255, 255, 0.8);
     text-align: center;
     height: 100%;
     display: flex;
     flex-direction: column;
+    /* width: 1.5em; */
 }
 .currentStat.statBox .fieldTitle {
     font-size: 0.2em;
@@ -328,23 +398,141 @@ input[type='checkbox']:checked+.bonusList {
  */
 
 #conditions {
+    background-color: var(--background-darker);
+    display: flex;
+    flex-direction: column;
+}
+
+
+#allConditions {
+    margin: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 0.5em;
+    margin: auto 0.5em;
+}
+
+#conditions {
     display: flex;
     flex-direction: column;
     /* display: none; */
 }
+#conditions h3 {
+    background-color: var(--card);
 
-.conditionIcon {
-    user-select: none;
-    /* font-size: 40px; */
-    line-height: 30px;
-    text-align: center;
-    color: grey;
-    opacity: 50%;
-    margin: 0 auto;
+    margin-bottom: 0.2em;
+    padding: 0.2em 0.5em;
+    padding-top: 0.3em;
+}
+
+#conditionsList {
+    margin: 0 0.5em;
+    padding-right: 0.25em;
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 775px;
+
+}
+#newCondition {
+    padding: 0;
+    margin: 0;
+    height: min-content;
+    /* width: min-content; */
+}
+#extraConditions {
+    padding: 0.3em 0;
+    background-color: var(--card);
+    display: flex;
+    justify-content: space-around;
+}
+
+#maxTraumas, #exhaustion {
+    font-size: 1.5em;
+    width: 2em;
+}
+
+.condition .dragHandle {
+    height: min-content;
+    background-color: var(--field);
+    display: inline;
+}
+.condition .sortable-placeholder {
+    padding: 0.25em 1em;
+    padding: 0.5em;
+}
+/* 
+.condition h1 {
+    font-size: 1.25em;
+    margin: 0;
+}
+.condition p {
+    margin: 0;
+} */
+
+.conditionDescription {
+    width: 100%;
+    border: 0;
+    font-size: 18px;
+    background-color: var(--field);
+    resize: vertical;
+    margin: 0.25em 0;
+    margin-bottom: 0;
+}
+
+.conditionHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    row-gap: 8px
 }
 
 
+.condition input {
+    display: inline;
+    border: none;
+    border-radius: 0;
+    /* margin: 0 auto; */
+    background-color: var(--field);
+}
 
+.newCondition div {
+    white-space: nowrap;
+}
+
+.newCondition .conditionName {
+    display: inline;
+}
+
+
+.conditionName {
+    font-size: 1.4em;
+    background-color: var(--field);
+}
+
+.condition, .newCondition {
+    background-color: var(--card);
+    color: black;
+}
+
+.newCondition {
+    padding: 0.5em;
+}
+.addCondition {
+    padding: 0 3em;
+    margin: auto;
+    display: block;
+}
+
+
+/* 
 .toggle input[type='checkbox'] {
     display: none;
 }
@@ -356,7 +544,7 @@ input[type='checkbox']:checked+.bonusList {
     opacity: 100%;
 
 }
-
+ */
 
 /* skills */
 /* 
@@ -387,6 +575,7 @@ table th {
     /* width: 100px; */
     width: min-content;
     white-space: wrap;
+    font-size: 0.75em;
 }
 
 tr {
@@ -403,8 +592,9 @@ tr {
 
 #impairedRollHeader, #hinderedRollHeader {
     width: 4em;
-    font-size: 0.75em;
+    /* font-size: 0.75em; */
 }
+
 #hinderedRollHeader {
     width: 3em;
 }
@@ -522,6 +712,7 @@ Resistance
     /* display: flex;
     flex-direction: column; */
     background-color: var(--background-darker);
+    width: 100%;
     /* padding: 0.5em; */
 }
 
@@ -617,7 +808,7 @@ label.hideAbilities {
     font-size: 1em;
 }
 
-.hideAbilities:hover{
+.hideAbilities:hover {
     /* background-color: cyan; */
 }
 
@@ -850,13 +1041,14 @@ input:checked+.shinsuIcon {
 
 
 .shinsuHover {
-    display: none;
-    position: absolute;
+    /* display: none; */
+    opacity: 0%;
+    /* position: absolute; */
     /* left:15em; */
     /* top: 0em; */
     /* transform: translate(-0, -20%); */
     /* transform: translate(0, -1em); */
-    transform: translate(0, 0.5em);
+    /* transform: translate(0, 0.5em); */
     font-size: 0.8em;
 
     /* 
@@ -864,7 +1056,8 @@ input:checked+.shinsuIcon {
 }
 
 input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.shinsuHover {
-    display: inline-block;
+    /* display: inline-block; */
+    opacity: 100%;
 }
 
 
@@ -935,12 +1128,12 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     visibility: hidden;
     white-space: pre;
 }
-.abilityName, .abilityField div{
+.abilityName, .abilityField div {
     background-color: var(--field);
 }
 
 
-.abilityName{
+.abilityName {
     font-size: 1.4em;
     /* width: 12em; */
     /* border: 1px solid black; */
@@ -1057,6 +1250,20 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
 #experienceTrigger {
     font-size: 1em;
     width: 100%;
+}
+
+@media (max-width:600px) {
+    #leveling label {
+        white-space: wrap;
+        display: block;
+        width: min-content;
+    }
+    #levelBody {
+        /* display: flex; */
+        display: flex;
+        /* grid-template-columns: 1fr 1fr; */
+        gap: 5px;
+    }
 }
 
 

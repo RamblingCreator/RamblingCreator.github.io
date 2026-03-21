@@ -95,520 +95,522 @@
           <input class="age save" id="age">
         </label> -->
       </div>
-      <div id="stats">
-        <div class="statLabel might" id="might">might
-          <div class="statFrame">
-            <div class="statParts" id="mightParts">
-              <div class="baseStat statBox noArrows">&nbsp;
-                <input type="number" class="baseStat save" id="mightBase" value="1" disabled>
+<div id="leftSide">
+        <div id="stats">
+          <div class="statLabel might" id="might">might
+            <div class="statFrame">
+              <div class="statParts" id="mightParts">
+                <div class="baseStat statBox noArrows">&nbsp;
+                  <input type="number" class="baseStat save" id="mightBase" value="1" disabled>
+                </div>
+  
+  
+                <div class="permBonuses statBox">
+                  <label for="mightPermBonusList" id="mightPermBonus" class="bonusToggler" tabindex="0">
+                    <span class>+</span><span class="permBonuses save" id="permMightMods"></span>
+                  </label>
+                  <input class="dropdownToggle" id='mightPermBonusList' type='checkbox' />
+                  <ul class="bonusList dropdown">
+                    <span class="bonusHeader">
+                      <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
+                    </span>
+                  </ul>
+                </div>
+  
+                <div class="tempBonuses statBox">
+                  <label for="mightTempBonusList" id="mightTempBonus" class="bonusToggler" tabindex="0">
+                    <span class>+</span><span class="tempBonuses save" id="tempMightMods"></span>
+                  </label>
+                  <input class="dropdownToggle" id='mightTempBonusList' type='checkbox' />
+                  <ul class="bonusList dropdown">
+                    <span class="bonusHeader">
+                      <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
+                    </span>
+                  </ul>
+                </div>
+  
               </div>
-
-
-              <div class="permBonuses statBox">
-                <label for="mightPermBonusList" id="mightPermBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="permBonuses save" id="permMightMods"></span>
-                </label>
-                <input class="dropdownToggle" id='mightPermBonusList' type='checkbox' />
-                <ul class="bonusList dropdown">
-                  <span class="bonusHeader">
-                    <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
-                  </span>
-                </ul>
+  
+              <div class="currentStat statBox">
+                <input type="number" class="currentStat save" id="currentMight" value="1" disabled>
               </div>
-
-              <div class="tempBonuses statBox">
-                <label for="mightTempBonusList" id="mightTempBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="tempBonuses save" id="tempMightMods"></span>
-                </label>
-                <input class="dropdownToggle" id='mightTempBonusList' type='checkbox' />
-                <ul class="bonusList dropdown">
-                  <span class="bonusHeader">
-                    <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
-                  </span>
-                </ul>
+  
+              <div class="statEffects">
+                <div class="edge statBox noArrows">
+                  <input type="number" class="edge" id="mightEdge" value="1" disabled>
+                  <span class="fieldTitle">edge</span>
+                </div>
+                <div class="harm statBox noArrows">
+                  <input type="number" class="harm save noArrows" id="mightHarm" value="0">
+                  <span class="fieldTitle">injuries</span>
+                </div>
               </div>
-
             </div>
-
-            <div class="currentStat statBox">
-              <input type="number" class="currentStat save" id="currentMight" value="1" disabled>
-            </div>
-
-            <div class="statEffects">
-              <div class="edge statBox noArrows">
-                <input type="number" class="edge" id="mightEdge" value="1" disabled>
-                <span class="fieldTitle">edge</span>
+  
+          </div>
+  
+          <div class="statLabel agility" id="agility">agility
+            <div class="statFrame">
+              <div class="statParts" id="agilityParts">
+                <div class="baseStat statBox noArrows">&nbsp;
+                  <input type="number" class="baseStat save" id="agilityBase" value="1" disabled>
+                </div>
+  
+  
+                <div class="permBonuses statBox">
+                  <label for="agilityPermBonusList" id="agilityPermBonus" class="bonusToggler" tabindex="0">
+                    <span class>+</span><span class="permBonuses save" id="permAgilityMods"></span>
+                  </label>
+                  <input class="dropdownToggle" id='agilityPermBonusList' type='checkbox' />
+                  <ul class="bonusList dropdown">
+                    <span class="bonusHeader">
+                      <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
+                    </span>
+                  </ul>
+                </div>
+  
+                <div class="tempBonuses statBox noArrows">
+                  <label for="agilityTempBonusList" id="agilityTempBonus" class="bonusToggler" tabindex="0">
+                    <span class>+</span><span class="tempBonuses save" id="tempAgilityMods"></span>
+                  </label>
+                  <input class="dropdownToggle" id='agilityTempBonusList' type='checkbox' />
+                  <ul class="bonusList dropdown">
+                    <span class="bonusHeader">
+                      <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
+                    </span>
+                  </ul>
+                </div>
+  
               </div>
-              <div class="harm statBox noArrows">
-                <input type="number" class="harm save noArrows" id="mightHarm" value="0">
-                <span class="fieldTitle">injuries</span>
+  
+              <div class="currentStat statBox">
+                <input type="number" class="currentStat save" id="currentAgility" value="1" disabled>
+                <span class="fieldTitle">total</span>
               </div>
+  
+              <div class="statEffects">
+                <div class="edge statBox noArrows">
+                  <input type="number" class="edge" id="agilityEdge" value="1" disabled>
+                  <span class="fieldTitle">edge</span>
+                </div>
+                <div class="harm statBox noArrows">
+                  <input type="number" class="harm save noArrows" id="agilityHarm" value="0">
+                  <span class="fieldTitle">fatigue</span>
+                </div>
+              </div>
+  
+  
             </div>
           </div>
-
-        </div>
-
-        <div class="statLabel agility" id="agility">agility
-          <div class="statFrame">
-            <div class="statParts" id="agilityParts">
-              <div class="baseStat statBox noArrows">&nbsp;
-                <input type="number" class="baseStat save" id="agilityBase" value="1" disabled>
+  
+          <div class="statLabel hearts" id="hearts">hearts
+            <div class="statFrame">
+              <div class="statParts" id="heartsParts">
+                <div class="baseStat statBox noArrows">&nbsp;
+                  <input type="number" class="baseStat save" id="heartsBase" value="1" disabled>
+                </div>
+  
+  
+                <div class="permBonuses statBox">
+                  <label for="heartsPermBonusList" id="heartsPermBonus" class="bonusToggler" tabindex="0">
+                    <span class>+</span><span class="permBonuses save" id="permHeartsMods"></span>
+                  </label>
+                  <input class="dropdownToggle" id='heartsPermBonusList' type='checkbox' />
+                  <ul class="bonusList dropdown">
+                    <span class="bonusHeader">
+                      <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
+                    </span>
+                  </ul>
+                </div>
+  
+                <div class="tempBonuses statBox noArrows">
+                  <label for="heartsTempBonusList" id="heartsTempBonus" class="bonusToggler" tabindex="0">
+                    <span class>+</span><span class="tempBonuses save" id="tempHeartsMods"></span>
+                  </label>
+                  <input class="dropdownToggle" id='heartsTempBonusList' type='checkbox' />
+                  <ul class="bonusList dropdown">
+                    <span class="bonusHeader">
+                      <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
+                    </span>
+                  </ul>
+                </div>
+  
               </div>
-
-
-              <div class="permBonuses statBox">
-                <label for="agilityPermBonusList" id="agilityPermBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="permBonuses save" id="permAgilityMods"></span>
-                </label>
-                <input class="dropdownToggle" id='agilityPermBonusList' type='checkbox' />
-                <ul class="bonusList dropdown">
-                  <span class="bonusHeader">
-                    <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
-                  </span>
-                </ul>
+  
+              <div class="currentStat statBox">
+                <input type="number" class="currentStat save" id="currentHearts" value="1" disabled>
               </div>
-
-              <div class="tempBonuses statBox noArrows">
-                <label for="agilityTempBonusList" id="agilityTempBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="tempBonuses save" id="tempAgilityMods"></span>
-                </label>
-                <input class="dropdownToggle" id='agilityTempBonusList' type='checkbox' />
-                <ul class="bonusList dropdown">
-                  <span class="bonusHeader">
-                    <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
-                  </span>
-                </ul>
-              </div>
-
-            </div>
-
-            <div class="currentStat statBox">
-              <input type="number" class="currentStat save" id="currentAgility" value="1" disabled>
-              <span class="fieldTitle">total</span>
-            </div>
-
-            <div class="statEffects">
-              <div class="edge statBox noArrows">
-                <input type="number" class="edge" id="agilityEdge" value="1" disabled>
-                <span class="fieldTitle">edge</span>
-              </div>
-              <div class="harm statBox noArrows">
-                <input type="number" class="harm save noArrows" id="agilityHarm" value="0">
-                <span class="fieldTitle">fatigue</span>
+  
+              <div class="statEffects">
+                <div class="edge statBox noArrows">
+                  <input type="number" class="edge" id="heartsEdge" value="1" disabled>
+                  <span class="fieldTitle">edge</span>
+                </div>
+                <div class="harm statBox noArrows">
+                  <input type="number" class="harm save noArrows" id="heartsHarm" value="0">
+                  <span class="fieldTitle">stress</span>
+                </div>
               </div>
             </div>
-
-
+  
           </div>
-        </div>
-
-        <div class="statLabel hearts" id="hearts">hearts
-          <div class="statFrame">
-            <div class="statParts" id="heartsParts">
-              <div class="baseStat statBox noArrows">&nbsp;
-                <input type="number" class="baseStat save" id="heartsBase" value="1" disabled>
+  
+          <div class="statLabel wits" id="wits">wits
+            <div class="statFrame">
+              <div class="statParts" id="witsParts">
+                <div class="baseStat statBox noArrows">&nbsp;
+                  <input type="number" class="baseStat save" id="witsBase" value="1" disabled>
+                </div>
+  
+  
+                <div class="permBonuses statBox">
+                  <label for="witsPermBonusList" id="witsPermBonus" class="bonusToggler" tabindex="0">
+                    <span class>+</span><span class="permBonuses save" id="permWitsMods"></span>
+                  </label>
+                  <input class="dropdownToggle" id='witsPermBonusList' type='checkbox' />
+                  <ul class="bonusList dropdown">
+                    <span class="bonusHeader">
+                      <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
+                    </span>
+                  </ul>
+                </div>
+  
+                <div class="tempBonuses statBox noArrows">
+                  <label for="witsTempBonusList" id="witsTempBonus" class="bonusToggler" tabindex="0">
+                    <span class>+</span><span class="tempBonuses save" id="tempWitsMods"></span>
+                  </label>
+                  <input class="dropdownToggle" id='witsTempBonusList' type='checkbox' />
+                  <ul class="bonusList dropdown">
+                    <span class="bonusHeader">
+                      <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
+                    </span>
+                  </ul>
+                </div>
+  
               </div>
-
-
-              <div class="permBonuses statBox">
-                <label for="heartsPermBonusList" id="heartsPermBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="permBonuses save" id="permHeartsMods"></span>
-                </label>
-                <input class="dropdownToggle" id='heartsPermBonusList' type='checkbox' />
-                <ul class="bonusList dropdown">
-                  <span class="bonusHeader">
-                    <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
-                  </span>
-                </ul>
+  
+              <div class="currentStat statBox">
+                <input type="number" class="currentStat save" id="currentWits" value="1" disabled>
               </div>
-
-              <div class="tempBonuses statBox noArrows">
-                <label for="heartsTempBonusList" id="heartsTempBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="tempBonuses save" id="tempHeartsMods"></span>
-                </label>
-                <input class="dropdownToggle" id='heartsTempBonusList' type='checkbox' />
-                <ul class="bonusList dropdown">
-                  <span class="bonusHeader">
-                    <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
-                  </span>
-                </ul>
+  
+              <div class="statEffects">
+                <div class="edge statBox noArrows">
+                  <input type="number" class="edge" id="witsEdge" value="1" disabled>
+                  <span class="fieldTitle">edge</span>
+                </div>
+                <div class="harm statBox noArrows">
+                  <input type="number" class="harm save noArrows" id="witsHarm" value="0">
+                  <span class="fieldTitle">confusion</span>
+                </div>
               </div>
-
             </div>
-
-            <div class="currentStat statBox">
-              <input type="number" class="currentStat save" id="currentHearts" value="1" disabled>
-            </div>
-
-            <div class="statEffects">
-              <div class="edge statBox noArrows">
-                <input type="number" class="edge" id="heartsEdge" value="1" disabled>
-                <span class="fieldTitle">edge</span>
-              </div>
-              <div class="harm statBox noArrows">
-                <input type="number" class="harm save noArrows" id="heartsHarm" value="0">
-                <span class="fieldTitle">stress</span>
-              </div>
-            </div>
+  
           </div>
-
-        </div>
-
-        <div class="statLabel wits" id="wits">wits
-          <div class="statFrame">
-            <div class="statParts" id="witsParts">
-              <div class="baseStat statBox noArrows">&nbsp;
-                <input type="number" class="baseStat save" id="witsBase" value="1" disabled>
+  
+          <div class="statLabel resistance" id="resistance">resistance
+            <div class="statFrame">
+              <div class="statParts" id="resistanceParts">
+                <div class="baseStat statBox noArrows">&nbsp;
+                  <input type="number" class="baseStat save" id="resistanceBase" value="1" disabled>
+                </div>
+  
+  
+                <div class="permBonuses statBox">
+                  <label for="resistancePermBonusList" id="resistancePermBonus" class="bonusToggler" tabindex="0">
+                    <span class>+</span><span class="permBonuses save" id="permResistanceMods"></span>
+                  </label>
+                  <input class="dropdownToggle" id='resistancePermBonusList' type='checkbox' />
+                  <ul class="bonusList dropdown">
+                    <span class="bonusHeader">
+                      <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
+                    </span>
+                  </ul>
+                </div>
+  
+                <div class="tempBonuses statBox noArrows">
+                  <label for="resistanceTempBonusList" id="resistanceTempBonus" class="bonusToggler" tabindex="0">
+                    <span class>+</span><span class="tempBonuses save" id="tempResistanceMods"></span>
+                  </label>
+                  <input class="dropdownToggle" id='resistanceTempBonusList' type='checkbox' />
+                  <ul class="bonusList dropdown">
+                    <span class="bonusHeader">
+                      <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
+                    </span>
+                  </ul>
+                </div>
+  
               </div>
-
-
-              <div class="permBonuses statBox">
-                <label for="witsPermBonusList" id="witsPermBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="permBonuses save" id="permWitsMods"></span>
-                </label>
-                <input class="dropdownToggle" id='witsPermBonusList' type='checkbox' />
-                <ul class="bonusList dropdown">
-                  <span class="bonusHeader">
-                    <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
-                  </span>
-                </ul>
+  
+              <div class="currentStat statBox">
+                <input type="number" class="currentStat save" id="currentResistance" value="1" disabled>
               </div>
-
-              <div class="tempBonuses statBox noArrows">
-                <label for="witsTempBonusList" id="witsTempBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="tempBonuses save" id="tempWitsMods"></span>
-                </label>
-                <input class="dropdownToggle" id='witsTempBonusList' type='checkbox' />
-                <ul class="bonusList dropdown">
-                  <span class="bonusHeader">
-                    <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
-                  </span>
-                </ul>
+  
+              <div class="statEffects">
+                <div class="edge statBox noArrows">
+                  <input type="number" class="edge" id="resistanceEdge" value="1" disabled>
+                  <span class="fieldTitle">edge</span>
+                </div>
+                <div class="harm statBox noArrows">
+                  <input type="number" class="harm save noArrows" id="resistanceHarm" value="0">
+                  <span class="fieldTitle">harm</span>
+                </div>
               </div>
-
             </div>
-
-            <div class="currentStat statBox">
-              <input type="number" class="currentStat save" id="currentWits" value="1" disabled>
-            </div>
-
-            <div class="statEffects">
-              <div class="edge statBox noArrows">
-                <input type="number" class="edge" id="witsEdge" value="1" disabled>
-                <span class="fieldTitle">edge</span>
-              </div>
-              <div class="harm statBox noArrows">
-                <input type="number" class="harm save noArrows" id="witsHarm" value="0">
-                <span class="fieldTitle">confusion</span>
-              </div>
-            </div>
+  
           </div>
-
+  
+  
         </div>
-
-        <div class="statLabel resistance" id="resistance">resistance
-          <div class="statFrame">
-            <div class="statParts" id="resistanceParts">
-              <div class="baseStat statBox noArrows">&nbsp;
-                <input type="number" class="baseStat save" id="resistanceBase" value="1" disabled>
-              </div>
-
-
-              <div class="permBonuses statBox">
-                <label for="resistancePermBonusList" id="resistancePermBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="permBonuses save" id="permResistanceMods"></span>
-                </label>
-                <input class="dropdownToggle" id='resistancePermBonusList' type='checkbox' />
-                <ul class="bonusList dropdown">
-                  <span class="bonusHeader">
-                    <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
-                  </span>
-                </ul>
-              </div>
-
-              <div class="tempBonuses statBox noArrows">
-                <label for="resistanceTempBonusList" id="resistanceTempBonus" class="bonusToggler" tabindex="0">
-                  <span class>+</span><span class="tempBonuses save" id="tempResistanceMods"></span>
-                </label>
-                <input class="dropdownToggle" id='resistanceTempBonusList' type='checkbox' />
-                <ul class="bonusList dropdown">
-                  <span class="bonusHeader">
-                    <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
-                  </span>
-                </ul>
-              </div>
-
-            </div>
-
-            <div class="currentStat statBox">
-              <input type="number" class="currentStat save" id="currentResistance" value="1" disabled>
-            </div>
-
-            <div class="statEffects">
-              <div class="edge statBox noArrows">
-                <input type="number" class="edge" id="resistanceEdge" value="1" disabled>
-                <span class="fieldTitle">edge</span>
-              </div>
-              <div class="harm statBox noArrows">
-                <input type="number" class="harm save noArrows" id="resistanceHarm" value="0">
-                <span class="fieldTitle">harm</span>
-              </div>
-            </div>
-          </div>
-
+  
+        <div id="rolls">
+  
+          <table>
+            <thead>
+              <tr>
+                <th id="rollNameHeader"></th>
+                <th id="overwhelmHeader">Over<br>whelm</th>
+                <th id="baseDiceHeader">Base Dice</th>
+                <th id="hinderedRollHeader">Hinder</th>
+                <th id="impairedRollHeader">Impair</th>
+                <th id="bonusDiceHeader">Bonus Dice</th>
+                <th id="bonusPercentDiceHeader">% Bonus Dice</th>
+                <th id="totalDiceHeader">Total Dice</th>
+                <th id="addEdgeHeader">+edge?</th>
+                <th id="bonusSuccessHeader">Bonus Successes</th>
+                <th id="autoSuccessHeader">Total Auto Successes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="mightRoll">
+                <td class="rollName">Might</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="brawl">
+                <td class="rollName">Brawl</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="threatenM">
+                <td class="rollName">Threaten (Might)</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="agilityRoll">
+                <td class="rollName">Agility</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="finesse">
+                <td class="rollName">Finesse</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="throw">
+                <td class="rollName">Throw</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="move">
+                <td class="rollName">Move</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="heartsRoll">
+                <td class="rollName">Hearts</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="reachOut">
+                <td class="rollName">ReachOut</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="attune">
+                <td class="rollName">Attune</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="witsRoll">
+                <td class="rollName">Wits</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="manipulate">
+                <td class="rollName">Manipulate</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="threatenW">
+                <td class="rollName">Threaten (Wits)</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="think">
+                <td class="rollName">Think</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+              <tr id="resistanceRoll">
+                <td class="rollName">Resistance</td>
+  
+                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="baseDice">0</td>
+                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+  
+                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="totalDice">4</td>
+                <td class="addEdge">0</td>
+                <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
+                <td class="autoSuccesses">6</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-
-      </div>
-
-      <div id="rolls">
-
-        <table>
-          <thead>
-            <tr>
-              <th id="rollNameHeader"></th>
-              <th id="overwhelmHeader">Over<br>whelm</th>
-              <th id="baseDiceHeader">Base Dice</th>
-              <th id="hinderedRollHeader">Hinder</th>
-              <th id="impairedRollHeader">Impair</th>
-              <th id="bonusDiceHeader">Bonus Dice</th>
-              <th id="bonusPercentDiceHeader">% Bonus Dice</th>
-              <th id="totalDiceHeader">Total Dice</th>
-              <th id="addEdgeHeader">+edge?</th>
-              <th id="bonusSuccessHeader">Bonus Successes</th>
-              <th id="autoSuccessHeader">Total Auto Successes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr id="mightRoll">
-              <td class="rollName">Might</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="brawl">
-              <td class="rollName">Brawl</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="threatenM">
-              <td class="rollName">Threaten (Might)</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="agilityRoll">
-              <td class="rollName">Agility</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="finesse">
-              <td class="rollName">Finesse</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="throw">
-              <td class="rollName">Throw</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="move">
-              <td class="rollName">Move</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="heartsRoll">
-              <td class="rollName">Hearts</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="reachOut">
-              <td class="rollName">ReachOut</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="attune">
-              <td class="rollName">Attune</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="witsRoll">
-              <td class="rollName">Wits</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="manipulate">
-              <td class="rollName">Manipulate</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="threatenW">
-              <td class="rollName">Threaten (Wits)</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="think">
-              <td class="rollName">Think</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-            <tr id="resistanceRoll">
-              <td class="rollName">Resistance</td>
-
-              <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
-              <td class="baseDice">0</td>
-              <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
-              <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
-
-              <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-              <td class="bonusPercentDice"><input class="bonusPercentDice noArrows" type="number" value="0">%</td>
-              <td class="totalDice">4</td>
-              <td class="addEdge">0</td>
-              <td class="bonusSuccesses"><input class="bonusSuccesses noArrows" type="number" value="0"></td>
-              <td class="autoSuccesses">6</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
+  
+</div>
 
 
       <div id="conditions">
@@ -616,7 +618,23 @@
         <div id="conditionsList" class="reorderList">
 
         </div>
-        <button type="button" class="addButton" id="newCondition">Add Condition</button>
+
+        <div id="extraConditions">
+          <button type="button" class="addButton" id="newCondition">Add new condition</button>
+
+          <label for="traumas" class="leveling">Traumas:
+            <textarea class="save" id="traumas"></textarea> <!-- rows="3" cols="70" -->
+          </label>
+          <label for="maxTraumas" class="leveling">Max traumas:
+            <input class="save noArrows" type="number" id="maxTraumas">
+          </label>
+
+
+          <label for="exhaustion" class="leveling">Exhaustion:
+            <input class="save noArrows" type="number" id="exhaustion">
+          </label>
+        </div>
+
       </div>
 
 
@@ -709,7 +727,7 @@
 
     </form>
   </main>
-  <footer> The rules for this game can be found here: <a href="https://docs.google.com/document/d/17msuvBgLhN51QafDzGzPxjpPlAjxIEo3LyAxf8tdPJ4/">https://docs.google.com/document/d/17msuvBgLhN51QafDzGzPxjpPlAjxIEo3LyAxf8tdPJ4/</a> <br> Character sheet created by Ruby Leroux </footer>
+  <footer> The rules for this game can be found <a href="https://docs.google.com/document/d/17msuvBgLhN51QafDzGzPxjpPlAjxIEo3LyAxf8tdPJ4/">here</a> <br> Character sheet created by Ruby Leroux </footer>
 
   <div id="confirmWindow" class="popup">
     <div id="confirmMessage">
@@ -941,13 +959,13 @@
   </div>
 
 
-  <div id="settingsWindow">
+  <!-- <div id="settingsWindow">
     <h4> customize colors:</h4>
     <input type="color" id="mainColor" name="mainColor" value="#e66465" />
     <label for="mainColor">Main color</label>
     <button type="button" id="applyColorChange">Apply</button>
 
-  </div>
+  </div> -->
 
 
 </body>

@@ -66,67 +66,85 @@ var posada_startAbilities = ["ANALYSIS"]
 var aven_startAbilities = ["FAMILY_SWORDSMANSHIP"]
 var yanetta_startAbilities = ["SHROUDED_IN_FLAME"]
 
-var exp_triggers = [
+var quickstart_values = [
     {
         source: "human",
+        credits: 5000,
         trigger: `Climber: Whenever you go up a floor, you gain experience equal to half the floor (round down). 
-        Why We Keep Going: You have a dream of some sort. Whenever you make progress towards this dream (other than going up the tower), gain experience equal to the highest floor you've reached. You can change your dream up to once per floor. When you do, you don't gain any experience the next time you make progress towards your dream. Changing your dream causes you to gain one Exhaustion. If you achieve your dream, you retire permanently.` },
+Why We Keep Going: You have a dream of some sort. Whenever you make progress towards this dream (other than going up the tower), gain experience equal to the highest floor you've reached. You can change your dream up to once per floor. When you do, you don't gain any experience the next time you make progress towards your dream. Changing your dream causes you to gain one Exhaustion. If you achieve your dream, you retire permanently.` },
     {
         source: "crocodile",
+        credits: 2000,
         trigger: `Live to Hunt: Each time you fight a single opponent (i.e. fighting multiple at once does not qualify), you gain experience equal to half their highest attribute (rounded down). This only applies once per person per month.`
     },
     {
         source: "canine",
+        credits: 2000,
         trigger: `Not Down Yet: Every time you become Fragile (maximum once per day) or gain an Exhaustion or Trauma, you gain experience equal to the highest floor you've reached. Additionally, taking strenuous actions while Fragile does not cause you to gain an Injury. You can continue to act normally while Dying; any strenuous actions while Dying still cause you to accept an Injury. You are immune to any instant-death effects of Called Shots.`
     },
     {
         source: "silverdwarf",
+        credits: 10000,
         trigger: `Pathfinder: Whenever you help someone find the correct path or help them with their journey, gain experience equal to their highest attribute minus the greatest type of Harm they currently have (minimum 1). This can only apply once per person per floor.`
     },
     {
         source: "redwitch",
+        credits: 10000,
         trigger: `Guide:  Whenever you guide someone where they need to go, and whenever a Regular changes their Dream because of you (directly or indirectly), gain experience equal to the total number of Harms they have. Calculate this after the Regular takes the Exhaustion for changing their Dream. Whenever someone takes Exhaustion or Trauma, or enters Weakened, Fragile, Anxious, or Volatile status because of advice or help you gave, gain experience equal to the Harms they have.`
     },
     {
         source: "irregular",
+        credits: 0,
         trigger: `Learn By Doing: When you are hit by a shinsu attack, you can choose to treat the damage from that as Unresisted and gain experience equal to the Harm you take. 
-        Shake the Foundations of the Tower: Whenever you shake the status quo, you gain experience:
-              - Equal to the current floor for a tiny or temporary change.
-              - Equal to twice the current floor for a significant and long-lasting change.
-              - Equal to three times the current floor for a total upheaval.` },
+Shake the Foundations of the Tower: Whenever you shake the status quo, you gain experience:
+    - Equal to the current floor for a tiny or temporary change.
+    - Equal to twice the current floor for a significant and long-lasting change.
+    - Equal to three times the current floor for a total upheaval.` },
+    {
+        source: "heir",
+        credits: 50000,
+        trigger: `Competition: Whenever you defeat another Heir or ensure they won’t be a competitor, you gain experience equal to three times their highest attribute` },
     {
         source: "keene",
+        credits: 20000,
         trigger: `Whenever you manipulate someone into helping you, you gain experience equal to their Wits.`
     },
     {
         source: "trumbald",
+        credits: 20000,
         trigger: `Whenever you make an item, you get one experience, plus one for every five hundred credits that item costs.`
     },
     {
         source: "haas",
+        credits: 20000,
         trigger: `Whenever you intentionally disobey someone with authority over you, you gain experience equal to their lowest attribute. This only applies once per person.`
     },
     {
         source: "lemarque",
+        credits: 20000,
         trigger: `Whenever you capture a divine fish, you gain experience equal to the current floor.`
     },
     {
         source: "halleck",
+        credits: 20000,
         trigger: `Whenever you reduce the Damage Base or total damage of an attack against you to 1 or less, gain experience equal to your Resistance, with a maximum of once per day.`
     },
     {
         source: "posada",
+        credits: 20000,
         trigger: `Whenever you uncover some significant, new piece of information that isn't commonly known (as determined by the GM), you gain an amount of experience: equal to the highest floor you've reached for information that is known only to High Rankers or other very important people; equal to twice that floor for information that is only known by a handful of people in the Tower; equal to five times that floor for information that isn't known by anyone else in the Tower.`
     },
     {
         source: "aven",
+        credits: 20000,
         trigger: `Whenever you kill someone who wasn't a threat to you (or otherwise didn't need to die), gain experience equal to the highest floor you've reached.`
     },
     {
         source: "yanetta",
+        credits: 20000,
         trigger: `When you pick this family, choose one of the following to be your experience trigger for this family. You can't change your decision later. Both only apply once per person per day.
-        Whenever you heal someone of Injuries equal to or greater than their Might Edge, gain experience equal to their Might.
-        Whenever you cause someone to take Injuries equal to or greater than half their Might, gain experience equal to their Might Edge.` }
+    Whenever you heal someone of Injuries equal to or greater than their Might Edge, gain experience equal to their Might.
+    Whenever you cause someone to take Injuries equal to or greater than half their Might, gain experience equal to their Might Edge.` }
 ]
 
 

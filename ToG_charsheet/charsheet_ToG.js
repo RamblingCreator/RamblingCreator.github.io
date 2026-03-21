@@ -28,14 +28,17 @@ $(document).ready(function () {
 
     $("#showHiddenAbilities").on("input", function () {
         if (document.styleSheets[0].cssRules[0] === undefined) {
-            return
+            console.log("stylesheet is broken?");
+            return;
         }
         // console.log("rule 0: " + document.styleSheets[0].cssRules[0]);
         // console.log("style 0: " + document.styleSheets[0].cssRules[0].style);
         if ($("#showHiddenAbilities").is(':checked')) {
             document.styleSheets[0].cssRules[0].style.display = "block";
+            console.log("showing abilities");
         } else {
             document.styleSheets[0].cssRules[0].style.display = "none";
+            console.log("hiding abilities");
         }
     });
     $("#buyCanineStage").on("click", function () {
@@ -850,8 +853,12 @@ function calculateStats() {
             current.value = (parseInt(base.value) + parseInt(permTotal) + parseInt(tempTotal));
         }
         edge.value = Math.floor(parseInt(current.value) / 10);
-
     }
+
+    // let maxTrauma = 4+Math.floor(parseInt($("#witsBase").value) / 25);
+    $("#maxTraumas").val(4+Math.floor(parseInt($("#witsBase").value) / 25));
+
+
 }
 
 function addStatBonus(source, amount, parent) {
@@ -983,7 +990,7 @@ function calculateRolls() {
         roll.querySelector(".baseDice").innerHTML = 1 + Math.floor($("#" + thisStat + "Base").val() / 5);
         let diceAmount = 1 + Math.floor($("#" + thisStat + "Base").val() / 5);
         diceAmount += parseInt(roll.querySelector("input.bonusDice").value) + parseInt(roll.querySelector("span.bonusDice").innerHTML);
-
+        diceAmount -= parseInt(roll.querySelector("input.impairedRoll").value)
 
 
         console.log(roll.id + " bonusDice: " + parseInt(roll.querySelector("input.bonusDice").value));
@@ -1038,11 +1045,59 @@ function calculateRolls() {
 
 /* conditions */
 function getConditions() {
-
+    conditions.forEach(element => {
+        $(getAddConditionHtml(element)).appendTo("#allConditions");
+    });
+    var elements = document.getElementsByClassName("addCondition");
+    Array.from(elements).forEach(function (element) {
+        element.addEventListener('click', addThisCondition);
+    });
 }
 
-function getConditionHtml(conditionJson) {
 
+var addThisCondition = function () {
+    let html = getConditionHtml({ name: this.name, description: $(this).attr("desc") });
+
+    $(html).appendTo("#conditionsList");
+    let thisCondition = document.getElementById("conditionsList").lastChild;
+    let tbox = thisCondition.getElementsByClassName("conditionDescription")[0];
+    tbox.style.height = tbox.scrollHeight + "px";
+    tbox.style.overflowY = "hidden";
+    for (const element of thisCondition.querySelectorAll("input.resize")) {
+        if (element.value != "") {
+            adjustWidthOfInput(element);
+        }
+    }
+    let thisButton = thisCondition.getElementsByClassName("removeCondition")[0];
+    thisButton.addEventListener('click', function () { thisCondition.remove(); }, false);
+};
+
+
+function getConditionHtml(conditionJson) {
+    return `<div class="condition" name="${conditionJson.name}">
+                <div class="conditionHeader">
+                    <div class="conditionNameBlock">
+                    <div class="dragHandle" draggable="false">↕</div>
+                    <input class="conditionName" value="${conditionJson.name}">
+                    </div>
+                    <button type="button" class="removeCondition confirm" value="${conditionJson.name}">✕</button>
+                </div>
+                <textarea class="conditionDescription" rows="1" cols="10">${conditionJson.description}</textarea>
+                
+            </div>`
+}
+
+function getAddConditionHtml(conditionJson) {
+    let newDesc = conditionJson.description.replaceAll(/\r\n|\r|\n/gi, "<br>"); //•
+    return `<div class="newCondition" name="${conditionJson.name}">
+                <div class="conditionHeader">
+                    <div class="conditionNameBlock">
+                        <div class="conditionName">${conditionJson.name}</div>
+                    </div>
+                </div>
+                <p class="conditionDescription" rows="1" cols="10">${newDesc}</p>
+                <button type="button" class="addCondition" name="${conditionJson.name}" desc="${conditionJson.description}">Add this condition</button>
+            </div>`
 }
 
 
@@ -1445,22 +1500,25 @@ function applyQuickstart() {
     $("#tier").val(1);
     calculateStats();
 
-
+    let thisInfo = {};
     if ($("#quickstartNoble").val() != "none") {
-        $("#experienceTrigger").val(exp_triggers.find(item => {
+        thisInfo = quickstart_values.find(item => {
             return item.source == $("#quickstartNoble").val();
-        }).trigger);
-        /* console.log("trigger: " + exp_triggers.find(item => {
-            return item.source == $("#quickstartNoble").val();
-        }).trigger); */
+        })
     } else {
-        $("#experienceTrigger").val(exp_triggers.find(item => {
+        thisInfo = quickstart_values.find(item => {
             return item.source == $("#quickstartRace").val();
-        }).trigger);
+        })
+        /* $("#experienceTrigger").val(quickstart_values.find(item => {
+            return item.source == $("#quickstartRace").val();
+        }).trigger); */
         /* console.log("trigger: " + exp_triggers.find(item => {
             return item.source == $("#quickstartRace").val();
         }).trigger); */
     }
+    $("#experienceTrigger").val(thisInfo.trigger);
+    $("#credits").val(thisInfo.credits);
+
 
     $("#race").val($("#quickstartRace").val());
     $("#position").val($("#quickstartPosition").val());
@@ -1507,7 +1565,17 @@ function saveForm() {
         abilitiesList.push(thisJSON);
     }
     setThisStorage("abilitiesList", JSON.stringify(abilitiesList));
-    // console.log(stats);
+
+
+    let conditionsList = [];
+    for (const condition of document.querySelectorAll(".condition")) {
+        let thisJSON = {}
+        thisJSON.name = condition.querySelector(".conditionName").value;
+        thisJSON.description = condition.querySelector(".conditionDescription").value;
+        conditionsList.push(thisJSON);
+    }
+    setThisStorage("conditionsList", JSON.stringify(conditionsList));
+
     for (const stat of stats.children) {
         let tempBonuses = {}
         temp = stat.querySelector('.tempBonuses .bonusList');
@@ -1584,6 +1652,25 @@ function loadForm() {
     if (abilitiesList != null) {
         abilitiesList.forEach(thisAbility => {
             addNewAbility(thisAbility);
+        });
+    }
+
+    let conditionsList = JSON.parse(getThisStorage("conditionsList"));
+    if (conditionsList != null) {
+        conditionsList.forEach(thisConditionJson => {
+            let html = getConditionHtml(thisConditionJson);
+            $(html).appendTo("#conditionsList");
+            let thisCondition = document.getElementById("conditionsList").lastChild;
+            let tbox = thisCondition.getElementsByClassName("conditionDescription")[0];
+            tbox.style.height = tbox.scrollHeight + "px";
+            tbox.style.overflowY = "hidden";
+            for (const element of thisCondition.querySelectorAll("input.resize")) {
+                if (element.value != "") {
+                    adjustWidthOfInput(element);
+                }
+            }
+            let thisButton = thisCondition.getElementsByClassName("removeCondition")[0];
+            thisButton.addEventListener('click', function () { thisCondition.remove(); }, false);
         });
     }
 
