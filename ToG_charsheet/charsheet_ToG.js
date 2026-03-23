@@ -29,6 +29,9 @@ $(document).ready(function () {
     $("#showHiddenAbilities").on("input", function () {
         if (document.styleSheets[0].cssRules[0] === undefined) {
             console.log("stylesheet is broken?");
+            console.log("sheet 0: " + document.styleSheets[0]);
+            console.log("cssRules: " + document.styleSheets[0].cssRules);
+            console.log("sheets: " + JSON.stringify(document.styleSheets));
             return;
         }
         // console.log("rule 0: " + document.styleSheets[0].cssRules[0]);
@@ -95,10 +98,31 @@ $(document).ready(function () {
             e.preventDefault()
             saveForm();
         }
+    });    
+    $("#showLog").on("click", function () {
+        $("#purchaseLog").css('display', 'flex');
+        $("#popupMask").css('display', 'flex');
+    });
+    $("#applyColorChange").on("click", function () {
+        applyColors();
     });
     $("#save").on("click", function () {
         saveForm();
     });
+    $(".save").on("input", function () {
+        saveForm();
+    });
+
+    $("#export").on("click", function () {
+        exportSave();
+    });
+    $("#copy").on("click", function () {
+        copySave();
+    });
+    $("#import").on("click", function () {
+        importSave();
+    });
+
     $("#calculatestats").on("click", function () {
         calculateStats();
     });
@@ -106,6 +130,9 @@ $(document).ready(function () {
         calculateExperience();
     });
     $("#calculaterolls").on("click", function () {
+        calculateRolls();
+    });
+    $("#rolls input").on("input", function () {
         calculateRolls();
     });
     $("#newCondition").on("click", function () {
@@ -304,10 +331,15 @@ function changeCanineLevel(direction) {
 }
 
 function buyCanineUpgrade() {
+    let type = "weapon ";
     if (document.querySelector('input[name="caninePurchase"]:checked').value === "mobility") {
         document.getElementById("canineMaxMobility").value++;
+        type = "mobility " + document.getElementById("canineMaxMobility").value;
+
     } else if (document.querySelector('input[name="caninePurchase"]:checked').value === "weapon") {
+
         document.getElementById("canineMaxWeapon").value++;
+        type += document.getElementById("canineMaxWeapon").value;
     }
     document.getElementById("canineMaxLevel").value++;
 
@@ -320,6 +352,10 @@ function buyCanineUpgrade() {
         $("#lowerCanineLevel").prop("disabled", false);
     }
     $("#raiseCanineLevel").prop("disabled", false);
+
+    /* technically an ability? */
+    addLogItem(cost, "canine", "stage " + $("#canineMaxLevel").val() + " (" + type + " " + ")");
+
 
 }
 
@@ -418,25 +454,25 @@ function checkAbilityBuyable(abilityID) {
         (abilityID === "SPIDER_FOOT" && !checkForAbility("FEATHER_FOOT"))) {
         return false;
     } else if ((abilityID === "LIGHTNING_STRIKE" || abilityID === "CHAIN_LIGHTNING" || abilityID === "BOLT_RIDER")
-        && !checkForAbility("SHINSU_QUALITY_[LIGHTNING]")) {
+        && !checkForAbility("SHINSU_QUALITY_LIGHTNING")) {
         return false;
-    } else if ((abilityID === "WHIRLWIND_[EXTENDED]" || abilityID === "GUST" || abilityID === "STILL_AND_STIR_THE_AIR")
-        && !checkForAbility("SHINSU_QUALITY_[WIND]")) {
+    } else if ((abilityID === "WHIRLWIND_EXTENDED" || abilityID === "GUST" || abilityID === "STILL_AND_STIR_THE_AIR")
+        && !checkForAbility("SHINSU_QUALITY_WIND")) {
         return false;
     } else if ((abilityID === "ICE_RINK" || abilityID === "POLAR_MIDNIGHT" || abilityID === "FROZEN_GRAPESHOT")
-        && !checkForAbility("SHINSU_QUALITY_[ICE]")) {
+        && !checkForAbility("SHINSU_QUALITY_ICE")) {
         return false;
-    } else if ((abilityID === "INFERNO_[EXTENDED]" || abilityID === "FIREBALL" || abilityID === "FLARE_[EXTENDED]")
-        && !checkForAbility("SHINSU_QUALITY_[FIRE]")) {
+    } else if ((abilityID === "INFERNO_EXTENDED" || abilityID === "FIREBALL" || abilityID === "FLARE_EXTENDED")
+        && !checkForAbility("SHINSU_QUALITY_FIRE")) {
         return false;
     } else if ((abilityID === "STONE_SKIN" || abilityID === "TOUGHNESS" || abilityID === "CLOSED_MIND")
-        && !checkForAbility("SHINSU_QUALITY_[ROCK]")) {
+        && !checkForAbility("SHINSU_QUALITY_ROCK")) {
         return false;
-    } else if ((abilityID === "CRASHING_WAVE" || abilityID === "MAELSTROM_[EXTENDED]" || abilityID === "PURIFY_BODY")
-        && !checkForAbility("SHINSU_QUALITY_[WATER]")) {
+    } else if ((abilityID === "CRASHING_WAVE" || abilityID === "MAELSTROM_EXTENDED" || abilityID === "PURIFY_BODY")
+        && !checkForAbility("SHINSU_QUALITY_WATER")) {
         return false;
     } else if ((abilityID === "PLACEHOLDER" || abilityID === "ARMED_AND_READY" || abilityID === "ARMOR_STORM")
-        && !checkForAbility("SHINSU_QUALITY_[STEEL]")) {
+        && !checkForAbility("SHINSU_QUALITY_STEEL")) {
         return false;
     }
     return true;
@@ -447,20 +483,20 @@ function checkAbilityBuyable(abilityID) {
 LIGHTNING_STRIKE
 CHAIN_LIGHTNING
 BOLT_RIDER
-WHIRLWIND_[EXTENDED]
+WHIRLWIND_EXTENDED
 GUST
 STILL_AND_STIR_THE_AIR
 ICE_RINK
 POLAR_MIDNIGHT
 FROZEN_GRAPESHOT
-INFERNO_[EXTENDED]
+INFERNO_EXTENDED
 FIREBALL
-FLARE_[EXTENDED]
+FLARE_EXTENDED
 STONE_SKIN
 TOUGHNESS
 CLOSED_MIND
 CRASHING_WAVE
-MAELSTROM_[EXTENDED]
+MAELSTROM_EXTENDED
 PURIFY_BODY
 PLACEHOLDER
 ARMED_AND_READY
@@ -476,6 +512,7 @@ function addCustomAbility() {
     $("#experienceSpent").val($("#experienceSpent").val() - (cost * -1));
     $("#abilitiesBought").val(parseInt($("#abilitiesBought").val()) + 1);
     updateAbilityCosts();
+    addLogItem(cost, "ability", "custom");
 }
 
 function updateAbilityCosts() {
@@ -525,6 +562,15 @@ function updateAbilityCosts() {
     } */
 }
 
+function addLogItem(cost, source, name) {
+    let html = `<div class="logItem">
+                    <div class="logItemCost">${cost}</div> for 
+                    <div class="logItemSource">${source}</div>:
+                    <div class="logItemName">${name}</div>
+                </div>`
+    $(html).appendTo("#purchasesList");
+}
+
 
 var addThisAbility = function () {
 
@@ -547,6 +593,8 @@ var addThisAbility = function () {
         $("#experienceSpent").val($("#experienceSpent").val() - (cost * -1));
         $("#abilitiesBought").val(parseInt($("#abilitiesBought").val()) + 1);
 
+        addLogItem(cost, "ability", thisAbility.name);
+
         // updateAbilityCosts();
         console.log(thisAbility);
         if (thisAbility != null) {
@@ -566,6 +614,7 @@ function addNewAbility(abilityJson) {
     // console.log(thisAbility.getElementsByClassName("abilityDescription"));
     let tbox = thisAbility.getElementsByClassName("abilityDescription")[0];
     tbox.style.height = tbox.scrollHeight + "px";
+    // console.log(abilityJson.name + " scrollheight: " + tbox.scrollHeight);
     tbox.style.overflowY = "hidden";
     /*$(tbox).on("input", function () {
         this.style.height = "auto";
@@ -641,27 +690,26 @@ function addAbilityBonuses(Json) {
 function getAbilityHtml(Json) {
 
     return `<div class="ability" hidden-ability="${Json.hidden}" abilityName="${Json.name}" id="${Json.id}">
-            <div class="abilityHeader">
-                <div class="abilityNameBlock">
-                <div class="dragHandle" draggable="false">↕</div>
-                <input class="abilityName resize" value="${Json.name}">
-                <label class="toggle">
-                    <input type="checkbox" class="isShinsu" name="btnToggle" />
-                    <span class="shinsuIcon">💧</span>
-                    <span class="shinsuHover">This ability uses Shinsu</span>
-                </label>
-                <div class="abilityOrigin">
-                    <input class="abilitySource resize" value="${Json.source}">:
-                    <input class="abilityType resize" value="${Json.type}">
-                </div>
-                </div>
+                <div class="abilityHeader">
+                    <div class="abilityNameBlock">
+                    <div class="dragHandle" draggable="false">↕</div>
+                    <input class="abilityName resize" value="${Json.name}">
+                    <label class="toggle">
+                        <input type="checkbox" class="isShinsu" name="btnToggle" />
+                        <span class="shinsuIcon">💧</span>
+                        <span class="shinsuHover">This ability uses Shinsu</span>
+                    </label>
 
-                <div class="abilityButtons">
+                    </div>
+                    <div class="abilityOrigin">
+                    <input class="abilitySource resize" value="${Json.source}"> : <input class="abilityType resize" value="${Json.type}">
+                    </div>
+                    <div class="abilityButtons">
                     <button type="button" class="hideThisAbility" title="hide this ability">👁</button>&nbsp;
                     <button type="button" class="removeAbility confirm" value="${Json.id}">✕</button>
+                    </div>
                 </div>
-            </div>
-            <textarea class="abilityDescription resize" rows="2" cols="10">${Json.description}</textarea>
+                <textarea class="abilityDescription resize" rows="2" cols="10">${Json.description}</textarea>
             </div>`;
 }
 /* 
@@ -696,8 +744,7 @@ function getAddAbilityHtml(Json) {
                 ${shinsuIcon}
             </div>
             <div class="abilityOrigin">
-                <div class="abilitySource">${Json.source}</div>:
-                <div class="abilityType">${Json.type}</div>
+                <div class="abilitySource">${Json.source}</div> : <div class="abilityType">${Json.type}</div>
             </div>
           </div>
           <p class="abilityDescription" rows="1" cols="10">${newDesc}</p>
@@ -714,8 +761,7 @@ function getPreviewAbilityHtml(Json) {
                 <div class="abilityName">${Json.name}</div>
             </div>
             <div class="abilityOrigin">
-                <div class="abilitySource">${Json.source}</div>:
-                <div class="abilityType">${Json.type}</div>
+                <div class="abilitySource">${Json.source}</div> : <div class="abilityType">${Json.type}</div>
             </div>
           </div>
           <p class="abilityDescription" rows="1" cols="10">${newDesc}</p>
@@ -748,26 +794,24 @@ function confirmDelete(thisButton, type) {
     $("#confirmWindow").css('display', 'grid');
     $("#popupMask").css('display', 'flex');
 
-    let parent = thisButton.parentNode.parentNode;
+    let parent = thisButton.parentNode.parentNode.parentNode;
 
     let message = "";
+    console.log("parent: " + parent.className);
 
     message = parent.getElementsByClassName(type + "Name")[0].value
     document.getElementById("confirmTarget").innerHTML = "This can't be undone. Are you sure you want to delete \"" + message + "\" ?";
     $('#confirmYes').click(function () {
         console.log("confirmed");
         console.log("removing");
-        /* if (type == "cypher") {
-            // thisButton.parentNode.parentNode.parentNode.remove();
-
-        } else if (type == "ability") {
+        if (type == "ability") {
             thisButton.parentNode.parentNode.parentNode.remove();
-        } else if (type == "skill") {
+        } /* else if (type == "") {
             thisButton.parentNode.parentNode.parentNode.remove();
         } else if (type == "attack") {
             thisButton.parentNode.parentNode.parentNode.remove();
         } */
-        parent.remove();
+        // parent.remove();
         $("#confirmWindow").css('display', 'none');
         $("#popupMask").css('display', 'none');
     });
@@ -856,8 +900,8 @@ function calculateStats() {
     }
 
     // let maxTrauma = 4+Math.floor(parseInt($("#witsBase").value) / 25);
-    $("#maxTraumas").val(4+Math.floor(parseInt($("#witsBase").value) / 25));
-
+    // $("#maxTraumas").val(4 + Math.floor(parseInt($("#witsBase").val()) / 25));
+    $("#maxTraumas").html(4 + Math.floor(parseInt($("#witsBase").val()) / 25));
 
 }
 
@@ -916,26 +960,30 @@ function removeBonus(thisButton) {
 
 function calculateRolls() {
 
-    if ($("#Slowed").is(':checked')) {
+    if (document.querySelector('.condition[name="Slowed"]') != null) {
         document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
         document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if ($("#Pinned").is(':checked')) {
+    if (document.querySelector('.condition[name="Pinned"]') != null) {
         document.querySelector("#rolls #agilityRoll .hinderedRoll input").checked = true;
         document.querySelector("#rolls #finesse .hinderedRoll input").checked = true;
         document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if ($("#Paralyzed").is(':checked')) {
-        document.querySelector("#rolls .hinderedRoll input").checked = true;
+    if (document.querySelector('.condition[name="Paralyzed"]') != null) {
+        // document.querySelectorAll("#rolls .hinderedRoll input").checked = true;
+        document.querySelectorAll("#rolls .hinderedRoll input").forEach(element => {
+            element.checked = true;
+        });
+        // console.log(document.querySelectorAll("#rolls .hinderedRoll input"));
     }
-    if ($("#Blind").is(':checked')) {
+    if (document.querySelector('.condition[name="Blind"]') != null) {
         document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
         document.querySelector("#rolls #finesse .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if ($("#Weakened").is(':checked')) {
+    if (document.querySelector('.condition[name="Weakened"]') != null) {
         document.querySelector("#rolls #mightRoll .hinderedRoll input").checked = true;
         document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
         document.querySelector("#rolls #threatenM .hinderedRoll input").checked = true;
@@ -944,11 +992,12 @@ function calculateRolls() {
         document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if ($("#Anxious").is(':checked')) {
+    if (document.querySelector('.condition[name="Anxious"]') != null) {
         document.querySelector("#rolls #heartsRoll .hinderedRoll input").checked = true;
         document.querySelector("#rolls #reachOut .hinderedRoll input").checked = true;
         document.querySelector("#rolls #attune .hinderedRoll input").checked = true;
     }
+
 
 
     if (checkForAbility("BRUISER")) {
@@ -978,6 +1027,10 @@ function calculateRolls() {
     }
 
 
+
+
+
+
     let rolls = document.querySelector("#rolls table");
     let thisStat = "might"
     console.log("rolls: " + rolls.querySelectorAll("tbody tr") + "[" + rolls.querySelectorAll("tbody tr").length + "]");
@@ -986,36 +1039,68 @@ function calculateRolls() {
         // console.log(roll.id.substring(roll.id.length - 4, roll.id.length) + "=? Roll");
         if (roll.id.substring(roll.id.length - 4, roll.id.length) === "Roll") {
             thisStat = roll.id.substring(0, roll.id.length - 4);
+        } else if ($("#" + thisStat + "Roll .hinderedRoll input").is(':checked')) {
+            roll.querySelector(".hinderedRoll input").checked = true;
         }
+
+
         roll.querySelector(".baseDice").innerHTML = 1 + Math.floor($("#" + thisStat + "Base").val() / 5);
         let diceAmount = 1 + Math.floor($("#" + thisStat + "Base").val() / 5);
         diceAmount += parseInt(roll.querySelector("input.bonusDice").value) + parseInt(roll.querySelector("span.bonusDice").innerHTML);
         diceAmount -= parseInt(roll.querySelector("input.impairedRoll").value)
 
 
-        console.log(roll.id + " bonusDice: " + parseInt(roll.querySelector("input.bonusDice").value));
-        console.log(roll.id + " bonusDice: " + roll.querySelector("input.bonusDice"));
-        console.log(roll.id + " bonusDice2: " + parseInt(roll.querySelector("span.bonusDice").innerHTML));
+        // console.log(roll.id + " bonusDice: " + parseInt(roll.querySelector("input.bonusDice").value));
+        // console.log(roll.id + " bonusDice: " + roll.querySelector("input.bonusDice"));
+        // console.log(roll.id + " bonusDice2: " + parseInt(roll.querySelector("span.bonusDice").innerHTML));
 
-        roll.querySelector(".totalDice").innerHTML = diceAmount;
+        /*  if (thisStat.querySelector(".hinderedRoll input").checked) {
+ 
+         }
+  */
+        roll.querySelector(".totalDice").innerHTML = "=" + diceAmount;
 
         let autoSuccesses = Math.floor($("#" + thisStat + "Base").val() / 20)
 
         roll.querySelector(".autoSuccesses").innerHTML = autoSuccesses + parseInt(roll.querySelector("input.bonusSuccesses").value);
 
 
+
         // $("#"+thisStat+"Base").val();
     }
     if (checkForAbility("OVERWHELMING_FORCE")) {
-        $("#brawl .overwhelm span").css('display', 'inline');
-    } else if (checkForAbility("OVERWHELMING_MIND")) {
-        $("#think .overwhelm span").css('display', 'inline');
-    } else if (checkForAbility("OVERWHELMING_SPEED")) {
-        $("#move .overwhelm span").css('display', 'inline');
-    } else if (checkForAbility("OVERWHELMING_ACCURACY")) {
-        $("#throw .overwhelm span").css('display', 'inline');
-    } else if (checkForAbility("OVERWHELMING_CONTROL")) {
-        $("#attune .overwhelm span").css('display', 'inline');
+        // $("#brawl .overwhelm span").css('display', 'inline');
+        $("#brawl .overwhelm span").css('opacity', '100%');
+    } else {
+        $("#brawl .overwhelm span").css('opacity', '0%');
+    }
+
+    if (checkForAbility("OVERWHELMING_MIND")) {
+        // $("#think .overwhelm span").css('display', 'inline');
+        $("#think .overwhelm span").css('opacity', '100%');
+    } else {
+        $("#think .overwhelm span").css('opacity', '0%');
+    }
+
+    if (checkForAbility("OVERWHELMING_SPEED")) {
+        // $("#move .overwhelm span").css('display', 'inline');
+        $("#move .overwhelm span").css('opacity', '100%');
+    } else {
+        $("#move .overwhelm span").css('opacity', '0%');
+    }
+
+    if (checkForAbility("OVERWHELMING_ACCURACY")) {
+        // $("#throw .overwhelm span").css('display', 'inline');
+        $("#throw .overwhelm span").css('opacity', '100%');
+    } else {
+        $("#throw .overwhelm span").css('opacity', '0%');
+    }
+
+    if (checkForAbility("OVERWHELMING_CONTROL")) {
+        // $("#attune .overwhelm span").css('display', 'inline');
+        $("#attune .overwhelm span").css('opacity', '100%');
+    } else {
+        $("#attune .overwhelm span").css('opacity', '0%');
     }
 
 
@@ -1026,10 +1111,10 @@ function calculateRolls() {
     OVERWHELMING_CONTROL */
 
     /* auto fail conditions */
-    if ($("#Pinned").is(':checked')) {
+    if (document.querySelector('.condition[name="Pinned"]') != null) {
         document.querySelector("#rolls #move .totalDice").innerHTML = 0;
     }
-    if ($("#Paralyzed").is(':checked')) {
+    if (document.querySelector('.condition[name="Paralyzed"]') != null) {
         document.querySelector("#rolls #mightRoll .totalDice").innerHTML = 0;
         document.querySelector("#rolls #brawl .totalDice").innerHTML = 0;
         document.querySelector("#rolls #threatenM .totalDice").innerHTML = 0;
@@ -1038,7 +1123,7 @@ function calculateRolls() {
         document.querySelector("#rolls #throw .totalDice").innerHTML = 0;
         document.querySelector("#rolls #move .totalDice").innerHTML = 0;
     }
-    if ($("#Blind").is(':checked')) {
+    if (document.querySelector('.condition[name="Blind"]') != null) {
         document.querySelector("#rolls #throw .totalDice").innerHTML = 0;
     }
 }
@@ -1070,6 +1155,7 @@ var addThisCondition = function () {
     }
     let thisButton = thisCondition.getElementsByClassName("removeCondition")[0];
     thisButton.addEventListener('click', function () { thisCondition.remove(); }, false);
+    calculateRolls();
 };
 
 
@@ -1143,16 +1229,20 @@ Royal Blood:
 
 function purchaseStats() {
     let cost = getStatCost();
+    let description = ""
     for (const stat of document.getElementById("statPurchaseSection").children) {
         let input = stat.querySelector("input");
         let statName = input.id.substring(0, input.id.length - 8);
         let baseID = "#" + statName + "Base"
         $(baseID).val(parseInt($(baseID).val()) + parseInt(input.value));
         input.value = 0;
+        description += statName + "+" + input.value + ", ";
     }
     $("#currentExperience").val($("#currentExperience").val() - cost);
     $("#experienceSpent").val($("#experienceSpent").val() - (cost * -1));
     $("#tier").val(getTier($("#experienceSpent").val()))
+    addLogItem(cost, "stats", description.substring(0, description.length - 2));
+
     $("#popupMask").css('display', 'none');
     $(".popup").css('display', 'none');
     calculateStats();
@@ -1528,6 +1618,52 @@ function applyQuickstart() {
 
 }
 
+/* settings */
+
+/* document.documentElement.style.setProperty('--somevar', 'green');
+--background: #97928e;
+--backgroundDarker: #595855;
+--card: #cdcac3;
+--field: #bab5aa; */
+
+function applyColors() {
+    console.log("background color: " + $("#background").val());
+    document.documentElement.style.setProperty('--background', $("#background").val());
+    document.documentElement.style.setProperty('--background-darker', $("#backgroundDarker").val());
+    document.documentElement.style.setProperty('--card', $("#card").val());
+    document.documentElement.style.setProperty('--field', $("#field").val());
+
+
+    document.documentElement.style.setProperty('--might-dark', ColorLuminance($("#mightColor").val(), -0.2));
+    document.documentElement.style.setProperty('--might-main', $("#mightColor").val());
+    document.documentElement.style.setProperty('--might-light', ColorLuminance($("#mightColor").val(), 0.2));
+
+
+
+
+}
+
+//from https://www.sitepoint.com/javascript-generate-lighter-darker-color/
+function ColorLuminance(hex, lum) {
+
+    // validate hex string
+    hex = String(hex).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+        hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    lum = lum || 0;
+
+    // convert to decimal and change luminosity
+    var rgb = "#", c, i;
+    for (i = 0; i < 3; i++) {
+        c = parseInt(hex.substr(i * 2, 2), 16);
+        c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+        rgb += ("00" + c).substr(c.length);
+    }
+
+    return rgb;
+}
+
 /* saving/loading */
 function saveForm() {
     // localStorage.clear();
@@ -1600,8 +1736,18 @@ function saveForm() {
         // "+ tempBonuses+", perm: "+permBonuses);
         // console.log("temp: 
         // " + JSON.stringify(tempBonuses) + ", perm: " + JSON.stringify(permBonuses));
-
     }
+
+
+    let logItemsList = [];
+    for (const logItem of document.querySelectorAll(".logItem")) {
+        let thisJSON = {}
+        thisJSON.cost = condition.querySelector(".logItemCost").value;
+        thisJSON.source = condition.querySelector(".logItemSource").value;
+        thisJSON.name = condition.querySelector(".logItemName").value;
+        logItemsList.push(thisJSON);
+    }
+    setThisStorage("logItemsList", JSON.stringify(logItemsList));
 }
 
 function getThisStorage(key) {
@@ -1623,7 +1769,9 @@ function loadForm() {
                 }
                 // console.log("setting " + input.id + ".checked to " + getThisStorage(input.id));
                 // console.log(input.id + ".checked = " + input.checked);
-            } else {
+            }/*  else if (input.type === "color") {
+
+            }  */else {
                 // console.log("");
                 if (getThisStorage(input.id) == null) {
                     input.value = -1;
@@ -1696,8 +1844,6 @@ function loadForm() {
         } else {
             addStatBonus("", "", perm);
         }
-
-
     }
     if ($("#race").val() === "noble") {
         $("#noble").parent().css('display', 'inline');
@@ -1710,4 +1856,99 @@ function loadForm() {
         $("#noble").parent().css('display', 'none');
         $("#noble").val("none");
     }
+
+    let logItemsList = JSON.parse(getThisStorage("logItemsList"));
+    if (logItemsList != null) {
+        logItemsList.forEach(item => {
+            addLogItem(item.cost, item.source, item.name);
+        });
+    }
+
+
+    calculateExperience();
+    calculateRolls();
+    calculateStats();
 }
+
+
+
+function download(data, filename, type) {
+    var file = new Blob([data], { type: type });
+    if (window.navigator.msSaveOrOpenBlob) // IE10+
+        window.navigator.msSaveOrOpenBlob(file, filename);
+    else { // Others
+        var a = document.createElement("a"),
+            url = URL.createObjectURL(file);
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }, 0);
+    }
+}
+
+
+function exportSave() {
+    /* amount = localStorage.length;
+    for (let i = 0; i < amount; i++) {
+        const element = localStorage.key(i);   
+    } */
+    /* var a = document.createElement("a");
+    console.log(JSON.stringify(localStorage));
+    var json = JSON.stringify(localStorage),
+        blob = new Blob([json], { type: "octet/stream" }),
+        url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = "exported save";
+    a.click(); */
+    // download()
+    // download(JSON.stringify(localStorage), "MAGRPG save (" + document.getElementById('name').value + ")", ".txt")
+
+    download(localStorage, "Tower of God save (" + document.getElementById('name').value + ")", ".json")
+
+}
+
+
+function copySave() {
+    navigator.clipboard.writeText(JSON.stringify(localStorage))
+}
+
+
+function importSave(fileData) {
+    console.log("importing save");
+    if (document.getElementById('upload').value == null) {
+        console.log("please put a file");
+    } else {
+
+        let newData = JSON.parse(fileData)
+        console.log(newData);
+
+        for (const [key, value] of Object.entries(newData)) {
+            console.log(`${key}: ${value}`);
+            localStorage.setItem(key, value)
+        }
+        loadForm();
+
+    }
+}
+
+function handle_file_select(evt) {
+
+    let fl_file = evt.target.files[0];
+
+    let reader = new FileReader(); // built in API
+    reader.readAsText(fl_file);
+    reader.onload = function () {
+        console.log(reader.result);
+        // importSave(reader.result);
+        document.getElementById('upload_file').innerHTML = reader.result
+    };
+
+
+}
+
+// add a function to call when the <input type=file> status changes, but don't "submit" the form
+document.getElementById('upload').addEventListener('change', handle_file_select, false);

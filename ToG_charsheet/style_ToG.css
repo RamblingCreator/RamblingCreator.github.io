@@ -14,7 +14,7 @@
 * {
     box-sizing: border-box;
     color: black;
-    font-family: sans-serif;
+    font-family: serif;
 }
 
 html {
@@ -39,6 +39,7 @@ h1, h2, h3, h4, h5 {
 
     --hearts-dark: #9921b7;
     --hearts-main: #BA55D3;
+    /* accessible: C976DD */
     --hearts-light: #e684ff;
 
     --wits-dark: #489dd1;
@@ -49,16 +50,28 @@ h1, h2, h3, h4, h5 {
     --resistance-main: #74f174;
     --resistance-light: #b7feb7;
 
-    --background: #97928e;
-    --background-darker: #595855;
-    --card: #cdcac3;
-    --field: #bab5aa;
-
+    --background: #919191;
+    --background-darker: #575757;
+    --card: #c7c7c7;
+    --field: #b3b3b3;
+    --accent: rgb(123, 211, 255);
+    /* 
+    --background
+    --card-background
+    --scroll-background
+ */
     /* media query values */
     --mobile-size: 800px;
     --medium-size: 1200px;
 }
 
+body {
+    background-color: var(--background);
+}
+
+.card {
+    background-color: var(--card);
+}
 
 /* overall layout */
 /* 
@@ -103,7 +116,6 @@ form {
         "rolls rolls rolls conditions conditions"
         "levels levels levels canine canine"; */
 
-    /* background-color: var(--background); */
     display: flex;
     /* flex-wrap: wrap; */
     flex-direction: column;
@@ -565,12 +577,12 @@ table {
 }
 
 table td {
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 table th {
     font-weight: bold;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     /* border: "1"; */
     /* width: 100px; */
     width: min-content;
@@ -583,7 +595,7 @@ tr {
     border-collapse: collapse;
     /* box-shadow: 0 0 10px #00000059; */
 }
-#rollNameHeader, #autoSuccessHeader {
+/* #rollNameHeader, #autoSuccessHeader {
     width: 6em;
 }
 #bonusDiceHeader {
@@ -592,7 +604,6 @@ tr {
 
 #impairedRollHeader, #hinderedRollHeader {
     width: 4em;
-    /* font-size: 0.75em; */
 }
 
 #hinderedRollHeader {
@@ -606,7 +617,7 @@ tr {
 #totalDiceHeader, #baseDiceHeader, #bonusSuccessHeader {
     width: 3em;
 }
-
+ */
 
 #mightRoll, #agilityRoll, #heartsRoll, #witsRoll, #resistanceRoll {
     font-weight: bold;
@@ -644,14 +655,18 @@ tr {
 
 span.overwhelmIcon {
     user-select: none;
-    font-size: 30px;
-    line-height: 30px;
+    font-size: 20px;
+    line-height: 20px;
     text-align: center;
-    color: grey;
-    opacity: 50%;
+    color: white;
+    opacity: 00%;
     margin: 0 auto;
-    display: none;
+    /* text-shadow: 0 0 2px rgb(0, 0, 0); */
+    -webkit-text-stroke: 1px black;
+    /* display: none; */
 }
+
+
 #rolls input {
     overflow: hidden;
     white-space: nowrap;
@@ -662,19 +677,40 @@ span.overwhelmIcon {
     padding: 0;
 }
 
+.rollName {
+    width: min-content;
+    white-space: wrap;
+    border-right: 1px solid black;
+    font-size: 0.9em;
+}
+
+#threatenM .rollName, #threatenW .rollName {
+    font-size: 0.9em;
+}
 
 .bonusDice input, .bonusPercentDice input, .bonusSuccesses input, .impairedRoll input {
     font-size: 16px;
     width: 2em;
+    width: 3ch;
 }
+
+.addEdge {
+    width: min-content;
+}
+/* 
 .totalDice, #totalDiceHeader {
     border-right: 2px solid black;
 }
+ */
+.overwhelm, #overwhelmHeader {
+    border-right: 2px solid black;
+}
+
 
 .hinderedRoll input {
     /* font-size: 2em; */
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.25em;
+    height: 1.25em;
     margin: auto;
 }
 
@@ -711,9 +747,12 @@ Resistance
     /* grid-area: abilities; */
     /* display: flex;
     flex-direction: column; */
-    background-color: var(--background-darker);
+    /* background-color: var(--background-darker); */
     width: 100%;
     /* padding: 0.5em; */
+}
+#newAbility {
+    font-size: 16px;
 }
 
 
@@ -822,14 +861,15 @@ label.hideAbilities {
 
 
 #abilitiesList, #startAbilitiesList {
-    margin: 0 0.5em;
+    /* margin: 0 0.5em; */
     padding-right: 0.25em;
+    padding: 0 0.5em;
     display: flex;
     flex-direction: column;
 
     gap: 8px;
     /* padding: 1em; */
-
+    background-color: var(--background-darker);
 
     overflow-y: scroll;
     overflow-x: hidden;
@@ -951,10 +991,10 @@ label.hideAbilities {
 }
 
 
-/* 
-button {
+
+/* button {
     background-color: var(--accent);
-    border-radius: 0.75em;
+    border-radius: 0.5em;
 
     border: none;
     margin: 0.2em;
@@ -972,7 +1012,8 @@ button {
 } */
 
 button:hover {
-    background-color: var(--accent-darker);
+    /* background-color: var(--accent-darker); */
+    filter: brightness(90%);
 }
 
 /* abilities */
@@ -1014,6 +1055,11 @@ button:hover {
     margin: 0;
     padding: 0;
     line-height: 0.75em;
+    /* border-radius: 0; */
+    /* border-width: 2px;
+    border-style: outset;
+    border-color: buttonborder;
+    border-image: initial; */
 }
 
 .shinsuIcon {
@@ -1060,6 +1106,16 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     opacity: 100%;
 }
 
+@media (max-width:800px) {
+
+    .shinsuHover {
+        display: none;
+    }
+    #abilitiesList {
+        max-height: none;
+        overflow-y: visible;
+    }
+}
 
 
 
@@ -1170,12 +1226,19 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     display: block;
 }
 .abilityOrigin {
-    margin-left: 10em;
     display: inline-block;
     white-space: nowrap;
     width: max-content;
 }
 
+.ability .abilityOrigin {
+    /* margin-left: 10em; */
+}
+
+
+.newAbility .abilityOrigin div {
+    display: inline-block;
+}
 /* popup windows */
 
 #popupMask {
@@ -1275,7 +1338,7 @@ footer {
     padding-bottom: 2em;
     text-align: center;
 
-    background-color: var(--accent);
+    background-color: var(--card);
 
     /* 
     position: absolute; */
@@ -1405,6 +1468,8 @@ select.quickstart {
     color: white;
 }
 
+
+
 /* stat purchase window */
 
 #statPurchaseSection {
@@ -1449,4 +1514,24 @@ select.quickstart {
 }
 .windowBody {
     padding: 1em;
+}
+
+.list {
+    background-color: var(--background-darker);
+}
+
+/* purchase log */
+
+#purchasesList {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 0.5em 0.5em;
+}
+.logItem {
+    background-color: var(--card);
+    padding: 0.1em 0.25em;
+}
+.logItem * {
+    display: inline;
 }

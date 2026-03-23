@@ -1,5 +1,6 @@
 /* 
 ^([^:]*?)\s*:\s*
+^( ){0,}(id: )([^\[]*?)\s*\[\s*
 (.*\n){2} 
 */
 
@@ -165,7 +166,7 @@ var universal_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Reinforcement [Extended]",
-    id: "SHINSU_REINFORCEMENT_[EXTENDED]",
+    id: "SHINSU_REINFORCEMENT_EXTENDED",
     description: "You can use one bead and, for two rounds, act as though your Agility and Might were increased by an amount equal to your Heart. Using this requires an action. The bonus increases those attributes for all purposes, including bonus dice, automatic successes, Edges, and your maximum Injuries and Fatigue. By accepting Stress, you can increase the duration by one round per Stress. You can accept Stress to extend the duration on other rounds, not just the first; doing so does not require an action. Additionally, you can accept one Stress (per round) to instead act as though your Agility and Might were increased by twice your Heart instead. By using one additional bead (but without accepting any additional Stress), you can additionally reinforce one object you're holding to let it function as a weapon. This lasts for up to one round after you let go of it or until the entire effect ends, whichever comes first. While you're reinforcing the object, it has Structure and Toughness equal to half your Heart and acts as an appropriate weapon for all purposes (discuss with your GM what weapon would be appropriate).",
     source: "any",
     type: "universal",
@@ -257,7 +258,7 @@ var universal_abilities = [{
 }]
 var shinsu_abilities = [{
     name: "Shinsu Quality (Lightning)",
-    id: "SHINSU_QUALITY_[LIGHTNING]",
+    id: "SHINSU_QUALITY_LIGHTNING",
     description: "If you deal any amount of Harm to a Lighthouse, Observer, or other electrical device (GM has the final say on what counts), it overloads and stops functioning for the next round.",
     source: "any",
     type: "shinsu",
@@ -285,14 +286,14 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Wind)",
-    id: "SHINSU_QUALITY_[WIND]",
+    id: "SHINSU_QUALITY_WIND",
     description: "You do not need to use a bead to use the Flight ability, and using it doesn't require an action. Flight still uses shinsu. Additionally, you are not Hindered on Brawl or Move rolls while airborne.",
     source: "any",
     type: "shinsu",
     shinsu: true
 }, {
     name: "Whirlwind [Extended]",
-    id: "WHIRLWIND_[EXTENDED]",
+    id: "WHIRLWIND_EXTENDED",
     description: "You can use any number of beads to create a whirling wall of air around you that deflects almost any projectile. Whenever you're being targeted by a ranged attack, you can roll against it. You make this roll with as many dice as twice the number of beads you used. This lasts until the end of your next turn, and requires an action.",
     source: "any",
     type: "shinsu",
@@ -313,7 +314,7 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Ice)",
-    id: "SHINSU_QUALITY_[ICE]",
+    id: "SHINSU_QUALITY_ICE",
     description: "Any of your abilities that would slow enemies instead pin them for the first round and slow them for the rest of the duration.",
     source: "any",
     type: "shinsu",
@@ -341,14 +342,14 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Fire)",
-    id: "SHINSU_QUALITY_[FIRE]",
+    id: "SHINSU_QUALITY_FIRE",
     description: "Whenever you would make an enemy take any number of Injuries, you also give them half that many Unresisted Injuries (rounded down) on their next turn. Calculate based on the post-mitigation Injuries. This does not apply to Injuries dealt by this ability. If you're underwater or in some other fire-resistant environment, this effect is negated (subject to GM interpretation).",
     source: "any",
     type: "shinsu",
     shinsu: true
 }, {
     name: "Inferno [Extended]",
-    id: "INFERNO_[EXTENDED]",
+    id: "INFERNO_EXTENDED",
     description: "You can use any number of beads to create a massive ball of flames, melting or incinerating just about everything nearby. On your first turn while using this ability, you cause all enemies within Short range to take Injuries equal to the number of beads used. On your second turn, the damage increases to be equal to twice the number of beads used. This continues until you're dealing damage equal to your Heart Edge per bead. You have to use your action each turn that you use this. If you already have this ability in use, you can add beads to it without using an action, which increases the damage.",
     source: "any",
     type: "shinsu",
@@ -362,14 +363,14 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Flare [Extended]",
-    id: "FLARE_[EXTENDED]",
+    id: "FLARE_EXTENDED",
     description: "You can use one or more beads to create a light in a location within Close range. That light brightly illuminates the surrounding area out to Close range. If the light covers at least Short range, it is especially bright in closer areas. Everything in the range increments below its illumination range is revealed. All rolls to hide or sneak within that area are Hindered. This has no effect on invisible things. For example, if the light illuminates everything up to Long range, it reveals things up to Medium range. It lasts until dispelled or until you want the bead(s) back. If you have the Magnify ability and double the bead cost, you can overcharge the light, creating a bright flash capable of blinding people inside the area. Anyone inside the light's total area who doesn't intentionally avert their eyes (you are assumed to do so) is Blinded for the next round. The duration of the Blinded effect can't be increased.",
     source: "any",
     type: "shinsu",
     shinsu: true
 }, {
     name: "Shinsu Quality (Rock)",
-    id: "SHINSU_QUALITY_[ROCK]",
+    id: "SHINSU_QUALITY_ROCK",
     description: "Whenever someone makes a contested roll against one of your attributes, increase that attribute's Edge by half (rounded down). If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
@@ -397,7 +398,7 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Water)",
-    id: "SHINSU_QUALITY_[WATER]",
+    id: "SHINSU_QUALITY_WATER",
     description: "As long as you would get at least one automatic success on a roll, you get additional automatic successes on that roll equal to your Tier. If you would not, you instead get bonus dice on that roll equal to your Tier. If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
@@ -411,7 +412,7 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Maelstrom [Extended]",
-    id: "MAELSTROM_[EXTENDED]",
+    id: "MAELSTROM_EXTENDED",
     description: "You can use any number of beads to create a whirling tempest of water around you. This has a radius of Short, and all creatures in the area (except you) take one Injury and Fatigue every round for each bead you use, as well as being Hindered on Move, Think, Finesse, and Throw rolls. This requires your action to start and to maintain, and you take one Stress every round it's active. Reduce the Harm dealt by each target's Resistance Edge.",
     source: "any",
     type: "shinsu",
@@ -425,7 +426,7 @@ var shinsu_abilities = [{
     shinsu: true
 }, {
     name: "Shinsu Quality (Steel)",
-    id: "SHINSU_QUALITY_[STEEL]",
+    id: "SHINSU_QUALITY_STEEL",
     description: "While wielding a weapon, you get +2 dice on Brawl rolls and take 2 fewer Injuries, Fatigue, Confusion, and Stress from all sources (to a minimum of 0). This does apply to Unresisted Harm. This does not apply to Harm you willingly accept as part of an ability. Apply this after calculating total damage from the source; do not apply this to the Damage Base. If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
@@ -454,35 +455,35 @@ var shinsu_abilities = [{
 }]
 var fisherman_abilities = [{
     name: "Weapon Skills (Hook)",
-    id: "WEAPON_SKILLS_[HOOK]",
+    id: "WEAPON_SKILLS_HOOK",
     description: "While wielding a hook, you can use two stunts on a Brawl roll to stab your enemy and hold them in place. While they're held, they are Pinned unless they pull it out (requiring a Brawl roll against your Brawl) or tear it out, which causes them to take Unresisted Injuries equal to your Might Edge. Additionally, while you have them held you gain the following stunts for Brawl: pull your enemy anywhere within your reach; and twist the hook to make them Hindered on Wits and Heart rolls for the next round (using this stunt more than once doesn't increase its effects or duration in any way). While holding an enemy in this way, you can't use stunts to deal additional Harm with the hook.",
     source: "position",
     type: "fisherman",
     shinsu: false
 }, {
     name: "Weapon Skills (Needle)",
-    id: "WEAPON_SKILLS_[NEEDLE]",
+    id: "WEAPON_SKILLS_NEEDLE",
     description: "While wielding a needle, you can accept two Fatigue to make two melee attacks with one action. For every five dice you have to Brawl (not including automatic successes), you can accept another two Fatigue to make another attack in this way. You have to declare that you're doing this (and how many attacks you're making) before you start making attacks.",
     source: "position",
     type: "fisherman",
     shinsu: false
 }, {
     name: "Weapon Skills (Blade)",
-    id: "WEAPON_SKILLS_[BLADE]",
+    id: "WEAPON_SKILLS_BLADE",
     description: "While wielding a blade, you can hit additional enemies with the same roll. Each enemy has to be within your reach. You take two Fatigue for each enemy past the first attacked in this way.",
     source: "position",
     type: "fisherman",
     shinsu: false
 }, {
     name: "Weapon Skills (Bludgeon)",
-    id: "WEAPON_SKILLS_[BLUDGEON]",
+    id: "WEAPON_SKILLS_BLUDGEON",
     description: "While wielding a blunt weapon, you can use Brawl stunts to knock an enemy down or back. Knocking an enemy down requires two stunts; that enemy is considered Slowed until the start of their turn. Knocking an enemy back requires two stunts to move them to Close range, six stunts to move them to Short range, fourteen stunts to move them to Medium range, and thirty stunts to move them to Long range. If they hit a solid barrier, or otherwise end their movement, they take 1d6 Injuries for every stunt used this way (e.g. moving them to Short range means they take 6d6 Injuries).",
     source: "position",
     type: "fisherman",
     shinsu: false
 }, {
     name: "Weapon Skills (Unarmed)",
-    id: "WEAPON_SKILLS_[UNARMED]",
+    id: "WEAPON_SKILLS_UNARMED",
     description: "While you aren't wielding any other weapons (except gauntlets, handwraps, or other minimal weapons), blocking bare-handed does not cause you to take damage. If you block a ranged weapon bare-handed, you can catch any projectiles involved. This negates the effects of Rebound, if applicable. You can choose to attack as though you were dual wielding or using any additional number of weapons.",
     source: "position",
     type: "fisherman",
@@ -708,7 +709,7 @@ var scout_abilities = [{
     shinsu: false
 }, {
     name: "Black Fish [Extended]",
-    id: "BLACK_FISH_[EXTENDED]",
+    id: "BLACK_FISH_EXTENDED",
     description: "You can block the light around you, essentially becoming invisible. This uses your action when you start it, but not to continue using it. This requires using one bead per minute. If you don't have any beads, you can't use this ability. While invisible, sneaking using Finesse does not use an action. Any attempts to detect you are Hindered. Anyone targeting you is treated as Blinded unless they can pinpoint your position (with a successful Think roll), in which case they are Hindered.",
     source: "position",
     type: "scout",
@@ -920,21 +921,21 @@ var wavecontroller_abilities = [{
     shinsu: false
 }, {
     name: "Shinsu Wall [Extended]",
-    id: "SHINSU_WALL_[EXTENDED]",
+    id: "SHINSU_WALL_EXTENDED",
     description: "Use one or more beads to create a wall of energy, enough to block a hallway, that lasts one round. This requires using an action. It's impenetrable and has Structure and Toughness equal to your Heart Edge. You can create it anywhere within Short range. For each bead, you can choose one of the following options: \nThe wall deals a number of Injuries equal to your Heart Edge (minus their Resistance Edge) to anyone adjacent to it at the start of their turn. If you use an additional bead, the range of this effect increases to Close. \nIt slows anyone adjacent to it. If you use an additional bead, the range of this effect increases to Close. \nIncrease the Structure and Toughness by your Heart Edge. This requires one bead for the first use, two beads for the second, three beads for the third, and so on. \nIt lasts up to five rounds, or until you dismiss it (does not take an action, can only be done on your turn). Each additional bead gets another five rounds. \nThe wall's negative effects don't affect those you specify (up to a number of people equal to half your Heart). This includes the ability to pass through it without first breaking it.",
     source: "position",
     type: "wavecontroller",
     shinsu: true
 }, {
     name: "Quick Shield [Extended]",
-    id: "QUICK_SHIELD_[EXTENDED]",
+    id: "QUICK_SHIELD_EXTENDED",
     description: "Use one or more beads to create a shield of shinsu. This can either take the form of a battle-ready shield, which can be used to block attacks (using your Attune instead of your Brawl), or a larger barrier to protect you and others from damaging large-scale attacks. In the first case, the shield does not require use of a hand and lasts until destroyed or dispelled, and has Structure and Toughness equal to half your Heart Edge times the number of beads used. In the second case, this ability requires using at least as many beads as the number of people you're protecting, lasts until the end of your next turn (unless destroyed or dispelled), cannot affect anyone outside Short range, and has Structure and Toughness equal to your Heart Edge times the number of beads used. This does not require an action. If you use this on somebody else's turn, you accept three Stress and Fatigue.",
     source: "position",
     type: "wavecontroller",
     shinsu: true
 }, {
     name: "Quick Weapon [Extended]",
-    id: "QUICK_WEAPON_[EXTENDED]",
+    id: "QUICK_WEAPON_EXTENDED",
     description: "Use one or more beads to create a weapon from shinsu. This can take the form of any weapon, but does not have any special abilities. The weapon grants an amount of bonus dice equal to half the number of beads (rounded down), 10 Structure per bead, and 5 Toughness per bead. If your weapon can be used for both melee and ranged attacks, it only grants half the bonus dice to each type of roll (rounded up). This does not require an action. If you use this on somebody else's turn, you accept three Stress and Fatigue.",
     source: "position",
     type: "wavecontroller",
@@ -948,7 +949,7 @@ var wavecontroller_abilities = [{
     shinsu: true
 }, {
     name: "Reverse Flow Control [Extended]",
-    id: "REVERSE_FLOW_CONTROL_[EXTENDED]",
+    id: "REVERSE_FLOW_CONTROL_EXTENDED",
     description: "Use one bead (requiring an Attune roll against the target's Resistance) to paralyze an enemy within Close range for one round. You can target Observers or Lighthouses using this; instead of rolling against your target's Resistance, you roll against their effective Agility (determined by their controller's Agility or Wits, respectively). If you successfully hit an Observer or Lighthouse, it's inoperable for one round and cannot move or have any abilities used through it. This uses your action. You can use stunts to extend the duration, at two stunts per round. You can use additional beads to extend the duration as well, at two beads per round. You cannot add beads afterwards.",
     source: "position",
     type: "wavecontroller",

@@ -1162,7 +1162,7 @@ input:checked+.supernaturalIcon {
     background-color: var(--card);
     margin-bottom: 0.2em;
     /* padding: 0.1em; */
-    padding-top: 0.3em;
+    padding-top: 0.3em; 
 }
 
 #skills {
