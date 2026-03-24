@@ -15,14 +15,15 @@
   <script src="https://code.jquery.com/ui/1.14.2/jquery-ui.js" integrity="sha256-zKbi8I2J5A9/AtXEXqfqZN23Mt1wpVcyEDYCF/PSYKw=" crossorigin="anonymous"></script>
   <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
   <script src="ToG_abilities.js"></script>
-
-
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> -->
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> -->
 </head>
 
 <body>
+
   <main>
     <form>
-
       <div id="basicInfo">
 
         <label for="name" class="basicInfo">name
@@ -90,20 +91,19 @@
           <input class="age save" id="age">
         </label> -->
       </div>
-      <div id="leftSide">
+      <!-- <div id="leftSide"> -->
         <div id="stats" class="card">
           <!--  Might
           Agility
           Hearts
           Wits
           Resistance -->
-          <div class="statLabel might" id="might">might
+          <div class="statLabel might" id="might"><span class="statTitle">might</span>
             <div class="statFrame">
               <div class="statParts" id="mightParts">
-                <div class="baseStat statBox noArrows">&nbsp;
-                  <input type="number" class="baseStat save" id="mightBase" value="1" disabled>
+                <div class="baseStat statBox noArrows"><!-- &nbsp; -->
+                  <input type="number" class="baseStat save noArrows" id="mightBase" value="1" disabled>
                 </div>
-
 
                 <div class="permBonuses statBox">
                   <label for="mightPermBonusList" id="mightPermBonus" class="bonusToggler" tabindex="0">
@@ -132,28 +132,29 @@
               </div>
 
               <div class="currentStat statBox">
-                <input type="number" class="currentStat save" id="currentMight" value="1" disabled>
+                <input type="number" class="currentStat save noArrows" id="currentMight" value="1" disabled>
+                <span class="fieldTitle">total</span>
               </div>
 
               <div class="statEffects">
-                <div class="edge statBox noArrows">
-                  <input type="number" class="edge" id="mightEdge" value="1" disabled>
-                  <span class="fieldTitle">edge</span>
+                <div class="edge statBox noArrows"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="edge" data-bs-offset="0, -1" data-bs-custom-class="edge">
+                  <input type="number" class="edge noArrows" id="mightEdge" value="1" disabled>
+                  <!-- <span class="fieldTitle">edge</span> -->
                 </div>
-                <div class="harm statBox noArrows">
+                <div class="harm statBox noArrows"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="injuries" data-bs-offset="0, -1" data-bs-custom-class="harm">
                   <input type="number" class="harm save noArrows" id="mightHarm" value="0">
-                  <span class="fieldTitle">injuries</span>
+                  <!-- <span class="fieldTitle">injuries</span> -->
                 </div>
               </div>
             </div>
 
           </div>
 
-          <div class="statLabel agility" id="agility">agility
+          <div class="statLabel agility" id="agility"><span class="statTitle">agility</span>
             <div class="statFrame">
               <div class="statParts" id="agilityParts">
-                <div class="baseStat statBox noArrows">&nbsp;
-                  <input type="number" class="baseStat save" id="agilityBase" value="1" disabled>
+                <div class="baseStat statBox noArrows"><!-- &nbsp; -->
+                  <input type="number" class="baseStat save noArrows" id="agilityBase" value="1" disabled>
                 </div>
 
 
@@ -184,18 +185,18 @@
               </div>
 
               <div class="currentStat statBox">
-                <input type="number" class="currentStat save" id="currentAgility" value="1" disabled>
+                <input type="number" class="currentStat save noArrows" id="currentAgility" value="1" disabled>
                 <span class="fieldTitle">total</span>
               </div>
 
               <div class="statEffects">
-                <div class="edge statBox noArrows">
-                  <input type="number" class="edge" id="agilityEdge" value="1" disabled>
-                  <span class="fieldTitle">edge</span>
+                <div class="edge statBox noArrows"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="edge" data-bs-offset="0, -1" data-bs-custom-class="edge">
+                  <input type="number" class="edge noArrows" id="agilityEdge" value="1" disabled>
+                  <!-- <span class="fieldTitle">edge</span> -->
                 </div>
-                <div class="harm statBox noArrows">
+                <div class="harm statBox noArrows"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="fatigue" data-bs-offset="0, -1" data-bs-custom-class="harm">
                   <input type="number" class="harm save noArrows" id="agilityHarm" value="0">
-                  <span class="fieldTitle">fatigue</span>
+                  <!-- <span class="fieldTitle">fatigue</span> -->
                 </div>
               </div>
 
@@ -203,11 +204,11 @@
             </div>
           </div>
 
-          <div class="statLabel hearts" id="hearts">hearts
+          <div class="statLabel hearts" id="hearts"><span class="statTitle">hearts</span>
             <div class="statFrame">
               <div class="statParts" id="heartsParts">
-                <div class="baseStat statBox noArrows">&nbsp;
-                  <input type="number" class="baseStat save" id="heartsBase" value="1" disabled>
+                <div class="baseStat statBox noArrows"><!-- &nbsp; -->
+                  <input type="number" class="baseStat save noArrows" id="heartsBase" value="1" disabled>
                 </div>
 
 
@@ -238,28 +239,29 @@
               </div>
 
               <div class="currentStat statBox">
-                <input type="number" class="currentStat save" id="currentHearts" value="1" disabled>
+                <input type="number" class="currentStat save noArrows" id="currentHearts" value="1" disabled>
+                <span class="fieldTitle">total</span>
               </div>
 
               <div class="statEffects">
-                <div class="edge statBox noArrows">
-                  <input type="number" class="edge" id="heartsEdge" value="1" disabled>
-                  <span class="fieldTitle">edge</span>
+                <div class="edge statBox noArrows"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="edge" data-bs-offset="0, -1" data-bs-custom-class="edge">
+                  <input type="number" class="edge noArrows" id="heartsEdge" value="1" disabled>
+                  <!-- <span class="fieldTitle">edge</span> -->
                 </div>
-                <div class="harm statBox noArrows">
+                <div class="harm statBox noArrows" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="stress" data-bs-offset="0, -1" data-bs-custom-class="harm">
                   <input type="number" class="harm save noArrows" id="heartsHarm" value="0">
-                  <span class="fieldTitle">stress</span>
+                  <!-- <span class="fieldTitle">stress</span> -->
                 </div>
               </div>
             </div>
 
           </div>
 
-          <div class="statLabel wits" id="wits">wits
+          <div class="statLabel wits" id="wits"><span class="statTitle">wits</span>
             <div class="statFrame">
               <div class="statParts" id="witsParts">
-                <div class="baseStat statBox noArrows">&nbsp;
-                  <input type="number" class="baseStat save" id="witsBase" value="1" disabled>
+                <div class="baseStat statBox noArrows"><!-- &nbsp; -->
+                  <input type="number" class="baseStat save noArrows" id="witsBase" value="1" disabled>
                 </div>
 
 
@@ -290,28 +292,29 @@
               </div>
 
               <div class="currentStat statBox">
-                <input type="number" class="currentStat save" id="currentWits" value="1" disabled>
+                <input type="number" class="currentStat save noArrows" id="currentWits" value="1" disabled>
+                <span class="fieldTitle">total</span>
               </div>
 
               <div class="statEffects">
-                <div class="edge statBox noArrows">
-                  <input type="number" class="edge" id="witsEdge" value="1" disabled>
-                  <span class="fieldTitle">edge</span>
+                <div class="edge statBox noArrows"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="edge" data-bs-offset="0, -1" data-bs-custom-class="edge">
+                  <input type="number" class="edge noArrows" id="witsEdge" value="1" disabled>
+                  <!-- <span class="fieldTitle">edge</span> -->
                 </div>
-                <div class="harm statBox noArrows">
+                <div class="harm statBox noArrows"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="confusion" data-bs-offset="0, -1" data-bs-custom-class="harm">
                   <input type="number" class="harm save noArrows" id="witsHarm" value="0">
-                  <span class="fieldTitle">confusion</span>
+                  <!-- <span class="fieldTitle">confusion</span> -->
                 </div>
               </div>
             </div>
 
           </div>
 
-          <div class="statLabel resistance" id="resistance">resistance
+          <div class="statLabel resistance" id="resistance"><span class="statTitle">resistance</span>
             <div class="statFrame">
               <div class="statParts" id="resistanceParts">
-                <div class="baseStat statBox noArrows">&nbsp;
-                  <input type="number" class="baseStat save" id="resistanceBase" value="1" disabled>
+                <div class="baseStat statBox noArrows"><!-- &nbsp; -->
+                  <input type="number" class="baseStat save noArrows" id="resistanceBase" value="1" disabled>
                 </div>
 
 
@@ -342,17 +345,18 @@
               </div>
 
               <div class="currentStat statBox">
-                <input type="number" class="currentStat save" id="currentResistance" value="1" disabled>
+                <input type="number" class="currentStat save noArrows" id="currentResistance" value="1" disabled>
+                <span class="fieldTitle">total</span>
               </div>
 
               <div class="statEffects">
-                <div class="edge statBox noArrows">
-                  <input type="number" class="edge" id="resistanceEdge" value="1" disabled>
-                  <span class="fieldTitle">edge</span>
+                <div class="edge statBox noArrows"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="edge" data-bs-offset="0, -1" data-bs-custom-class="edge">
+                  <input type="number" class="edge noArrows" id="resistanceEdge" value="1" disabled>
+                  <!-- <span class="fieldTitle">edge</span> -->
                 </div>
-                <div class="harm statBox noArrows">
+                <div class="harm statBox noArrows"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="harm" data-bs-offset="0, -1" data-bs-custom-class="harm">
                   <input type="number" class="harm save noArrows" id="resistanceHarm" value="0">
-                  <span class="fieldTitle">harm</span>
+                  <!-- <span class="fieldTitle">harm</span> -->
                 </div>
               </div>
             </div>
@@ -367,220 +371,242 @@
           <table>
             <thead>
               <tr>
-                <th id="rollNameHeader"></th>
-                <th id="overwhelmHeader"><!-- Over<br>whelm --></th>
-                <th id="baseDiceHeader"><!-- Base Dice --></th>
-                <th id="hinderedRollHeader"><!-- Hinder --></th>
-                <th id="impairedRollHeader"><!-- Impair --></th>
-                <th id="bonusDiceHeader"><!-- Bonus Dice --></th>
-                <th id="bonusPercentDiceHeader"><!-- % Bonus Dice --></th>
-                <th id="totalDiceHeader"><!-- Total Dice --></th>
-                <th id="addEdgeHeader"><!-- +edge ?--></th>
-                <th id="bonusSuccessHeader"><!-- Bonus Successes --></th>
-                <th id="autoSuccessHeader"><!-- Total Auto Successes --></th>
+                <th id="rollNameHeader">
+                  <span class="columnTitle">Roll name</span>
+                </th>
+                <th id="hinderedRollHeader"><!-- Hinder -->
+                  <span class="columnTitle"> Hinder </span>
+                </th>
+                <th id="baseDiceHeader"><!-- Base Dice -->
+                  <span class="columnTitle"> Base Dice </span>
+                </th>
+                <th id="impairedRollHeader"><!-- Impair -->
+                  <span class="columnTitle"> Impair </span>
+                </th>
+                <th id="bonusDiceHeader"><!-- Bonus Dice -->
+                  <span class="columnTitle"> Bonus Dice </span>
+                </th>
+                <!-- <th id="bonusPercentDiceHeader">
+                  <span class="columnTitle"> Bonus Dice </span>
+                </th> -->
+                <th id="totalDiceHeader"><!-- Total Dice -->
+                  <span class="columnTitle"> Total Dice </span>
+                </th>
+                <th id="overwhelmHeader"><!-- Over<br>whelm -->
+                  <span class="columnTitle"> Overwhelm </span>
+                </th>
+                <th id="addEdgeHeader"><!-- +edge ?-->
+                  <span class="columnTitle"> edge </span>
+                </th>
+                <th id="bonusSuccessesHeader"><!-- Bonus Successes -->
+                  <span class="columnTitle"> Bonus Successes </span>
+                </th>
+                <th id="autoSuccessesHeader"><!-- Total Auto Successes -->
+                  <span class="columnTitle"> Auto Successes </span>
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr id="mightRoll">
                 <td class="rollName">Might</td>
-                <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
+                <td class="hinderedRoll"><input type="checkbox" switch="true" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="brawl">
                 <td class="rollName">Brawl</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="threatenM">
                 <td class="rollName">Threaten<br>(Might)</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="agilityRoll">
                 <td class="rollName">Agility</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="finesse">
                 <td class="rollName">Finesse</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="throw">
                 <td class="rollName">Throw</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="move">
                 <td class="rollName">Move</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
-                <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
+                <td class="overwhelm"><span class="overwhelmIcon" >★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="heartsRoll">
                 <td class="rollName">Hearts</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="reachOut">
                 <td class="rollName">Reach out</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="attune">
                 <td class="rollName">Attune</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="witsRoll">
                 <td class="rollName">Wits</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="manipulate">
                 <td class="rollName">Manipulate</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="threatenW">
                 <td class="rollName">Threaten<br>(Wits)</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="think">
                 <td class="rollName">Think</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
               <tr id="resistanceRoll">
                 <td class="rollName">Resistance</td>
                 <td class="hinderedRoll"><input type="checkbox" class="hinderedCheckbox" /></td>
                 <td class="baseDice">0</td>
-                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0">+</td>
-                <td class="bonusDice"><input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
-                <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td>
+                <td class="impairedRoll">-<input class="impairedRoll noArrows" type="number" value="0"></td>
+                <td class="bonusDice">+<input class="bonusDice noArrows" type="number" value="0">+<span class="bonusDice">0</span></td>
+                <!-- <td class="bonusPercentDice">+<input class="bonusPercentDice noArrows" type="number" value="0">%</td> -->
                 <td class="totalDice">4</td>
                 <td class="overwhelm"><span class="overwhelmIcon">★</span></td>
                 <td class="addEdge">0</td>
-                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0">=</td>
+                <td class="bonusSuccesses">+<input class="bonusSuccesses noArrows" type="number" value="0"></td>
                 <td class="autoSuccesses">6</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-      </div>
+      <!-- </div> -->
 
 
       <div id="conditions" class="card">
@@ -593,7 +619,8 @@
           <button type="button" class="addButton" id="newCondition">Add new condition</button>
 
           <label for="traumas" class="leveling">Traumas:
-            <textarea class="save" id="traumas"></textarea> <!-- rows="3" cols="70" -->
+            <!-- <textarea class="save" id="traumas"></textarea> rows="3" cols="70" -->
+            <input class="save" id="traumas"> <!-- rows="3" cols="70" -->
           </label>
           <label for="maxTraumas" class="leveling">Max traumas:
             <!-- <input class="save noArrows" type="number" id="maxTraumas"> -->
@@ -608,65 +635,68 @@
 
       </div>
 
-
-      <div id="abilities" class="card">
-        <div id="abilitiesHeader">
-          <h1>Special abilities</h1>
-          <label class="hideAbilities">
-            <input type="checkbox" id="showHiddenAbilities" class="showAbilities" name="btnToggle" />
-            <!-- Reveal hidden abilities -->
-
-            <span id="abilitiesHiddenText">Un-reveal hidden abilities</span>
-            <span id="abilitiesShownText">Reveal hidden abilities</span>
-
-            <span id="abilitiesHiddenIcon">👁</span>
-            <!-- <span id="abilitiesHiddenIcon">✕</span>
-            <span id="abilitiesShownIcon">👁</span> -->
-            <!-- <span id="abilitiesHiddenHover">Show/Hide hidden abilities</span> -->
-          </label>
-        </div>
-        <div id="abilitiesList" class="reorderList">
-          <!-- <div class="newAbility">
-          <div class="abilityHeader">
-            <div class="abilityNameBlock">
-                <div class="abilityName">${Json.name}</div>
-            </div>
-            <div class="abilityOrigin">
-                <div class="abilitySource">${Json.source}</div>:
-                <div class="abilityType">${Json.type}</div>
-            </div>
+<div id="abilitiesSection">
+  
+        <div id="abilities" class="card">
+          <div id="abilitiesHeader">
+            <h1>Special abilities</h1>
+            <a href="#leveling" id="abilitiesJump">↓</a>
+            <label class="hideAbilities">
+              <input type="checkbox" id="showHiddenAbilities" class="showAbilities" name="btnToggle" />
+              <!-- Reveal hidden abilities -->
+  
+              <span id="abilitiesHiddenText">Unreveal hidden abilities</span>
+              <span id="abilitiesShownText">Reveal hidden abilities</span>
+  
+              <span id="abilitiesHiddenIcon">👁</span>
+              <!-- <span id="abilitiesHiddenIcon">✕</span>
+              <span id="abilitiesShownIcon">👁</span> 
+               <span id="abilitiesHiddenHover">Show/Hide hidden abilities</span> -->
+            </label>
           </div>
-          <p class="abilityDescription" rows="1" cols="10">${newDesc}</p>
-          <button type="button" class="addAbility" name="${Json.type}" value="${Json.id}">Add</button>
-        </div> -->
+          <div id="abilitiesList" class="reorderList">
+            <!-- <div class="newAbility">
+            <div class="abilityHeader">
+              <div class="abilityNameBlock">
+                  <div class="abilityName">${Json.name}</div>
+              </div>
+              <div class="abilityOrigin">
+                  <div class="abilitySource">${Json.source}</div>:
+                  <div class="abilityType">${Json.type}</div>
+              </div>
+            </div>
+            <p class="abilityDescription" rows="1" cols="10">${newDesc}</p>
+            <button type="button" class="addAbility" name="${Json.type}" value="${Json.id}">Add</button>
+          </div> -->
+          </div>
+          <button type="button" class="addButton" id="newAbility">New Ability</button>
+  
         </div>
-        <button type="button" class="addButton" id="newAbility">New Ability</button>
-
-      </div>
-
-      <div id="canineTransformations" class="card">
-        <h1>Canine Transformation:</h1>
-        <div id="canineAbilities">
-
+        <br>
+        <div id="canineTransformations" class="card">
+          <h1>Canine Transformation:</h1>
+          <div id="canineAbilities">
+  
+          </div>
+  
+          <div>
+            <button type="button" id="lowerCanineLevel" disabled>◁</button>
+            <input type="number" id="canineLevel" class="noArrows" value="0">/
+            <input type="number" id="canineMaxLevel" class="noArrows" value="0">
+            <button type="button" id="raiseCanineLevel" disabled>▷</button>
+            <button type="button" id="buyCanineStage">Purchase next stage</button>
+          </div>
+          <label for="canineMaxWeapon" class="canine">Max weapon stage:
+            <input type="number" id="canineMaxWeapon" class="noArrows" value="0" disabled></label>
+          <label for="canineMaxMobility" class="canine">Max mobility stage:
+            <input type="number" id="canineMaxMobility" class="noArrows" value="0" disabled></label>
+  
+  
+          <!-- <button type="button" class="addButton" id="newAbility">New Ability</button> -->
+  
         </div>
-
-        <div>
-          <button type="button" id="lowerCanineLevel" disabled>◁</button>
-          <input type="number" id="canineLevel" class="noArrows" value="0">/
-          <input type="number" id="canineMaxLevel" class="noArrows" value="0">
-          <button type="button" id="raiseCanineLevel" disabled>▷</button>
-          <button type="button" id="buyCanineStage">Purchase next stage</button>
-        </div>
-        <label for="canineMaxWeapon" class="canine">Max weapon stage:
-          <input type="number" id="canineMaxWeapon" class="noArrows" value="0" disabled></label>
-        <label for="canineMaxMobility" class="canine">Max mobility stage:
-          <input type="number" id="canineMaxMobility" class="noArrows" value="0" disabled></label>
-
-
-        <!-- <button type="button" class="addButton" id="newAbility">New Ability</button> -->
-
-      </div>
-
+  
+</div>
       <div id="leveling" class="card">
         <h3>Leveling</h3>
         <div id="levelBody">
@@ -678,7 +708,7 @@
           <div id="levelNumbers">
             <label for="abilitiesBought" class="leveling">Abilities purchased:
               <input class="save noArrows" type="number" id="abilitiesBought">
-            </label><br>
+            </label>
             <label for="currentExperience" class="leveling">Current experience:
               <input class="save noArrows" type="number" id="currentExperience">
             </label>
@@ -689,7 +719,7 @@
               <input class="save noArrows" type="number" id="tier">
             </label>
             <button type="button" id="buyStats">Purchase Stats</button>
-            <button type="button" id="showLog">Show purchase log</button>
+            <button type="button" id="showLog">Show history</button>
 
           </div>
 
@@ -699,7 +729,11 @@
 
     </form>
   </main>
-  <footer> The rules for this game can be found <a href="https://docs.google.com/document/d/17msuvBgLhN51QafDzGzPxjpPlAjxIEo3LyAxf8tdPJ4/">here</a> <br> Character sheet created by Ruby Leroux </footer>
+  <footer>
+    <button type="button" id="openSettings">Settings</button>
+    <br>
+    The rules for this game can be found <a href="https://docs.google.com/document/d/17msuvBgLhN51QafDzGzPxjpPlAjxIEo3LyAxf8tdPJ4/">here</a> <br> Character sheet created by Ruby Leroux
+  </footer>
 
   <div id="confirmWindow" class="popup">
     <div id="confirmMessage">
@@ -717,7 +751,7 @@
     <div class="windowTitle">
       <h1>Add New Ability:</h1>
       <button type="button" id="addCustomAbility">Add custom ability (cost: ?)</button>
-      <button class="closeSelector">X</button>
+      <button class="closeSelector">✕</button>
     </div>
     <div class="abilitySelectors">
       <div id="sourceSelection">
@@ -763,7 +797,7 @@
     <div class="windowTitle">
       <h1>Purchase new Transformation stage:</h1>
       <!-- <button id="addCustomAbility">Add custom ability (cost: ?)</button> -->
-      <button class="closeSelector">X</button>
+      <button class="closeSelector">✕</button>
     </div>
     <!-- <span id="canineStageDescription">description</span> -->
 
@@ -791,7 +825,7 @@
   <div id="quickstartWindow" class="popup">
     <div class="windowTitle">
       <h2>Quickstart new character</h2>
-      <button class="closeSelector">X</button>
+      <button class="closeSelector">✕</button>
     </div>
     <div id="quickstartDescription">Enter information below to autofill fields with the starting values for this character:</div>
     <div id="quickstartInfo">
@@ -870,7 +904,7 @@
   <div id="statPurchaseWindow" class="popup">
     <div class="windowTitle">
       <h2>Purchase Stat Increases</h2>
-      <button class="closeSelector">X</button>
+      <button class="closeSelector">✕</button>
     </div>
     <div class="windowBody">
 
@@ -922,7 +956,7 @@
     <div class="windowTitle">
       <h1>Add New Condition:</h1>
       <button type="button" id="addCustomCondition">Add custom condition</button>
-      <button class="closeSelector">X</button>
+      <button class="closeSelector">✕</button>
     </div>
 
     <div id="allConditions">
@@ -933,7 +967,7 @@
   <div id="purchaseLog" class="popup">
     <div class="windowTitle">
       <h1>Purchase Log:</h1>
-      <button class="closeSelector">X</button>
+      <button class="closeSelector">✕</button>
     </div>
     <div id="purchasesList" class="list">
       <!-- <div class="logItem">
@@ -944,59 +978,71 @@
     </div>
   </div>
 
-  <div id="settingsWindow"><!-- class="popup" -->
-    <h4> customize colors:</h4>
-    <input type="color" class="save" id="background" name="background" value="#919191" />
-    <label for="background">background</label>
-    <input type="color" class="save" id="backgroundDarker" name="backgroundDarker" value="#575757" />
-    <label for="backgroundDarker">backgroundDarker</label>
-    <input type="color" class="save" id="card" name="card" value="#c7c7c7" />
-    <label for="card">card</label>
-    <input type="color" class="save" id="field" name="field" value="#b3b3b3" />
-    <label for="field">field</label>
-    <br>
-    <input type="color" class="save" id="mightColor" name="mightColor" value="#FF6347" />
-    <label for="mightColor">might color</label>
-    <input type="color" class="save" id="agilityColor" name="agilityColor" value="#ffe23d" />
-    <label for="agilityColor">agility color</label>
-    <input type="color" class="save" id="heartsColor" name="heartsColor" value="#BA55D3" />
-    <label for="heartsColor">hearts color</label>
-    <input type="color" class="save" id="witsColor" name="witsColor" value="#87CEFA" />
-    <label for="witsColor">wits color</label>
-    <input type="color" class="save" id="resistanceColor" name="resistanceColor" value="#74f174" />
-    <label for="resistanceColor">resistance color</label>
-
-
-
-
-
-
-
-
-    <button type="button" id="applyColorChange">Apply</button>
-
-    <h4>manage character:</h4>
-    <button type="button" id="save">SAVE</button>
-    <h4>export save</h4>
-    <div id="exportButtons">
-      <button type="button" id="export">Download Data</button>
-      <button type="button" id="copy">Copy Data</button>
+  <div id="settingsWindow" class="popup">
+    <div class="windowTitle">
+      <h1>Settings</h1>
+      <button class="closeSelector">✕</button>
     </div>
-    <h4>import save</h4>
-    <div id="importFields">
-      <div>paste here or upload file:</div>
-      <input class="form-control" id="upload_file"></input>
-      <input id="upload" type="file" accept=".txt" name="files" size=40>
+    <div class="windowBody">
+      <h4> customize colors:</h4>
+      <div>
+        <input type="color" class="save" id="background" name="background" value="#919191" />
+        <label for="background">background</label>
+        <input type="color" class="save" id="backgroundDarker" name="backgroundDarker" value="#575757" />
+        <label for="backgroundDarker">backgroundDarker</label>
+        <input type="color" class="save" id="card" name="card" value="#c7c7c7" />
+        <label for="card">card</label>
+        <input type="color" class="save" id="field" name="field" value="#b3b3b3" />
+        <label for="field">field</label>
+      </div>
+      <br>
+      <div>
+        <input type="color" class="save" id="mightColor" name="mightColor" value="#FF6347" />
+        <label for="mightColor">might color</label>
+        <input type="color" class="save" id="agilityColor" name="agilityColor" value="#ffe23d" />
+        <label for="agilityColor">agility color</label>
+        <input type="color" class="save" id="heartsColor" name="heartsColor" value="#BA55D3" />
+        <label for="heartsColor">hearts color</label>
+        <input type="color" class="save" id="witsColor" name="witsColor" value="#87CEFA" />
+        <label for="witsColor">wits color</label>
+        <input type="color" class="save" id="resistanceColor" name="resistanceColor" value="#74f174" />
+        <label for="resistanceColor">resistance color</label>
+      </div>
+
+
+
+
+
+
+
+
+      <button type="button" id="applyColorChange">Apply</button>
+
+      <h4>manage character:</h4>
+      <button type="button" id="save">SAVE</button>
+      <h4>export save</h4>
+      <div id="exportButtons">
+        <button type="button" id="export">Download Data</button>
+        <button type="button" id="copy">Copy Data</button>
+      </div>
+      <h4>import save</h4>
+      <div id="importFields">
+        <div>paste here or upload file:</div>
+        <input class="form-control" id="upload_file"></input>
+        <input id="upload" type="file" accept=".txt" name="files" size=40>
+      </div>
+      <button type="button" id="calculatestats">Calculate stats</button>
+      <button type="button" id="calculateexp">Calculate exp</button>
+      <button type="button" id="calculaterolls">Calculate rolls</button>
+      <button type="button" id="quickstart">New Character</button>
     </div>
-    <button type="button" id="calculatestats">Calculate stats</button>
-    <button type="button" id="calculateexp">Calculate exp</button>
-    <button type="button" id="calculaterolls">Calculate rolls</button>
-    <button type="button" id="quickstart">New Character</button>
   </div>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
-
 
 
 

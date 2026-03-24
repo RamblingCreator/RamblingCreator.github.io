@@ -262,83 +262,95 @@ var shinsu_abilities = [{
     description: "If you deal any amount of Harm to a Lighthouse, Observer, or other electrical device (GM has the final say on what counts), it overloads and stops functioning for the next round.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "lightning"
 }, {
     name: "Lightning Strike",
     id: "LIGHTNING_STRIKE",
     description: "You can use two beads and accept Stress and Confusion equal to your Heart Edge and Wits Edge, respectively, to throw a spear made of lightning. You don't need a physical spear to make this attack. You can't use this attack with the abilities Called Shot, Rapid Shot, Impale, Critical Shot, or Disabling Shot. You can't use stunts with this attack except to deal additional Harm. All Harm caused by this attack is Unresisted. Attempts to dodge this attack are Hindered.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "lightning"
 }, {
     name: "Chain Lightning",
     id: "CHAIN_LIGHTNING",
     description: "You can use one or more beads to target a point within Short range; a number of enemies within Close range less than or equal to twice the number of beads used take Injuries equal to half your Heart minus half their Resistance.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "lightning"
 }, {
     name: "Bolt Rider",
     id: "BOLT_RIDER",
     description: "You can use a bead and take two Stress and Fatigue to move to any location you could reach in a straight line without hitting any solid objects. This uses either your movement or your action. You cannot use this more than once per round. Any attempts to sneak while using this are Hindered.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "lightning"
 }, {
     name: "Shinsu Quality (Wind)",
     id: "SHINSU_QUALITY_WIND",
     description: "You do not need to use a bead to use the Flight ability, and using it doesn't require an action. Flight still uses shinsu. Additionally, you are not Hindered on Brawl or Move rolls while airborne.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "wind"
 }, {
     name: "Whirlwind [Extended]",
     id: "WHIRLWIND_EXTENDED",
     description: "You can use any number of beads to create a whirling wall of air around you that deflects almost any projectile. Whenever you're being targeted by a ranged attack, you can roll against it. You make this roll with as many dice as twice the number of beads you used. This lasts until the end of your next turn, and requires an action.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "wind"
 }, {
     name: "Gust",
     id: "GUST",
     description: "You can use any number of beads to create a gust of wind. The wind is a line as wide as you that extends until it hits a large, solid object (to a maximum range of Short). Creatures that are hit by the gust take one Injury and one Fatigue for every three beads you use (reduced by their Resistance Edge, minimum one), and are Impaired by a number equal to the number of beads you use on all rolls for the next round.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "wind"
 }, {
     name: "Still and Stir the Air",
     id: "STILL_AND_STIR_THE_AIR",
     description: "You can use a bead to manipulate the air currents around you within Short range. Depending on what you wish, you can amplify sounds and scents, or instead negate them.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "wind"
 }, {
     name: "Shinsu Quality (Ice)",
     id: "SHINSU_QUALITY_ICE",
     description: "Any of your abilities that would slow enemies instead pin them for the first round and slow them for the rest of the duration.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "ice"
 }, {
     name: "Ice Rink",
     id: "ICE_RINK",
     description: "You can use any number of beads to create a circular ice rink on the ground around you in Short range. It lasts for one round. While touching the ground, anyone who does not have the ice shinsu quality is Impaired on Move and Brawl rolls by a number equal to the number of beads you used and takes Fatigue equal to the number of beads you used minus their Resistance Edge at the start of each of their turns. This takes your action.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "ice"
 }, {
     name: "Polar Midnight",
     id: "POLAR_MIDNIGHT",
     description: "Cool the area within Close range. This takes an action. All water freezes, everyone who isn't you takes three times your Heart Edge in Fatigue (reduced by their Resistance Edge), and all metallic objects become too cold to safely touch without protection. Anyone holding one takes Unresisted Injuries equal to three times your Heart Edge unless they drop the object.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "ice"
 }, {
     name: "Frozen Grapeshot",
     id: "FROZEN_GRAPESHOT",
     description: "You can use an action and a bead to fire off a blast of razor-sharp shards of ice. Enemies in a cone within Close range take Injuries and Fatigue equal to twice your Heart Edge. Creatures in the area can attempt to dodge this, rolling against your Attune (if more than one creature is dodging, roll Attune once and compare that to all dodge rolls). If they successfully dodge, they instead take Injuries and Fatigue equal to your Heart Edge. Regardless, they reduce both types of incoming Harm by their Resistance Edge (minimum 1).",
     source: "any",
     type: "shinsu",
+    quality: "ice",
     shinsu: true
 }, {
     name: "Shinsu Quality (Fire)",
@@ -346,112 +358,128 @@ var shinsu_abilities = [{
     description: "Whenever you would make an enemy take any number of Injuries, you also give them half that many Unresisted Injuries (rounded down) on their next turn. Calculate based on the post-mitigation Injuries. This does not apply to Injuries dealt by this ability. If you're underwater or in some other fire-resistant environment, this effect is negated (subject to GM interpretation).",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "fire"
 }, {
     name: "Inferno [Extended]",
     id: "INFERNO_EXTENDED",
     description: "You can use any number of beads to create a massive ball of flames, melting or incinerating just about everything nearby. On your first turn while using this ability, you cause all enemies within Short range to take Injuries equal to the number of beads used. On your second turn, the damage increases to be equal to twice the number of beads used. This continues until you're dealing damage equal to your Heart Edge per bead. You have to use your action each turn that you use this. If you already have this ability in use, you can add beads to it without using an action, which increases the damage.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "fire"
 }, {
     name: "Fireball",
     id: "FIREBALL",
     description: "You can use any number of beads to create a small ball of fire that flies towards an area and explodes. It travels in a straight line and explodes when it hits any solid barrier or when it reaches its maximum range. Its maximum range is Medium. When it explodes, it deals two Injuries per bead to all creatures within Close range of it. The creatures can attempt to dodge this, rolling against your Attune (if more than one creature is dodging, roll Attune once and compare that to all dodge rolls). If they successfully dodge, they instead take one Injury per bead. The damage in both cases is reduced by their Resistance Edge (minimum one). This takes your action.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "fire"
 }, {
     name: "Flare [Extended]",
     id: "FLARE_EXTENDED",
     description: "You can use one or more beads to create a light in a location within Close range. That light brightly illuminates the surrounding area out to Close range. If the light covers at least Short range, it is especially bright in closer areas. Everything in the range increments below its illumination range is revealed. All rolls to hide or sneak within that area are Hindered. This has no effect on invisible things. For example, if the light illuminates everything up to Long range, it reveals things up to Medium range. It lasts until dispelled or until you want the bead(s) back. If you have the Magnify ability and double the bead cost, you can overcharge the light, creating a bright flash capable of blinding people inside the area. Anyone inside the light's total area who doesn't intentionally avert their eyes (you are assumed to do so) is Blinded for the next round. The duration of the Blinded effect can't be increased.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "fire"
 }, {
     name: "Shinsu Quality (Rock)",
     id: "SHINSU_QUALITY_ROCK",
     description: "Whenever someone makes a contested roll against one of your attributes, increase that attribute's Edge by half (rounded down). If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "rock"
 }, {
     name: "Stone Skin",
     id: "STONE_SKIN",
     description: "By taking one Stress per round (in addition to any other sources of Stress), Shinsu Reinforcement increases your Resistance by half of your Heart.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "rock"
 }, {
     name: "Toughness",
     id: "TOUGHNESS",
     description: "Attacks that target you have a minimum Damage Base of 0.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "rock"
 }, {
     name: "Closed Mind",
     id: "CLOSED_MIND",
     description: "You know what you're here to do, and you don't get distracted easily. You reduce any Confusion that you would take by your Resistance Edge, similar to Fatigue. If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "rock"
 }, {
     name: "Shinsu Quality (Water)",
     id: "SHINSU_QUALITY_WATER",
     description: "As long as you would get at least one automatic success on a roll, you get additional automatic successes on that roll equal to your Tier. If you would not, you instead get bonus dice on that roll equal to your Tier. If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "water"
 }, {
     name: "Crashing Wave",
     id: "CRASHING_WAVE",
     description: "You can use one bead to shove an opponent around at range. You make an Attune roll and treat it as a Brawl roll. You need to be able to see your target. This has a maximum range of Medium. You don't get any bonuses that apply only to Brawl rolls or that apply only to weapon attacks. For this attack, your Damage Base is equal to half your Heart Edge (round up).",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "water"
 }, {
     name: "Maelstrom [Extended]",
     id: "MAELSTROM_EXTENDED",
     description: "You can use any number of beads to create a whirling tempest of water around you. This has a radius of Short, and all creatures in the area (except you) take one Injury and Fatigue every round for each bead you use, as well as being Hindered on Move, Think, Finesse, and Throw rolls. This requires your action to start and to maintain, and you take one Stress every round it's active. Reduce the Harm dealt by each target's Resistance Edge.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "water"
 }, {
     name: "Purify Body",
     id: "PURIFY_BODY",
     description: "Whenever you would be affected by the Heal ability, or whenever you would use the Heal ability on another (including through wands), you heal 50% more (rounded up).",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "water"
 }, {
     name: "Shinsu Quality (Steel)",
     id: "SHINSU_QUALITY_STEEL",
     description: "While wielding a weapon, you get +2 dice on Brawl rolls and take 2 fewer Injuries, Fatigue, Confusion, and Stress from all sources (to a minimum of 0). This does apply to Unresisted Harm. This does not apply to Harm you willingly accept as part of an ability. Apply this after calculating total damage from the source; do not apply this to the Damage Base. If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "steel"
 }, {
     name: "Placeholder",
     id: "PLACEHOLDER",
     description: "nothing",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "steel"
 }, {
     name: "Armed and Ready",
     id: "ARMED_AND_READY",
     description: "You can never be disarmed. Double the Toughness and Structure of any weapon, armor, Inventory, or reel you're wielding. If this is dispelled, it returns at the end of your next turn.",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "steel"
 }, {
     name: "Armor Storm",
     id: "ARMOR_STORM",
     description: "You can use your armor (including shield and armor inventories) offensively. At any time, including on somebody else’s turn, you can choose to start using your armor as a weapon. From that point until you choose to stop using it as a weapon (which can only be done on your turn), any rolls you make to block with it are Hindered and any rolls you make to attack with it gain bonus dice equal to half the dice it would normally grant (rounded down). If your armor does not normally grant dice to Block rolls, and functions some other way, then work with your GM to decide how to reduce the defensive powers of your armor (as a guideline, its defensive powers should be reduced by about half) and how to grant it offensive powers. You cannot switch between using your armor as a weapon and using it as armor more than once per turn (i.e. on a given turn, you can only stop using it as a weapon or start using it as a weapon).",
     source: "any",
     type: "shinsu",
-    shinsu: true
+    shinsu: true,
+    quality: "steel"
 }]
 var fisherman_abilities = [{
     name: "Weapon Skills (Hook)",
@@ -1130,98 +1158,138 @@ var canine_abilities = [{
 var canine_transformation_abilities = [{
     name: "Mobility 1",
     id: "MOBILITY_1",
-    description: "You get twice as many dice to Move rolls as normal, but only when on foot. You can only choose this once.",
+    description: `You get twice as many dice to Move rolls as normal, but only when on foot. You can only choose this once.`,
     source: "race",
     type: "canine",
     stage: 1
 }, {
     name: "Mobility 2",
     id: "MOBILITY_2",
-    description: "You get twice as many dice to Move rolls as normal, but only when on foot.<br> You also gain the ability to slowly fly, swim, or burrow. Pick one; you are Hindered on Brawl and Move when in that situation. If you choose swimming or burrowing, you can breathe underwater or underground, respectively. <br> You must first have Mobility 1 to pick this, and you can only choose this once.",
+    description: `You get twice as many dice to Move rolls as normal, but only when on foot.
+     You also gain the ability to slowly fly, swim, or burrow. Pick one; you are Hindered on Brawl and Move when in that situation. If you choose swimming or burrowing, you can breathe underwater or underground, respectively. 
+     You must first have Mobility 1 to pick this, and you can only choose this once. `,
     source: "race",
     type: "canine",
     stage: 2
 }, {
     name: "Mobility 3",
     id: "MOBILITY_3",
-    description: "In addition to the benefits of Mobility 2, choose one additional option from that ability (flying, swimming, or burrowing). You are no longer Hindered when moving in those ways. You must first have Mobility 2 to pick this, and you can only choose this once.",
+    description: `In addition to the benefits of Mobility 2, choose one additional option from that ability (flying, swimming, or burrowing). You are no longer Hindered when moving in those ways. You must first have Mobility 2 to pick this, and you can only choose this once.`,
     source: "race",
     type: "canine",
     stage: 3
 }, {
     name: "Mobility 4",
     id: "MOBILITY_4",
-    description: "In addition to the benefits of Mobility 3, you gain the remaining option from Mobility 2. The benefit of Mobility 1 now applies when not on foot. You must have Mobility 3 to <br> You get twice as many dice to Move rolls as normal.<br> You gain the ability to slowly fly, swim, or burrow, and you can breathe underwater or underground. You are Hindered on Brawl when in that situation",
+    description: `In addition to the benefits of Mobility 3, you gain the remaining option from Mobility 2. The benefit of Mobility 1 now applies when not on foot. You must have Mobility 3 to 
+     You get twice as many dice to Move rolls as normal.
+     You gain the ability to slowly fly, swim, or burrow, and you can breathe underwater or underground. You are Hindered on Brawl when in that situation  `,
     source: "race",
     type: "canine",
     stage: 4
 }, {
     name: "Mobility 5",
     id: "MOBILITY_5",
-    description: "Anything that would slow you doesn't have that effect, and anything that would paralyze you instead slows you for the same duration.<br> You get twice as many dice to Move rolls as normal.<br> You gain the ability to slowly fly, swim, or burrow, and you can breathe underwater or underground. You are Hindered on Brawl when in that situation",
+    description: `Anything that would slow you doesn't have that effect, and anything that would paralyze you instead slows you for the same duration.
+     You get twice as many dice to Move rolls as normal.
+     You gain the ability to slowly fly, swim, or burrow, and you can breathe underwater or underground. You are Hindered on Brawl when in that situation`,
     source: "race",
     type: "canine",
     stage: 5
 }, {
     name: "Mobility 6",
     id: "MOBILITY_6",
-    description: "You can no longer be slowed or paralyzed<br> You get twice as many dice to Move rolls as normal.<br> You gain the ability to slowly fly, swim, or burrow, and you can breathe underwater or underground. You are Hindered on Brawl when in that situation",
+    description: `You can no longer be slowed or paralyzed
+     You get twice as many dice to Move rolls as normal.
+     You gain the ability to slowly fly, swim, or burrow, and you can breathe underwater or underground. You are Hindered on Brawl when in that situation`,
     source: "race",
     type: "canine",
     stage: 6
 }, {
     name: "Mobility 7",
     id: "MOBILITY_7",
-    description: "Instead of rolling twice as many dice with Move, you roll three times as many. <br> Additionally, dodging multiple times in one round doesn't reduce your bonus.",
+    description: `Instead of rolling twice as many dice with Move, you roll three times as many. 
+     Additionally, dodging multiple times in one round doesn't reduce your bonus. `,
     source: "race",
     type: "canine",
     stage: 7
 }, {
     name: "Weapon 1",
     id: "WEAPON_1",
-    description: "When you first choose this, pick the form you want your weapon to take. <br>If your chosen weapon is ranged, you also need to pick a maximum range. <br>If your chosen weapon is melee, it takes the form of a one-handed weapon. <br>When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 2.",
+    description: `When you first choose this, pick the form you want your weapon to take. 
+    If your chosen weapon is ranged, you also need to pick a maximum range. 
+    If your chosen weapon is melee, it takes the form of a one-handed weapon. 
+    When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 2.  `,
     source: "race",
     type: "canine",
     stage: 1
 }, {
     name: "Weapon 2",
     id: "WEAPON_2",
-    description: "If your chosen weapon is ranged, you also need to pick a maximum range. <br>If your chosen weapon is melee, it takes the form of a one-handed weapon. <br>When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 2.<br>Your weapon also deals Fatigue, Confusion, and Stress equal to your highest Edge minus the enemy's Resistance Edge. ",
+    description: `If your chosen weapon is ranged, you also need to pick a maximum range. 
+    If your chosen weapon is melee, it takes the form of a one-handed weapon. 
+    When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 2.
+    Your weapon also deals Fatigue, Confusion, and Stress equal to your highest Edge minus the enemy's Resistance Edge.   `,
     source: "race",
     type: "canine",
     stage: 2
 }, {
     name: "Weapon 3",
     id: "WEAPON_3",
-    description: "If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. <br>If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. <br>The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. <br>When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 2.<br>Your weapon also deals Fatigue, Confusion, and Stress equal to your highest Edge minus the enemy's Resistance Edge. ",
+    description: `If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. 
+    If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. 
+    The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. 
+    When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 2.
+    Your weapon also deals Fatigue, Confusion, and Stress equal to your highest Edge minus the enemy's Resistance Edge. `,
     source: "race",
     type: "canine",
     stage: 3
 }, {
     name: "Weapon 4",
     id: "WEAPON_4",
-    description: "If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. <br>You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. <br>If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. <br>The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. <br>When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 6.<br>Your weapon also deals Fatigue, Confusion, and Stress equal to three times your highest Edge, minus the enemy's Resistance Edge. <br>The extra Harm your weapon deals triples. ",
+    description: `If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. 
+    You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. 
+    If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. 
+    The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. 
+    When you use this weapon to attack, you get a number of bonus dice equal to your highest Edge and your Damage Base is increased by 6.
+    Your weapon also deals Fatigue, Confusion, and Stress equal to three times your highest Edge, minus the enemy's Resistance Edge. 
+    The extra Harm your weapon deals triples.  `,
     source: "race",
     type: "canine",
     stage: 4
 }, {
     name: "Weapon 5",
     id: "WEAPON_5",
-    description: "Whenever you hit an enemy with your weapon, you become invigorated, and heal for an amount of Injuries or Fatigue equal to half your highest Edge. This does not apply if you don't have Injuries equal to or greater than half your Might or Fatigue equal to or greater than half your Agility. If you are Fragile or Weakened, the healing doubles- it heals for an amount equal to your highest Edge. This can only heal you from Dying once per turn.",
+    description: `Whenever you hit an enemy with your weapon, you become invigorated, and heal for an amount of Injuries or Fatigue equal to half your highest Edge. This does not apply if you don't have Injuries equal to or greater than half your Might or Fatigue equal to or greater than half your Agility. If you are Fragile or Weakened, the healing doubles- it heals for an amount equal to your highest Edge. This can only heal you from Dying once per turn.   `,
     source: "race",
     type: "canine",
     stage: 5
 }, {
     name: "Weapon 6",
     id: "WEAPON_6",
-    description: "If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. <br>You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. <br>If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. <br>The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. <br>When you use this weapon to attack, you get a number of bonus dice equal to your two times highest Edge and your Damage Base is increased by 6.<br>Your weapon also deals Fatigue, Confusion, and Stress equal to three times your highest Edge, minus the enemy's Resistance Edge. <br>The extra Harm your weapon deals triples. <br>Whenever you hit an enemy with your weapon, you become invigorated, and heal for an amount of Injuries or Fatigue equal to half your highest Edge. This does not apply if you don't have Injuries equal to or greater than half your Might or Fatigue equal to or greater than half your Agility. If you are Fragile or Weakened, the healing doubles- it heals for an amount equal to your highest Edge. This can only heal you from Dying once per turn.",
+    description: `If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. 
+    You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. 
+    If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. 
+    The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. 
+    When you use this weapon to attack, you get a number of bonus dice equal to your two times highest Edge and your Damage Base is increased by 6.
+    Your weapon also deals Fatigue, Confusion, and Stress equal to three times your highest Edge, minus the enemy's Resistance Edge. 
+    The extra Harm your weapon deals triples. 
+    Whenever you hit an enemy with your weapon, you become invigorated, and heal for an amount of Injuries or Fatigue equal to half your highest Edge. This does not apply if you don't have Injuries equal to or greater than half your Might or Fatigue equal to or greater than half your Agility. If you are Fragile or Weakened, the healing doubles- it heals for an amount equal to your highest Edge. This can only heal you from Dying once per turn. `,
     source: "race",
     type: "canine",
     stage: 6
 }, {
     name: "Weapon 7",
     id: "WEAPON_7",
-    description: "If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. <br>You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. <br>If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. <br>The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. <br>When you use this weapon to attack, you get a number of bonus dice equal to your two times highest Edge and your Damage Base is increased by 6.<br>Your weapon also deals Fatigue, Confusion, and Stress equal to three times your highest Edge, minus the enemy's Resistance Edge. <br>The extra Harm your weapon deals triples.<br>Whenever you hit an enemy with your weapon, you become invigorated, and heal for an amount of Injuries or Fatigue equal to half your highest Edge. This does not apply if you don't have Injuries equal to or greater than half your Might or Fatigue equal to or greater than half your Agility. If you are Fragile or Weakened, the healing doubles- it heals for an amount equal to your highest Edge. This can only heal you from Dying once per turn.<br>All damage your weapon deals is doubled. This includes the base damage, damage dealt through stunts, extra damage from Weapon 4, and any other damage dealt through your weapon. ",
+    description: `If you chose a melee weapon, you can now have it function as a two-handed weapon, or as many one-handed weapons as you can wield. 
+    You must make this choice when transforming—if you wish to change, you have to revert to your base form and transform again. 
+    If you chose a ranged weapon, you can adjust the maximum range of your weapon on the fly. This does not require an action, and can be done on another person's turn. 
+    The Dual Training, Bruiser, Thrower, and Stabber abilities now add dice equal to your highest Edge, not necessarily your Might or Agility Edge. 
+    When you use this weapon to attack, you get a number of bonus dice equal to your two times highest Edge and your Damage Base is increased by 6.
+    Your weapon also deals Fatigue, Confusion, and Stress equal to three times your highest Edge, minus the enemy's Resistance Edge. 
+    The extra Harm your weapon deals triples.
+    Whenever you hit an enemy with your weapon, you become invigorated, and heal for an amount of Injuries or Fatigue equal to half your highest Edge. This does not apply if you don't have Injuries equal to or greater than half your Might or Fatigue equal to or greater than half your Agility. If you are Fragile or Weakened, the healing doubles- it heals for an amount equal to your highest Edge. This can only heal you from Dying once per turn.
+    All damage your weapon deals is doubled. This includes the base damage, damage dealt through stunts, extra damage from Weapon 4, and any other damage dealt through your weapon.  `,
     source: "race",
     type: "canine",
     stage: 7

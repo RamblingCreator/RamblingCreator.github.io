@@ -24,6 +24,7 @@ $(document).ready(function () {
         $("#abilityWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
         filterAbilities();
+        console.log("new ability");
     });
 
     $("#showHiddenAbilities").on("input", function () {
@@ -98,11 +99,16 @@ $(document).ready(function () {
             e.preventDefault()
             saveForm();
         }
-    });    
+    });
     $("#showLog").on("click", function () {
         $("#purchaseLog").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
     });
+    $("#openSettings").on("click", function () {
+        $("#settingsWindow").css('display', 'flex');
+        $("#popupMask").css('display', 'flex');
+    });
+
     $("#applyColorChange").on("click", function () {
         applyColors();
     });
@@ -332,7 +338,9 @@ function changeCanineLevel(direction) {
 
 function buyCanineUpgrade() {
     let type = "weapon ";
-    if (document.querySelector('input[name="caninePurchase"]:checked').value === "mobility") {
+    if (document.querySelector('input[name="caninePurchase"]:checked')==null) {
+        return;
+    } else if (document.querySelector('input[name="caninePurchase"]:checked').value === "mobility") {
         document.getElementById("canineMaxMobility").value++;
         type = "mobility " + document.getElementById("canineMaxMobility").value;
 
@@ -354,7 +362,7 @@ function buyCanineUpgrade() {
     $("#raiseCanineLevel").prop("disabled", false);
 
     /* technically an ability? */
-    addLogItem(cost, "canine", "stage " + $("#canineMaxLevel").val() + " (" + type + " " + ")");
+    addLogItem(parseInt($("#newCanineStageCost span").innerHTML), "canine", "stage " + $("#canineMaxLevel").val() + " (" + type + " " + ")");
 
 
 }
@@ -536,7 +544,21 @@ function updateAbilityCosts() {
         // console.log("source: " + element.getAttribute("source") + " name: " + element.name);
         if (element.getAttribute("source") === "position" && element.name != position.value && element.id != "addCustomAbility") {
             cost = cost * 2;
-        }
+        } else if (element.value.includes("SHINSU_QUALITY")) { //element.getAttribute("name") === "shinsu"
+            let totalQualities = 0; // abilities.querySelectorAll(".ability").filter((el) => el.id.includes("SHINSU_QUALITY")).length;
+            for (const ability of abilities.querySelectorAll(".ability")) {
+                if (ability.id.includes("SHINSU_QUALITY")) {
+                    totalQualities++;
+                }
+            }
+            cost = cost * Math.pow(3, totalQualities);
+        } /* else if (element.id.includes("SHINSU_QUALITY")){
+
+        } */
+
+        // let totalQualities = abilities.children.filter((el) => el.id.includes("SHINSU_QUALITY")).length;
+        // console.log("total qualities: " + totalQualities);
+
         let buttonMessage = "Purchase this ability (Cost: " + cost + ")"
 
         if (cost > $("#currentExperience").val()) {
@@ -689,7 +711,7 @@ function addAbilityBonuses(Json) {
 
 function getAbilityHtml(Json) {
 
-    return `<div class="ability" hidden-ability="${Json.hidden}" abilityName="${Json.name}" id="${Json.id}">
+    return `<div class="ability" hidden-ability="${Json.hidden}" abilityName="${Json.name}" id="${Json.id}" >
                 <div class="abilityHeader">
                     <div class="abilityNameBlock">
                     <div class="dragHandle" draggable="false">↕</div>
@@ -702,7 +724,7 @@ function getAbilityHtml(Json) {
 
                     </div>
                     <div class="abilityOrigin">
-                    <input class="abilitySource resize" value="${Json.source}"> : <input class="abilityType resize" value="${Json.type}">
+                    <input class="abilitySource resize" value="${Json.source}">:<input class="abilityType resize" value="${Json.type}">
                     </div>
                     <div class="abilityButtons">
                     <button type="button" class="hideThisAbility" title="hide this ability">👁</button>&nbsp;
@@ -1033,22 +1055,36 @@ function calculateRolls() {
 
     let rolls = document.querySelector("#rolls table");
     let thisStat = "might"
+    let parentStat = document.querySelector("#" + thisStat + "Roll");
     console.log("rolls: " + rolls.querySelectorAll("tbody tr") + "[" + rolls.querySelectorAll("tbody tr").length + "]");
     for (const roll of rolls.querySelectorAll("tbody tr")) {
         // console.log(roll.id.substring(roll.id.length - 4, roll.id.length));
         // console.log(roll.id.substring(roll.id.length - 4, roll.id.length) + "=? Roll");
+        let hindered = roll.querySelector(".hinderedRoll input").checked;
         if (roll.id.substring(roll.id.length - 4, roll.id.length) === "Roll") {
             thisStat = roll.id.substring(0, roll.id.length - 4);
+            parentStat = document.querySelector("#" + thisStat + "Roll");
         } else if ($("#" + thisStat + "Roll .hinderedRoll input").is(':checked')) {
-            roll.querySelector(".hinderedRoll input").checked = true;
+            roll.querySelector(".hinderedRoll input").disabled = true;
+            hindered = true;
+        } else {
+            roll.querySelector(".hinderedRoll input").disabled = false;
         }
 
 
         roll.querySelector(".baseDice").innerHTML = 1 + Math.floor($("#" + thisStat + "Base").val() / 5);
         let diceAmount = 1 + Math.floor($("#" + thisStat + "Base").val() / 5);
         diceAmount += parseInt(roll.querySelector("input.bonusDice").value) + parseInt(roll.querySelector("span.bonusDice").innerHTML);
-        diceAmount -= parseInt(roll.querySelector("input.impairedRoll").value)
+        diceAmount -= parseInt(roll.querySelector("input.impairedRoll").value);
 
+        if (roll.id.substring(roll.id.length - 4, roll.id.length) != "Roll") {
+            diceAmount += parseInt(parentStat.querySelector("input.bonusDice").value) + parseInt(parentStat.querySelector("span.bonusDice").innerHTML);
+            diceAmount -= parseInt(parentStat.querySelector("input.impairedRoll").value)
+        }
+        console.log("parent stat: " + parentStat.querySelector("input.impairedRoll").value);
+        if (hindered) {
+            diceAmount = Math.floor(diceAmount / 2);
+        }
 
         // console.log(roll.id + " bonusDice: " + parseInt(roll.querySelector("input.bonusDice").value));
         // console.log(roll.id + " bonusDice: " + roll.querySelector("input.bonusDice"));
@@ -1062,8 +1098,8 @@ function calculateRolls() {
 
         let autoSuccesses = Math.floor($("#" + thisStat + "Base").val() / 20)
 
-        roll.querySelector(".autoSuccesses").innerHTML = autoSuccesses + parseInt(roll.querySelector("input.bonusSuccesses").value);
-
+        roll.querySelector(".autoSuccesses").innerHTML = "=" + parseInt(autoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value);
+        // console.log("autosuccessses inner: "+(parseInt(autoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value)));
 
 
         // $("#"+thisStat+"Base").val();
@@ -1952,3 +1988,40 @@ function handle_file_select(evt) {
 
 // add a function to call when the <input type=file> status changes, but don't "submit" the form
 document.getElementById('upload').addEventListener('change', handle_file_select, false);
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
+
+hoverByClass("baseDice", "red", "cyan");
+
+function hoverByClass(classname, colorover, colorout = "transparent") {
+    var elms = document.getElementsByClassName(classname);
+    // $("." + classname).css('backgroundColor', colorover);
+    for (var i = 0; i < elms.length; i++) {
+        elms[i].onmouseover = function () {
+            // $("." + classname).css('backgroundColor', colorover);
+            $("." + classname).attr('hovered', "true");
+
+        };
+        elms[i].onmouseout = function () {
+            // $("." + classname).css('backgroundColor', colorout);
+            $("." + classname).attr('hovered', "false");
+        };
+    }
+}
+columnHeaders();
+
+
+function columnHeaders() {
+    $("td").on("mouseenter", function () {
+        $("#" + this.className + "Header span").css('display', 'block');
+        $("." + this.className).attr('hovered', "true");
+    });
+    $("td").on("mouseleave", function () {
+        $("#" + this.className + "Header span").css('display', 'none');
+        $("." + this.className).attr('hovered', "false");
+    });
+}
