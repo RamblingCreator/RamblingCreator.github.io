@@ -12,11 +12,10 @@ const position = document.getElementById('position');
 
 let stats = document.getElementById("stats");
 const abilities = document.getElementById('abilitiesList');
-
+const items = document.getElementById('itemsList');
 let toggles = document.getElementsByClassName("dropdownToggle");
 // const cyphers = document.getElementById('cyphersList');
 // const skills = document.getElementById('skillsList');
-// const attacks = document.getElementById('attacksList');
 
 $(document).ready(function () {
     loadForm();
@@ -153,6 +152,7 @@ $(document).ready(function () {
         filterAbilities();
     });
 
+
     $("#race").on("input", function () {
         if (this.value === "noble") {
             $("#noble").parent().css('display', 'inline');
@@ -187,6 +187,11 @@ $(document).ready(function () {
         purchaseStats();
     });
 
+
+
+    $("#addEmptyItem").on("click", function () {
+        addItem({ name: "", amount: "", rank: "", description: "" })
+    });
 
     $("#quickstart").on("click", function () {
         $("#quickstartWindow").css('display', 'flex');
@@ -338,7 +343,7 @@ function changeCanineLevel(direction) {
 
 function buyCanineUpgrade() {
     let type = "weapon ";
-    if (document.querySelector('input[name="caninePurchase"]:checked')==null) {
+    if (document.querySelector('input[name="caninePurchase"]:checked') == null) {
         return;
     } else if (document.querySelector('input[name="caninePurchase"]:checked').value === "mobility") {
         document.getElementById("canineMaxMobility").value++;
@@ -361,19 +366,22 @@ function buyCanineUpgrade() {
     }
     $("#raiseCanineLevel").prop("disabled", false);
 
+    let cost = parseInt(document.querySelector("#newCanineStageCost span").innerHTML);
+    $("#currentExperience").val($("#currentExperience").val() - cost);
+    $("#experienceSpent").val($("#experienceSpent").val() - (cost * -1));
+    $("#abilitiesBought").val(parseInt($("#abilitiesBought").val()) + 1);
+
     /* technically an ability? */
     addLogItem(parseInt($("#newCanineStageCost span").innerHTML), "canine", "stage " + $("#canineMaxLevel").val() + " (" + type + " " + ")");
-
-
 }
 
 function getTransformationPurchases() {
     let canineAbilities = document.getElementById("canineAbilities").children;
     let weaponLevel = parseInt($("#canineMaxWeapon").val());
     let mobilityLevel = parseInt($("#canineMaxMobility").val());
-    console.log("stageDesc: canineStageInfo[" + $("#canineMaxLevel").val());
+    // console.log("stageDesc: canineStageInfo[" + $("#canineMaxLevel").val());
     document.querySelector("#canineStageDescription").innerHTML = canineStageInfo[$("#canineMaxLevel").val()]
-    console.log("mobility choice: " + (document.querySelector("#mobilityChoice + label")));
+    // console.log("mobility choice: " + (document.querySelector("#mobilityChoice + label")));
     if (mobilityLevel < 7) {
         document.querySelector("#mobilityDescription").innerHTML = canineMobilityChoices[mobilityLevel]
     } else {
@@ -875,7 +883,7 @@ function getWidthOfInput(inputEl) {
 
 
 function calculateStats() {
-    // console.log("calculating stats");
+    // console.log("calculating stats, called by " + calculateStats.caller);
     for (const stat of stats.children) {
         let tempTotal = 0;
         temp = stat.querySelector('.tempBonuses .bonusList');
@@ -919,7 +927,37 @@ function calculateStats() {
             current.value = (parseInt(base.value) + parseInt(permTotal) + parseInt(tempTotal));
         }
         edge.value = Math.floor(parseInt(current.value) / 10);
+
+
+        let conditionName = "";
+        let threshold = 0.9;
+
+        if (stat.id === "might") {
+            conditionName = "Fragile";
+        } else if (stat.id === "agility") {
+            conditionName = "Weakened";
+        } else if (stat.id === "heart") {
+            conditionName = "Volatile";
+        } else if (stat.id === "wits") {
+            conditionName = "Anxious";
+            threshold == 0.75;
+        }
+        let thisCondition = document.querySelector('.condition[name="' + conditionName + '"]');
+        if (stat.querySelector('input.harm').value > (current.value * threshold) && thisCondition == null) {
+            addCondition(conditions.find(item => { return item.name == conditionName; }));
+
+        } else if (stat.querySelector('input.harm').value < (current.value * threshold) && thisCondition != null) {
+            thisCondition.remove();
+        }
+        // console.log("this condition: "+thisCondition);
+        if (stat.id === "resistance") {
+            // console.log("has anxious? "+$('.condition[name="anxious"]').length+", "+document.querySelector('.condition[name="anxious"]'));
+            // if ($('.condition[name="anxious"]'))
+        }
     }
+
+
+
 
     // let maxTrauma = 4+Math.floor(parseInt($("#witsBase").value) / 25);
     // $("#maxTraumas").val(4 + Math.floor(parseInt($("#witsBase").val()) / 25));
@@ -982,30 +1020,30 @@ function removeBonus(thisButton) {
 
 function calculateRolls() {
 
-    if (document.querySelector('.condition[name="Slowed"]') != null) {
+    if (document.querySelector('.condition[name="Slowed"]') == null) {
         document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
         document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if (document.querySelector('.condition[name="Pinned"]') != null) {
+    if (document.querySelector('.condition[name="Pinned"]') == null) {
         document.querySelector("#rolls #agilityRoll .hinderedRoll input").checked = true;
         document.querySelector("#rolls #finesse .hinderedRoll input").checked = true;
         document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if (document.querySelector('.condition[name="Paralyzed"]') != null) {
+    if (document.querySelector('.condition[name="Paralyzed"]') == null) {
         // document.querySelectorAll("#rolls .hinderedRoll input").checked = true;
         document.querySelectorAll("#rolls .hinderedRoll input").forEach(element => {
             element.checked = true;
         });
         // console.log(document.querySelectorAll("#rolls .hinderedRoll input"));
     }
-    if (document.querySelector('.condition[name="Blind"]') != null) {
+    if (document.querySelector('.condition[name="Blind"]') == null) {
         document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
         document.querySelector("#rolls #finesse .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if (document.querySelector('.condition[name="Weakened"]') != null) {
+    if (document.querySelector('.condition[name="Weakened"]') == null) {
         document.querySelector("#rolls #mightRoll .hinderedRoll input").checked = true;
         document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
         document.querySelector("#rolls #threatenM .hinderedRoll input").checked = true;
@@ -1014,7 +1052,7 @@ function calculateRolls() {
         document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if (document.querySelector('.condition[name="Anxious"]') != null) {
+    if (document.querySelector('.condition[name="Anxious"]') == null) {
         document.querySelector("#rolls #heartsRoll .hinderedRoll input").checked = true;
         document.querySelector("#rolls #reachOut .hinderedRoll input").checked = true;
         document.querySelector("#rolls #attune .hinderedRoll input").checked = true;
@@ -1147,20 +1185,20 @@ function calculateRolls() {
     OVERWHELMING_CONTROL */
 
     /* auto fail conditions */
-    if (document.querySelector('.condition[name="Pinned"]') != null) {
-        document.querySelector("#rolls #move .totalDice").innerHTML = 0;
+    if (document.querySelector('.condition[name="Pinned"]') == null) {
+        document.querySelector("#rolls #move .totalDice").innerHTML = "=0";
     }
-    if (document.querySelector('.condition[name="Paralyzed"]') != null) {
-        document.querySelector("#rolls #mightRoll .totalDice").innerHTML = 0;
-        document.querySelector("#rolls #brawl .totalDice").innerHTML = 0;
-        document.querySelector("#rolls #threatenM .totalDice").innerHTML = 0;
-        document.querySelector("#rolls #agilityRoll .totalDice").innerHTML = 0;
-        document.querySelector("#rolls #finesse .totalDice").innerHTML = 0;
-        document.querySelector("#rolls #throw .totalDice").innerHTML = 0;
-        document.querySelector("#rolls #move .totalDice").innerHTML = 0;
+    if (document.querySelector('.condition[name="Paralyzed"]') == null) {
+        document.querySelector("#rolls #mightRoll .totalDice").innerHTML = "=0";
+        document.querySelector("#rolls #brawl .totalDice").innerHTML = "=0";
+        document.querySelector("#rolls #threatenM .totalDice").innerHTML = "=0";
+        document.querySelector("#rolls #agilityRoll .totalDice").innerHTML = "=0";
+        document.querySelector("#rolls #finesse .totalDice").innerHTML = "=0";
+        document.querySelector("#rolls #throw .totalDice").innerHTML = "=0";
+        document.querySelector("#rolls #move .totalDice").innerHTML = "=0";
     }
-    if (document.querySelector('.condition[name="Blind"]') != null) {
-        document.querySelector("#rolls #throw .totalDice").innerHTML = 0;
+    if (document.querySelector('.condition[name="Blind"]') == null) {
+        document.querySelector("#rolls #throw .totalDice").innerHTML = "=0";
     }
 }
 
@@ -1175,9 +1213,32 @@ function getConditions() {
     });
 }
 
+function addCondition(json) {
+    let html = getConditionHtml(json);
+
+    $(html).appendTo("#conditionsList");
+    let thisCondition = document.getElementById("conditionsList").lastChild;
+    let tbox = thisCondition.getElementsByClassName("conditionDescription")[0];
+    tbox.style.height = tbox.scrollHeight + "px";
+    tbox.style.overflowY = "hidden";
+    for (const element of thisCondition.querySelectorAll("input.resize")) {
+        if (element.value != "") {
+            adjustWidthOfInput(element);
+        }
+    }
+
+    if (thisCondition.querySelector(".conditionName").value != "") {
+        adjustWidthOfInput(thisCondition.querySelector(".conditionName"));
+    }
+
+    let thisButton = thisCondition.getElementsByClassName("removeCondition")[0];
+    thisButton.addEventListener('click', function () { thisCondition.remove(); }, false);
+    calculateRolls();
+}
 
 var addThisCondition = function () {
-    let html = getConditionHtml({ name: this.name, description: $(this).attr("desc") });
+    addCondition({ name: this.name, description: $(this).attr("desc") });
+    /* let html = getConditionHtml({ name: this.name, description: $(this).attr("desc") });
 
     $(html).appendTo("#conditionsList");
     let thisCondition = document.getElementById("conditionsList").lastChild;
@@ -1191,7 +1252,7 @@ var addThisCondition = function () {
     }
     let thisButton = thisCondition.getElementsByClassName("removeCondition")[0];
     thisButton.addEventListener('click', function () { thisCondition.remove(); }, false);
-    calculateRolls();
+    calculateRolls(); */
 };
 
 
@@ -1200,7 +1261,7 @@ function getConditionHtml(conditionJson) {
                 <div class="conditionHeader">
                     <div class="conditionNameBlock">
                     <div class="dragHandle" draggable="false">↕</div>
-                    <input class="conditionName" value="${conditionJson.name}">
+                    <input class="conditionName resize" value="${conditionJson.name}">
                     </div>
                     <button type="button" class="removeCondition confirm" value="${conditionJson.name}">✕</button>
                 </div>
@@ -1414,6 +1475,57 @@ function getStatCost(changedStat) {
     return totalExpCost;
 
 }
+
+/* inventory */
+
+function addItem(itemJson) {
+    // $(getItemHtml(itemJson)).appendTo("#itemsList");
+    $(getItemHtml(itemJson)).appendTo("#itemsTable tbody");
+    let thisItem = document.querySelector("#itemsTable tbody").lastChild;
+    // thisItem.getElementsByClassName("itemDifficulty")[0].value = itemJson.difficulty
+
+    let thisButton = thisItem.getElementsByClassName("removeItem")[0];
+    thisButton.addEventListener('click', function () { confirmDelete(thisButton, "item") }, false);
+}
+
+
+
+function getItemHtml(Json) {
+    return `<tr class="item">
+              <td class="handle"><div class="dragHandle" draggable="false">↕</div></td>
+              <td class="itemName"> <input class="itemName" value="${Json.name}"></input></td>
+              <td class="itemRank"> <input class="itemRank" value="${Json.rank}"></input></td>
+              <td class="itemAmount"> <input class="itemAmount" value="${Json.amount}"></input></td>
+              <td class="itemDescription"> <input class="itemDescription" value="${Json.description}"></input></td>
+              <td class="removeItem"> <button type="button" class="removeItem confirm" value="${Json.name}">✕</button></td>
+            </tr>`
+    // return `<div class="item">
+    //             <div class="dragHandle" draggable="false">↕</div>
+    //             <input class="itemName" value="${Json.name}"></input>
+    //             <input class="itemAmount" value="${Json.amount}"></input>
+    //             <input class="itemRank" value="${Json.rank}"></input>
+    //             <input class="itemDescription" value="${Json.description}"></input>
+    //             <button type="button" class="removeItem confirm" value="${Json.name}">✕</button>
+    //         </div>`;
+}
+
+/* 
+function getItemHtml(Json) {
+    return `<div class="item">
+                <div class="dragHandle" draggable="false">↕</div>
+                <input class="itemName" value="${Json.name}"></input>
+                <input class="itemAmount" value="${Json.amount}"></input>
+                <input class="itemRank" value="${Json.rank}"></input>
+                <input class="itemDescription" value="${Json.description}"></input>
+                <button type="button" class="removeItem confirm" value="${Json.name}">✕</button>
+            </div>`;
+} */
+/* <select class="itemDifficulty">
+                <option value="eased">Eased</option>
+                <option value="-">    -Normal</option>
+                <option value="hindered">Hindered</option>
+              </select> */
+
 /* quickstart */
 
 function getStarterAbilities() {
@@ -1795,6 +1907,14 @@ function setThisStorage(key, value) {
 }
 
 function loadForm() {
+    if (localStorage.length == 0) {
+
+        $("#quickstartWindow").css('display', 'flex');
+        $("#popupMask").css('display', 'flex');
+        getStarterAbilities();
+        calculateStarterStats(document.querySelector("#startMight"));
+        return;
+    }
     inputsToLoad = document.getElementsByClassName("save");
     for (const input of inputsToLoad) {
         if (input.nodeName === "INPUT" /* && input.type === "text" */) {
@@ -1995,33 +2115,34 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 })
 
 
-hoverByClass("baseDice", "red", "cyan");
+columnHeaders("rolls");
+// columnHeaders("itemsTable");
 
-function hoverByClass(classname, colorover, colorout = "transparent") {
-    var elms = document.getElementsByClassName(classname);
-    // $("." + classname).css('backgroundColor', colorover);
-    for (var i = 0; i < elms.length; i++) {
-        elms[i].onmouseover = function () {
-            // $("." + classname).css('backgroundColor', colorover);
-            $("." + classname).attr('hovered', "true");
-
-        };
-        elms[i].onmouseout = function () {
-            // $("." + classname).css('backgroundColor', colorout);
-            $("." + classname).attr('hovered', "false");
-        };
-    }
-}
-columnHeaders();
-
-
-function columnHeaders() {
-    $("td").on("mouseenter", function () {
+function columnHeaders(tableId) {
+    $("#" + tableId + " td").on("mouseenter", function () {
         $("#" + this.className + "Header span").css('display', 'block');
         $("." + this.className).attr('hovered', "true");
     });
-    $("td").on("mouseleave", function () {
+    $("#" + tableId + " td").on("mouseleave", function () {
         $("#" + this.className + "Header span").css('display', 'none');
         $("." + this.className).attr('hovered', "false");
     });
 }
+
+function resizedw() {
+    let tboxes = document.querySelectorAll("textarea");
+    tboxes.forEach(tbox => {
+        console.log("resizing " + tbox.className + " from " + tbox.style.height + " to " + tbox.scrollHeight + "px");
+        tbox.style.height = "0px";
+        tbox.style.height = tbox.scrollHeight + "px";
+    });
+    console.log("resizing");
+
+
+}
+
+var doit;
+window.onresize = function () {
+    clearTimeout(doit);
+    doit = setTimeout(resizedw, 200);
+};

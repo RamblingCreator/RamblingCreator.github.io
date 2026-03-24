@@ -17,12 +17,7 @@
     font-family: serif;
     font-family: sans-serif;
 }
-/* 
-html, body, main {
-    height: 100%;
-    width: 90vw;
-}
- */
+
 h1, h2, h3, h4, h5 {
     /* removing automatic margin */
     margin: 0;
@@ -79,6 +74,88 @@ body {
     background-color: var(--card);
 }
 
+.cardTitle {
+    background-color: var(--card);
+
+    margin-bottom: 0.2em;
+    padding: 0.2em 0.5em;
+    padding-top: 0.3em;
+}
+
+.cardBody {
+    /* background-color: var(--card); */
+    /* margin-bottom: 0.2em; */
+    padding: 0.2em 0.5em;
+    padding-top: 0.3em;
+}
+
+.reorderList {
+    background-color: var(--background-darker);
+    /* margin: 0.2em 0.5em;
+    margin: 0 0.5em; */
+    /* padding: 0 0.2em;
+    padding: 0 0.5em; */
+
+
+    /* padding-right: 0.25em;
+    padding-top: 0.5em; */
+    /* margin: 1em; */
+    /* padding: 1em; */
+
+    margin: 0 0.5em;
+    padding-right: 0.25em;
+    padding: 0.5em 0.5em;
+    /* padding-top: 0.5em; */
+}
+
+textarea.field {
+    width: 100%;
+    border: 0;
+    font-size: 18px;
+    background-color: var(--field);
+    resize: vertical;
+    margin: 0.25em 0;
+    margin-bottom: 0;
+    /* margin-top: 0.2em;
+    border: none;
+    border-bottom: 1px solid black; */
+}
+input.field {
+    display: inline;
+    border: none;
+    border-radius: 0;
+    /* margin: 0 auto; */
+    background-color: var(--field);
+}
+
+
+
+
+button {
+    background-color: var(--accent);
+
+    font-family: 'Alegreya', serif;
+    font-size: 1em;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.3s;
+
+    border-radius: 0.25em;
+    border: none;
+    margin: 0.2em;
+    height: min-content;
+
+
+    display: inline-block;
+    padding: 0.25em;
+
+}
+
+button:hover {
+    /* background-color: var(--accent-darker); */
+    filter: brightness(90%);
+}
+
 /* overall layout */
 
 #basicInfo {
@@ -87,6 +164,9 @@ body {
 }
 #stats {
     grid-area: stats;
+}
+#statsAndRolls {
+    grid-area: statRoll;
 }
 #rolls {
     grid-area: rolls;
@@ -104,52 +184,48 @@ body {
 #leveling {
     grid-area: levels;
 }
-
+#inventory {
+    grid-area: items;
+}
 
 
 form {
-    width: 90vw;
+    /* width: 90vw; */
     display: grid;
-    /* grid-template-columns: repeat(3, 1fr); */
-    /* grid-template-columns: 30% 45% 25%; */
-    /*  grid-template-areas:
-        "info info info"
-        "stats abilities conditions"; */
-    /* grid-template-columns: 35% 70%; */
     grid-template-columns: repeat(5, 1fr);
     grid-template-columns: 25% 18.75% 18.75% 18.75% 18.75%;
 
-    /* grid-template-areas:
-        "info info info info info"
-        "stats stats abilities abilities abilities"
-        "rolls rolls rolls conditions conditions"
-        "levels levels levels canine canine"; */
-    /* grid-template-areas:
-        "info info info info info"
-        "stats rolls abilities abilities abilities"
-        "conditions conditions conditions conditions conditions"
-        "levels levels levels canine canine"; */
-    grid-template-areas:
-        "info info info info info"
-        "stats abilities abilities abilities abilities"
-        "rolls abilities abilities abilities abilities"
-        "levels levels levels conditions conditions";
-    /* display: flex; */
-    /* flex-wrap: wrap; */
-    /* flex-direction: column; */
+    grid-template-columns: min-content 1fr;
+    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 24.6em 2fr 1fr;
     gap: 10px;
+
+    /* smallest stats w/ 2 columns is 392.5 px */
+    /* important: percentage width with gap means overflow */
+
+    grid-template-areas:
+        "info info info"
+        "statRoll abilities items"
+        "levels levels conditions";
     padding-bottom: 10px;
 }
 
-/* @media(max-width:1500px) {
+@media(max-width:1500px) {
     form {
-        display: grid;
-        grid-template-columns: 40% 60%;
+        grid-template-columns: 24.6em 1fr;
         grid-template-areas:
-            "left center"
-            "right right";
+            "info info"
+            "statRoll abilities"
+            "levels conditions";
     }
-} */
+}
+@media(max-width:900px) {
+    form {
+        display: flex;
+        /* flex-wrap: wrap; */
+        flex-direction: column;
+    }
+}
 
 
 #basicInfo label, #quickstartInfo label {
@@ -485,7 +561,7 @@ input[type='checkbox']:checked+.bonusList {
  */
 
 #conditions {
-    background-color: var(--background-darker);
+    /* background-color: var(--background-darker); */
     display: flex;
     flex-direction: column;
 }
@@ -501,22 +577,16 @@ input[type='checkbox']:checked+.bonusList {
     margin: auto 0.5em;
 }
 
-#conditions {
-    display: flex;
-    flex-direction: column;
-    /* display: none; */
-}
-#conditions h3 {
+/* #conditions h3 { 
     background-color: var(--card);
 
     margin-bottom: 0.2em;
     padding: 0.2em 0.5em;
     padding-top: 0.3em;
-}
-
+*/
 #conditionsList {
-    margin: 0 0.5em;
-    padding-right: 0.25em;
+    /* margin: 0 0.5em;
+    padding-right: 0.25em; */
     display: flex;
     flex-direction: column;
 
@@ -673,11 +743,11 @@ table {
     border-spacing: 0;
     table-layout: fixed;
 
-
+    font-size: 1em;
 }
 
-table td {
-    /* border: 1px solid black; */
+#rolls table {
+    min-width: 22.1em;
 }
 
 table th {
@@ -997,8 +1067,8 @@ label.hideAbilities {
 
 #abilitiesList, #startAbilitiesList {
     /* margin: 0 0.5em; */
-    padding-right: 0.25em;
-    padding: 0 0.5em;
+    /* padding-right: 0.25em; */
+    /* padding: 0 0.5em; */
     display: flex;
     flex-direction: column;
 
@@ -1125,32 +1195,6 @@ label.hideAbilities {
     grid-area: no;
 }
 
-
-
-button {
-    background-color: var(--accent);
-    border-radius: 0.25em;
-
-    border: none;
-    margin: 0.2em;
-    height: min-content;
-
-
-    font-family: 'Alegreya', serif;
-    font-size: 1em;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background-color 0.3s;
-
-    display: inline-block;
-    padding: 0.5em;
-
-}
-
-button:hover {
-    /* background-color: var(--accent-darker); */
-    filter: brightness(90%);
-}
 
 /* abilities */
 
@@ -1489,6 +1533,9 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     width: 100%;
 }
 
+#leveling input {
+    font-size: 1.1em;
+}
 
 #levelBody {
     /* display: flex; */
@@ -1498,37 +1545,220 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
 }
 #abilitiesBought {
     width: 3em;
+    width: 2.5ch;
+    text-align: center;
 }
 #currentExperience, #experienceSpent {
-    width: 6em;
+    /* width: 6em; */
+    width: 6.5ch;
+    text-align: center;
 }
 #tier {
     width: 2em;
+    width: 1.5ch;
+    text-align: center;
+    /* padding: 0 2px; */
 }
 
 #experienceTrigger {
     font-size: 1em;
     width: 100%;
 }
-
-@media (max-width:600px) {
+@media (max-width:1500px) {
     #leveling label {
-        white-space: wrap;
+        /* white-space: wrap; */
         display: block;
         width: min-content;
+        /* width: auto; */
     }
+    #leveling label input {
+        display: block;
+        margin: auto;
+    }
+
     #levelBody {
         /* display: flex; */
         display: flex;
+        flex-direction: column;
         /* grid-template-columns: 1fr 1fr; */
         gap: 5px;
     }
     #levelNumbers {
-        width: min-content;
+        /* width: min-content; */
         display: flex;
         gap: 5px;
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
     }
+}
+
+/* inventory */
+
+/* 
+#itemNameLabel {
+    width: min-content;
+    font-size: 1.2em;
+    flex: 1;
+    margin-top: auto;
+    padding-left: 0.6em;
+
+} */
+#itemsHeader {
+    background-color: var(--card);
+    margin-bottom: 0.2em;
+    /* padding: 0.1em; */
+    padding-top: 0.3em;
+}
+
+
+
+/* 
+.item {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    font-size: 1em;
+    background-color: var(--card);
+    height: min-content;
+} */
+
+#itemsTable thead {
+    background-color: var(--card);
+    margin-bottom: 0.2em;
+    /* padding: 0.1em; */
+    padding-top: 0.3em;
+    width: 100%;
+}
+
+#itemsTable {
+    border-spacing: 0 5px;
+    background-color: var(--background-darker);
+    width: 100%;
+}
+#itemsTable th {
+    position: relative;
+    font-size: 1em;
+}
+
+#itemsTable th span {
+    font-size: 0.75em;
+    position: absolute;
+    bottom: 0em;
+/* 
+    left: 50%;
+    top: 50%; */
+    /* transform: translateX(-50%); */
+    
+    margin-inline: auto;
+    width: fit-content;
+    background-color: var(--card);
+    border-radius: 0.5em;
+}
+
+#itemNameHeader span {
+    left: 50%;
+    /* top: 50%;  */
+    transform: translateX(-60%);
+}
+
+#itemDescriptionHeader span {
+    left: 50%;
+    /* top: 50%;  */
+    transform: translateX(-30%);
+}
+
+#itemRankHeader span {
+    right: -2px;
+    /* transform: translateX(100%); */
+}
+#itemAmountHeader span {
+    /* transform: translateX(-90%); */
+    left: 6px;
+}
+
+.item {
+    width: 100%;
+    font-size: 1em;
+    background-color: var(--card);
+    height: min-content;
+}
+
+#itemNameHeader/* , .itemName */ {
+    /* width: 80%; */
+    width: 6em;
+}
+#itemAmountHeader/* , .itemAmount */ {
+    width: 3.5ch;
+}
+#itemRankHeader/* , .itemRank */ {
+    width: 2ch;
+}
+
+#handleHeader/* , .handle */ {
+    width: 2ch;
+}
+#removeItemHeader/* , .handle */ {
+    width: 2.4ch;
+}
+
+.itemDescription {
+    width: max-content;
+}
+.item input {
+    width: 100%;
+}
+
+
+.item.ui-sortable-helper .itemName{
+    /* width: 80%; */
+    width: 6em;
+}
+.item.ui-sortable-helper .itemAmount{
+    width: 3.5ch;
+    text-align: center;
+}
+.item.ui-sortable-helper .itemRank{
+    width: 2ch;
+    text-align: center;
+}
+
+.item.ui-sortable-helper .handle{
+    width: 2ch;
+    text-align: center;
+}
+/* .item.ui-sortable-helper .removeItem{
+    width: 3.25ch;
+    text-align: center;
+} */
+.item.ui-sortable-helper td.itemDescription{
+    width: max-content;
+    width: 100%;
+}
+
+.item input, .item select {
+    background-color: var(--field);
+    border: none;
+    /* border: 0.81px solid black; */
+    font-size: 1em;
+
+    border-right-width: 0;
+    height: 100%;
+}
+
+button.removeItem {
+    line-height: 0.9em;
+    padding: 0.15em;
+    margin: auto;
+}
+.item .dragHandle {
+    line-height: 0.9em;
+    width: min-content;
+}
+
+
+@media (max-width:900px) {
+
     .abilityOrigin {
         white-space: wrap;
         font-size: 0.9em;
@@ -1562,9 +1792,9 @@ footer {
 
     background-color: var(--card);
 
-    /* 
-    position: absolute; */
-    bottom: 0;
+    position: relative;
+    /* position: absolute;
+    bottom: 0; */
     width: 100%;
     /* width: min-content; */
     height: 2.5em;
