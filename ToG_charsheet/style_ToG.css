@@ -15,7 +15,7 @@
     box-sizing: border-box;
     color: black;
     font-family: serif;
-    font-family: sans-serif;
+    /* font-family: sans-serif; */
 }
 
 h1, h2, h3, h4, h5 {
@@ -142,7 +142,7 @@ select.field {
 button {
     background-color: var(--accent);
 
-    font-family: 'Alegreya', serif;
+    /* font-family: 'Alegreya', serif; */
     font-size: 1em;
     font-weight: 500;
     text-decoration: none;
@@ -225,8 +225,9 @@ form {
         grid-template-areas:
             "info info"
             "statRoll abilities"
-            "levels conditions"
-            "items items";
+            "levels abilities"
+            "levels items"
+            "conditions conditions";
     }
 }
 @media(max-width:900px) {
@@ -248,7 +249,7 @@ form {
     /* field-sizing: content; */
 }
 #pronouns {
-    width: 8em;
+    width: 6.5em;
 }
 
 #credits {
@@ -274,16 +275,18 @@ column-gap: 10px; */
     height: min-content;
 }
 
+/* @media (min-width: 1200px) { */
 @media (max-width: 900px) {
     #stats {
         gap: 0em;
         justify-content: space-evenly;
+        font-size: 1.4em;
     }
 }
-/* @media (min-width: 1200px) { */
 @media (min-width: 900px) {
     #stats {
         font-size: 1.6em;
+        font-size: 1.8em;
     }
 }
 .statLabel {
@@ -1015,9 +1018,10 @@ input:checked~#abilitiesHiddenIcon {
 
 
 #abilitiesHiddenText, #abilitiesShownText {
-    /* width: min-content;
-    white-space: wrap; */
+    width: min-content;
+    white-space: wrap;
     display: inline-block;
+    margin: 0 auto;
 }
 #abilitiesHiddenText {
     display: none;
@@ -1122,13 +1126,13 @@ label.hideAbilities {
 }
 
 
-
+/* 
 #quickstartWindow {
 
     overflow-y: scroll;
     overflow-x: hidden;
 }
-
+ */
 #startAbilitiesList {
     /* max-height: 50vh; */
     height: 100%;
@@ -1326,7 +1330,7 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
         background-color: var(--accent);
         border-radius: 1em;
         border: none;
-        font-family: 'Alegreya', serif;
+        /* font-family: 'Alegreya', serif; */
         font-size: 2.5em;
     }
 
@@ -1678,7 +1682,7 @@ details {
     order: 1;
     margin-left: 1em;
 }
-.item > div {
+.item>div {
     display: flex;
 }
 .itemName, .itemType, .itemTags {
@@ -1876,9 +1880,13 @@ select.quickstart {
     flex-direction: row;
     gap: 5px;
 }
-@media(max-width:920px) {
+@media(max-width:900px) {
     #statPurchaseSection label {
         flex-direction: column;
+    }
+    #statPurchaseSection {
+        flex-wrap: wrap;
+
     }
 }
 #statCost {

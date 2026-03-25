@@ -122,7 +122,10 @@ $(document).ready(function () {
     $("#import").on("click", function () {
         importSave();
     });
-
+    $("#clearData").on("click", function () {
+        $("#settingsWindow").css('display', 'none');
+        confirmDelete(null, "saveData", "all saved data")
+    });
     $("#calculatestats").on("click", function () {
         calculateStats();
     });
@@ -830,26 +833,31 @@ function getPreviewAbilityHtml(Json) {
 
 
 
-function confirmDelete(thisButton, type) {
+function confirmDelete(thisButton, type, messageIn = "") {
     console.log("confirming...?");
     $("#confirmWindow").css('display', 'grid');
     $("#popupMask").css('display', 'flex');
 
-    let parent = thisButton.parentNode.parentNode.parentNode;
+    let parent = null;
+    let message = messageIn;
+    if (messageIn != "") {
+        message = messageIn;
+    } else {
+        parent = thisButton.parentNode.parentNode.parentNode;
 
-    let message = "";
-    console.log("parent: " + parent.className);
+        console.log("parent: " + parent.className);
 
-    message = parent.getElementsByClassName(type + "Name")[0].value
+        message = parent.getElementsByClassName(type + "Name")[0].value
+    }
     document.getElementById("confirmTarget").innerHTML = "This can't be undone. Are you sure you want to delete \"" + message + "\" ?";
     $('#confirmYes').click(function () {
         console.log("confirmed");
         console.log("removing");
-        if (type == "ability") {
+        if (type === "ability") {
             thisButton.parentNode.parentNode.parentNode.remove();
-        } /* else if (type == "") {
-            thisButton.parentNode.parentNode.parentNode.remove();
-        } else if (type == "attack") {
+        } else if (type === "saveData") {
+            clearData();
+        } /* else if (type == "attack") {
             thisButton.parentNode.parentNode.parentNode.remove();
         } */
         // parent.remove();
@@ -1037,30 +1045,30 @@ function removeBonus(thisButton) {
 
 function calculateRolls() {
 
-    if (document.querySelector('.condition[name="Slowed"]') == null) {
+    if (document.querySelector('.condition[name="Slowed"]') != null) {
         document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
         document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if (document.querySelector('.condition[name="Pinned"]') == null) {
+    if (document.querySelector('.condition[name="Pinned"]') != null) {
         document.querySelector("#rolls #agilityRoll .hinderedRoll input").checked = true;
         document.querySelector("#rolls #finesse .hinderedRoll input").checked = true;
         document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if (document.querySelector('.condition[name="Paralyzed"]') == null) {
+    if (document.querySelector('.condition[name="Paralyzed"]') != null) {
         // document.querySelectorAll("#rolls .hinderedRoll input").checked = true;
         document.querySelectorAll("#rolls .hinderedRoll input").forEach(element => {
             element.checked = true;
         });
         // console.log(document.querySelectorAll("#rolls .hinderedRoll input"));
     }
-    if (document.querySelector('.condition[name="Blind"]') == null) {
+    if (document.querySelector('.condition[name="Blind"]') != null) {
         document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
         document.querySelector("#rolls #finesse .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if (document.querySelector('.condition[name="Weakened"]') == null) {
+    if (document.querySelector('.condition[name="Weakened"]') != null) {
         document.querySelector("#rolls #mightRoll .hinderedRoll input").checked = true;
         document.querySelector("#rolls #brawl .hinderedRoll input").checked = true;
         document.querySelector("#rolls #threatenM .hinderedRoll input").checked = true;
@@ -1069,7 +1077,7 @@ function calculateRolls() {
         document.querySelector("#rolls #throw .hinderedRoll input").checked = true;
         document.querySelector("#rolls #move .hinderedRoll input").checked = true;
     }
-    if (document.querySelector('.condition[name="Anxious"]') == null) {
+    if (document.querySelector('.condition[name="Anxious"]') != null) {
         document.querySelector("#rolls #heartsRoll .hinderedRoll input").checked = true;
         document.querySelector("#rolls #reachOut .hinderedRoll input").checked = true;
         document.querySelector("#rolls #attune .hinderedRoll input").checked = true;
@@ -1131,7 +1139,6 @@ function calculateRolls() {
         let diceAmount = 1 + Math.floor($("#" + thisStat + "Base").val() / 5);
         diceAmount += parseInt(roll.querySelector("input.bonusDice").value) + parseInt(roll.querySelector("span.bonusDice").innerHTML);
         diceAmount -= parseInt(roll.querySelector("input.impairedRoll").value);
-
         if (roll.id.substring(roll.id.length - 4, roll.id.length) != "Roll") {
             diceAmount += parseInt(parentStat.querySelector("input.bonusDice").value) + parseInt(parentStat.querySelector("span.bonusDice").innerHTML);
             diceAmount -= parseInt(parentStat.querySelector("input.impairedRoll").value)
@@ -1153,7 +1160,7 @@ function calculateRolls() {
 
         let autoSuccesses = Math.floor($("#" + thisStat + "Base").val() / 20)
 
-        roll.querySelector(".autoSuccesses").innerHTML = "=" + parseInt(autoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value);
+        roll.querySelector(".autoSuccesses").innerHTML = "=" + (parseInt(autoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value));
         // console.log("autosuccessses inner: "+(parseInt(autoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value)));
 
 
@@ -1202,10 +1209,10 @@ function calculateRolls() {
     OVERWHELMING_CONTROL */
 
     /* auto fail conditions */
-    if (document.querySelector('.condition[name="Pinned"]') == null) {
+    if (document.querySelector('.condition[name="Pinned"]') != null) {
         document.querySelector("#rolls #move .totalDice").innerHTML = "=0";
     }
-    if (document.querySelector('.condition[name="Paralyzed"]') == null) {
+    if (document.querySelector('.condition[name="Paralyzed"]') != null) {
         document.querySelector("#rolls #mightRoll .totalDice").innerHTML = "=0";
         document.querySelector("#rolls #brawl .totalDice").innerHTML = "=0";
         document.querySelector("#rolls #threatenM .totalDice").innerHTML = "=0";
@@ -1214,7 +1221,7 @@ function calculateRolls() {
         document.querySelector("#rolls #throw .totalDice").innerHTML = "=0";
         document.querySelector("#rolls #move .totalDice").innerHTML = "=0";
     }
-    if (document.querySelector('.condition[name="Blind"]') == null) {
+    if (document.querySelector('.condition[name="Blind"]') != null) {
         document.querySelector("#rolls #throw .totalDice").innerHTML = "=0";
     }
 }
@@ -1795,7 +1802,18 @@ function applyQuickstart() {
     $("#experienceSpent").val(0);
     $("#tier").val(1);
     calculateStats();
-
+    calculateRolls();
+    if ($("#race").val() === "noble") {
+        $("#noble").parent().css('display', 'inline');
+    } else if ($("#race").val() === "canine") {
+        $("#canineTransformations").css('display', 'block');
+        $("#noble").parent().css('display', 'none');
+        $("#noble").val("none");
+    } else {
+        $("#canineTransformations").css('display', 'none');
+        $("#noble").parent().css('display', 'none');
+        $("#noble").val("none");
+    }
     let thisInfo = {};
     if ($("#quickstartNoble").val() != "none") {
         thisInfo = quickstart_values.find(item => {
@@ -2186,6 +2204,20 @@ function handle_file_select(evt) {
     };
 
 
+}
+
+function clearData() {
+    console.log("clearing savedata");
+    let keysToRemove = [];
+    for (var i = 0; i < localStorage.length; i++) {
+        console.log("substring = "+localStorage.key(i).substring(0, 4));
+        if (localStorage.key(i).substring(0, 4) === "ToG_") {
+            keysToRemove.push(localStorage.key(i))
+        }
+    }
+    keysToRemove.forEach(key => {
+        localStorage.removeItem(key);
+    });
 }
 
 // add a function to call when the <input type=file> status changes, but don't "submit" the form
