@@ -1178,6 +1178,15 @@ label.hideAbilities {
     padding: 2em;
 }
 
+@media (max-width: 900px) {
+
+    #confirmWindow {
+        width: 90vw;
+        height: 30vh;
+        padding: 1.5em;
+    }
+}
+
 #confirmMessage {
     grid-area: message;
     /* font-size: 5vw; */
