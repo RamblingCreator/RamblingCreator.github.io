@@ -1,11 +1,3 @@
-
-
-/* window.addEventListener('load', function () {
-  calculateStats()
-}) */
-
-
-
 const race = document.getElementById('race');
 const noble = document.getElementById('noble');
 const position = document.getElementById('position');
@@ -19,6 +11,9 @@ let toggles = document.getElementsByClassName("dropdownToggle");
 
 $(document).ready(function () {
     loadForm();
+    console.log("after loading form");
+    getConditions();
+    // getPremadeItems();
     $("#newAbility").on("click", function () {
         $("#abilityWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
@@ -143,7 +138,7 @@ $(document).ready(function () {
     $("#newCondition").on("click", function () {
         $("#conditionsWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
-        getConditions();
+
     });
     $("#addCustomAbility").on("click", function () {
         addCustomAbility();
@@ -190,8 +185,21 @@ $(document).ready(function () {
 
 
     $("#addEmptyItem").on("click", function () {
-        addItem({ name: "", amount: "", rank: "", description: "" })
+        addItem({ name: "", amount: "", rank: "", description: "", type: "", tags: "" })
     });
+    /* $("#addPremadeItem").on("click", function () {
+        // addItem({ name: "", amount: "", rank: "", description: "", type:"", tags:"" })
+
+        $("#exampleItemsWindow").css('display', 'flex');
+        $("#popupMask").css('display', 'flex');
+    }); */
+
+    $("#addPremadeItem").on("input", function () {
+        $("#exampleItemsWindow").css('display', 'flex');
+        $("#popupMask").css('display', 'flex');
+    });
+
+
 
     $("#quickstart").on("click", function () {
         $("#quickstartWindow").css('display', 'flex');
@@ -277,6 +285,7 @@ $(document).ready(function () {
     Array.from(elements).forEach(function (element) {
         element.addEventListener('click', addNewStatBonus);
     });
+
     $(".reorderList").sortable({
         axis: "y",
         handle: ".dragHandle",
@@ -291,8 +300,8 @@ $(document).ready(function () {
         // forceHelperSize: 
         // true
     })
-    calculateStats();
     document.styleSheets[0].cssRules[0].style.display = "none";
+    // calculateStats();
 });
 
 
@@ -713,6 +722,8 @@ function addAbilityBonuses(Json) {
     } else if (Json.id === "TOUGH") {
         addStatBonus("Tough (Crocodile)", 3, document.querySelector("#mightPermBonusList + ul"));
         addStatBonus("Tough (Crocodile)", 3, document.querySelector("#resistancePermBonusList + ul"));
+    } else {
+        return;
     }
     calculateStats();
 }
@@ -942,21 +953,27 @@ function calculateStats() {
             conditionName = "Anxious";
             threshold == 0.75;
         }
+        // console.log("conditions: " + document.querySelectorAll('.condition').length);
+
         let thisCondition = document.querySelector('.condition[name="' + conditionName + '"]');
+        // console.log(conditionName + " = " + thisCondition);
         if (stat.querySelector('input.harm').value > (current.value * threshold) && thisCondition == null) {
             addCondition(conditions.find(item => { return item.name == conditionName; }));
+            // console.log("adding condition: " + conditionName);
 
         } else if (stat.querySelector('input.harm').value < (current.value * threshold) && thisCondition != null) {
             thisCondition.remove();
         }
         // console.log("this condition: "+thisCondition);
         if (stat.id === "resistance") {
-            // console.log("has anxious? "+$('.condition[name="anxious"]').length+", "+document.querySelector('.condition[name="anxious"]'));
-            // if ($('.condition[name="anxious"]'))
+            if (document.querySelector('.condition[name="Fragile"]') != null || document.querySelector('.condition[name="Weakened"]') != null || document.querySelector('.condition[name="Volatile"]') != null || document.querySelector('.condition[name="Anxious"]') != null || $("#exhaustion").val() > 0) {
+                current.value = parseInt(current.value) / 2
+            }
+
         }
     }
 
-
+    console.log("fragile amount: " + document.querySelectorAll('.condition[name="Fragile"]').length);
 
 
     // let maxTrauma = 4+Math.floor(parseInt($("#witsBase").value) / 25);
@@ -1094,7 +1111,7 @@ function calculateRolls() {
     let rolls = document.querySelector("#rolls table");
     let thisStat = "might"
     let parentStat = document.querySelector("#" + thisStat + "Roll");
-    console.log("rolls: " + rolls.querySelectorAll("tbody tr") + "[" + rolls.querySelectorAll("tbody tr").length + "]");
+    console.log("rolls: " + rolls.querySelectorAll("tbody tr") + " length = " + rolls.querySelectorAll("tbody tr").length);
     for (const roll of rolls.querySelectorAll("tbody tr")) {
         // console.log(roll.id.substring(roll.id.length - 4, roll.id.length));
         // console.log(roll.id.substring(roll.id.length - 4, roll.id.length) + "=? Roll");
@@ -1119,7 +1136,7 @@ function calculateRolls() {
             diceAmount += parseInt(parentStat.querySelector("input.bonusDice").value) + parseInt(parentStat.querySelector("span.bonusDice").innerHTML);
             diceAmount -= parseInt(parentStat.querySelector("input.impairedRoll").value)
         }
-        console.log("parent stat: " + parentStat.querySelector("input.impairedRoll").value);
+        // console.log("parent stat impaired: " + parentStat.querySelector("input.impairedRoll").value);
         if (hindered) {
             diceAmount = Math.floor(diceAmount / 2);
         }
@@ -1478,12 +1495,30 @@ function getStatCost(changedStat) {
 
 /* inventory */
 
+/* function getPremadeItems() {
+    premade_items.forEach(element => {
+        $("<option value="misc">Misc</option>").appendTo("#addPremadeItem");
+    });
+    var elements = document.getElementsByClassName("addCondition");
+    Array.from(elements).forEach(function (element) {
+        element.addEventListener('click', addThisCondition);
+    });
+} */
+
+$(".item input").on("click", function (event) {
+    if (event.originalEvent.detail != 0) {
+        alert("Clicked");
+    } else {
+        return
+    }
+});
+
 function addItem(itemJson) {
     // $(getItemHtml(itemJson)).appendTo("#itemsList");
-    $(getItemHtml(itemJson)).appendTo("#itemsTable tbody");
-    let thisItem = document.querySelector("#itemsTable tbody").lastChild;
+    $(getItemHtml(itemJson)).appendTo("#itemsList");
+    let thisItem = document.querySelector("#itemsList").lastChild;
     // thisItem.getElementsByClassName("itemDifficulty")[0].value = itemJson.difficulty
-
+    thisItem.querySelector(".itemType").value = itemJson.type;
     let thisButton = thisItem.getElementsByClassName("removeItem")[0];
     thisButton.addEventListener('click', function () { confirmDelete(thisButton, "item") }, false);
 }
@@ -1491,14 +1526,37 @@ function addItem(itemJson) {
 
 
 function getItemHtml(Json) {
-    return `<tr class="item">
+    return `<details class="item">
+            <summary>
+              <div class="dragHandle" draggable="false">↕</div>
+              <input class="itemName field" value="${Json.name}">
+              <label class="itemAmount">(x<input type="number" class="itemAmount noArrows field" value="${Json.amount}">)</label>
+              <button type="button" class="removeItem confirm" value="${Json.name}">✕</button>
+            </summary>
+            <div>
+                <label>rank <input class="itemRank field" value="${Json.rank}"></label>
+                <label><select class="itemType field">
+                    <option value="misc">Misc</option>
+                    <option value="shield">Shield</option>
+                    <option value="weapon">Weapon</option>
+                    <option value="armor">Armor</option>
+                    <option value="ring">Ring</option>
+                    <option value="inventory">Arms Inventory</option>
+                    <option value="lighthouse">Lighthouse</option>
+                    <option value="weapon">Weapon</option>
+                  </select></label>
+                <label class="itemTags">(<input class="itemTags field" value="${Json.tags}">)</label>
+            </div>
+            <textarea class="itemDescription field">${Json.description}</textarea>
+          </details>`;
+    /* return `<tr class="item">
               <td class="handle"><div class="dragHandle" draggable="false">↕</div></td>
               <td class="itemName"> <input class="itemName" value="${Json.name}"></input></td>
               <td class="itemRank"> <input class="itemRank" value="${Json.rank}"></input></td>
               <td class="itemAmount"> <input class="itemAmount" value="${Json.amount}"></input></td>
               <td class="itemDescription"> <input class="itemDescription" value="${Json.description}"></input></td>
               <td class="removeItem"> <button type="button" class="removeItem confirm" value="${Json.name}">✕</button></td>
-            </tr>`
+            </tr>` */
     // return `<div class="item">
     //             <div class="dragHandle" draggable="false">↕</div>
     //             <input class="itemName" value="${Json.name}"></input>
@@ -1860,6 +1918,21 @@ function saveForm() {
     }
     setThisStorage("conditionsList", JSON.stringify(conditionsList));
 
+
+    let itemsList = [];
+    for (const item of document.querySelectorAll(".item")) {
+        let thisJSON = {}
+        thisJSON.name = item.querySelector("input.itemName").value;
+        thisJSON.amount = item.querySelector("input.itemAmount").value;
+        thisJSON.rank = item.querySelector("input.itemRank").value;
+        // console.log("type: "+item.querySelector(".itemType"));
+        thisJSON.type = item.querySelector(".itemType").value;
+        thisJSON.tags = item.querySelector("input.itemTags").value;
+        thisJSON.description = item.querySelector(".itemDescription").value;
+        itemsList.push(thisJSON);
+    }
+    setThisStorage("itemsList", JSON.stringify(itemsList));
+
     for (const stat of stats.children) {
         let tempBonuses = {}
         temp = stat.querySelector('.tempBonuses .bonusList');
@@ -1952,13 +2025,6 @@ function loadForm() {
         // console.log("setting " + input.nodeName + " (" + input.type + ") " + input.id + " to [" + input.value + "]");
     }
 
-    let abilitiesList = JSON.parse(getThisStorage("abilitiesList"));
-    if (abilitiesList != null) {
-        abilitiesList.forEach(thisAbility => {
-            addNewAbility(thisAbility);
-        });
-    }
-
     let conditionsList = JSON.parse(getThisStorage("conditionsList"));
     if (conditionsList != null) {
         conditionsList.forEach(thisConditionJson => {
@@ -1975,6 +2041,21 @@ function loadForm() {
             }
             let thisButton = thisCondition.getElementsByClassName("removeCondition")[0];
             thisButton.addEventListener('click', function () { thisCondition.remove(); }, false);
+        });
+    }
+
+    let abilitiesList = JSON.parse(getThisStorage("abilitiesList"));
+    if (abilitiesList != null) {
+        abilitiesList.forEach(thisAbility => {
+            addNewAbility(thisAbility);
+        });
+    }
+
+
+    let itemsList = JSON.parse(getThisStorage("itemsList"));
+    if (itemsList != null) {
+        itemsList.forEach(thisItem => {
+            addItem(thisItem);
         });
     }
 
@@ -2023,7 +2104,8 @@ function loadForm() {
 
     calculateExperience();
     calculateRolls();
-    calculateStats();
+    // calculateStats();
+    console.log("done loading");
 }
 
 
@@ -2146,3 +2228,7 @@ window.onresize = function () {
     clearTimeout(doit);
     doit = setTimeout(resizedw, 200);
 };
+
+
+
+

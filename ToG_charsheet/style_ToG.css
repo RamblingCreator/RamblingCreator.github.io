@@ -129,6 +129,14 @@ input.field {
 }
 
 
+select.field {
+    display: inline;
+    border: none;
+    border-radius: 0;
+    /* margin: 0 auto; */
+    background-color: var(--field);
+}
+
 
 
 button {
@@ -189,6 +197,7 @@ button:hover {
 }
 
 
+
 form {
     /* width: 90vw; */
     display: grid;
@@ -216,7 +225,8 @@ form {
         grid-template-areas:
             "info info"
             "statRoll abilities"
-            "levels conditions";
+            "levels conditions"
+            "items items";
     }
 }
 @media(max-width:900px) {
@@ -270,7 +280,8 @@ column-gap: 10px; */
         justify-content: space-evenly;
     }
 }
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) { */
+@media (min-width: 900px) {
     #stats {
         font-size: 1.6em;
     }
@@ -1292,7 +1303,7 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     display: none;
 }
 
-@media (max-width:800px) {
+@media (max-width:900px) {
 
     .shinsuHover {
         display: none;
@@ -1321,6 +1332,26 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
 
     #abilitiesHeader h1 {
         width: min-content;
+    }
+    .abilityOrigin {
+        white-space: wrap;
+        font-size: 0.9em;
+    }
+    .abilityNameBlock, .newAbility .abilityNameBlock {
+        white-space: nowrap;
+    }
+    .abilityHeader {
+        flex-wrap: nowrap;
+    }
+    .newAbility .abilityHeader {
+        flex-wrap: wrap;
+        gap: 0;
+    }
+    .ability .dragHandle {
+        display: none;
+    }
+    .fixedShinsuIcon {
+        display: inline;
     }
 }
 
@@ -1595,86 +1626,10 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
 
 /* inventory */
 
-/* 
-#itemNameLabel {
-    width: min-content;
-    font-size: 1.2em;
-    flex: 1;
-    margin-top: auto;
-    padding-left: 0.6em;
-
-} */
-#itemsHeader {
-    background-color: var(--card);
-    margin-bottom: 0.2em;
-    /* padding: 0.1em; */
-    padding-top: 0.3em;
-}
-
-
-
-/* 
-.item {
+#itemsList {
     display: flex;
-    flex-direction: row;
-    width: 100%;
-    font-size: 1em;
-    background-color: var(--card);
-    height: min-content;
-} */
-
-#itemsTable thead {
-    background-color: var(--card);
-    margin-bottom: 0.2em;
-    /* padding: 0.1em; */
-    padding-top: 0.3em;
-    width: 100%;
-}
-
-#itemsTable {
-    border-spacing: 0 5px;
-    background-color: var(--background-darker);
-    width: 100%;
-}
-#itemsTable th {
-    position: relative;
-    font-size: 1em;
-}
-
-#itemsTable th span {
-    font-size: 0.75em;
-    position: absolute;
-    bottom: 0em;
-/* 
-    left: 50%;
-    top: 50%; */
-    /* transform: translateX(-50%); */
-    
-    margin-inline: auto;
-    width: fit-content;
-    background-color: var(--card);
-    border-radius: 0.5em;
-}
-
-#itemNameHeader span {
-    left: 50%;
-    /* top: 50%;  */
-    transform: translateX(-60%);
-}
-
-#itemDescriptionHeader span {
-    left: 50%;
-    /* top: 50%;  */
-    transform: translateX(-30%);
-}
-
-#itemRankHeader span {
-    right: -2px;
-    /* transform: translateX(100%); */
-}
-#itemAmountHeader span {
-    /* transform: translateX(-90%); */
-    left: 6px;
+    gap: 4px;
+    flex-direction: column;
 }
 
 .item {
@@ -1682,104 +1637,94 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     font-size: 1em;
     background-color: var(--card);
     height: min-content;
+    padding: 0.3em;
 }
 
-#itemNameHeader/* , .itemName */ {
-    /* width: 80%; */
-    width: 6em;
-}
-#itemAmountHeader/* , .itemAmount */ {
-    width: 3.5ch;
-}
-#itemRankHeader/* , .itemRank */ {
-    width: 2ch;
+summary {
+    position: relative;
+    display: flex;
+    &::marker {
+        content: "";
+    }
+    &::before {
+        content: "⏵";
+        /* content: "▶"; */
+        height: 1em;
+        width: min-content;
+
+        /* inset-block-start: 50%;
+        inset-inline-end: 0; */
+        user-select: none;
+        order: 0;
+        font-size: 1.5em;
+        /* font-size: 1em; */
+        line-height: 0.95em;
+        margin: auto 0;
+    }
 }
 
-#handleHeader/* , .handle */ {
-    width: 2ch;
+details[open] summary::before {
+    content: "⏷";
+    /* content: "▼"; */
 }
-#removeItemHeader/* , .handle */ {
-    width: 2.4ch;
-}
-
-.itemDescription {
-    width: max-content;
-}
-.item input {
-    width: 100%;
+details {
+    white-space: nowrap;
 }
 
-
-.item.ui-sortable-helper .itemName{
-    /* width: 80%; */
-    width: 6em;
+.item summary .dragHandle {
+    order: -1;
 }
-.item.ui-sortable-helper .itemAmount{
-    width: 3.5ch;
-    text-align: center;
+.item summary::marker {
+    order: 1;
+    margin-left: 1em;
 }
-.item.ui-sortable-helper .itemRank{
-    width: 2ch;
-    text-align: center;
+.item > div {
+    display: flex;
 }
-
-.item.ui-sortable-helper .handle{
-    width: 2ch;
-    text-align: center;
-}
-/* .item.ui-sortable-helper .removeItem{
-    width: 3.25ch;
-    text-align: center;
-} */
-.item.ui-sortable-helper td.itemDescription{
-    width: max-content;
-    width: 100%;
-}
-
-.item input, .item select {
-    background-color: var(--field);
-    border: none;
-    /* border: 0.81px solid black; */
+.itemName, .itemType, .itemTags {
     font-size: 1em;
+    padding: 0;
+}
+input.itemTags {
+    /* width: max-content; */
+    width: calc(100% - 1ch);
+    /* margin-right: 0.4em; */
+    /* width: 10em; */
+}
+label.itemTags {
+    white-space: nowrap;
+    width: 100%;
+    /* width: fit-content; */
+    display: block;
+}
 
-    border-right-width: 0;
-    height: 100%;
+/* .itemBonus {
+    width: 3ch;
+} */
+input.itemAmount {
+    width: 3ch;
+    font-size: 1em;
+}
+label.itemAmount {
+    margin: auto 0;
+    margin-left: 0.5em;
+}
+
+.itemRank {
+    width: 2ch;
+}
+
+.item .dragHandle {
+    width: min-content;
 }
 
 button.removeItem {
     line-height: 0.9em;
     padding: 0.15em;
-    margin: auto;
-}
-.item .dragHandle {
-    line-height: 0.9em;
-    width: min-content;
+    margin: auto 0;
+    margin-left: auto;
 }
 
-
-@media (max-width:900px) {
-
-    .abilityOrigin {
-        white-space: wrap;
-        font-size: 0.9em;
-    }
-    .abilityNameBlock, .newAbility .abilityNameBlock {
-        white-space: nowrap;
-    }
-    .abilityHeader {
-        flex-wrap: nowrap;
-    }
-    .newAbility .abilityHeader {
-        flex-wrap: wrap;
-        gap: 0;
-    }
-    .ability .dragHandle {
-        display: none;
-    }
-    .fixedShinsuIcon {
-        display: inline;
-    }
-}
 
 
 /* footer */
@@ -1891,7 +1836,8 @@ select.quickstart {
     border-radius: 0.25em;
     margin: auto 0;
     width: 1em;
-    color: #6d6d6d
+    color: #6d6d6d;
+    user-select: none;
 }
 .dragHandle:hover {
     color: white;

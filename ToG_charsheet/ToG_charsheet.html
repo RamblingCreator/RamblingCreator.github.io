@@ -736,48 +736,34 @@
 
       <div id="inventory" class="card">
         <h3 class="cardTitle">Items</h3>
-
-        <!-- <div id="itemsList" class="reorderList">
-          <div class="item">
-            <div class="dragHandle" draggable="false">↕</div>
-            <input class="itemName" value="${Json.name}"></input>
-            <input class="itemAmount" value="${Json.amount}"></input>
-            <input class="itemRank" value="${Json.rank}"></input>
-            <input class="itemDescription" value="${Json.description}"></input>
-            <button type="button" class="removeItem confirm" value="${Json.name}">✕</button>
-          </div>
-        </div> -->
-
-
-        <table id="itemsTable">
-          <thead>
-            <tr>
-              <th id="handleHeader"> </th>
-              <th id="itemNameHeader"><span>  Name</span></td>
-              <th id="itemRankHeader"> <span> Rank</span></td>
-              <th id="itemAmountHeader"> <span> Amount</span></td>
-              <th id="itemDescriptionHeader"> <span> Description</span></td>
-              <th id="removeItemHeader"><!-- <span> Remove</span> --></th>
-            </tr>
-          </thead>
-          <tbody class="reorderList">
-            <tr class="item">
-              <td class="handle">
-                <div class="dragHandle" draggable="false">↕</div>
-              </td>
-              <td class="itemName"> <input class="itemName" value="${Json.name}"></input></td>
-              <td class="itemRank"> <input class="itemRank" value="${Json.rank}"></input></td>
-              <td class="itemAmount"> <input class="itemAmount" value="${Json.amount}"></input></td>
-              <td class="itemDescription"> <input class="itemDescription" value="${Json.description}"></input></td>
-              <td class="removeItem"> <button type="button" class="removeItem confirm" value="${Json.name}">✕</button></td>
-            </tr>
-          </tbody>
-        </table>
-        <button type="button" id="addItem">New premade item</button>
+        <div id="itemsList" class="reorderList">
+          <!-- <details class="item">
+            <summary>
+              <div class="dragHandle" draggable="false">↕</div>
+              <input class="itemName" value="${Json.name}"></input>
+              <label>(x<input type="number" class="itemAmount noArrows" value="${Json.amount}"></input>)</label>
+              <button type="button" class="removeItem confirm" value="${Json.name}">✕</button>
+            </summary>
+            <label>rank <input class="itemRank" value="${Json.rank}"></input></label>
+            <label><select class="itemType">
+                <option value="misc">Misc</option>
+                <option value="shield">Shield</option>
+                <option value="weapon">Weapon</option>
+                <option value="armor">Armor</option>
+                <option value="ring">Ring</option>
+                <option value="armsInventory">Arms Inventory</option>
+                <option value="lighthouse">Lighthouse</option>
+                <option value="weapon">Weapon</option>
+              </select></label>
+            <label>(<input class="itemTags" value="${Json.tags}"></input>)</label>
+            <textarea class="itemDescription field"></textarea>
+          </details> -->
+        </div>
+        <!-- <button type="button" id="addPremadeItem">New premade item</button> -->
+        <!-- <label>Add premade item: <select id="addPremadeItem"></select></label> -->
         <button type="button" id="addEmptyItem">New custom item</button>
-        <button type="button" id="addEmptyEquipment">New custom equipment</button>
-
       </div>
+
 
     </form>
   </main>

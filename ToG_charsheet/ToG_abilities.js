@@ -67,6 +67,7 @@ var posada_startAbilities = ["ANALYSIS"]
 var aven_startAbilities = ["FAMILY_SWORDSMANSHIP"]
 var yanetta_startAbilities = ["SHROUDED_IN_FLAME"]
 
+
 var quickstart_values = [
     {
         source: "human",
@@ -104,7 +105,8 @@ Shake the Foundations of the Tower: Whenever you shake the status quo, you gain 
     {
         source: "heir",
         credits: 50000,
-        trigger: `Competition: Whenever you defeat another Heir or ensure they won’t be a competitor, you gain experience equal to three times their highest attribute` },
+        trigger: `Competition: Whenever you defeat another Heir or ensure they won’t be a competitor, you gain experience equal to three times their highest attribute`
+    },
     {
         source: "keene",
         credits: 20000,
@@ -1574,4 +1576,244 @@ var yanetta_abilities = [{
     source: "family",
     type: "yanetta",
     shinsu: false
+}]
+
+
+var premade_items = [{
+    name: "Dragonslayer Amulet",
+    type: "misc",
+    tags: "special",
+    rank: "",
+    description: `A cracked dragon scale set in a golden disc. Attacks you make ignore the Resistance of any dragons or dragonkind.`,
+},
+{
+    name: "Dragonslayer Greatshield",
+    type: "shield",
+    tags: "special",
+    rank: "B",
+    description: `This grants no dice to Brawl rolls made to block an attack. It has 500 Structure and 200 Toughness. If it becomes broken, it is fully repaired by the next day. [-25% damage from dragons]`,
+},
+{
+    name: "Dragonslayer Greataxe",
+    type: "weapon",
+    tags: "Blade, special",
+    rank: "C",
+    description: `While wielding this two-handed axe, your Brawl rolls are Impaired 2 (for a net of +0 dice), but increase your Damage Base by 2 and deal 2d6 Fatigue on a hit. You can hold the axe over your head, charge it with power, and then swing with enough force to devastate anything you hit. This requires an action and causes you to take Injuries and Fatigue equal to half your Might Edge (rounded down). You make a Brawl roll—as normal, your target can attempt to dodge, and they make that roll with 2 more dice. If you hit, you deal triple damage. This includes the base damage, all damage from other sources, and the passive additional damage the axe normally deals (increasing it to 6d6 Fatigue). Whether you hit or not, all creatures adjacent to your target (except you) take 2d6 Injuries (reduced by their Resistance Edge, minimum 1) and 1d6 Fatigue. If, instead, you take an action to charge the axe, then on a hit you deal quintuple damage (increasing the passive damage to 10d6 Fatigue), and all adjacent creatures take 4d6 Injuries (reduced by their Resistance Edge, minimum 1) and 2d6 Fatigue. [+50% damage to dragons]`,
+},
+{
+    name: "Dragonslayer's Crescent Axe",
+    type: "weapon",
+    tags: "Blade, special",
+    rank: "C",
+    description: `While wielding this one-handed axe, your Brawl rolls are Impaired 1 (for a net of +1 dice), but deal 1d6 Fatigue on a hit and increase your Damage Base by 1. [+50% damage to dragons]`,
+},
+{
+    name: "Opera",
+    type: "lighthouse",
+    tags: "special",
+    rank: "S",
+    description: `Allows the Light Bearer to conduct the battlefield to their will.
+Range: 1,000 miles
+Structure 1000, Toughness 1000
+Bonus: +200
+Abilities:
+-All abilities of a Rank B Lighthouse.
+-The Lighthouse can split off fifty smaller units. These units regenerate over time, at a rate of two units per day
+-The sub-units can have their sizes changed to be an inch or up to ten feet across.
+-The sub-units can be placed on something else (automatically and semi-permanently adhering) and put into a sort of tracking mode- while in this mode, you can find them and their location at any distance.
+-While using Light Bearer abilities, treat your Wits as though it was doubled.
+-Light Bearer abilities don’t cause you to accept Confusion.
+-[Abilities used with this can affect deities]`,
+},
+{
+    name: "Lancer's Armor",
+    type: "armor",
+    tags: "special",
+    rank: "",
+    description: `Summons mount (M 82 A 100 W 30 H 30 R 82. Flight (free)). Mount has own action, rider and mount share movement. Armor has Structure 1000 Toughness 1000, blocks 75% of incoming Injuries/Fatigue, Hinders wearer on all Agility rolls.`,
+},
+{
+    name: "Life Ring",
+    type: "misc",
+    tags: "special",
+    rank: "D",
+    description: `A ring with a gem of red shinsu. Gives +10 Resistance and +5 Might.`,
+},
+{
+    name: "Demon's Maw",
+    type: "weapon",
+    tags: "Spear, special",
+    rank: "A",
+    description: `One of six javelins made from the many mouths of a fear drake. When it hits an enemy, and that enemy is Dying or has three Exhaustion, the fangs open up and swallow that enemy whole. Only one enemy can be swallowed at a time. Anyone inside is held in stasis until they’re released by the destruction of the Demon’s Maw or by using it to swallow another enemy.`,
+},
+{
+    name: "Hoarfrost Pike",
+    type: "weapon",
+    tags: "Spear, special",
+    rank: "C",
+    description: `A halberd that always has a light coating of frost. On hit deals 1d6 Fatigue and Injuries.`,
+},
+{
+    name: "Lance",
+    type: "weapon",
+    tags: "Needle, special",
+    rank: "C",
+    description: `After using action to move, can make a free attack that deals double damage. Target is Hindered on blocking.`,
+},
+{
+    name: "Armor Inventory",
+    type: "inventory",
+    tags: "",
+    rank: "D",
+    description: `Structure 30, Toughness 50, +0 dice.`,
+},
+{
+    name: "Armor Inventory",
+    type: "inventory",
+    tags: "",
+    rank: "C",
+    description: `Structure 60, Toughness 100, +5 dice.`,
+},
+{
+    name: "Armor Inventory",
+    type: "inventory",
+    tags: "",
+    rank: "B",
+    description: `Structure 120, Toughness 150, +8 dice.`,
+},
+{
+    name: "Armor Inventory",
+    type: "inventory",
+    tags: "",
+    rank: "A",
+    description: `Structure >120, Toughness >150, +? Dice.`,
+},
+{
+    name: "Armor Inventory",
+    type: "inventory",
+    tags: "",
+    rank: "S",
+    description: `Structure unknown, Toughness unknown, bonus dice unknown.`,
+},
+{
+    name: "Lighthouse",
+    type: "lighthouse",
+    tags: "",
+    rank: "E",
+    description: `Range: Close
+Structure 10
+Toughness 5
+Bonus: +0
+Abilities:
+Spreading light in a large area, enough to illuminate a large room
+Voice calls between two or more Lighthouses, or between a Pocket and any number of Lighthouses.
+Text communication between two or more Lighthouses.
+Translating any known language.
+Information gathering and relaying. The Lighthouse can record audio and video and transmit that data to any receiving Lighthouse. It can also play recorded audio.
+Scan an area, person, or object within Close range.
+Various minor utility functions, like a timer and alarm clock.`,
+},
+{
+    name: "Lighthouse",
+    type: "lighthouse",
+    tags: "",
+    rank: "D",
+    description: `Range: Short
+Structure 20
+Toughness 10
+Bonus: +1
+Abilities:
+All abilities of a Rank E Lighthouse.
+Access to BOX, an information-sharing network of Light Bearers. Using BOX, you can find any information that isn’t being deliberately kept secret. Finding information that isn’t readily available requires a Think roll.
+Access to a small storage space inside the Lighthouse. This space can hold any one object smaller than a person.
+The Lighthouse can support weight up to a small child. This limit applies to any objects in the inside storage space.
+Any side of the Lighthouse can function as a display screen, showing any of the recorded images or video, as well as any images or video available over BOX.
+The scan range increases to Short.
+The Lighthouse can turn itself invisible while inactive. While inactive, it cannot be used as a storage space, nor can any of its abilities be used.`,
+},
+{
+    name: "Lighthouse",
+    type: "lighthouse",
+    tags: "",
+    rank: "C",
+    description: `Range: Medium
+Structure 40
+Toughness 20
+Bonus: +2
+Abilities:
+All abilities of a Rank D Lighthouse.
+The storage space is about the size of a walk-in closet. Additionally, the Light Bearer can be inside the space while controlling the Lighthouse and access all its functions. The interior is fully customizable, including creating furniture.
+The Lighthouse can support weight up to two large people, including any objects and people inside the storage space.
+The scan range increases to Medium.
+The Lighthouse can split off up to three smaller units, in addition to the main Lighthouse. These units do not have a storage space and can only be controlled by the Light Bearer. They do not count against the Light Bearer’s total number of Lighthouses controlled. They also do not grant additional die bonuses. Each Light Bearer can only have one of their controlled Lighthouses do this at a time.`,
+},
+{
+    name: "Lighthouse",
+    type: "lighthouse",
+    tags: "",
+    rank: "B",
+    description: `Range: Long
+Structure 75
+Toughness 40
+Bonus: +5
+Abilities:
+All abilities of a Rank C Lighthouse.
+The storage space is the size of a bedroom, and can provide breathable air and otherwise livable conditions for up to one week. It does not provide food, water, or any other sustenance—it just maintains the internal environment and provides oxygen.
+The Lighthouse can support roughly two tons of weight, including any objects and people inside the storage space.
+The Lighthouse can split off up to ten smaller units. This otherwise acts like the ability of Rank C Lighthouses.
+The scan range increases to Long.
+The Lighthouse can turn itself invisible and still be active, using abilities that don’t give off light and having the inside storage space be available for use.`,
+},
+{
+    name: "Lighthouse",
+    type: "lighthouse",
+    tags: "",
+    rank: "A",
+    description: `Range: Long
+Structure 150+
+Toughness 75+
+Bonus: +10
+Abilities:
+All abilities of a Rank B Lighthouse.
+The Lighthouse can split off at least fifty smaller units. The actual maximum is unknown.
+The other abilities are currently unknown`,
+},
+{
+    name: "Lighthouse",
+    type: "lighthouse",
+    tags: "",
+    rank: "S",
+    description: `Unknown`,
+},
+{
+    name: "Wand",
+    type: "misc",
+    tags: "",
+    rank: "E",
+    description: `Abilities: Shot, Heal
+Heart: 10`,
+},
+{
+    name: "Wand",
+    type: "misc",
+    tags: "",
+    rank: "D",
+    description: `Abilities: Shot, Heal, Flight
+Heart: 20`,
+},
+{
+    name: "Wand",
+    type: "misc",
+    tags: "",
+    rank: "C",
+    description: `Abilities: Shot, Heal, Flight, Dispel
+Heart: 40`,
+},
+{
+    name: "Wand",
+    type: "misc",
+    tags: "",
+    rank: "B",
+    description: `Abilities: Shot, Heal, Flight, Dispel, Shinsu Wall
+Heart: 80`,
 }]
