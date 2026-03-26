@@ -9,6 +9,10 @@ let toggles = document.getElementsByClassName("dropdownToggle");
 // const cyphers = document.getElementById('cyphersList');
 // const skills = document.getElementById('skillsList');
 
+let useSessionStorage = false;
+
+let disableSaving = false;
+
 $(document).ready(function () {
     loadForm();
     console.log("after loading form");
@@ -126,6 +130,25 @@ $(document).ready(function () {
         $("#settingsWindow").css('display', 'none');
         confirmDelete(null, "saveData", "all saved data")
     });
+    $("#readURL").on("click", function () {
+        /* let searchParams = new URLSearchParams(window.location.search);
+        console.log("searchParams: " + searchParams);
+        // makeShareLink();
+        searchParams.forEach((value, key) => {
+            console.log(value, key);
+        }); */
+        let values = getValues("1PT7MxBo3l4FcZSTSho65VoqCq8McEotI6XSPxAiNb9c", "Sheet1!A1:D5")
+        values.forEach(value => {
+            console.log(value);
+        });
+
+    });
+
+    $("#share").on("click", function () {
+        console.log(makeShareLink());
+    });
+
+
     $("#calculatestats").on("click", function () {
         calculateStats();
     });
@@ -1890,6 +1913,9 @@ function ColorLuminance(hex, lum) {
 
 /* saving/loading */
 function saveForm() {
+    if (disableSaving) {
+        return;
+    }
     // localStorage.clear();
     inputsToSave = document.getElementsByClassName("save");
     for (const input of inputsToSave) {
@@ -1990,15 +2016,21 @@ function saveForm() {
 }
 
 function getThisStorage(key) {
+    if (useSessionStorage) {
+        return sessionStorage.getItem("ToG_" + key);
+    }
     return localStorage.getItem("ToG_" + key);
 }
 
 function setThisStorage(key, value) {
+    if (useSessionStorage) {
+        return sessionStorage.setItem("ToG_" + key, value);
+    }
     return localStorage.setItem("ToG_" + key, value);
 }
 
 function loadForm() {
-    if (localStorage.length == 0) {
+    if (localStorage.length == 0 && !useSessionStorage) {
 
         $("#quickstartWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
@@ -2210,7 +2242,7 @@ function clearData() {
     console.log("clearing savedata");
     let keysToRemove = [];
     for (var i = 0; i < localStorage.length; i++) {
-        console.log("substring = "+localStorage.key(i).substring(0, 4));
+        console.log("substring = " + localStorage.key(i).substring(0, 4));
         if (localStorage.key(i).substring(0, 4) === "ToG_") {
             keysToRemove.push(localStorage.key(i))
         }
@@ -2219,6 +2251,176 @@ function clearData() {
         localStorage.removeItem(key);
     });
 }
+function makeShareLink() {
+    let link = "";
+    for (var i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i) != "ToG_abilitiesList" && localStorage.key(i) != "ToG_conditionsList"
+            && localStorage.key(i) != "ToG_itemsList" && localStorage.key(i) != "ToG_logItemsList") {
+            // keysToRemove.push(localStorage.key(i))
+            link += localStorage.key(i) + '=' + localStorage.getItem(localStorage.key(i)).replace(" ", "_") + '&'
+        }
+    }
+    return link;
+}
+
+
+
+console.log("spreadsheet values: " + getValues("1PT7MxBo3l4FcZSTSho65VoqCq8McEotI6XSPxAiNb9c"));
+
+function getValues(spreadsheetId, range, callback) {
+    try {
+        gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: spreadsheetId,
+            range: range,
+        }).then((response) => {
+            const result = response.result;
+            const numRows = result.values ? result.values.length : 0;
+            console.log(`${numRows} rows retrieved.`);
+            if (callback) callback(response);
+        });
+    } catch (err) {
+        // document.getElementById('content').innerText = err.message;
+        console.log("error: " + err.message);
+        return;
+    }
+}
+
+const CLIENT_ID = '242438580086-f1jgb5nsn2lke3fjjk6e0at0e26aci4a.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyBzMIbFeMle5yAzxSGc2lkpNfbcE5CB36g';
+
+// Discovery doc URL for APIs used by the quickstart
+const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
+
+// Authorization scopes required by the API; multiple scopes can be
+// included, separated by spaces.
+const SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly';
+
+let tokenClient;
+let gapiInited = false;
+let gisInited = false;
+
+/**
+ * Callback after api.js is loaded.
+ */
+function gapiLoaded() {
+    gapi.load('client', initializeGapiClient);
+}
+
+/**
+ * Callback after the API client is loaded. Loads the
+ * discovery doc to initialize the API.
+ */
+async function initializeGapiClient() {
+    await gapi.client.init({
+        apiKey: API_KEY,
+        discoveryDocs: [DISCOVERY_DOC],
+    });
+    gapiInited = true;
+    maybeEnableButtons();
+}
+
+/**
+ * Callback after Google Identity Services are loaded.
+ */
+function gisLoaded() {
+    tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: '', // defined later
+    });
+    console.log("token client: " + tokenClient);
+    gisInited = true;
+    maybeEnableButtons();
+}
+
+/**
+ * Enables user interaction after all libraries are loaded.
+ */
+function maybeEnableButtons() {
+    if (gapiInited && gisInited) {
+        document.getElementById('authorize_button').style.visibility = 'visible';
+    }
+}
+
+/**
+ *  Sign in the user upon button click.
+ */
+function handleAuthClick() {
+    tokenClient.callback = async (resp) => {
+        if (resp.error !== undefined) {
+            throw (resp);
+        }
+        // document.getElementById('signout_button').style.visibility = 'visible';
+        // document.getElementById('authorize_button').innerText = 'Refresh';
+        // let data="";
+        let data = await getStoredData();
+        console.log("data: " + data);
+    };
+
+    if (gapi.client.getToken() === null) {
+        // Prompt the user to select a Google Account and ask for consent to share their data
+        // when establishing a new session.
+        tokenClient.requestAccessToken({ prompt: 'consent' });
+    } else {
+        // Skip display of account chooser and consent dialog for an existing session.
+        tokenClient.requestAccessToken({ prompt: '' });
+    }
+}
+
+/**
+ *  Sign out the user upon button click.
+ */
+function handleSignoutClick() {
+    const token = gapi.client.getToken();
+    if (token !== null) {
+        google.accounts.oauth2.revoke(token.access_token);
+        gapi.client.setToken('');
+        document.getElementById('content').innerText = '';
+        document.getElementById('authorize_button').innerText = 'Authorize';
+        document.getElementById('signout_button').style.visibility = 'hidden';
+    }
+}
+
+/**
+ * Print the names and majors of students in a sample spreadsheet:
+ * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+ */
+async function getStoredData() {
+    let response;
+    let row = 1;
+    try {
+        // Fetch first 10 files
+        response = await gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: '1PT7MxBo3l4FcZSTSho65VoqCq8McEotI6XSPxAiNb9c',
+            range: 'Sheet1!A'+row+':B'+row+'',
+        });
+    } catch (err) {
+        document.getElementById('content').innerText = err.message;
+        return;
+    }
+    const range = response.result;
+    if (!range || !range.values || range.values.length == 0) {
+        document.getElementById('content').innerText = 'No values found.';
+        return;
+    }/* 
+    console.log("range: "+range);
+    console.log("range.values: "+range.values);
+    useSessionStorage = true;
+    range.values.forEach(row => {
+        setThisStorage(row[0], row[1]);
+    }); */
+    console.log("importing save named "+range.values[0][0]);
+    importSave(range.values[0][1])
+    // loadForm();
+    // Flatten to string to display
+    const output = "success?"/* range.values.reduce(
+        (str, row) => `${str}${row[0]}, ${row[1]}\n`,
+        'key, value:\n'); */
+    return output;
+}
+
+
+
 
 // add a function to call when the <input type=file> status changes, but don't "submit" the form
 document.getElementById('upload').addEventListener('change', handle_file_select, false);
