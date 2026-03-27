@@ -32,7 +32,8 @@ h1, h2, h3, h4, h5 {
 
     --agility-dark: #c1a60c;
     --agility-main: #ffe23d;
-    --agility-light: #ffe865;
+    --agility-light: #fff1a4;
+    --agility-main: hsl(51, 100%, 72%);
 
     --hearts-dark: #9921b7;
     --hearts-main: #BA55D3;
@@ -46,6 +47,15 @@ h1, h2, h3, h4, h5 {
     --resistance-dark: #52c852;
     --resistance-main: #74f174;
     --resistance-light: #b7feb7;
+
+
+    --might-main: hsl(9, 90%, 64%);
+    --agility-main: hsl(51, 90%, 70%);
+    --hearts-main: hsl(288, 59%, 58%);
+    --wits-main: hsl(203, 92%, 75%);
+    --resistance-main: hsl(120, 82%, 70%);
+
+
 
     --background: #919191;
     --background-darker: #575757;
@@ -221,7 +231,9 @@ form {
 
 @media(max-width:1500px) {
     form {
-        grid-template-columns: 24.6em 1fr;
+        /* grid-template-columns: 25.6em 1fr; */
+        /* grid-template-columns: 1fr 2fr; */
+        grid-template-columns: 24em 1fr;
         grid-template-areas:
             "info info"
             "statRoll abilities"
@@ -263,8 +275,9 @@ form {
     font-size: 1em;
     display: flex;
     flex-direction: row;
-    /* justify-content: space-between; */
+    justify-content: space-evenly;
     gap: 1em;
+    gap: 10px;
     row-gap: 10px;
     text-align: center;
     flex-wrap: wrap;
@@ -298,35 +311,45 @@ column-gap: 10px; */
     font-size: 1em;
 }
 
-.statLabel.might {
+.statLabel.might, #brawl, #threatenM, #mightRoll {
     background-color: var(--might-main);
-    --dark: var(--might-dark);
+    /* --dark: var(--might-dark); */
     --main: var(--might-main);
-    --light: var(--might-light);
+    /* --light: var(--might-light); */
 }
-.statLabel.agility {
+.statLabel.agility, #finesse, #throw, #move, #agilityRoll {
     background-color: var(--agility-main);
-    --dark: var(--agility-dark);
+    /* --dark: var(--agility-dark); */
     --main: var(--agility-main);
-    --light: var(--agility-light);
+    /* --light: var(--agility-light); */
 }
-.statLabel.hearts {
+.statLabel.hearts, #reachOut, #attune, #heartsRoll {
     background-color: var(--hearts-main);
-    --dark: var(--hearts-dark);
+    /* --dark: var(--hearts-dark); */
     --main: var(--hearts-main);
-    --light: var(--hearts-light);
+    /* --light: var(--hearts-light); */
 }
-.statLabel.wits {
+.statLabel.wits, #manipulate, #think, #threatenW, #witsRoll {
     background-color: var(--wits-main);
-    --dark: var(--wits-dark);
+    /* --dark: var(--wits-dark); */
     --main: var(--wits-main);
-    --light: var(--wits-light);
+    /* --light: var(--wits-light); */
 }
-.statLabel.resistance {
+.statLabel.resistance, #resistanceRoll {
     background-color: var(--resistance-main);
-    --dark: var(--resistance-dark);
+    /* --dark: var(--resistance-dark); */
     --main: var(--resistance-main);
-    --light: var(--resistance-light);
+    /* --light: var(--resistance-light); */
+}
+
+.statLabel, #rolls tbody tr {
+    --light: color-mix(in oklch, var(--main) 100%, white 100%);
+    /* --light: color-mix(in oklch, var(--main) 100%, white 100%); */
+    --dark: hsl(from var(--main) h s 50%);
+}
+
+.statLabel button {
+    background-color: var(--dark) !important;
 }
 
 .statFrame {
@@ -382,6 +405,7 @@ span.fieldTitle {
 
 .tooltip.edge, .tooltip.harm {
     font-size: max(0.4em, var(--min-font-size));
+    font-size: 16px;
     padding-left: 0.1em;
 }
 
@@ -495,14 +519,58 @@ input.baseStat, input.tempBonuses, input.permBonuses {
     cursor: pointer;
     text-decoration: none;
 }
-input[type='checkbox']:checked+.bonusList {
-    display: flex;
+
+.bonusList {
+    display: none;
+    /* opacity: 0%; */
+    /* display: flex; */
     flex-direction: column;
     gap: 2px;
 }
 
+/* .bonusToggler:focus-within, .bonusToggler:has(~ul:focus-within) {
+    background-color: cyan;
+} */
+
+/* .bonusToggler:focus+.bonusList,
+.bonusList:focus,
+.bonusList:focus-within {
+    opacity: 100%;
+    user-select: none;
+}
+ */
+
+
+
+/* .bonusToggler:focus-within~.bonusList,
+.bonusToggler:has(~ul:focus-within)~.bonusList,
+.bonusList:focus {
+    opacity: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+}
+ */
+/* .bonusList:focus {
+    
+    background-color: red;
+} */
+/* 
+.bonusToggler:has(*:focus) {
+    background-color: red;
+} */
+/* .dropdownToggle:focus+.bonusList { */
+
+input[type='checkbox']:checked+.bonusList {
+
+    display: flex;
+    /* flex-direction: column;
+    gap: 2px; */
+}
+
 .bonusList {
-    display: none;
+    /* display: none; */
     position: absolute;
     padding: 0;
     /* padding-top: 10px; */
@@ -537,6 +605,7 @@ input[type='checkbox']:checked+.bonusList {
 }
 .bonusList input {
     background-color: var(--light);
+    font-size: 1em;
 }
 
 .bonusList li .bonusSource {
@@ -805,36 +874,6 @@ tr {
 
 #mightRoll, #agilityRoll, #heartsRoll, #witsRoll, #resistanceRoll {
     font-weight: bold;
-}
-
-#brawl, #threatenM, #mightRoll {
-    /* background-color: var(--might-main); */
-    --dark: var(--might-dark);
-    --main: var(--might-main);
-    --light: var(--might-light);
-}
-#finesse, #throw, #move, #agilityRoll {
-    /* background-color: var(--agility-main); */
-    --dark: var(--agility-dark);
-    --main: var(--agility-main);
-    --light: var(--agility-light);
-}
-#reachOut, #attune, #heartsRoll {
-    /* background-color: var(--hearts-main); */
-    --dark: var(--hearts-dark);
-    --main: var(--hearts-main);
-    --light: var(--hearts-light);
-}
-#manipulate, #think, #threatenW, #witsRoll {
-    /* background-color: var(--wits-main); */
-    --dark: var(--wits-dark);
-    --main: var(--wits-main);
-    --light: var(--wits-light);
-}
-#resistanceRoll {
-    --dark: var(--resistance-dark);
-    --main: var(--resistance-main);
-    --light: var(--resistance-light);
 }
 
 span.overwhelmIcon {
@@ -1889,6 +1928,17 @@ select.quickstart {
     flex-direction: row;
     gap: 5px;
 }
+
+#statPurchaseOutcome .outcomeLabel {
+    width: 5em;
+    display: inline-block;
+}
+
+#statPurchaseOutcome {
+    font-size: 1.4em;
+}
+
+
 @media(max-width:900px) {
     #statPurchaseSection label {
         flex-direction: column;
@@ -2013,4 +2063,15 @@ select.quickstart {
     border-color: black;
     border: 1px solid black;
 
+} */
+
+/* settings */
+
+#sharingInfo {
+    display: none;
+}
+
+
+/* *:focus{
+    background-color: pink!important;
 } */

@@ -30,10 +30,6 @@
 
   <main>
     <form>
-
-      <button type="button" id="share">Share!?</button>
-      <button type="button" id="readURL">Read URL parameters</button>
-      <button type="button" id="authorize_button" onclick="handleAuthClick()">Authorize</button>
       <div id="basicInfo">
 
         <label for="name" class="basicInfo">name
@@ -103,7 +99,8 @@
       </div>
       <div id="statsAndRolls">
         <div id="stats" class="card">
-          <!--  Might
+          <!--  
+          Might
           Agility
           Hearts
           Wits
@@ -120,7 +117,7 @@
                     <span class>+</span><span class="permBonuses save" id="permMightMods">0</span>
                   </label>
                   <input class="dropdownToggle" id='mightPermBonusList' type='checkbox' />
-                  <ul class="bonusList dropdown">
+                  <ul class="bonusList dropdown" tabindex="0">
                     <span class="bonusHeader">
                       <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
                     </span>
@@ -132,7 +129,7 @@
                     <span class>+</span><span class="tempBonuses save" id="tempMightMods">0</span>
                   </label>
                   <input class="dropdownToggle" id='mightTempBonusList' type='checkbox' />
-                  <ul class="bonusList dropdown">
+                  <ul class="bonusList dropdown" tabindex="0">
                     <span class="bonusHeader">
                       <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
                     </span>
@@ -173,7 +170,7 @@
                     <span class>+</span><span class="permBonuses save" id="permAgilityMods">0</span>
                   </label>
                   <input class="dropdownToggle" id='agilityPermBonusList' type='checkbox' />
-                  <ul class="bonusList dropdown">
+                  <ul class="bonusList dropdown" tabindex="0">
                     <span class="bonusHeader">
                       <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
                     </span>
@@ -185,7 +182,7 @@
                     <span class>+</span><span class="tempBonuses save" id="tempAgilityMods">0</span>
                   </label>
                   <input class="dropdownToggle" id='agilityTempBonusList' type='checkbox' />
-                  <ul class="bonusList dropdown">
+                  <ul class="bonusList dropdown" tabindex="0">
                     <span class="bonusHeader">
                       <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
                     </span>
@@ -227,7 +224,7 @@
                     <span class>+</span><span class="permBonuses save" id="permHeartsMods">0</span>
                   </label>
                   <input class="dropdownToggle" id='heartsPermBonusList' type='checkbox' />
-                  <ul class="bonusList dropdown">
+                  <ul class="bonusList dropdown" tabindex="0">
                     <span class="bonusHeader">
                       <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
                     </span>
@@ -239,7 +236,7 @@
                     <span class>+</span><span class="tempBonuses save" id="tempHeartsMods">0</span>
                   </label>
                   <input class="dropdownToggle" id='heartsTempBonusList' type='checkbox' />
-                  <ul class="bonusList dropdown">
+                  <ul class="bonusList dropdown" tabindex="0">
                     <span class="bonusHeader">
                       <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
                     </span>
@@ -280,7 +277,7 @@
                     <span class>+</span><span class="permBonuses save" id="permWitsMods">0</span>
                   </label>
                   <input class="dropdownToggle" id='witsPermBonusList' type='checkbox' />
-                  <ul class="bonusList dropdown">
+                  <ul class="bonusList dropdown" tabindex="0">
                     <span class="bonusHeader">
                       <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
                     </span>
@@ -292,7 +289,7 @@
                     <span class>+</span><span class="tempBonuses save" id="tempWitsMods">0</span>
                   </label>
                   <input class="dropdownToggle" id='witsTempBonusList' type='checkbox' />
-                  <ul class="bonusList dropdown">
+                  <ul class="bonusList dropdown" tabindex="0">
                     <span class="bonusHeader">
                       <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
                     </span>
@@ -333,7 +330,7 @@
                     <span class>+</span><span class="permBonuses save" id="permResistanceMods">0</span>
                   </label>
                   <input class="dropdownToggle" id='resistancePermBonusList' type='checkbox' />
-                  <ul class="bonusList dropdown">
+                  <ul class="bonusList dropdown" tabindex="0">
                     <span class="bonusHeader">
                       <h5>Permanent Bonuses</h5> <button type="button" class="addBonus">+</button>
                     </span>
@@ -345,7 +342,7 @@
                     <span class>+</span><span class="tempBonuses save" id="tempResistanceMods">0</span>
                   </label>
                   <input class="dropdownToggle" id='resistanceTempBonusList' type='checkbox' />
-                  <ul class="bonusList dropdown">
+                  <ul class="bonusList dropdown" tabindex="0">
                     <span class="bonusHeader">
                       <h5>Temporary Bonuses</h5> <button type="button" class="addBonus">+</button>
                     </span>
@@ -991,6 +988,43 @@
       <div id="statCost">Exp Cost: <span>0</span></div>
       <span id="tierUpMessage">Tier increased! Please purchase these levels before buying more.</span>
       <button type="button" id="applyStatPurchase">Spend Experience!</button>
+
+      <button type="button" id="raiseToNextTier">Raise stats evenly until next tier</button>
+
+
+      <div id="statPurchaseOutcome">
+        <span id="mightOutcome">
+          <span class="outcomeLabel">Might: </span><span class="originalStat">0</span> → <span class="newStat">0</span></span><br>
+        <span id="agilityOutcome">
+          <span class="outcomeLabel">Agility: </span><span class="originalStat">0</span> → <span class="newStat">0</span></span><br>
+        <span id="heartsOutcome">
+          <span class="outcomeLabel">Hearts: </span><span class="originalStat">0</span> → <span class="newStat">0</span></span><br>
+        <span id="witsOutcome">
+          <span class="outcomeLabel">Wits: </span><span class="originalStat">0</span> → <span class="newStat">0</span></span><br>
+        <span id="resistanceOutcome">
+          <span class="outcomeLabel">Resistance: </span><span class="originalStat">0</span> → <span class="newStat">0</span></span>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <div id="purchaseLog" class="popup">
+    <div class="windowTitle">
+      <h1>EXP Purchase Log:</h1>
+      <button class="closeSelector">✕</button>
+    </div>
+    <div id="purchasesList" class="list">
+      <!-- <div class="logItem">
+        <div class="logItemCost"></div> for
+        <div class="logItemSource"></div>:
+        <div class="logItemName"></div>
+      </div> -->
     </div>
   </div>
 
@@ -1006,19 +1040,6 @@
     </div>
   </div>
 
-  <div id="purchaseLog" class="popup">
-    <div class="windowTitle">
-      <h1>Purchase Log:</h1>
-      <button class="closeSelector">✕</button>
-    </div>
-    <div id="purchasesList" class="list">
-      <!-- <div class="logItem">
-        <div class="logItemCost"></div> for
-        <div class="logItemSource"></div>:
-        <div class="logItemName"></div>
-      </div> -->
-    </div>
-  </div>
 
   <div id="settingsWindow" class="popup">
     <div class="windowTitle">
@@ -1065,6 +1086,16 @@
         <input class="form-control" id="upload_file"></input>
         <input id="upload" type="file" accept=".txt" name="files" size=40>
       </div>
+
+      <h4>Upload character for sharing</h4>
+      <div id="shareSection">
+        <label> <span>Choose a password to restrict who can edit this character:</span> <input id="sharePassword"></label>
+        <button type="button" id="uploadSheet">Upload sheet for sharing</button>
+        <span id="sharingInfo">that is not the correct password for this character</span>
+        <span id="shareLink"></span>
+      </div>
+
+
       <!-- <button type="button" id="calculatestats">Calculate stats</button>
       <button type="button" id="calculateexp">Calculate exp</button>
       <button type="button" id="calculaterolls">Calculate rolls</button> -->
@@ -1086,15 +1117,12 @@
 
 
 </html>
-
-<!-- 
-
-
-
-
-
--->
-
+<!-- <script type="module" src="databaseModule.js"></script> -->
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-auth-compat.js"></script>
+<!-- <script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js"></script> -->
+<!-- <script src="https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js"></script> -->
 <script src="charsheet_ToG.js"></script>
-  <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-  <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+<!-- <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+  <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script> -->

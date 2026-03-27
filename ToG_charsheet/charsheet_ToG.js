@@ -13,9 +13,29 @@ let useSessionStorage = false;
 
 let disableSaving = false;
 
+let viewingSharedSheet = false;
+
+
+
+const firebaseApp = firebase.initializeApp({
+    apiKey: "AIzaSyDOGFUZMt3IKyY9_6BRHexL-3YdwMH4VOM",
+    authDomain: "tog-charsheets.firebaseapp.com",
+    projectId: "tog-charsheets",
+    storageBucket: "tog-charsheets.firebasestorage.app",
+    messagingSenderId: "242438580086",
+    appId: "1:242438580086:web:707620862fbfcf685a7c57"
+});
+const db = firebaseApp.firestore();
+
 $(document).ready(function () {
-    loadForm();
-    console.log("after loading form");
+    let searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.size != 0) {
+        useSessionStorage = true;
+        viewingSharedSheet = true;
+        loadSharedSheet(searchParams.get("id"));
+    } else {
+        loadForm();
+    }
     getConditions();
     // getPremadeItems();
     $("#newAbility").on("click", function () {
@@ -105,6 +125,10 @@ $(document).ready(function () {
     $("#openSettings").on("click", function () {
         $("#settingsWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
+        if (viewingSharedSheet) {
+            $("#shareSection label span").html("You are currently viewing a shared sheet.<br>To upload your modifications to this sheet, please enter its password: ");
+            $("#shareLink").css('display', 'none');
+        }
     });
 
     $("#applyColorChange").on("click", function () {
@@ -146,6 +170,10 @@ $(document).ready(function () {
 
     $("#share").on("click", function () {
         console.log(makeShareLink());
+    });
+    $("#uploadSheet").on("click", function () {
+        uploadSave();
+        // console.log("uploading sheet");
     });
 
 
@@ -191,8 +219,16 @@ $(document).ready(function () {
 
 
     $("#buyStats").on("click", function () {
+        $("#mightOutcome .originalStat, #mightOutcome .newStat").html($("#mightBase").val());
+        $("#agilityOutcome .originalStat, #agilityOutcome .newStat").html($("#agilityBase").val());
+        $("#heartsOutcome .originalStat, #heartsOutcome .newStat").html($("#heartsBase").val());
+        $("#witsOutcome .originalStat, #witsOutcome .newStat").html($("#witsBase").val());
+        $("#resistanceOutcome .originalStat, #resistanceOutcome .newStat").html($("#resistanceBase").val());
+
         $("#statPurchaseWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
+        $("#raiseToNextTier").prop("disabled", false);
+        $("#tierUpMessage").css('display', 'none');
     });
 
     $(".raiseStat").on("click", function () {
@@ -207,15 +243,16 @@ $(document).ready(function () {
     $("#applyStatPurchase").on("click", function () {
         purchaseStats();
     });
-
-
+    $("#raiseToNextTier").on("click", function () {
+        raiseToNextTier();
+    });
 
     $("#addEmptyItem").on("click", function () {
         addItem({ name: "", amount: "", rank: "", description: "", type: "", tags: "" })
     });
     /* $("#addPremadeItem").on("click", function () {
         // addItem({ name: "", amount: "", rank: "", description: "", type:"", tags:"" })
-
+    
         $("#exampleItemsWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
     }); */
@@ -291,12 +328,8 @@ $(document).ready(function () {
 
 
 
-
+    // only allow one bonus dropdown to be open
     $(".dropdownToggle").on("input", function () {
-        /* toggles.forEach(element => {
-            element.checked = false;
-        }); */
-
         for (const element of toggles) {
             if (element != this) {
                 element.checked = false;
@@ -304,14 +337,48 @@ $(document).ready(function () {
         }
     });
     /* $(".addBonus").on("click", function () {
-        addStatBonus();
+        addNewStatBonus(this);
     }); */
 
     var elements = document.getElementsByClassName("addBonus");
     Array.from(elements).forEach(function (element) {
         element.addEventListener('click', addNewStatBonus);
     });
+    /* var popup = document.querySelector("#might .bonusList");
+    
+        for (const element of document.querySelectorAll(".bonusList *, .bonusList")) {
+            element.style.backgroundColor = "red";
+        }
+     */
 
+    // When the user clicks anywhere outside a bonus list, hide it
+    window.onclick = function (event) {
+        // console.log("clicked: " + event.target+"("+event.target.className+") matches? " + event.target.matches(".bonusList *, .bonusList, .bonusToggler, .bonusToggler *, .dropdownToggle"));
+
+        if (document.querySelector(".dropdownToggle:checked") != null) {
+            if (event.target.matches(".bonusList *, .bonusList, .bonusToggler, .bonusToggler *, .dropdownToggle")) {
+                console.log("clicked popup");
+                // popup.style.display = "none";
+            } else {
+                console.log("clicked off popup");
+                // $(".dropdownToggle:checked").css('display', 'none');
+                document.querySelector(".dropdownToggle:checked").checked=false;
+            }
+        }
+        // console.log("checked toggles: "+document.querySelectorAll(".dropdownToggle:checked").length);
+        // 
+
+    }
+
+    /* 
+    
+    $(".bonusToggler").on("click", function () {
+        // addStatBonus();
+        console.log("bonus toggler clicked, list: "+this.parentNode.querySelector(".bonusList"));
+        this.parentNode.querySelector(".bonusList").focus();
+        this.parentNode.querySelector(".bonusList").style();
+    });
+     */
     $(".reorderList").sortable({
         axis: "y",
         handle: ".dragHandle",
@@ -629,9 +696,9 @@ function updateAbilityCosts() {
 
 function addLogItem(cost, source, name) {
     let html = `<div class="logItem">
-                    <div class="logItemCost">${cost}</div> for 
-                    <div class="logItemSource">${source}</div>:
-                    <div class="logItemName">${name}</div>
+                    <span class="logItemCost">${cost}</span> for 
+                    <span class="logItemSource">${source}</span>:
+                    <span class="logItemName">${name}</span>
                 </div>`
     $(html).appendTo("#purchasesList");
 }
@@ -1004,7 +1071,7 @@ function calculateStats() {
         }
     }
 
-    console.log("fragile amount: " + document.querySelectorAll('.condition[name="Fragile"]').length);
+    // console.log("fragile amount: " + document.querySelectorAll('.condition[name="Fragile"]').length);
 
 
     // let maxTrauma = 4+Math.floor(parseInt($("#witsBase").value) / 25);
@@ -1017,7 +1084,7 @@ function addStatBonus(source, amount, parent) {
     // console.log("parent is " + parent);
     // [object HTMLUListElement]
     html = `<li class="bonusListItem">
-                    <input type="number" class="bonusAmount"  value=${amount}>
+                    +<input type="number" class="bonusAmount"  value=${amount}>
                     <input class="bonusSource" value="${source}"><button type="button" class="removeBonus" value="">✕</button>
                   </li>`;
     $(parent).append(html);
@@ -1032,12 +1099,13 @@ function addStatBonus(source, amount, parent) {
 }
 
 function addNewStatBonus() {
-
+    console.log("adding stat bonus");
     html = `<li class="bonusListItem">
-                    <input type="number" class="bonusAmount">
+                    +<input type="number" class="bonusAmount">
                     <input class="bonusSource"><button type="button" class="removeBonus" value="">✕</button>
                   </li>`;
     // $(html).appendTo("#abilitiesList");
+    console.log("this: " + this);
     console.log("adding stat bonus to " + this.parentNode.parentNode);
     $(this.parentNode.parentNode).append(html);
 
@@ -1142,7 +1210,7 @@ function calculateRolls() {
     let rolls = document.querySelector("#rolls table");
     let thisStat = "might"
     let parentStat = document.querySelector("#" + thisStat + "Roll");
-    console.log("rolls: " + rolls.querySelectorAll("tbody tr") + " length = " + rolls.querySelectorAll("tbody tr").length);
+    // console.log("rolls: " + rolls.querySelectorAll("tbody tr") + " length = " + rolls.querySelectorAll("tbody tr").length);
     for (const roll of rolls.querySelectorAll("tbody tr")) {
         // console.log(roll.id.substring(roll.id.length - 4, roll.id.length));
         // console.log(roll.id.substring(roll.id.length - 4, roll.id.length) + "=? Roll");
@@ -1349,14 +1417,12 @@ function getTier(exp) {
         if (exp < 5) {
             return 1;
         }
-        console.log("base tier");
         return Math.floor(Math.log(exp / 500) / Math.log(5)) + 2;
         // Math.log(x) / Math.log(otherBase)
     }
     if (exp < 5) {
         return 1;
     }
-    console.log("base tier");
     return Math.floor(Math.log10(exp / 500)) + 2;
 
 }
@@ -1422,6 +1488,7 @@ function changeBoughtStat(origin, direction) {
         stat.value = Math.max(0, parseInt(stat.value))
     }
     let cost = getStatCost(stat);
+
     if ($("#tierUpMessage").css('display') === 'inline') {
         console.log("this stat: " + stat.id);
 
@@ -1440,13 +1507,19 @@ function changeBoughtStat(origin, direction) {
                 overflowAmount++;
                 console.log("overflow at lvl " + i);
                 stat.value = (i + 1) * increaseAmount;
-                getStatCost(stat);
+                cost = getStatCost(stat);
                 break;
             }
         }
         console.log("overflow amount: " + overflowAmount);
     }
+    if (cost > $("#currentExperience").val()) {
+        $("#applyStatPurchase").html("Cannot afford");
+        $("#applyStatPurchase").prop("disabled", true);
+    }
 
+
+    $("#" + thisStat + "Outcome .newStat").html(parseInt($("#" + thisStat + "Outcome .originalStat").html()) + parseInt(stat.value))
     /* while ($("#tierUpMessage").css('display') === 'inline') {
         stat.value = parseInt(stat.value) - parseInt(increaseAmount);
         getStatCost();
@@ -1455,6 +1528,32 @@ function changeBoughtStat(origin, direction) {
     stat.value = parseInt(stat.value) + parseInt(increaseAmount);
     getStatCost(); */
 }
+
+function raiseToNextTier() {
+    let raiseButtons = document.querySelectorAll(".raiseStat");
+    console.log("raisebuttons: " + raiseButtons + "(" + raiseButtons.length + ")");
+    // while (getTier(thisExpCost + otherLevels) <= parseInt($("#tier").val())) {
+    let limit = 20;
+    while ($("#tierUpMessage").css('display') != 'inline') {
+        for (let i = 0; i < raiseButtons.length; i++) {
+            changeBoughtStat(raiseButtons[i], 1);
+            console.log("raising stat: " + raiseButtons[i]);
+            if ($("#tierUpMessage").css('display') === 'inline') {
+                break;
+            }
+            // limit--;
+        }
+
+        // limit--;
+        // if (limit <= 0) { break; }
+    }
+    $("#raiseToNextTier").prop("disabled", true);
+    // stat.value = (i + 1) * increaseAmount;
+    // cost = getStatCost(stat);
+    // break;
+}
+
+
 // checkForAbility("WEAPON_SKILLS_[HOOK]");
 function checkForAbility(abilityID) {
     if (abilities.querySelector("#" + abilityID) != null) {
@@ -1535,14 +1634,6 @@ function getStatCost(changedStat) {
     });
 } */
 
-$(".item input").on("click", function (event) {
-    if (event.originalEvent.detail != 0) {
-        alert("Clicked");
-    } else {
-        return
-    }
-});
-
 function addItem(itemJson) {
     // $(getItemHtml(itemJson)).appendTo("#itemsList");
     $(getItemHtml(itemJson)).appendTo("#itemsList");
@@ -1551,6 +1642,18 @@ function addItem(itemJson) {
     thisItem.querySelector(".itemType").value = itemJson.type;
     let thisButton = thisItem.getElementsByClassName("removeItem")[0];
     thisButton.addEventListener('click', function () { confirmDelete(thisButton, "item") }, false);
+
+
+    $(thisItem).on("keyup", function (event) {
+        if ($(document.activeElement).is("input") && $(document.activeElement).parent().is("summary") && event.keyCode == 32) {
+            if ($(this).attr("open")) {
+                $(this).removeAttr("open");
+            } else {
+                $(this).attr("open", "");
+            }
+        }
+    });
+
 }
 
 
@@ -2005,11 +2108,12 @@ function saveForm() {
 
 
     let logItemsList = [];
+    console.log("log items amount: " + document.querySelectorAll(".logItem").length);
     for (const logItem of document.querySelectorAll(".logItem")) {
         let thisJSON = {}
-        thisJSON.cost = condition.querySelector(".logItemCost").value;
-        thisJSON.source = condition.querySelector(".logItemSource").value;
-        thisJSON.name = condition.querySelector(".logItemName").value;
+        thisJSON.cost = logItem.querySelector(".logItemCost").innerHTML;
+        thisJSON.source = logItem.querySelector(".logItemSource").innerHTML;
+        thisJSON.name = logItem.querySelector(".logItemName").innerHTML;
         logItemsList.push(thisJSON);
     }
     setThisStorage("logItemsList", JSON.stringify(logItemsList));
@@ -2030,6 +2134,17 @@ function setThisStorage(key, value) {
 }
 
 function loadForm() {
+    /* let searchParams = new URLSearchParams(window.location.search);
+    console.log("searchParams: " + searchParams);
+    // makeShareLink();
+    searchParams.forEach((value, key) => {
+        console.log(value, key);
+    });
+    console.log("searchParams: " + searchParams.size);
+    if (searchParams.size != 0) {
+        loadSharedSheet(searchParams.get("id"));
+        return;
+    } */
     if (localStorage.length == 0 && !useSessionStorage) {
 
         $("#quickstartWindow").css('display', 'flex');
@@ -2155,7 +2270,6 @@ function loadForm() {
     calculateExperience();
     calculateRolls();
     // calculateStats();
-    console.log("done loading");
 }
 
 
@@ -2215,13 +2329,15 @@ function importSave(fileData) {
         console.log(newData);
 
         for (const [key, value] of Object.entries(newData)) {
-            console.log(`${key}: ${value}`);
-            localStorage.setItem(key, value)
+            // console.log(`${key}: ${value}`);
+            setThisStorage(key.substring(4, key.length), value);
+            // localStorage.setItem(key, value)
         }
         loadForm();
 
     }
 }
+
 
 function handle_file_select(evt) {
 
@@ -2251,175 +2367,123 @@ function clearData() {
         localStorage.removeItem(key);
     });
 }
-function makeShareLink() {
-    let link = "";
-    for (var i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i) != "ToG_abilitiesList" && localStorage.key(i) != "ToG_conditionsList"
-            && localStorage.key(i) != "ToG_itemsList" && localStorage.key(i) != "ToG_logItemsList") {
-            // keysToRemove.push(localStorage.key(i))
-            link += localStorage.key(i) + '=' + localStorage.getItem(localStorage.key(i)).replace(" ", "_") + '&'
+
+const charCollection = db.collection("Characters")
+
+
+async function uploadSave() {
+    /* JSON.stringify(localStorage)
+    db.collection("characters").doc("ID").set({
+        name: $("#name").val(),
+        data: JSON.stringify(localStorage)
+    })
+        .then(() => {
+            console.log("Document successfully written!");
+        })
+        .catch((error) => {
+            console.error("Error writing document: ", error);
+        }); */
+    if (viewingSharedSheet) {
+        // $("#sharePassword");
+        console.log($("#sharePassword").val() + "=?" + sharePassword);
+        if ($("#sharePassword").val() === sharePassword) {
+            console.log("uploading modifications");
+            await db.collection("Characters").doc(searchParams.get("id")).set({
+                name: $("#name").val(),
+                data: JSON.stringify(sessionStorage)
+            }).then(() => {
+                console.log("Document successfully written!");
+            }).catch((error) => {
+                console.error("Error writing document: ", error);
+            });
+        } else {
+            console.log("incorrect password");
         }
-    }
-    return link;
-}
-
-
-
-console.log("spreadsheet values: " + getValues("1PT7MxBo3l4FcZSTSho65VoqCq8McEotI6XSPxAiNb9c"));
-
-function getValues(spreadsheetId, range, callback) {
-    try {
-        gapi.client.sheets.spreadsheets.values.get({
-            spreadsheetId: spreadsheetId,
-            range: range,
-        }).then((response) => {
-            const result = response.result;
-            const numRows = result.values ? result.values.length : 0;
-            console.log(`${numRows} rows retrieved.`);
-            if (callback) callback(response);
-        });
-    } catch (err) {
-        // document.getElementById('content').innerText = err.message;
-        console.log("error: " + err.message);
-        return;
-    }
-}
-
-const CLIENT_ID = '242438580086-f1jgb5nsn2lke3fjjk6e0at0e26aci4a.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyBzMIbFeMle5yAzxSGc2lkpNfbcE5CB36g';
-
-// Discovery doc URL for APIs used by the quickstart
-const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
-
-// Authorization scopes required by the API; multiple scopes can be
-// included, separated by spaces.
-const SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly';
-
-let tokenClient;
-let gapiInited = false;
-let gisInited = false;
-
-/**
- * Callback after api.js is loaded.
- */
-function gapiLoaded() {
-    gapi.load('client', initializeGapiClient);
-}
-
-/**
- * Callback after the API client is loaded. Loads the
- * discovery doc to initialize the API.
- */
-async function initializeGapiClient() {
-    await gapi.client.init({
-        apiKey: API_KEY,
-        discoveryDocs: [DISCOVERY_DOC],
-    });
-    gapiInited = true;
-    maybeEnableButtons();
-}
-
-/**
- * Callback after Google Identity Services are loaded.
- */
-function gisLoaded() {
-    tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: CLIENT_ID,
-        scope: SCOPES,
-        callback: '', // defined later
-    });
-    console.log("token client: " + tokenClient);
-    gisInited = true;
-    maybeEnableButtons();
-}
-
-/**
- * Enables user interaction after all libraries are loaded.
- */
-function maybeEnableButtons() {
-    if (gapiInited && gisInited) {
-        document.getElementById('authorize_button').style.visibility = 'visible';
-    }
-}
-
-/**
- *  Sign in the user upon button click.
- */
-function handleAuthClick() {
-    tokenClient.callback = async (resp) => {
-        if (resp.error !== undefined) {
-            throw (resp);
-        }
-        // document.getElementById('signout_button').style.visibility = 'visible';
-        // document.getElementById('authorize_button').innerText = 'Refresh';
-        // let data="";
-        let data = await getStoredData();
-        console.log("data: " + data);
-    };
-
-    if (gapi.client.getToken() === null) {
-        // Prompt the user to select a Google Account and ask for consent to share their data
-        // when establishing a new session.
-        tokenClient.requestAccessToken({ prompt: 'consent' });
     } else {
-        // Skip display of account chooser and consent dialog for an existing session.
-        tokenClient.requestAccessToken({ prompt: '' });
-    }
-}
+        var amount = "0";
+        await charCollection.doc("totalCharacters").get().then((doc) => {
+            if (doc.exists) {
+                amount = doc.data().count + "";
+                console.log("Document data:", amount, "type=", typeof doc.data().count);
 
-/**
- *  Sign out the user upon button click.
- */
-function handleSignoutClick() {
-    const token = gapi.client.getToken();
-    if (token !== null) {
-        google.accounts.oauth2.revoke(token.access_token);
-        gapi.client.setToken('');
-        document.getElementById('content').innerText = '';
-        document.getElementById('authorize_button').innerText = 'Authorize';
-        document.getElementById('signout_button').style.visibility = 'hidden';
-    }
-}
-
-/**
- * Print the names and majors of students in a sample spreadsheet:
- * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
- */
-async function getStoredData() {
-    let response;
-    let row = 1;
-    try {
-        // Fetch first 10 files
-        response = await gapi.client.sheets.spreadsheets.values.get({
-            spreadsheetId: '1PT7MxBo3l4FcZSTSho65VoqCq8McEotI6XSPxAiNb9c',
-            range: 'Sheet1!A'+row+':B'+row+'',
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+                amount = "-1";
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
         });
-    } catch (err) {
-        document.getElementById('content').innerText = err.message;
-        return;
+        console.log("new id is: " + amount);
+
+        var idAvailable = false;
+        await charCollection.doc(amount + "").get().then((doc) => {
+            if (doc.exists) {
+                // console.log("Document data:", doc.data());
+                // amount = doc.data();
+                console.log("id already in use");
+                idAvailable = false;
+                // return;
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("id is available");
+                idAvailable = true;
+                // amount = -1;
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+        console.log("idAvailable: " + idAvailable);
+
+        if (idAvailable) {
+            await db.collection("Characters").doc(amount).set({
+                name: $("#name").val(),
+                data: JSON.stringify(localStorage),
+                password: $("#sharePassword").val()
+            }).then(() => {
+                console.log("Document successfully written!");
+            }).catch((error) => {
+                console.error("Error writing document: ", error);
+            });
+            await db.collection("Characters").doc("totalCharacters").set({
+                count: parseInt(amount) + 1
+            }).then(() => {
+                console.log("count updated");
+            }).catch((error) => {
+                console.error("Error writing document: ", error);
+            });
+            let shareLink = location.origin + location.pathname + "?id=" + amount;
+            $("#shareLink").html(shareLink);
+            $("#sharingInfo").html("Character info uploaded! Use this link to view it:");
+        }
     }
-    const range = response.result;
-    if (!range || !range.values || range.values.length == 0) {
-        document.getElementById('content').innerText = 'No values found.';
-        return;
-    }/* 
-    console.log("range: "+range);
-    console.log("range.values: "+range.values);
-    useSessionStorage = true;
-    range.values.forEach(row => {
-        setThisStorage(row[0], row[1]);
-    }); */
-    console.log("importing save named "+range.values[0][0]);
-    importSave(range.values[0][1])
-    // loadForm();
-    // Flatten to string to display
-    const output = "success?"/* range.values.reduce(
-        (str, row) => `${str}${row[0]}, ${row[1]}\n`,
-        'key, value:\n'); */
-    return output;
+
 }
 
+let sharePassword = "";
 
+function loadSharedSheet(id) {
+    console.log("loading shared sheet: " + id);
+
+    // let charData = "";
+    charCollection.doc(id).get().then((doc) => {
+        if (doc.exists) {
+            console.log("Document data:", doc.data());
+            // amount = doc.data();
+            console.log("loading " + doc.data().name);
+            sharePassword = doc.data().password;
+            importSave(doc.data().data);
+
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+
+
+}
 
 
 // add a function to call when the <input type=file> status changes, but don't "submit" the form
