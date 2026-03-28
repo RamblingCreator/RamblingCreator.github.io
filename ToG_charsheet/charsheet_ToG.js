@@ -128,6 +128,8 @@ $(document).ready(function () {
         if (viewingSharedSheet) {
             $("#shareSection label span").html("You are currently viewing a shared sheet.<br>To upload your modifications to this sheet, please enter its password: ");
             $("#shareLink").css('display', 'none');
+            $("#localSave").css('display', 'inline');
+
         }
     });
 
@@ -2016,14 +2018,28 @@ var functionforscroll = function (id) {
 function applyColors() {
     console.log("background color: " + $("#background").val());
     document.documentElement.style.setProperty('--background', $("#background").val());
-    document.documentElement.style.setProperty('--background-darker', $("#backgroundDarker").val());
+    // document.documentElement.style.setProperty('--background-darker', $("#backgroundDarker").val());
+    // document.documentElement.style.setProperty('--background-darker', "hsl(from var(--background) h s calc(l - 23))");
     document.documentElement.style.setProperty('--card', $("#card").val());
     document.documentElement.style.setProperty('--field', $("#field").val());
 
-
+/* 
     document.documentElement.style.setProperty('--might-dark', ColorLuminance($("#mightColor").val(), -0.2));
     document.documentElement.style.setProperty('--might-main', $("#mightColor").val());
-    document.documentElement.style.setProperty('--might-light', ColorLuminance($("#mightColor").val(), 0.2));
+    document.documentElement.style.setProperty('--might-light', ColorLuminance($("#mightColor").val(), 0.2)); */
+
+    document.documentElement.style.setProperty('--might-main', $("#mightColor").val());
+    document.documentElement.style.setProperty('--agility-main', $("#agilityColor").val());
+    document.documentElement.style.setProperty('--hearts-main', $("#heartsColor").val());
+    document.documentElement.style.setProperty('--wits-main', $("#witsColor").val());
+    document.documentElement.style.setProperty('--resistance-main', $("#resistanceColor").val());
+
+
+    
+    
+    
+    
+    
 }
 
 //from https://www.sitepoint.com/javascript-generate-lighter-darker-color/
@@ -2207,7 +2223,16 @@ function loadForm() {
         loadSharedSheet(searchParams.get("id"));
         return;
     } */
-    if (localStorage.length == 0 && !useSessionStorage) {
+    let hasSavedData = false;
+    for (var i = 0; i < localStorage.length; i++) {
+        let thiskey = localStorage.key(i);
+        if (thiskey.substring(0, 4) === "ToG_") {
+            hasSavedData = true;
+            break;
+        }
+    }
+    // if (localStorage.length == 0 && !useSessionStorage) {
+    if (!hasSavedData && !useSessionStorage) {
 
         $("#quickstartWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
@@ -2227,9 +2252,13 @@ function loadForm() {
                 }
                 // console.log("setting " + input.id + ".checked to " + getThisStorage(input.id));
                 // console.log(input.id + ".checked = " + input.checked);
-            }/*  else if (input.type === "color") {
-
-            }  */else {
+            } else if (input.type === "color") {
+                console.log("stored: " + getThisStorage(input.id));
+                // if (getThisStorage(input.id) === "true") {
+                //     input.checked = getThisStorage(input.id);
+                //     // console.log(input.id + " saved as 'true' ");
+                // }
+            } else {
                 // console.log("");
                 if (getThisStorage(input.id) == null) {
                     input.value = -1;

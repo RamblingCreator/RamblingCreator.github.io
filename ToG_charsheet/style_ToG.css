@@ -65,6 +65,9 @@ h1, h2, h3, h4, h5 {
 
     --background: #919191;
     --background-darker: #575757;
+    --background: hsl(0, 0%, 57%);
+    --background-darker: hsl(0, 0%, 34%);
+    --background-darker:  hsl(from var(--background) h s calc(l - 23));
     --card: #c7c7c7;
     --field: #b3b3b3;
     --accent: rgb(123, 211, 255);
@@ -2208,8 +2211,16 @@ select.quickstart {
 
 #windowColors label, #statColors label {
     white-space: nowrap;
+    margin-right: 0.5em;
 }
 
+#localSave {
+    display: none;
+}
+
+#settingsWindow h4 {
+    margin-top: 0.4em;
+}
 /* *:focus{
     background-color: pink!important;
 } */
