@@ -138,8 +138,15 @@ $(document).ready(function () {
         saveForm();
     });
     $(".save").on("input", function () {
-        saveForm();
+        if ($("#savingMode").val() == "input") {
+            saveForm();
+        }
     });
+    $("#savingMode").on("input", function () {
+
+
+    });
+
 
     $("#export").on("click", function () {
         exportSave();
@@ -148,7 +155,11 @@ $(document).ready(function () {
         copySave();
     });
     $("#import").on("click", function () {
-        importSave();
+        if (document.getElementById('upload_file').value == null) {
+            console.log("please put a file");
+        } else {
+            importSave(document.getElementById('upload_file').value);
+        }
     });
     $("#clearData").on("click", function () {
         $("#settingsWindow").css('display', 'none');
@@ -173,6 +184,11 @@ $(document).ready(function () {
     });
     $("#uploadSheet").on("click", function () {
         uploadSave();
+        // console.log("uploading sheet");
+    });
+
+    $("#transferData").on("click", function () {
+        transferData();
         // console.log("uploading sheet");
     });
 
@@ -397,6 +413,12 @@ $(document).ready(function () {
     // calculateStats();
 });
 
+
+setInterval(function () {
+    if ($("#savingMode").val() == "timed") {
+        saveForm();
+    }
+}, 300_000); // in ms
 
 /* Canine transformation */
 
@@ -1007,7 +1029,7 @@ function calculateStats() {
             // " + tempTotal);
         }
 
-        stat.querySelector('span.tempBonuses').innerHTML = "+"+tempTotal;
+        stat.querySelector('span.tempBonuses').innerHTML = "+" + tempTotal;
         // stat.querySelector('input.tempBonuses').value = "+"+tempTotal;
         // console.log(stat.querySelector('span.tempBonuses') + " => " + tempTotal);
         // console.log("temp span: 
@@ -1025,7 +1047,7 @@ function calculateStats() {
             // " + tempTotal);
         }
 
-        stat.querySelector('span.permBonuses').innerHTML = "+"+permTotal;
+        stat.querySelector('span.permBonuses').innerHTML = "+" + permTotal;
         // stat.querySelector('input.permBonuses').value = "+"+permTotal;
 
 
@@ -1518,6 +1540,9 @@ function changeBoughtStat(origin, direction) {
     if (cost > $("#currentExperience").val()) {
         $("#applyStatPurchase").html("Cannot afford");
         $("#applyStatPurchase").prop("disabled", true);
+    } else {
+        $("#applyStatPurchase").html("Spend Experience!");
+        $("#applyStatPurchase").prop("disabled", false);
     }
 
 
@@ -1973,9 +1998,11 @@ function applyQuickstart() {
 
 /* settings */
 
-var functionforscroll = function(id){
-    var reqId = "#"+id;
-    window.scrollTo(0, $(reqId).offset().top-85);
+
+
+var functionforscroll = function (id) {
+    var reqId = "#" + id;
+    window.scrollTo(0, $(reqId).offset().top - 85);
 }
 
 
@@ -2139,6 +2166,35 @@ function setThisStorage(key, value) {
     return localStorage.setItem("ToG_" + key, value);
 }
 
+function clearAllFields() {
+    /* inputsToSave = document.getElementsByClassName("save");
+    for (const input of inputsToSave) {
+        // console.log("saving " + input.nodeName);
+        if (input.nodeName === "INPUT" ) { //&& input.type === "text"
+            if (input.type === "checkbox") {
+                setThisStorage(input.id, input.checked);
+            } else {
+                setThisStorage(input.id, input.value);
+            }
+        } else if (input.nodeName == "SELECT") {
+            if (input.value != "NONE") {
+                setThisStorage(input.id, input.value);
+            }
+        } else if (input.nodeName == "TEXTAREA") {
+            if (input.value != "NONE") {
+                setThisStorage(input.id, input.value);
+            }
+        }
+        // console.log("saving " + input.nodeName + " (" + input.type + ") " + input.id + " as " + input.value);
+    } */
+    $("#abilitiesList").html("");
+    $("#conditionsList").html("");
+    $("#itemsList").html("");
+    $("#logItemsList").html("");
+    $('.tempBonuses .bonusList').html("");
+}
+
+
 function loadForm() {
     /* let searchParams = new URLSearchParams(window.location.search);
     console.log("searchParams: " + searchParams);
@@ -2159,6 +2215,8 @@ function loadForm() {
         calculateStarterStats(document.querySelector("#startMight"));
         return;
     }
+    clearAllFields();
+
     inputsToLoad = document.getElementsByClassName("save");
     for (const input of inputsToLoad) {
         if (input.nodeName === "INPUT" /* && input.type === "text" */) {
@@ -2315,33 +2373,66 @@ function exportSave() {
     // download()
     // download(JSON.stringify(localStorage), "MAGRPG save (" + document.getElementById('name').value + ")", ".txt")
 
-    download(localStorage, "Tower of God save (" + document.getElementById('name').value + ")", ".json")
-
+    // download(JSON.stringify(localStorage), "Tower of God save (" + document.getElementById('name').value + ")", ".json")
+    let downloadName = document.getElementById('name').value.replaceAll(/(\.| )/gi, "_");
+    download(getSaveData(), "Tower of God save (" + downloadName + ")", ".json")
 }
 
 
+function getSaveData() {
+    let data = new Map();
+    for (var i = 0; i < localStorage.length; i++) {
+
+        let thiskey = localStorage.key(i);
+        if (thiskey.substring(0, 4) === "ToG_") {
+            data.set(thiskey.substring(4, thiskey.length), localStorage.getItem(thiskey));
+        }
+    }
+    console.log("save data: " + JSON.stringify(Object.fromEntries(data)));
+    return JSON.stringify(Object.fromEntries(data));
+}
+
 function copySave() {
-    navigator.clipboard.writeText(JSON.stringify(localStorage))
+    getSaveData();
+    // navigator.clipboard.writeText(JSON.stringify(localStorage));
+    navigator.clipboard.writeText(getSaveData());
 }
 
 
 function importSave(fileData) {
+    console.log("fileData: " + fileData);
+    let data = JSON.parse(fileData);
+    // for (const [key, value] of Object.entries(fileData)) {
+    for (const [key, value] of Object.entries(data)) {
+        // console.log(`${key}: ${value}`);
+        console.log("key: " + key + ", value: " + value);
+        // setThisStorage(key.substring(4, key.length), value);
+        setThisStorage(key, value);
+        // setThisStorage(key, value);
+        // localStorage.setItem(key, value)
+    }
+
+    loadForm();
+    // console.log("localstorage: "+JSON.stringify(localStorage));
+    /* 
+    if
     console.log("importing save");
-    if (document.getElementById('upload').value == null) {
+    if (document.getElementById('upload_file').value == null) {
         console.log("please put a file");
     } else {
 
-        let newData = JSON.parse(fileData)
+        // let newData = JSON.parse(fileData)
+        let newData = document.getElementById('upload_file').value;
         console.log(newData);
-
         for (const [key, value] of Object.entries(newData)) {
             // console.log(`${key}: ${value}`);
             setThisStorage(key.substring(4, key.length), value);
+            // setThisStorage(key, value);
             // localStorage.setItem(key, value)
         }
         loadForm();
 
-    }
+    } */
 }
 
 
@@ -2354,7 +2445,7 @@ function handle_file_select(evt) {
     reader.onload = function () {
         console.log(reader.result);
         // importSave(reader.result);
-        document.getElementById('upload_file').innerHTML = reader.result
+        document.getElementById('upload_file').value = reader.result
     };
 
 
@@ -2376,19 +2467,9 @@ function clearData() {
 
 const charCollection = db.collection("Characters")
 
-
 async function uploadSave() {
-    /* JSON.stringify(localStorage)
-    db.collection("characters").doc("ID").set({
-        name: $("#name").val(),
-        data: JSON.stringify(localStorage)
-    })
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        }); */
+    let searchParams = new URLSearchParams(window.location.search);
+
     if (viewingSharedSheet) {
         // $("#sharePassword");
         console.log($("#sharePassword").val() + "=?" + sharePassword);
@@ -2396,9 +2477,11 @@ async function uploadSave() {
             console.log("uploading modifications");
             await db.collection("Characters").doc(searchParams.get("id")).set({
                 name: $("#name").val(),
-                data: JSON.stringify(sessionStorage)
+                data: JSON.stringify(sessionStorage),
+                password: sharePassword
             }).then(() => {
                 console.log("Document successfully written!");
+                $("#sharingInfo").html("Character sheet has been updated");
             }).catch((error) => {
                 console.error("Error writing document: ", error);
             });
@@ -2420,48 +2503,60 @@ async function uploadSave() {
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
-        console.log("new id is: " + amount);
-
+        // console.log("new id is: " + amount);
+        let idName = document.getElementById('name').value.replaceAll(/(\.| )/gi, "_");
         var idAvailable = false;
-        await charCollection.doc(amount + "").get().then((doc) => {
+        await charCollection.doc(idName).get().then((doc) => {
             if (doc.exists) {
-                // console.log("Document data:", doc.data());
-                // amount = doc.data();
                 console.log("id already in use");
                 idAvailable = false;
-                // return;
             } else {
-                // doc.data() will be undefined in this case
                 console.log("id is available");
                 idAvailable = true;
-                // amount = -1;
             }
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
-        console.log("idAvailable: " + idAvailable);
 
-        if (idAvailable) {
-            await db.collection("Characters").doc(amount).set({
-                name: $("#name").val(),
-                data: JSON.stringify(localStorage),
-                password: $("#sharePassword").val()
-            }).then(() => {
-                console.log("Document successfully written!");
+        console.log("idAvailable: " + idAvailable);
+        idNumber = 0;
+        while (!idAvailable) {
+            idNumber++;
+            await charCollection.doc(idName + idNumber).get().then((doc) => {
+                if (doc.exists) {
+                    console.log("id already in use");
+                    idAvailable = false;
+                } else {
+                    console.log("id is available");
+                    idAvailable = true;
+                }
             }).catch((error) => {
-                console.error("Error writing document: ", error);
+                console.log("Error getting document:", error);
             });
-            await db.collection("Characters").doc("totalCharacters").set({
-                count: parseInt(amount) + 1
-            }).then(() => {
-                console.log("count updated");
-            }).catch((error) => {
-                console.error("Error writing document: ", error);
-            });
-            let shareLink = location.origin + location.pathname + "?id=" + amount;
-            $("#shareLink").html(shareLink);
-            $("#sharingInfo").html("Character info uploaded! Use this link to view it:");
         }
+        if (idNumber != 0) {
+            idName = idName + idNumber;
+        }
+        await db.collection("Characters").doc(idName).set({
+            name: $("#name").val(),
+            // data: JSON.stringify(localStorage),
+            data: getSaveData(),
+            password: $("#sharePassword").val()
+        }).then(() => {
+            console.log("Document successfully written!");
+        }).catch((error) => {
+            console.error("Error writing document: ", error);
+        });
+        await db.collection("Characters").doc("totalCharacters").set({
+            count: parseInt(amount) + 1
+        }).then(() => {
+            console.log("count updated");
+        }).catch((error) => {
+            console.error("Error writing document: ", error);
+        });
+        let shareLink = location.origin + location.pathname + "?id=" + idName;
+        $("#shareLink").html(shareLink);
+        $("#sharingInfo").html("Character info uploaded! Use this link to view it:");
     }
 
 }
@@ -2491,6 +2586,14 @@ function loadSharedSheet(id) {
 
 }
 
+
+function transferData() {
+    for (var i = 0; i < sessionStorage.length; i++) {
+        if (sessionStorage.key(i).substring(0, 4) === "ToG_") {
+            localStorage.setItem(sessionStorage.key(i), sessionStorage.getItem(sessionStorage.key(i)));
+        }
+    }
+}
 
 // add a function to call when the <input type=file> status changes, but don't "submit" the form
 document.getElementById('upload').addEventListener('change', handle_file_select, false);

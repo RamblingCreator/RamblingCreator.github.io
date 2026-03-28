@@ -88,6 +88,7 @@ body {
 
 .card {
     background-color: var(--card);
+    /* padding: 0.1em; */
 }
 
 .cardTitle {
@@ -212,6 +213,13 @@ button:hover {
     grid-area: items;
 }
 
+#backstory {
+    grid-area: backstory;
+}
+#notes {
+    grid-area: notes;
+}
+
 
 
 form {
@@ -231,7 +239,8 @@ form {
     grid-template-areas:
         "info info info"
         "statRoll abilities items"
-        "levels levels conditions";
+        "levels levels conditions"
+        "backstory backstory notes";
     padding-bottom: 10px;
 }
 
@@ -245,7 +254,8 @@ form {
             "statRoll abilities"
             "levels abilities"
             "levels items"
-            "conditions conditions";
+            "conditions conditions"
+            "backstory notes";
     }
 }
 @media(max-width:900px) {
@@ -377,6 +387,7 @@ column-gap: 10px; */
     padding: 0 2px;
     /* background-color: rgba(255, 255, 255, 0.676); */
     background-color: var(--dark);
+    height: fit-content;
     /* grid-template-columns: 1.5em 2em 2em; */
     /* grid-template-columns: repeat(3, 2em); */
 
@@ -442,9 +453,10 @@ span.fieldTitle {
 
 
 .tooltip.edge .tooltip-inner, .tooltip.harm .tooltip-inner {
-    padding-left: 0.1em;
+    /* padding-left: 0.1em; */
+    padding-top: 0.1em;
     border-radius: 0 0.5em 0.5em 0;
-
+    border-radius: 0 0 0.5em 0.5em;
 }
 
 input[type="number"] {
@@ -541,7 +553,7 @@ input.noArrows[type=number] {
 }
 
 /* input.baseStat, .tempBonuses label, .permBonuses label { */
-input.baseStat, input.tempBonuses, input.permBonuses {
+input.baseStat, div.tempBonuses, div.permBonuses {
     text-align: right;
     /* text-align: center; */
     /* width: 2em; */
@@ -810,6 +822,7 @@ input[type='checkbox']:checked+.bonusList {
 
 #traumas {
     width: max-content;
+    /* width: 100%; */
 }
 
 #maxTraumas, #exhaustion {
@@ -1683,6 +1696,8 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     display: none;
 
     box-shadow: 0 0 10px #00000059;
+    overscroll-behavior: contain;
+    overflow: hidden;
 }
 
 
@@ -1891,7 +1906,10 @@ button.removeItem {
     margin: auto 0;
     margin-left: auto;
 }
-
+/* notes/backstory */
+#backstory, #notes {
+    padding: 0.4em;
+}
 
 
 /* footer */
@@ -2142,6 +2160,13 @@ select.quickstart {
     -o-transform: translateX(50px);
     -webkit-transform: translateX(50px);
     transform: translateX(50px);
+}
+.tooltip.bottom {
+    -moz-transform: translateY(50px);
+    -ms-transform: translateY(50px);
+    -o-transform: translateY(50px);
+    -webkit-transform: translateY(50px);
+    transform: translateY(50px);
 }
 
 /* .tooltip .tooltip-arrow {
