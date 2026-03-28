@@ -1294,7 +1294,7 @@ label.hideAbilities {
 
 #confirmWindow {
     max-width: 1100px;
-
+    min-height: fit-content;
     display: grid;
     /* grid-template-columns: repeat(1fr, 2);
     grid-template-areas:
