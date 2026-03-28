@@ -2023,10 +2023,10 @@ function applyColors() {
     document.documentElement.style.setProperty('--card', $("#card").val());
     document.documentElement.style.setProperty('--field', $("#field").val());
 
-/* 
-    document.documentElement.style.setProperty('--might-dark', ColorLuminance($("#mightColor").val(), -0.2));
-    document.documentElement.style.setProperty('--might-main', $("#mightColor").val());
-    document.documentElement.style.setProperty('--might-light', ColorLuminance($("#mightColor").val(), 0.2)); */
+    /* 
+        document.documentElement.style.setProperty('--might-dark', ColorLuminance($("#mightColor").val(), -0.2));
+        document.documentElement.style.setProperty('--might-main', $("#mightColor").val());
+        document.documentElement.style.setProperty('--might-light', ColorLuminance($("#mightColor").val(), 0.2)); */
 
     document.documentElement.style.setProperty('--might-main', $("#mightColor").val());
     document.documentElement.style.setProperty('--agility-main', $("#agilityColor").val());
@@ -2035,11 +2035,11 @@ function applyColors() {
     document.documentElement.style.setProperty('--resistance-main', $("#resistanceColor").val());
 
 
-    
-    
-    
-    
-    
+
+
+
+
+
 }
 
 //from https://www.sitepoint.com/javascript-generate-lighter-darker-color/
@@ -2244,6 +2244,7 @@ function loadForm() {
 
     inputsToLoad = document.getElementsByClassName("save");
     for (const input of inputsToLoad) {
+        console.log("type: " + input.type);
         if (input.nodeName === "INPUT" /* && input.type === "text" */) {
             if (input.type === "checkbox") {
                 if (getThisStorage(input.id) === "true") {
@@ -2253,8 +2254,11 @@ function loadForm() {
                 // console.log("setting " + input.id + ".checked to " + getThisStorage(input.id));
                 // console.log(input.id + ".checked = " + input.checked);
             } else if (input.type === "color") {
+
                 console.log("stored: " + getThisStorage(input.id));
-                // if (getThisStorage(input.id) === "true") {
+                if (getThisStorage(input.id) != null) {
+                    input.value = getThisStorage(input.id);
+                }                // if (getThisStorage(input.id) === "true") {
                 //     input.checked = getThisStorage(input.id);
                 //     // console.log(input.id + " saved as 'true' ");
                 // }
