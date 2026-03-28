@@ -48,13 +48,19 @@ h1, h2, h3, h4, h5 {
     --resistance-main: #74f174;
     --resistance-light: #b7feb7;
 
-
+    /* 
     --might-main: hsl(9, 90%, 64%);
     --agility-main: hsl(51, 90%, 70%);
     --hearts-main: hsl(288, 59%, 58%);
     --wits-main: hsl(203, 92%, 75%);
-    --resistance-main: hsl(120, 82%, 70%);
+    --resistance-main: hsl(120, 82%, 70%); */
 
+    --might-main: hsl(9, 90%, 64%);
+    --agility-main: hsl(51, 90%, 65%);
+    --hearts-main: hsl(288, 70%, 65%);
+    --wits-main: hsl(203, 92%, 75%);
+    --resistance-main: hsl(120, 82%, 70%);
+    --agility-main: #f7e36e;
 
 
     --background: #919191;
@@ -343,20 +349,34 @@ column-gap: 10px; */
 }
 
 .statLabel, #rolls tbody tr {
-    --light: color-mix(in oklch, var(--main) 100%, white 100%);
     /* --light: color-mix(in oklch, var(--main) 100%, white 100%); */
-    --dark: hsl(from var(--main) h s 50%);
+    /* --light: color-mix(in oklch, var(--main) 100%, white 100%); */
+    --dark: hsl(from var(--main) h s calc(l - 10));
+    --light: hsl(from var(--main) h 100% 90%);
 }
+
+
+.statLabel.might, #brawl, #threatenM, #mightRoll,
+.statLabel.agility, #finesse, #throw, #move, #agilityRoll .statLabel.resistance, #resistanceRoll {
+    --dark: hsl(from var(--main) h s 40%);
+    --light: hsl(from var(--main) h 100% 90%);
+}
+
 
 .statLabel button {
     background-color: var(--dark) !important;
+    /* background-color: hsl(from var(--main) h s calc(l - 10))!important; */
+    /* background-color: hsl(from rgb(255 0 0 / 0.8) calc(h + 60) calc(s - 20) calc(l - 10) / calc(alpha - 0.1))!important; */
+
 }
 
 .statFrame {
     display: flex;
     flex-direction: row;
-    gap: 5px;
-    background-color: rgba(255, 255, 255, 0.676);
+    gap: 2px;
+    padding: 0 2px;
+    /* background-color: rgba(255, 255, 255, 0.676); */
+    background-color: var(--dark);
     /* grid-template-columns: 1.5em 2em 2em; */
     /* grid-template-columns: repeat(3, 2em); */
 
@@ -368,23 +388,33 @@ column-gap: 10px; */
     grid-column: span 3;
     font-size: 1.75em;
     font-size: 1.5em;
-    background-color: rgba(255, 255, 255, 0.8);
+    /* background-color: rgba(255, 255, 255, 0.8); */
+    background-color: var(--light);
     text-align: center;
     height: 100%;
     display: flex;
     flex-direction: column;
     width: 3.5ch;
+    width: 3.75ch;
+    margin: auto 0;
+    /* padding: 0 3px; */
+}
+.statBox input {
+    /* background-color: white; */
+}
+.statField {
+    background-color: var(--light);
+    width: 100%;
+    display: inline-block;
 }
 
-
-
-input.currentStat, input.edge {
+input.currentStat, input.harm, input.edge {
     text-align: center;
 }
-.statBox.harm, .statBox.edge {
+/* .statBox.harm, .statBox.edge {
     display: flex;
     flex-direction: column;
-}
+} */
 
 input.harm, input.edge {
     width: 3.5ch;
@@ -395,6 +425,7 @@ input.harm, input.edge {
     flex-direction: column;
     font-size: 0.9em;
     width: min-content;
+    justify-content: space-around;
 }
 
 span.fieldTitle {
@@ -435,28 +466,32 @@ input.noArrows[type=number] {
 .statBox {
     /* width: min-content; */
     white-space: nowrap;
-    height: 100%;
-
-    height: 100%;
-    vertical-align: middle;
-    margin: auto 0;
+    /* height: 100%; */
+    /* vertical-align: middle; */
+    /* margin: auto 0; */
 }
 /* <span class="fieldTitle">edge</span> */
-.statBox input {
-    background-color: white;
-}
+
 
 .statParts {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    gap: 2px;
 }
 
 .statBox.baseStat, .statBox.tempBonuses, .statBox.permBonuses {
     font-size: max(0.75em, var(--min-font-size));
 
-    background-color: rgba(255, 255, 255, 0.5);
+    /* background-color: rgba(255, 255, 255, 0.5); */
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
+    height: min-content;
+}
+.statBox.baseStat {
+    padding: 0;
+    margin: 0;
+    height: min-content;
 }
 
 .baseStat.statBox span, .baseStat.statBox div {
@@ -464,6 +499,12 @@ input.noArrows[type=number] {
     height: min-content;
     display: block;
 }
+
+.baseStat input {
+    height: 100% !important;
+}
+
+
 
 
 .statBox input {
@@ -480,16 +521,56 @@ input.noArrows[type=number] {
     margin: 0;
     padding: 0;
 
-    margin: auto 0;
+    /* margin: auto 0; */
+}
+.statBox label {
+    height: 1em;
+    font-size: 1em;
+    display: block;
+    position: relative;
+}
+.statBox label input {
+    position: absolute;
+    /*     left: 0;
+    top: 0;
+    right: 0;
+    transform: translatex(50%); */
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
 }
 
+/* input.baseStat, .tempBonuses label, .permBonuses label { */
 input.baseStat, input.tempBonuses, input.permBonuses {
     text-align: right;
-    /* text-align: left; */
+    /* text-align: center; */
     /* width: 2em; */
     width: 3.5ch;
+    width: 3.25ch;
+    line-height: 0.9em;
     height: 1em;
+    /* height: 1em; */
+    /* height: 0.5em; */
     /* font-size: 2.5em; */
+}
+input.tempBonuses, input.permBonuses {
+    width: 2.25ch;
+    /* height: min-content; */
+}
+
+.statParts .statBox {
+    font-size: 0.9em;
+
+    height: 1em;
+    height: min-content;
+    height: 100%;
+    /* font-size: 1em; */
+    /* width: 4.25ch; */
+}
+
+
+.statParts .statBox input {
+    font-size: 1em;
 }
 
 .addSign {
@@ -519,6 +600,9 @@ input.baseStat, input.tempBonuses, input.permBonuses {
     cursor: pointer;
     text-decoration: none;
 }
+.bonusToggler span {
+    height: min-content;
+}
 
 .bonusList {
     display: none;
@@ -526,6 +610,15 @@ input.baseStat, input.tempBonuses, input.permBonuses {
     /* display: flex; */
     flex-direction: column;
     gap: 2px;
+    z-index: 5;
+}
+@media (max-width: 900px) {
+    .bonusList {
+        position: fixed;
+        /* top:0; */
+        left: 50%;
+        transform: translateX(-50%)
+    }
 }
 
 /* .bonusToggler:focus-within, .bonusToggler:has(~ul:focus-within) {
@@ -576,7 +669,9 @@ input[type='checkbox']:checked+.bonusList {
     /* padding-top: 10px; */
     padding-top: 3px;
     text-align: center;
+    font-size: 1em;
     width: min-content;
+    width: 18.7em;
     background-color: var(--card);
     margin-block-start: 0;
     margin-block-end: 0;
@@ -648,7 +743,7 @@ input[type='checkbox']:checked+.bonusList {
     display: flex;
     flex-direction: column;
 }
-
+/* 
 
 #allConditions {
     margin: auto;
@@ -658,7 +753,7 @@ input[type='checkbox']:checked+.bonusList {
     gap: 10px;
     padding: 0 0.5em;
     margin: auto 0.5em;
-}
+} */
 
 /* #conditions h3 { 
     background-color: var(--card);
@@ -1529,6 +1624,19 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
 .newAbility .abilityOrigin div {
     display: inline-block;
 }
+
+.scrollList {
+    margin: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 0.5em;
+    margin: auto 0.5em;
+    /* gap: 20px; */
+    background-color: var(--background-darker);
+}
+
 /* popup windows */
 
 #popupMask {
@@ -1564,7 +1672,7 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     left: 50%;
     transform: translate(-50%, -50%);
 
-    background-color: var(--background);
+    background-color: var(--card);
     border: 10px solid var(--background-darker);
     color: #fff;
 
@@ -1597,6 +1705,12 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     }
     .windowTitle h1 {
         /* width: min-content; */
+    }
+    .popup {
+        width: 90vw;
+        height: 90vh;
+        border: 4px solid var(--background-darker);
+
     }
 }
 
@@ -1756,6 +1870,7 @@ label.itemTags {
 input.itemAmount {
     width: 3ch;
     font-size: 1em;
+    text-align: center;
 }
 label.itemAmount {
     margin: auto 0;
@@ -1801,21 +1916,16 @@ footer {
 
 /* ability selection window */
 
-#filteredAbilities {
+/* #filteredAbilities {
     margin: auto;
-    /* overflow-y: scroll; */
     overflow-x: hidden;
-    /* height: 60vh; */
-    /* height: 88%; */
-    /* height: 10%; */
-    /* height: min-content; */
 
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 0 0.5em;
     margin: auto 0.5em;
-}
+} */
 
 #filteredWrapper {
     height: 100%;
@@ -2071,6 +2181,9 @@ select.quickstart {
     display: none;
 }
 
+#windowColors label, #statColors label {
+    white-space: nowrap;
+}
 
 /* *:focus{
     background-color: pink!important;

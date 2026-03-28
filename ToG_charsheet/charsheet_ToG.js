@@ -362,7 +362,7 @@ $(document).ready(function () {
             } else {
                 console.log("clicked off popup");
                 // $(".dropdownToggle:checked").css('display', 'none');
-                document.querySelector(".dropdownToggle:checked").checked=false;
+                document.querySelector(".dropdownToggle:checked").checked = false;
             }
         }
         // console.log("checked toggles: "+document.querySelectorAll(".dropdownToggle:checked").length);
@@ -1007,7 +1007,8 @@ function calculateStats() {
             // " + tempTotal);
         }
 
-        stat.querySelector('span.tempBonuses').innerHTML = tempTotal;
+        stat.querySelector('span.tempBonuses').innerHTML = "+"+tempTotal;
+        // stat.querySelector('input.tempBonuses').value = "+"+tempTotal;
         // console.log(stat.querySelector('span.tempBonuses') + " => " + tempTotal);
         // console.log("temp span: 
         // " + stat.querySelector('span.tempBonuses'));
@@ -1024,7 +1025,8 @@ function calculateStats() {
             // " + tempTotal);
         }
 
-        stat.querySelector('span.permBonuses').innerHTML = permTotal;
+        stat.querySelector('span.permBonuses').innerHTML = "+"+permTotal;
+        // stat.querySelector('input.permBonuses').value = "+"+permTotal;
 
 
         base = stat.querySelector('input.baseStat');
@@ -1965,10 +1967,18 @@ function applyQuickstart() {
 
     $("#popupMask").css('display', 'none');
     $(".popup").css('display', 'none');
+    addItem({ name: "Pocket", rank: "", tags: "", description: "A universal translator, wallet, phone, timer, watch, ID, journal, and voice recorder. Every Regular receives one at no cost when they enter the Tower. Having one allows someone to make a contract with the Administrator (for example, for the ability to compress themselves or their weapons to a manageable size).", })
 
 }
 
 /* settings */
+
+var functionforscroll = function(id){
+    var reqId = "#"+id;
+    window.scrollTo(0, $(reqId).offset().top-85);
+}
+
+
 
 /* document.documentElement.style.setProperty('--somevar', 'green');
 --background: #97928e;
@@ -1987,10 +1997,6 @@ function applyColors() {
     document.documentElement.style.setProperty('--might-dark', ColorLuminance($("#mightColor").val(), -0.2));
     document.documentElement.style.setProperty('--might-main', $("#mightColor").val());
     document.documentElement.style.setProperty('--might-light', ColorLuminance($("#mightColor").val(), 0.2));
-
-
-
-
 }
 
 //from https://www.sitepoint.com/javascript-generate-lighter-darker-color/
