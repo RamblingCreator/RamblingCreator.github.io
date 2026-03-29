@@ -3,6 +3,7 @@ const noble = document.getElementById('noble');
 const position = document.getElementById('position');
 
 let stats = document.getElementById("stats");
+let rolls = document.getElementById("rolls");
 const abilities = document.getElementById('abilitiesList');
 const items = document.getElementById('itemsList');
 let toggles = document.getElementsByClassName("dropdownToggle");
@@ -97,6 +98,14 @@ $(document).ready(function () {
     $("#lowerCanineLevel").on("click", function () {
         changeCanineLevel(-1);
     });
+
+    $("#rolls input").on("input", function () {
+        if (this.value === ""){
+            this.value = '0';
+        }
+    });
+
+
     $(".closeSelector").on("click", function () {
         $("#abilityWindow").css('display', 'none');
         $("#cypherWindow").css('display', 'none');
@@ -1110,7 +1119,7 @@ function calculateStats() {
 }
 
 function addStatBonus(source, amount, parent) {
-    if (parent.querySelector(".bonusSource[value='"+source+"']") != null) {
+    if (parent.querySelector(".bonusSource[value='" + source + "']") != null) {
         // prevent duplicates
         return;
     }
@@ -1209,29 +1218,29 @@ function calculateRolls() {
 
 
     if (checkForAbility("BRUISER")) {
-        document.querySelector("#rolls #brawl .addEdge").innerHTML = $("#mightEdge").val();
+        document.querySelector("#rolls #brawl .addEdge").innerHTML = "+" + $("#mightEdge").val();
     }
     if (checkForAbility("SNEAKY")) {
-        document.querySelector("#rolls #finesse .addEdge").innerHTML = $("#agilityEdge").val();
+        document.querySelector("#rolls #finesse .addEdge").innerHTML = "+" + $("#agilityEdge").val();
     }
     if (checkForAbility("SPEEDY")) {
-        document.querySelector("#rolls #move .addEdge").innerHTML = $("#agilityEdge").val();
+        document.querySelector("#rolls #move .addEdge").innerHTML = "+" + $("#agilityEdge").val();
     }
     if (checkForAbility("THROWER")) {
         if ($("#agilityEdge").val > $("#mightEdge").val) {
-            document.querySelector("#rolls #throw .addEdge").innerHTML = $("#agilityEdge").val();
+            document.querySelector("#rolls #throw .addEdge").innerHTML = "+" + $("#agilityEdge").val();
         } else {
-            document.querySelector("#rolls #throw .addEdge").innerHTML = $("#mightEdge").val();
+            document.querySelector("#rolls #throw .addEdge").innerHTML = "+" + $("#mightEdge").val();
         }
     }
     if (checkForAbility("PRECISION")) {
-        document.querySelector("#rolls #attune .addEdge").innerHTML = $("#heartsEdge").val();
+        document.querySelector("#rolls #attune .addEdge").innerHTML = "+" + $("#heartsEdge").val();
     }
     if (checkForAbility("BRAINS")) {
-        document.querySelector("#rolls #think .addEdge").innerHTML = $("#witsEdge").val();
+        document.querySelector("#rolls #think .addEdge").innerHTML = "+" + $("#witsEdge").val();
     }
     if (checkForAbility("SMOOTH_TALKER")) {
-        document.querySelector("#rolls #manipulate .addEdge").innerHTML = $("#witsEdge").val();
+        document.querySelector("#rolls #manipulate .addEdge").innerHTML = "+" + $("#witsEdge").val();
     }
 
 
@@ -1281,9 +1290,10 @@ function calculateRolls() {
   */
         roll.querySelector(".totalDice").innerHTML = "=" + diceAmount;
 
-        let autoSuccesses = Math.floor($("#" + thisStat + "Base").val() / 20)
+        let statAutoSuccesses = Math.floor($("#" + thisStat + "Base").val() / 20)
+        roll.querySelector(".statAutoSuccesses").innerHTML = statAutoSuccesses;
 
-        roll.querySelector(".autoSuccesses").innerHTML = "=" + (parseInt(autoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value));
+        roll.querySelector(".totalAutoSuccesses").innerHTML = "=" + (parseInt(statAutoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value) + parseInt(roll.querySelector(".addEdge").innerHTML));
         // console.log("autosuccessses inner: "+(parseInt(autoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value)));
 
 
@@ -1653,7 +1663,7 @@ function getStatCost(changedStat) {
         $("#tierUpMessage").css('display', 'inline');
         console.log("raised tier");
     } else {
-        
+
         $("#raiseToNextTier").prop("disabled", false);
     }
     document.querySelector("#statCost span").innerHTML = totalExpCost;
@@ -2175,6 +2185,19 @@ function saveForm() {
         logItemsList.push(thisJSON);
     }
     setThisStorage("logItemsList", JSON.stringify(logItemsList));
+
+    let rollsList = [];
+    for (const roll of document.querySelectorAll("#rolls tbody tr")) {
+        let thisJSON = {}
+        thisJSON.id = roll.id;
+        thisJSON.hindered = roll.querySelector("input.hinderedCheckbox").checked;
+        thisJSON.impaired = roll.querySelector("input.impairedRoll").value;
+        thisJSON.bonusDice = roll.querySelector("input.bonusDice").value;
+        thisJSON.bonusSuccesses = roll.querySelector("input.bonusSuccesses").value;
+        rollsList.push(thisJSON);
+    }
+    setThisStorage("rollsList", JSON.stringify(rollsList));
+
 }
 
 function getThisStorage(key) {
@@ -2351,6 +2374,19 @@ function loadForm() {
         } else {
             addStatBonus("", "", perm);
         }
+    }
+    let rollsList = JSON.parse(getThisStorage("rollsList"));
+
+    for (const roll of rollsList) {
+        // console.log("roll: " + Object.entries(roll));
+        for (const [key, value] of Object.entries(roll)) {
+            console.log(`${key}: ${value}`);
+        }
+        let thisRoll = document.querySelector("#" + roll.id);
+        thisRoll.querySelector(".hinderedCheckbox").checked = roll.hindered;
+        thisRoll.querySelector("input.impairedRoll").value = roll.impaired;
+        thisRoll.querySelector("input.bonusDice").value = roll.bonusDice;
+        thisRoll.querySelector("input.bonusSuccesses").value = roll.bonusSuccesses;
     }
     if ($("#race").val() === "noble") {
         $("#noble").parent().css('display', 'inline');
@@ -2545,7 +2581,7 @@ async function uploadSave() {
             console.log("Error getting document:", error);
         });
         // console.log("new id is: " + amount);
-        let idName = document.getElementById('name').value.replaceAll(/(\.| )/gi, "_");
+        let idName = document.getElementById('name').value.replaceAll(/(\.| )/gi, "_").toLowerCase();
         var idAvailable = false;
         await charCollection.doc(idName).get().then((doc) => {
             if (doc.exists) {

@@ -1032,6 +1032,11 @@ thead {
     width: fit-content; */
     background-color: var(--card);
     border-radius: 0.5em;
+    width: min-content;
+    max-height: 28px;
+}
+#totalAutoSuccessesHeader .columnTitle {
+    width: 60px;
 }
 
 .rollName {
