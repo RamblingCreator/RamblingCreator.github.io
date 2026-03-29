@@ -646,6 +646,7 @@ ARMOR_STORM
  */
 
 function addCustomAbility() {
+    console.log("adding custom ability");
     addNewAbility({
         name: "", source: "any", type: "custom", id: "", description: ""
     });
@@ -664,6 +665,7 @@ function updateAbilityCosts() {
         document.getElementById("addCustomAbility").innerHTML = "Add custom ability (Cannot afford)";
     } else {
         document.getElementById("addCustomAbility").innerHTML = "Add custom ability (cost: " + cost + ") ";
+        document.getElementById("addCustomAbility").disabled = false;
     }
     var elements = document.getElementsByClassName("addAbility");
     Array.from(elements).forEach(function (element) {
@@ -971,9 +973,9 @@ function confirmDelete(thisButton, type, messageIn = "") {
             thisButton.parentNode.parentNode.parentNode.remove();
         } else if (type === "saveData") {
             clearData();
-        } /* else if (type == "attack") {
-            thisButton.parentNode.parentNode.parentNode.remove();
-        } */
+        } else if (type == "item") {
+            thisButton.parentNode.parentNode.remove();
+        }
         // parent.remove();
         $("#confirmWindow").css('display', 'none');
         $("#popupMask").css('display', 'none');
@@ -1103,12 +1105,16 @@ function calculateStats() {
     // let maxTrauma = 4+Math.floor(parseInt($("#witsBase").value) / 25);
     // $("#maxTraumas").val(4 + Math.floor(parseInt($("#witsBase").val()) / 25));
     $("#maxTraumas").html(4 + Math.floor(parseInt($("#witsBase").val()) / 25));
+    calculateRolls();
 
 }
 
 function addStatBonus(source, amount, parent) {
-    // console.log("parent is " + parent);
-    // [object HTMLUListElement]
+    if (parent.querySelector(".bonusSource[value='"+source+"']") != null) {
+        // prevent duplicates
+        return;
+    }
+
     html = `<li class="bonusListItem">
                     +<input type="number" class="bonusAmount"  value=${amount}>
                     <input class="bonusSource" value="${source}"><button type="button" class="removeBonus" value="">✕</button>
@@ -1471,8 +1477,8 @@ function purchaseStats() {
         let statName = input.id.substring(0, input.id.length - 8);
         let baseID = "#" + statName + "Base"
         $(baseID).val(parseInt($(baseID).val()) + parseInt(input.value));
-        input.value = 0;
         description += statName + "+" + input.value + ", ";
+        input.value = 0;
     }
     $("#currentExperience").val($("#currentExperience").val() - cost);
     $("#experienceSpent").val($("#experienceSpent").val() - (cost * -1));
@@ -1560,6 +1566,7 @@ function changeBoughtStat(origin, direction) {
 
 function raiseToNextTier() {
     let raiseButtons = document.querySelectorAll(".raiseStat");
+    $(".raiseStat").val(0);
     console.log("raisebuttons: " + raiseButtons + "(" + raiseButtons.length + ")");
     // while (getTier(thisExpCost + otherLevels) <= parseInt($("#tier").val())) {
     let limit = 20;
@@ -1645,6 +1652,9 @@ function getStatCost(changedStat) {
         $(".raiseStat").prop("disabled", true);
         $("#tierUpMessage").css('display', 'inline');
         console.log("raised tier");
+    } else {
+        
+        $("#raiseToNextTier").prop("disabled", false);
     }
     document.querySelector("#statCost span").innerHTML = totalExpCost;
     return totalExpCost;
@@ -1957,7 +1967,7 @@ function applyQuickstart() {
     $("#experienceSpent").val(0);
     $("#tier").val(1);
     calculateStats();
-    calculateRolls();
+    // calculateRolls();
     if ($("#race").val() === "noble") {
         $("#noble").parent().css('display', 'inline');
     } else if ($("#race").val() === "canine") {
@@ -1994,7 +2004,7 @@ function applyQuickstart() {
 
     $("#popupMask").css('display', 'none');
     $(".popup").css('display', 'none');
-    addItem({ name: "Pocket", rank: "", tags: "", description: "A universal translator, wallet, phone, timer, watch, ID, journal, and voice recorder. Every Regular receives one at no cost when they enter the Tower. Having one allows someone to make a contract with the Administrator (for example, for the ability to compress themselves or their weapons to a manageable size).", })
+    addItem({ name: "Pocket", rank: "", amount: "1", tags: "", description: "A universal translator, wallet, phone, timer, watch, ID, journal, and voice recorder. Every Regular receives one at no cost when they enter the Tower. Having one allows someone to make a contract with the Administrator (for example, for the ability to compress themselves or their weapons to a manageable size).", })
 
 }
 
@@ -2138,13 +2148,12 @@ function saveForm() {
             tempBonuses[listItem.querySelector(".bonusSource").value] = listItem.querySelector(".bonusAmount").value;
         }
 
-
         setThisStorage("tempBonuses_" + stat.id, JSON.stringify(tempBonuses));
 
         let permBonuses = {}
         permanent = stat.querySelector('.permBonuses .bonusList');
-        for (const listItem of temp.getElementsByClassName('bonusListItem')) {
-            tempBonuses[listItem.querySelector(".bonusSource").value] = listItem.querySelector(".bonusAmount").value;
+        for (const listItem of permanent.getElementsByClassName('bonusListItem')) {
+            permBonuses[listItem.querySelector(".bonusSource").value] = listItem.querySelector(".bonusAmount").value;
         }
         // console.log("permbonuses: 
         // " + JSON.stringify(permBonuses));
@@ -2207,7 +2216,7 @@ function clearAllFields() {
     $("#conditionsList").html("");
     $("#itemsList").html("");
     $("#logItemsList").html("");
-    $('.tempBonuses .bonusList').html("");
+    // $('.tempBonuses .bonusList').html("");
 }
 
 
@@ -2244,7 +2253,6 @@ function loadForm() {
 
     inputsToLoad = document.getElementsByClassName("save");
     for (const input of inputsToLoad) {
-        console.log("type: " + input.type);
         if (input.nodeName === "INPUT" /* && input.type === "text" */) {
             if (input.type === "checkbox") {
                 if (getThisStorage(input.id) === "true") {
@@ -2365,8 +2373,8 @@ function loadForm() {
 
 
     calculateExperience();
-    calculateRolls();
-    // calculateStats();
+    // calculateRolls();
+    calculateStats();
 }
 
 
@@ -2587,9 +2595,11 @@ async function uploadSave() {
         }).catch((error) => {
             console.error("Error writing document: ", error);
         });
-        let shareLink = location.origin + location.pathname + "?id=" + idName;
+        // let shareLink = location.origin + location.pathname + "?id=" + idName;
+        let shareLink = "https://ramblingcreator.github.io/ToG_charsheet/ToG_charsheet.html" + "?id=" + idName;
         $("#shareLink").html(shareLink);
         $("#sharingInfo").html("Character info uploaded! Use this link to view it:");
+        $("#sharingInfo").css('display', 'inline');
     }
 
 }

@@ -1897,6 +1897,7 @@ label.itemAmount {
 
 .itemRank {
     width: 2ch;
+    margin-right: 0.3em;
 }
 
 .item .dragHandle {
@@ -1910,10 +1911,13 @@ button.removeItem {
     margin-left: auto;
 }
 /* notes/backstory */
-#backstory, #notes {
+#backstoryCard, #notesCard {
     padding: 0.4em;
 }
-
+#backstory, #notes {
+    min-height: 6em;
+    font-size: 16px;
+}
 
 /* footer */
 
