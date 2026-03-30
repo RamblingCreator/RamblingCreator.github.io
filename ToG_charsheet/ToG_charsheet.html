@@ -32,13 +32,13 @@
     <form>
       <div id="basicInfo">
 
-        <label for="name" class="basicInfo">name
+        <label for="name" class="basicInfo">Name:
           <input class="name save" id="name">
         </label>
-        <label for="pronouns" class="basicInfo">pronouns
+        <label for="pronouns" class="basicInfo">Pronouns:
           <input class="pronouns save" id="pronouns">
         </label>
-        <label for="race" class="basicInfo">race
+        <label for="race" class="basicInfo">Race:
           <select name="race" id="race" class="save">
             <option value="human">Human</option>
             <option value="crocodile">Crocodile</option>
@@ -50,7 +50,7 @@
             <option value="irregular">Irregular</option>
           </select>
         </label>
-        <label for="noble" class="basicInfo">noble family
+        <label for="noble" class="basicInfo">Noble family:
           <select name="noble" id="noble" class="save">
             <option value="none">----</option>
             <option value="keene">Keene</option>
@@ -63,7 +63,7 @@
             <option value="yanetta">Yanetta</option>
           </select>
         </label>
-        <label for="position" class="basicInfo">position
+        <label for="position" class="basicInfo">Position:
           <select name="position" id="position" class="save">
             <option value="fisherman">Fisherman</option>
             <option value="lightbearer">Lightbearer</option>
@@ -73,27 +73,27 @@
           </select>
         </label>
 
-        <!-- <label for="shinsu" class="basicInfo">shinsu quality
+        <!-- <label for="shinsu" class="basicInfo">Shinsu quality:
           <input class="shinsu save" id="shinsu">
         </label>
  -->
-        <label for="shinsuQuality" class="basicInfo">shinsu quality
+        <label for="shinsuQuality" class="basicInfo">Shinsu quality:
           <select name="shinsuQuality" id="shinsuQuality" class="shinsu save">
             <option value="none">----</option>
-            <option value="lightning">Lightning</option>
-            <option value="wind">Wind</option>
-            <option value="ice">Ice</option>
-            <option value="fire">Fire</option>
-            <option value="rock">Rock</option>
-            <option value="water">Water</option>
-            <option value="steel">Steel</option>
+            <option value="LIGHTNING">Lightning</option>
+            <option value="WIND">Wind</option>
+            <option value="ICE">Ice</option>
+            <option value="FIRE">Fire</option>
+            <option value="ROCK">Rock</option>
+            <option value="WATER">Water</option>
+            <option value="STEEL">Steel</option>
           </select>
         </label>
 
-        <label for="credits" class="basicInfo">credits
+        <label for="credits" class="basicInfo">Credits:
           <input class="credits save" id="credits">
         </label>
-        <!-- <label for="age" class="basicInfo">age
+        <!-- <label for="age" class="basicInfo">Age:
           <input class="age save" id="age">
         </label> -->
       </div>
@@ -645,17 +645,17 @@
 
           <label for="traumas" class="leveling">Traumas:
             <!-- <textarea class="save" id="traumas"></textarea> rows="3" cols="70" -->
-            <input class="save" id="traumas"> <!-- rows="3" cols="70" -->
+            <input class="save field" id="traumas"> <!-- rows="3" cols="70" -->
           </label>
           <!-- for="maxTraumas" -->
           <label class="leveling">Max traumas:
             <!-- <input class="save noArrows" type="number" id="maxTraumas"> -->
-            <span class="save noArrows" type="number" id="maxTraumas"></span>
+            <span class="noArrows" type="number" id="maxTraumas">0</span> <!-- save -->
           </label>
 
 
           <label for="exhaustion" class="leveling">Exhaustion:
-            <input class="save noArrows" type="number" id="exhaustion">
+            <input class="save noArrows field" type="number" id="exhaustion" value="0">
           </label>
         </div>
 
@@ -670,14 +670,15 @@
             <button type="button" id="abilitiesJump" onclick="functionforscroll('leveling')" class="smoothScroll">↓</button>
 
 
-            <label class="hideAbilities">
+            <label class="hideAbilities" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-offset="0, -10"  data-bs-title="Toggle hidden abilities" data-bs-custom-class="abilitiesToggle">
               <input type="checkbox" id="showHiddenAbilities" class="showAbilities" name="btnToggle" />
               <!-- Reveal hidden abilities -->
 
-              <span id="abilitiesHiddenText">Unreveal hidden abilities</span>
-              <span id="abilitiesShownText">Reveal hidden abilities</span>
-
               <span id="abilitiesHiddenIcon">👁</span>
+              <!-- <span id="abilitiesToggleText">Toggle hidden abilities</span> -->
+              <!--               <span id="abilitiesHiddenText">Unreveal hidden abilities</span>
+              <span id="abilitiesShownText">Reveal hidden abilities</span> -->
+
               <!-- <span id="abilitiesHiddenIcon">✕</span>
               <span id="abilitiesShownIcon">👁</span> 
                <span id="abilitiesHiddenHover">Show/Hide hidden abilities</span> -->
@@ -733,7 +734,7 @@
         <div id="levelBody">
 
           <label for="experienceTrigger" class="leveling"><!-- EXP trigger: -->
-            <textarea class="save field" id="experienceTrigger"></textarea> <!-- rows="3" cols="70" -->
+            <textarea class="save field resize" id="experienceTrigger"></textarea> <!-- rows="3" cols="70" -->
           </label>
 
           <div id="levelNumbers">
@@ -951,7 +952,7 @@
       </label>
     </div>
 
-    starting stats:
+    <h4>Starting stats:</h4>
     <div>
       Points remaining: <span id="statPoints">10</span>
     </div>
@@ -964,7 +965,7 @@
 
     </div>
 
-    Starting abilities:
+    <h4>Starting abilities:</h4>
     <div id="startAbilitiesList" class="scrollList">
     </div>
 
@@ -1086,8 +1087,8 @@
       <div id="windowColors">
         <label for="background"><input type="color" class="save" id="background" name="background" value="#919191" />
           background</label>
-        <label for="backgroundDarker"><input type="color" class="save" id="backgroundDarker" name="backgroundDarker" value="#575757" />
-          darker background</label>
+        <!-- <label for="backgroundDarker"><input type="color" class="save" id="backgroundDarker" name="backgroundDarker" value="#575757" />
+          darker background</label> -->
         <label for="card"><input type="color" class="save" id="card" name="card" value="#c7c7c7" />
           card</label>
         <label for="field"><input type="color" class="save" id="field" name="field" value="#b3b3b3" />
@@ -1155,6 +1156,8 @@
       <ul>
         <!-- <li>add sections for backstory, etc</li> -->
         <li>check if sharing is good</li>
+        <li>maybe add a tutorial / help thing</li>
+        <li>more options for custom things like canine transformations</li>
       </ul>
     </div>
   </div>

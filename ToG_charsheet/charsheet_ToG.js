@@ -100,7 +100,7 @@ $(document).ready(function () {
     });
 
     $("#rolls input").on("input", function () {
-        if (this.value === ""){
+        if (this.value === "") {
             this.value = '0';
         }
     });
@@ -594,7 +594,7 @@ function checkAbilityBuyable(abilityID) {
 
 
     // (abilityID === "OVERWHELMING_SPEED") && $("#agilityBase").val() < 50 && $("#witsBase").val() < 50
-
+    // console.log("is quality? "+abilityID.substring(0, 14))
     if ((abilityID === "SUPERHUMAN_STRENGTH" && $("#mightBase").val() < 50) ||
         (abilityID === "SUPERHUMAN_SPEED" && $("#agilityBase").val() < 50) ||
         (abilityID === "OVERWHELMING_FORCE" && $("#mightBase").val() < 50 && $("#resistanceBase").val() < 50) ||
@@ -603,6 +603,8 @@ function checkAbilityBuyable(abilityID) {
         (abilityID === "OVERWHELMING_ACCURACY" && $("#agilityBase").val() < 50 && $("#mightBase").val() < 50) ||
         (abilityID === "OVERWHELMING_CONTROL" && $("#agilityBase").val() < 50 && $("#heartBase").val() < 50) ||
         (abilityID === "SPIDER_FOOT" && !checkForAbility("FEATHER_FOOT"))) {
+        return false;
+    } else if ($("#noble").val() === "lemarque" && abilityID.substring(0, 14) === "SHINSU_QUALITY") {
         return false;
     } else if ((abilityID === "LIGHTNING_STRIKE" || abilityID === "CHAIN_LIGHTNING" || abilityID === "BOLT_RIDER")
         && !checkForAbility("SHINSU_QUALITY_LIGHTNING")) {
@@ -696,6 +698,13 @@ function updateAbilityCosts() {
                     totalQualities++;
                 }
             }
+            if ($("#race").val() === "noble" && $("#shinsuQuality").val() != element.value.substring(15, element.value.length)) {
+                cost *= 2;
+            }
+            // if ($("#race").val() === "noble") {
+            //     console.log($("#shinsuQuality").val() + "=?" + element.value.substring(15, element.value.length));
+            // }
+
             cost = cost * Math.pow(3, totalQualities);
         } /* else if (element.id.includes("SHINSU_QUALITY")){
 
@@ -766,11 +775,11 @@ var addThisAbility = function () {
         console.log(thisAbility);
         if (thisAbility != null) {
             addNewAbility(thisAbility);
+            bootstrap.Tooltip(thisAbility.querySelector('[data-bs-toggle="tooltip"]'))
         }
         // console.log("check for ability ("+thisID+"): "+checkForAbility(thisID));
         filterAbilities();
     }
-
 
 
 };
@@ -858,30 +867,33 @@ function addAbilityBonuses(Json) {
 
 function getAbilityHtml(Json) {
 
-    return `<div class="ability" hidden-ability="${Json.hidden}" abilityName="${Json.name}" id="${Json.id}" >
-                <div class="abilityHeader">
-                    <div class="abilityNameBlock">
-                    <div class="dragHandle" draggable="false">↕</div>
-                    <input class="abilityName resize" value="${Json.name}">
-                    <label class="toggle">
-                        <input type="checkbox" class="isShinsu" name="btnToggle" />
-                        <span class="shinsuIcon">💧</span>
-                        <span class="shinsuHover">This ability uses Shinsu</span>
-                    </label>
-
-                    </div>
-                    <div class="abilityOrigin">
-                    <input class="abilitySource resize" value="${Json.source}">:<input class="abilityType resize" value="${Json.type}">
-                    </div>
-                    <div class="abilityButtons">
-                    <button type="button" class="hideThisAbility" title="hide this ability">👁</button>&nbsp;
-                    <button type="button" class="removeAbility confirm" value="${Json.id}">✕</button>
-                    </div>
+    return `<div class="ability" hidden-ability="${Json.hidden}" abilityName="${Json.name}" id="${Json.id}">
+            <div class="abilityHeader">
+                <div class="abilityNameBlock">
+                <div class="dragHandle" draggable="false">↕</div>
+                <div contentEditable="true" class="abilityName editable-div overflow-auto" role="textbox" aria-multiline=" true">${Json.name}</div>
+                <label class="toggle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="This ability uses Shinsu">
+                    <input type="checkbox" class="isShinsu" name="btnToggle"/>
+                    <span class="shinsuIcon"  data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="This ability uses Shinsu">💧</span>
+                </label>
                 </div>
-                <textarea class="abilityDescription resize" rows="2" cols="10">${Json.description}</textarea>
+                <div class="abilityOrigin">
+                <input class="abilitySource resize" value="${Json.source}">:<input class="abilityType resize" value="${Json.type}">
+                </div>
+                <div class="abilityButtons">
+                <button type="button" class="hideThisAbility" title="hide this ability">👁</button>&nbsp;
+                <button type="button" class="removeAbility confirm" value="${Json.id}">✕</button>
+                </div>
+            </div>
+            <textarea class="abilityDescription resize" rows="2" cols="10">${Json.description}</textarea>
             </div>`;
 }
+
 /* 
+                <button data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="This ability uses Shinsu">
+
+<span class="shinsuHover">This ability uses Shinsu</span>
+
 title="This ability uses Shinsu"
  title="This ability does not use Shinsu"
 */
@@ -1004,6 +1016,15 @@ function confirmDelete(thisButton, type, messageIn = "") {
             $("#popupMask").css('display', 'none');
         }
     });
+}
+
+function resizeInput(element) {
+    if (element.nodeName === "INPUT") {
+        adjustWidthOfInput(element)
+    } else if (element.nodeName == "TEXTAREA") {
+        element.style.height = "0px";
+        element.style.height = element.scrollHeight + "px";
+    }
 }
 
 function adjustWidthOfInput(inputEl) {
@@ -1396,7 +1417,7 @@ function addCondition(json) {
 var addThisCondition = function () {
     addCondition({ name: this.name, description: $(this).attr("desc") });
     /* let html = getConditionHtml({ name: this.name, description: $(this).attr("desc") });
-
+ 
     $(html).appendTo("#conditionsList");
     let thisCondition = document.getElementById("conditionsList").lastChild;
     let tbox = thisCondition.getElementsByClassName("conditionDescription")[0];
@@ -1469,14 +1490,14 @@ function getTier(exp) {
 
 }
 /* leveling modifiers:
-
+ 
 Tough: 
 You increase your Might and Resistance increase by your Tier plus one.
 Born Fighter: 
 Might, Resistance, and Agility scores by 2 increase  by your Tier plus one
 Royal Blood: 
  Whenever you spend experience to increase one of your attributes, you increase that attribute by your Tier plus one
-
+ 
 */
 
 function purchaseStats() {
@@ -2007,6 +2028,7 @@ function applyQuickstart() {
     }
     $("#experienceTrigger").val(thisInfo.trigger);
     $("#credits").val(thisInfo.credits);
+    $("#shinsuQuality").val(thisInfo.quality);
 
 
     $("#race").val($("#quickstartRace").val());
@@ -2015,6 +2037,9 @@ function applyQuickstart() {
     $("#popupMask").css('display', 'none');
     $(".popup").css('display', 'none');
     addItem({ name: "Pocket", rank: "", amount: "1", tags: "", description: "A universal translator, wallet, phone, timer, watch, ID, journal, and voice recorder. Every Regular receives one at no cost when they enter the Tower. Having one allows someone to make a contract with the Administrator (for example, for the ability to compress themselves or their weapons to a manageable size).", })
+    for (const element of document.querySelectorAll(".resize")) {
+        resizeInput(element);
+    }
 
 }
 
@@ -2113,7 +2138,8 @@ function saveForm() {
     let abilitiesList = [];
     for (const ability of abilities.getElementsByClassName('ability')) {
         let thisJSON = {}
-        thisJSON.name = ability.querySelector(".abilityName").value;
+        // thisJSON.name = ability.querySelector(".abilityName").value;
+        thisJSON.name = ability.querySelector(".abilityName").innerHTML;
         thisJSON.id = ability.id;
         thisJSON.shinsu = ability.querySelector(".isShinsu").checked;
         thisJSON.description = ability.querySelector(".abilityDescription").value;
@@ -2285,8 +2311,6 @@ function loadForm() {
                 // console.log("setting " + input.id + ".checked to " + getThisStorage(input.id));
                 // console.log(input.id + ".checked = " + input.checked);
             } else if (input.type === "color") {
-
-                console.log("stored: " + getThisStorage(input.id));
                 if (getThisStorage(input.id) != null) {
                     input.value = getThisStorage(input.id);
                 }                // if (getThisStorage(input.id) === "true") {
@@ -2314,8 +2338,21 @@ function loadForm() {
             input.style.height = input.scrollHeight + "px";
             input.style.overflowY = "hidden";
 
+        } else if (input.nodeName == "div") {
+            console.log("is editable: " + input.isContentEditable);
+            input.value = getThisStorage(input.id);
+            input.style.height = input.scrollHeight + "px";
+            input.style.overflowY = "hidden";
+
         }
         // console.log("setting " + input.nodeName + " (" + input.type + ") " + input.id + " to [" + input.value + "]");
+    }
+
+    for (const element of document.querySelectorAll(".resize")) {
+        resizeInput(element);
+        // if (element.value != "") {
+        //     adjustWidthOfInput(element);
+        // }
     }
 
     let conditionsList = JSON.parse(getThisStorage("conditionsList"));
@@ -2343,6 +2380,12 @@ function loadForm() {
             addNewAbility(thisAbility);
         });
     }
+
+
+    var abilityTooltipTriggerList = [].slice.call(document.querySelectorAll('.ability [data-bs-toggle="tooltip"]'))
+    var abilityTooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
 
 
     let itemsList = JSON.parse(getThisStorage("itemsList"));
@@ -2378,10 +2421,6 @@ function loadForm() {
     let rollsList = JSON.parse(getThisStorage("rollsList"));
 
     for (const roll of rollsList) {
-        // console.log("roll: " + Object.entries(roll));
-        for (const [key, value] of Object.entries(roll)) {
-            console.log(`${key}: ${value}`);
-        }
         let thisRoll = document.querySelector("#" + roll.id);
         thisRoll.querySelector(".hinderedCheckbox").checked = roll.hindered;
         thisRoll.querySelector("input.impairedRoll").value = roll.impaired;
@@ -2497,7 +2536,7 @@ function importSave(fileData) {
     if (document.getElementById('upload_file').value == null) {
         console.log("please put a file");
     } else {
-
+ 
         // let newData = JSON.parse(fileData)
         let newData = document.getElementById('upload_file').value;
         console.log(newData);
@@ -2508,7 +2547,7 @@ function importSave(fileData) {
             // localStorage.setItem(key, value)
         }
         loadForm();
-
+ 
     } */
 }
 

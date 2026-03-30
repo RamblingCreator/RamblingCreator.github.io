@@ -67,7 +67,7 @@ h1, h2, h3, h4, h5 {
     --background-darker: #575757;
     --background: hsl(0, 0%, 57%);
     --background-darker: hsl(0, 0%, 34%);
-    --background-darker:  hsl(from var(--background) h s calc(l - 23));
+    --background-darker: hsl(from var(--background) h s calc(l - 23));
     --card: #c7c7c7;
     --field: #b3b3b3;
     --accent: rgb(123, 211, 255);
@@ -1155,6 +1155,9 @@ Resistance
     bottom: -0.2em; */
     font-size: 3em;
     line-height: 0.75em;
+    display: block;
+    margin: auto;
+    height: max-content;
 }
 
 /* #abilitiesHiddenIcon {
@@ -1171,13 +1174,24 @@ input:checked~#abilitiesHiddenIcon {
     /* text-shadow: none; */
 }
 
+#abilitiesToggleText {
+    width: min-content;
+    /* width: fit-content; */
+    white-space: wrap;
+    display: block;
+    margin: 0 auto;
+    font-size: 14px;
+    /* max-height: 2em; */
+}
 
+/* 
 #abilitiesHiddenText, #abilitiesShownText {
     width: min-content;
     white-space: wrap;
     display: inline-block;
     margin: 0 auto;
 }
+
 #abilitiesHiddenText {
     display: none;
 }
@@ -1191,7 +1205,7 @@ input:checked~#abilitiesShownText {
     display: none;
 }
 
-
+ */
 #abilitiesHeader {
     display: flex;
     flex-direction: row;
@@ -1205,6 +1219,9 @@ input:checked~#abilitiesShownText {
 
 label.hideAbilities {
     position: relative;
+    /* width: ; */
+    min-width: 54px;
+    text-align: center;
     /* transform: translate(15em, -3em); */
 }
 
@@ -1291,6 +1308,7 @@ label.hideAbilities {
 #startAbilitiesList {
     /* max-height: 50vh; */
     height: 100%;
+    margin-top: 0.3em;
 }
 
 
@@ -1471,58 +1489,6 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     display: none;
 }
 
-@media (max-width:900px) {
-
-    .shinsuHover {
-        display: none;
-    }
-    #abilitiesList {
-        max-height: none;
-        overflow-y: visible;
-    }
-
-    #abilitiesJump {
-        display: inline-block;
-        /* width: 2em; */
-        width: min-content;
-        height: min-content;
-        padding: 0.1em;
-        text-align: center;
-        /* margin-left: 3em; */
-
-
-        background-color: var(--accent);
-        border-radius: 1em;
-        border: none;
-        /* font-family: 'Alegreya', serif; */
-        font-size: 2.5em;
-    }
-
-    #abilitiesHeader h1 {
-        width: min-content;
-    }
-    .abilityOrigin {
-        white-space: wrap;
-        font-size: 0.9em;
-    }
-    .abilityNameBlock, .newAbility .abilityNameBlock {
-        white-space: nowrap;
-    }
-    .abilityHeader {
-        flex-wrap: nowrap;
-    }
-    .newAbility .abilityHeader {
-        flex-wrap: wrap;
-        gap: 0;
-    }
-    .ability .dragHandle {
-        display: none;
-    }
-    .fixedShinsuIcon {
-        display: inline;
-    }
-}
-
 
 
 .abilityDescription {
@@ -1547,10 +1513,10 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 
-    row-gap: 8px
-        /* 
+    /* row-gap: 8px */
+    /* 
     align-items: center
     align-items: flex-start; */
 }
@@ -1564,7 +1530,7 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
 }
 
 
-.ability input {
+.ability input, .ability .abilityName {
     display: inline;
     border: none;
     border-radius: 0;
@@ -1573,7 +1539,7 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
 }
 
 .newAbility div {
-    white-space: nowrap;
+    /* white-space: nowrap; */
 }
 
 .newAbility .abilityName {
@@ -1597,6 +1563,7 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
 
 .abilityName {
     font-size: 1.4em;
+    white-space: wrap;
     /* width: 12em; */
     /* border: 1px solid black; */
 }
@@ -1657,6 +1624,77 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     /* gap: 20px; */
     background-color: var(--background-darker);
 }
+.abilityButtons {
+    white-space: nowrap;
+}
+.abilityNameBlock, .newAbility .abilityNameBlock {
+    white-space: nowrap;
+}
+
+@media (max-width:900px) {
+
+    .shinsuHover {
+        display: none;
+    }
+    #abilitiesList {
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    #abilitiesJump {
+        display: inline-block;
+        /* width: 2em; */
+        width: min-content;
+        height: min-content;
+        padding: 0.1em;
+        text-align: center;
+        /* margin-left: 3em; */
+
+        margin: 0;
+        padding-top: 0em;
+        background-color: var(--accent);
+        border-radius: 1em;
+        border: none;
+        /* font-family: 'Alegreya', serif; */
+        font-size: 2.5em;
+
+        font-size: 2.25em;
+        width: 1em;
+    }
+
+    #abilitiesHeader h1 {
+        /* width: min-content; */
+    }
+    .abilityOrigin {
+        white-space: wrap;
+        width: max-content;
+        font-size: 0.9em;
+    }
+    .abilityHeader {
+        flex-wrap: nowrap;
+    }
+    /* .abilityHeader .abilityOrigin {
+        order: 2;
+    }
+    .abilityHeader .abilityButtons {
+        order: 1;
+    } */
+    .abilityName {
+        max-width: 240px;
+        white-space: wrap;
+    }
+    .newAbility .abilityHeader {
+        flex-wrap: wrap;
+        gap: 0;
+    }
+    .ability .dragHandle {
+        display: none;
+    }
+    .fixedShinsuIcon {
+        display: inline;
+    }
+}
+
 
 /* popup windows */
 
@@ -2004,9 +2042,13 @@ footer {
     height: 80vh;
     padding: 1em;
 }
+#quickstartWindow h4{
+    margin-top: 0.4em;
+}
 
 #quickstartDescription {
     margin-bottom: 1em;
+    margin-bottom: 0.4em;
 }
 #quickstartWindow label {
     font-size: 1em;
@@ -2150,6 +2192,9 @@ select.quickstart {
     font-style: normal;
     font-weight: 400;
     line-height: 1.5;
+    line-height: 1.25;
+
+
     text-align: left;
     text-align: start;
     text-decoration: none;
@@ -2179,6 +2224,11 @@ select.quickstart {
     -o-transform: translateY(50px);
     -webkit-transform: translateY(50px);
     transform: translateY(50px);
+}
+
+.tooltip.abilitiesToggle {
+    /* white-space: nowrap; */
+    width: min-content;
 }
 
 /* .tooltip .tooltip-arrow {

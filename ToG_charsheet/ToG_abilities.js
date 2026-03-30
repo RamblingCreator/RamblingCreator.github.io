@@ -110,41 +110,49 @@ Shake the Foundations of the Tower: Whenever you shake the status quo, you gain 
     {
         source: "keene",
         credits: 20000,
+        quality: "LIGHTNING",
         trigger: `Whenever you manipulate someone into helping you, you gain experience equal to their Wits.`
     },
     {
         source: "trumbald",
         credits: 20000,
+        quality: "ICE",
         trigger: `Whenever you make an item, you get one experience, plus one for every five hundred credits that item costs.`
     },
     {
         source: "haas",
         credits: 20000,
+        quality: "WATER",
         trigger: `Whenever you intentionally disobey someone with authority over you, you gain experience equal to their lowest attribute. This only applies once per person.`
     },
     {
         source: "lemarque",
         credits: 20000,
+        quality: "NONE",
         trigger: `Whenever you capture a divine fish, you gain experience equal to the current floor.`
     },
     {
         source: "halleck",
         credits: 20000,
+        quality: "ROCK",
         trigger: `Whenever you reduce the Damage Base or total damage of an attack against you to 1 or less, gain experience equal to your Resistance, with a maximum of once per day.`
     },
     {
         source: "posada",
         credits: 20000,
+        quality: "WIND",
         trigger: `Whenever you uncover some significant, new piece of information that isn't commonly known (as determined by the GM), you gain an amount of experience: equal to the highest floor you've reached for information that is known only to High Rankers or other very important people; equal to twice that floor for information that is only known by a handful of people in the Tower; equal to five times that floor for information that isn't known by anyone else in the Tower.`
     },
     {
         source: "aven",
         credits: 20000,
+        quality: "STEEL",
         trigger: `Whenever you kill someone who wasn't a threat to you (or otherwise didn't need to die), gain experience equal to the highest floor you've reached.`
     },
     {
         source: "yanetta",
         credits: 20000,
+        quality: "FIRE",
         trigger: `When you pick this family, choose one of the following to be your experience trigger for this family. You can't change your decision later. Both only apply once per person per day.
     Whenever you heal someone of Injuries equal to or greater than their Might Edge, gain experience equal to their Might.
     Whenever you cause someone to take Injuries equal to or greater than half their Might, gain experience equal to their Might Edge.` }
@@ -1378,7 +1386,7 @@ var redwitch_abilities = [{
     shinsu: false
 }, {
     name: "Cassandra's Truth",
-    id: "CASSANDRA'S_TRUTH",
+    id: "CASSANDRAS_TRUTH",
     description: "You don't start with this ability, but can buy it with experience as though it was a universal ability. The more profound your words are, the more people distrust them. You can choose to take only half the normal Stress (rounded up) to use Where Fate Leads. Whatever answers you get, you have to convince others (with a Manipulate or Reach Out roll against their Think) for them to believe the truth of what you say.",
     source: "race",
     type: "redwitch",
@@ -1414,7 +1422,7 @@ var noble_abilities = [{
     shinsu: false
 }, {
     name: "You Have Your Parents' Fire",
-    id: "YOU_HAVE_YOUR_PARENTS'_FIRE",
+    id: "YOU_HAVE_YOUR_PARENTS_FIRE",
     description: "Each family has an associated shinsu quality. If you ever gain the Shinsu Quality universal ability, any quality except the one associated with your family costs twice as much experience.",
     source: "race",
     type: "noble",
@@ -1469,7 +1477,7 @@ var irregular_abilities = [{
     description: "When you are hit by a shinsu attack, you can choose to treat the damage from that as Unresisted and gain experience equal to the Harm you take.",
     source: "race",
     type: "irregular",
-    shinsu: true
+    shinsu: false
 }, {
     name: "Shake the Foundations of the Tower",
     id: "SHAKE_THE_FOUNDATIONS_OF_THE_TOWER",
