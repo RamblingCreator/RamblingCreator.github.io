@@ -134,13 +134,23 @@ $(document).ready(function () {
     $("#openSettings").on("click", function () {
         $("#settingsWindow").css('display', 'flex');
         $("#popupMask").css('display', 'flex');
+        console.log("shareId: " + getThisStorage("shareId"));
         if (viewingSharedSheet) {
             $("#shareSection label span").html("You are currently viewing a shared sheet.<br>To upload your modifications to this sheet, please enter its password: ");
             $("#shareLink").css('display', 'none');
             $("#localSave").css('display', 'inline');
+        } else if (getThisStorage("shareId") != null) {
+            $("label.modifyExistingSave").css('display', 'inline');
+            $("label.sharePassword span").html("If not, enter a password to restrict who can edit this sheet:");
+            $("#uploadSheet").html('Upload new sheet');
+
+        } else {
+            $("#uploadSheet").html('Upload sheet for sharing');
 
         }
     });
+
+
 
     $("#applyColorChange").on("click", function () {
         applyColors();
@@ -157,8 +167,6 @@ $(document).ready(function () {
 
 
     });
-
-
     $("#export").on("click", function () {
         exportSave();
     });
@@ -176,31 +184,19 @@ $(document).ready(function () {
         $("#settingsWindow").css('display', 'none');
         confirmDelete(null, "saveData", "all saved data")
     });
-    $("#readURL").on("click", function () {
-        /* let searchParams = new URLSearchParams(window.location.search);
-        console.log("searchParams: " + searchParams);
-        // makeShareLink();
-        searchParams.forEach((value, key) => {
-            console.log(value, key);
-        }); */
-        let values = getValues("1PT7MxBo3l4FcZSTSho65VoqCq8McEotI6XSPxAiNb9c", "Sheet1!A1:D5")
-        values.forEach(value => {
-            console.log(value);
-        });
-
-    });
 
     $("#share").on("click", function () {
         console.log(makeShareLink());
     });
     $("#uploadSheet").on("click", function () {
         uploadSave();
-        // console.log("uploading sheet");
+    });
+    $("#modifyExistingSave").on("click", function () {
+        uploadSave(true);
     });
 
     $("#transferData").on("click", function () {
         transferData();
-        // console.log("uploading sheet");
     });
 
 
@@ -803,6 +799,7 @@ function addNewAbility(abilityJson) {
             adjustWidthOfInput(element);
         }
     }
+    $(thisAbility).attr("hidden-ability", abilityJson.hidden)
     // console.log(abilityJson.name + " shinsu: " + abilityJson.shinsu);
 
     /* if (abilityJson.shinsu == true) {
@@ -867,7 +864,35 @@ function addAbilityBonuses(Json) {
 
 function getAbilityHtml(Json) {
 
-    return `<div class="ability" hidden-ability="${Json.hidden}" abilityName="${Json.name}" id="${Json.id}">
+    return `<div class="ability" abilityName="${Json.name}" id="${Json.id}">
+  <div class="abilityHeader">
+    <div class="abilityNameBlock">
+      <div class="dragHandle" draggable="false">↕</div>
+      <div contentEditable="true" class="abilityName editable-div overflow-auto" role="textbox" aria-multiline=" true">${Json.name}</div>
+      <label class="toggle" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="This ability uses Shinsu">
+        <input type="checkbox" class="isShinsu" name="btnToggle" />
+        <span class="shinsuIcon" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="This ability uses Shinsu">💧</span>
+      </label>
+      <div class="abilityOrigin">
+        <input class="abilitySource resize" value="${Json.source}">:<input class="abilityType resize" value="${Json.type}">
+      </div>
+    </div>
+
+    <div class="abilityButtons">
+      <button type="button" class="hideThisAbility" title="hide this ability">👁</button>&nbsp;
+      <button type="button" class="removeAbility confirm" value="${Json.id}">✕</button>
+    </div>
+  </div>
+  <textarea class="abilityDescription resize field" rows="2" cols="10">${Json.description}</textarea>
+</div>`;
+}
+
+
+/*
+
+hidden-ability="${Json.hidden}" 
+
+<div class="ability" hidden-ability="${Json.hidden}" abilityName="${Json.name}" id="${Json.id}">
             <div class="abilityHeader">
                 <div class="abilityNameBlock">
                 <div class="dragHandle" draggable="false">↕</div>
@@ -885,9 +910,8 @@ function getAbilityHtml(Json) {
                 <button type="button" class="removeAbility confirm" value="${Json.id}">✕</button>
                 </div>
             </div>
-            <textarea class="abilityDescription resize" rows="2" cols="10">${Json.description}</textarea>
-            </div>`;
-}
+            <textarea class="abilityDescription resize field" rows="2" cols="10">${Json.description}</textarea>
+            </div> */
 
 /* 
                 <button data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="This ability uses Shinsu">
@@ -1713,6 +1737,7 @@ function addItem(itemJson) {
     let thisButton = thisItem.getElementsByClassName("removeItem")[0];
     thisButton.addEventListener('click', function () { confirmDelete(thisButton, "item") }, false);
 
+    resizeInput(thisItem.querySelector(".itemDescription"));
 
     $(thisItem).on("keyup", function (event) {
         if ($(document.activeElement).is("input") && $(document.activeElement).parent().is("summary") && event.keyCode == 32) {
@@ -1750,7 +1775,7 @@ function getItemHtml(Json) {
                   </select></label>
                 <label class="itemTags">(<input class="itemTags field" value="${Json.tags}">)</label>
             </div>
-            <textarea class="itemDescription field">${Json.description}</textarea>
+            <textarea class="itemDescription field resize">${Json.description}</textarea>
           </details>`;
     /* return `<tr class="item">
               <td class="handle"><div class="dragHandle" draggable="false">↕</div></td>
@@ -2045,7 +2070,14 @@ function applyQuickstart() {
 
 /* settings */
 
-
+function setShareInfo(newMessage, selector = "#sharingInfo") {
+    if (newMessage === "") {
+        $(selector).css('display', 'none');
+    } else {
+        $(selector).html(newMessage);
+        $(selector).css('display', 'inline');
+    }
+}
 
 var functionforscroll = function (id) {
     var reqId = "#" + id;
@@ -2202,7 +2234,7 @@ function saveForm() {
 
 
     let logItemsList = [];
-    console.log("log items amount: " + document.querySelectorAll(".logItem").length);
+    // console.log("log items amount: " + document.querySelectorAll(".logItem").length);
     for (const logItem of document.querySelectorAll(".logItem")) {
         let thisJSON = {}
         thisJSON.cost = logItem.querySelector(".logItemCost").innerHTML;
@@ -2500,9 +2532,12 @@ function getSaveData() {
     for (var i = 0; i < localStorage.length; i++) {
 
         let thiskey = localStorage.key(i);
-        if (thiskey.substring(0, 4) === "ToG_") {
+        if (thiskey.startsWith("ToG_ToG_")) {
+            console.log("found bad key: " + thiskey);
+        } else if (thiskey.startsWith("ToG_")) {
             data.set(thiskey.substring(4, thiskey.length), localStorage.getItem(thiskey));
         }
+
     }
     console.log("save data: " + JSON.stringify(Object.fromEntries(data)));
     return JSON.stringify(Object.fromEntries(data));
@@ -2516,6 +2551,7 @@ function copySave() {
 
 
 function importSave(fileData) {
+    clearData(); // risky?
     console.log("fileData: " + fileData);
     let data = JSON.parse(fileData);
     // for (const [key, value] of Object.entries(fileData)) {
@@ -2583,42 +2619,60 @@ function clearData() {
 
 const charCollection = db.collection("Characters")
 
-async function uploadSave() {
+async function uploadSave(uploadOverride = false) {
+    saveForm();
     let searchParams = new URLSearchParams(window.location.search);
-
-    if (viewingSharedSheet) {
-        // $("#sharePassword");
-        console.log($("#sharePassword").val() + "=?" + sharePassword);
-        if ($("#sharePassword").val() === sharePassword) {
-            console.log("uploading modifications");
-            await db.collection("Characters").doc(searchParams.get("id")).set({
-                name: $("#name").val(),
-                data: JSON.stringify(sessionStorage),
-                password: sharePassword
-            }).then(() => {
-                console.log("Document successfully written!");
-                $("#sharingInfo").html("Character sheet has been updated");
-            }).catch((error) => {
-                console.error("Error writing document: ", error);
-            });
-        } else {
-            console.log("incorrect password");
-        }
-    } else {
-        var amount = "0";
-        await charCollection.doc("totalCharacters").get().then((doc) => {
+    if (uploadOverride) {
+        await charCollection.doc("morgan").get().then((doc) => {
             if (doc.exists) {
-                amount = doc.data().count + "";
-                console.log("Document data:", amount, "type=", typeof doc.data().count);
-
+                sharePassword = doc.data().password;
             } else {
-                // doc.data() will be undefined in this case
                 console.log("No such document!");
-                amount = "-1";
             }
         }).catch((error) => {
             console.log("Error getting document:", error);
         });
+
+
+        console.log("sharePassword: " + $("#modifyPassword").val() + "=?" + sharePassword);
+        if ($("#modifyPassword").val() === sharePassword) {
+            setShareInfo("uploading modifications", "#sharingInfoTwo");
+            await db.collection("Characters").doc(getThisStorage("shareId").toLowerCase()).update({
+                name: $("#name").val(),
+                data: getSaveData(),
+            }).then(() => {
+                let shareLink = "https://ramblingcreator.github.io/ToG_charsheet/ToG_charsheet.html" + "?id=" + getThisStorage("shareId");
+
+                setShareInfo("Character sheet updated: <a href='" + shareLink + "'>" + shareLink + "</a>", "#sharingInfoTwo");
+
+            }).catch((error) => {
+                console.error("Error writing document: ", error);
+            });
+        } else {
+            setShareInfo("incorrect password", "#sharingInfoTwo");
+        }
+    } else if (viewingSharedSheet) {
+        // $("#sharePassword");
+        console.log("sharePassword: " + $("#sharePassword").val() + "=?" + sharePassword);
+        if ($("#sharePassword").val() === sharePassword) {
+            console.log("uploading modifications...");
+            setShareInfo("uploading modifications");
+            await db.collection("Characters").doc(searchParams.get("id").toLowerCase()).update({
+                name: $("#name").val(),
+                data: getSaveData(),
+            }).then(() => {
+                console.log("Document successfully written!");
+                $("#sharingInfo").html("Character sheet updated");
+            }).catch((error) => {
+                console.error("Error writing document: ", error);
+            });
+        } else {
+            // console.log("incorrect password");
+            setShareInfo("incorrect password");
+        }
+    } else {
+        var amount = "0";
+        setShareInfo("uploading character...");
         // console.log("new id is: " + amount);
         let idName = document.getElementById('name').value.replaceAll(/(\.| )/gi, "_").toLowerCase();
         var idAvailable = false;
@@ -2660,6 +2714,7 @@ async function uploadSave() {
             password: $("#sharePassword").val()
         }).then(() => {
             console.log("Document successfully written!");
+
         }).catch((error) => {
             console.error("Error writing document: ", error);
         });
@@ -2672,17 +2727,33 @@ async function uploadSave() {
         });
         // let shareLink = location.origin + location.pathname + "?id=" + idName;
         let shareLink = "https://ramblingcreator.github.io/ToG_charsheet/ToG_charsheet.html" + "?id=" + idName;
-        $("#shareLink").html(shareLink);
-        $("#sharingInfo").html("Character info uploaded! Use this link to view it:");
-        $("#sharingInfo").css('display', 'inline');
+        $("#shareLink").html("<a href='" + shareLink + "'>" + shareLink + "</a>");
+        setShareInfo("Character info uploaded! Use this link to view it:");
+        setThisStorage("shareId", idName);
     }
 
+}
+
+function checkifCharacterExists(idName) {
+    charCollection.doc(idName + idNumber).get().then((doc) => {
+        if (doc.exists) {
+            console.log("id already in use");
+            return true;
+        } else {
+            console.log("id is available");
+            return false;
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
 }
 
 let sharePassword = "";
 
 function loadSharedSheet(id) {
+    id = id.toLowerCase();
     console.log("loading shared sheet: " + id);
+
 
     // let charData = "";
     charCollection.doc(id).get().then((doc) => {
@@ -2690,6 +2761,7 @@ function loadSharedSheet(id) {
             console.log("Document data:", doc.data());
             // amount = doc.data();
             console.log("loading " + doc.data().name);
+
             sharePassword = doc.data().password;
             importSave(doc.data().data);
 
@@ -2711,6 +2783,7 @@ function transferData() {
             localStorage.setItem(sessionStorage.key(i), sessionStorage.getItem(sessionStorage.key(i)));
         }
     }
+    setShareInfo('This sheet is now saved locally');
 }
 
 // add a function to call when the <input type=file> status changes, but don't "submit" the form

@@ -670,7 +670,7 @@
             <button type="button" id="abilitiesJump" onclick="functionforscroll('leveling')" class="smoothScroll">↓</button>
 
 
-            <label class="hideAbilities" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-offset="0, -10"  data-bs-title="Toggle hidden abilities" data-bs-custom-class="abilitiesToggle">
+            <label class="hideAbilities" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-offset="0, -10" data-bs-title="Toggle hidden abilities" data-bs-custom-class="abilitiesToggle">
               <input type="checkbox" id="showHiddenAbilities" class="showAbilities" name="btnToggle" />
               <!-- Reveal hidden abilities -->
 
@@ -1133,11 +1133,20 @@
 
       <h4>Upload character for sharing</h4>
       <div id="shareSection">
-        <label> <span>Choose a password to restrict who can edit this character:</span> <input id="sharePassword"></label>
+        <label class="modifyExistingSave"> <span>A version of this character sheet has already been uploaded for sharing, do you want to update it instead?</span>
+          <br>
+          <span>If so, enter that sheet's password:</span> <input id="modifyPassword">
+          <button type="button" id="modifyExistingSave">Update existing sheet</button> <span id="sharingInfoTwo">Character sheet updated</span>
+        </label>
+
+        <!-- password? -->
+        <br>
+        <label class="sharePassword"> <span>Choose a password to restrict who can edit this character:</span> <input id="sharePassword"></label>
         <button type="button" id="uploadSheet">Upload sheet for sharing</button>
         <span id="sharingInfo">that is not the correct password for this character</span>
         <code id="shareLink"></code>
       </div>
+
       <label id="localSave"> <span>You are currently viewing a shared sheet, so any changes you make will not be saved. You can permanently save this sheet, but it will overwrite any existing saved data.</span>
         <button type="button" id="transferData">Save sheet locally</button></label>
       <br>

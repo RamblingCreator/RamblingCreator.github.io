@@ -131,7 +131,7 @@ body {
 textarea.field {
     width: 100%;
     border: 0;
-    font-size: 18px;
+    font-size: 16px;
     background-color: var(--field);
     resize: vertical;
     margin: 0.25em 0;
@@ -216,10 +216,10 @@ button:hover {
     grid-area: items;
 }
 
-#backstory {
+#backstoryCard {
     grid-area: backstory;
 }
-#notes {
+#notesCard {
     grid-area: notes;
 }
 
@@ -1489,7 +1489,7 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     display: none;
 }
 
-
+/* 
 
 .abilityDescription {
     width: 100%;
@@ -1499,14 +1499,8 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     resize: vertical;
     margin: 0.25em 0;
     margin-bottom: 0;
-    /* margin-top: 0.2em; */
-    /* border: none; */
-    /* border-bottom: 1px solid black; */
 }
-
-.newAbility .abilityDescription {
-    /* margin: 0; */
-}
+ */
 
 
 .abilityHeader {
@@ -1601,11 +1595,15 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
 .abilityOrigin {
     display: inline-block;
     white-space: nowrap;
-    width: max-content;
+    /* width: max-content; */
+    width: fit-content;
 }
 
 .ability .abilityOrigin {
     /* margin-left: 10em; */
+    margin-right: 0.4em;
+    margin-left: auto;
+    float: right;
 }
 
 
@@ -1629,6 +1627,8 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
 }
 .abilityNameBlock, .newAbility .abilityNameBlock {
     white-space: nowrap;
+    width: 100%;
+
 }
 
 @media (max-width:900px) {
@@ -1667,8 +1667,9 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     }
     .abilityOrigin {
         white-space: wrap;
-        width: max-content;
+        /* width: max-content; */
         font-size: 0.9em;
+        /* width: min-content; */
     }
     .abilityHeader {
         flex-wrap: nowrap;
@@ -1682,6 +1683,7 @@ input:checked+.shinsuIcon:hover+.shinsuHover, input:checked+.shinsuIcon:focus+.s
     .abilityName {
         max-width: 240px;
         white-space: wrap;
+        font-size: 20px;
     }
     .newAbility .abilityHeader {
         flex-wrap: wrap;
@@ -1925,9 +1927,6 @@ label.itemTags {
     display: block;
 }
 
-/* .itemBonus {
-    width: 3ch;
-} */
 input.itemAmount {
     width: 3ch;
     font-size: 1em;
@@ -1941,6 +1940,10 @@ label.itemAmount {
 .itemRank {
     width: 2ch;
     margin-right: 0.3em;
+}
+
+.itemDescription {
+    font-size: 1em;
 }
 
 .item .dragHandle {
@@ -2042,7 +2045,7 @@ footer {
     height: 80vh;
     padding: 1em;
 }
-#quickstartWindow h4{
+#quickstartWindow h4 {
     margin-top: 0.4em;
 }
 
@@ -2264,9 +2267,11 @@ select.quickstart {
 
 /* settings */
 
-#sharingInfo {
+#sharingInfo, #sharingInfoTwo, label.modifyExistingSave {
     display: none;
 }
+
+
 
 #windowColors label, #statColors label {
     white-space: nowrap;
