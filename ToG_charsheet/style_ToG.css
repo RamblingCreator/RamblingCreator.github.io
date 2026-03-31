@@ -922,7 +922,7 @@ input[type='checkbox']:checked+.bonusList {
 }
  */
 
-/* skills */
+/* skills / rolls */
 /* 
 #rolls table {
     border: 1px solid black;
@@ -938,6 +938,10 @@ table {
     table-layout: fixed;
 
     font-size: 1em;
+}
+
+#rolls {
+    overflow-x: scroll;
 }
 
 #rolls table {
@@ -959,29 +963,10 @@ tr {
     border-collapse: collapse;
     /* box-shadow: 0 0 10px #00000059; */
 }
-/* #rollNameHeader, #autoSuccessHeader {
-    width: 6em;
-}
-#bonusDiceHeader {
-    width: 4em;
-}
 
-#impairedRollHeader, #hinderedRollHeader {
-    width: 4em;
+#rolls td {
+    white-space: nowrap;
 }
-
-#hinderedRollHeader {
-    width: 3em;
-}
-
-#bonusPercentDiceHeader {
-    width: 5em;
-}
-
-#totalDiceHeader, #baseDiceHeader, #bonusSuccessHeader {
-    width: 3em;
-}
- */
 
 #mightRoll, #agilityRoll, #heartsRoll, #witsRoll, #resistanceRoll {
     font-weight: bold;
@@ -1116,7 +1101,9 @@ Hearts
 Wits
 Resistance
  */
-
+#abilitiesSection {
+    height: 100%;
+}
 #abilities {
     /* grid-area: abilities; */
     /* display: flex;
