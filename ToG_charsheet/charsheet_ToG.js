@@ -363,6 +363,11 @@ $(document).ready(function () {
         addNewStatBonus(this);
     }); */
 
+    // only allow one bonus dropdown to be open
+    $("input.harm").on("input", function () {
+        calculateStats();
+    });
+
     var elements = document.getElementsByClassName("addBonus");
     Array.from(elements).forEach(function (element) {
         element.addEventListener('click', addNewStatBonus);
@@ -1203,6 +1208,9 @@ function addNewStatBonus() {
         console.log("removed new bonus");
     }, false); */
     thisButton.addEventListener('click', function () { this.parentNode.remove(); calculateStats(); }, false);
+
+    let thisField = this.parentNode.parentNode.lastChild.getElementsByClassName("bonusAmount")[0];
+    thisButton.addEventListener('input', function () { calculateStats(); }, false);
     // thisButton.addEventListener('click', function () { this.parentNode.remove(); calculateStats();}, false);
 }
 function removeBonus(thisButton) {
@@ -1321,9 +1329,11 @@ function calculateRolls() {
             diceAmount -= parseInt(parentStat.querySelector("input.impairedRoll").value)
         }
         // console.log("parent stat impaired: " + parentStat.querySelector("input.impairedRoll").value);
+        diceAmount += parseInt(roll.querySelector(".addEdge").innerHTML);
         if (hindered) {
             diceAmount = Math.floor(diceAmount / 2);
         }
+        roll.querySelector(".totalDice").innerHTML = "=" + diceAmount;
 
         // console.log(roll.id + " bonusDice: " + parseInt(roll.querySelector("input.bonusDice").value));
         // console.log(roll.id + " bonusDice: " + roll.querySelector("input.bonusDice"));
@@ -1333,12 +1343,16 @@ function calculateRolls() {
  
          }
   */
-        roll.querySelector(".totalDice").innerHTML = "=" + diceAmount;
+
 
         let statAutoSuccesses = Math.floor($("#" + thisStat + "Base").val() / 20)
         roll.querySelector(".statAutoSuccesses").innerHTML = statAutoSuccesses;
 
-        roll.querySelector(".totalAutoSuccesses").innerHTML = "=" + (parseInt(statAutoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value) + parseInt(roll.querySelector(".addEdge").innerHTML));
+        let autoSuccesses = (parseInt(statAutoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value));
+        if (hindered) {
+            autoSuccesses = Math.floor(autoSuccesses / 2);
+        }
+        roll.querySelector(".totalAutoSuccesses").innerHTML = "=" +autoSuccesses;
         // console.log("autosuccessses inner: "+(parseInt(autoSuccesses) + parseInt(roll.querySelector("input.bonusSuccesses").value)));
 
 

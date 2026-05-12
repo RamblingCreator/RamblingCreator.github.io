@@ -940,9 +940,12 @@ table {
     font-size: 1em;
 }
 
-#rolls {
-    overflow-x: scroll;
+@media (max-width: 900px) {
+    #rolls {
+        overflow-x: scroll;
+    }
 }
+
 
 #rolls table {
     min-width: 22.1em;
